@@ -49,7 +49,7 @@ Route::group(['middleware' => 'auth'], function()
 
 
 	// POST routes
-
+    Route::post('account/connect/psn', 'PlatformValidatorController@validatePsn');
 
 });
 
