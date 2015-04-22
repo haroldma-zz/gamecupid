@@ -21,14 +21,8 @@ class PlatformValidatorController extends Controller {
                 'body' => [
                     // we're going to be using password for authentication
                     'grant_type' => 'password',
-                    // this comes from the PS app on Android
-                    'client_id' => 'b0d0d7ad-bb99-4ab1-b25e-afa0c76577b0',
-                    // really wasn't that hard to get ;)
-                    'client_secret' => 'Zo4y8eGIa3oazIEp',
                     // this are the default the app uses, not even sure if we need all of them...
                     'scope' => 'psn%3Asceapp%2Cuser%3Aaccount.get%2Cuser%3Aaccount.settings.privacy.get%2Cuser%3Aaccount.settings.privacy.update%2Cuser%3Aaccount.realName.get%2Cuser%3Aaccount.realName.update',
-                    // have to test if we even need this for password grant
-                    'code' => 'INXh7h&service_entity=urn%3Aservice-entity%3Apsn&duid=0000000700020128cc4b8184a6e77d6f3a4c4745202020202020203a68616d6d65726865616400000000000000',
                     // the username (actually email address but according to oauth it have to use the username field
                     'username' => $request->get('email'),
                     // self-explanatory
