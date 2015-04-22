@@ -27,6 +27,9 @@ class UserController extends Controller {
 		$user->last_name  = $request->get('last_name');
 		$user->email      = $request->get('email');
 		$user->password   = Hash::make($request->get('password'));
+		$user->banned     = false;
+		$user->is_private = false;
+		$user->dob        = date('Y-m-d', strtotime("now"));
 
 		if ($user->save())
 		{
