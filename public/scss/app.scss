@@ -1,0 +1,113 @@
+@import "compass";
+@import "settings";
+@import "foundation";
+@import "misc";
+@import "ionicons";
+
+// Or selectively include components
+// @import
+//   "foundation/components/accordion",
+//   "foundation/components/alert-boxes",
+//   "foundation/components/block-grid",
+//   "foundation/components/breadcrumbs",
+//   "foundation/components/button-groups",
+//   "foundation/components/buttons",
+//   "foundation/components/clearing",
+//   "foundation/components/dropdown",
+//   "foundation/components/dropdown-buttons",
+//   "foundation/components/flex-video",
+//   "foundation/components/forms",
+//   "foundation/components/grid",
+//   "foundation/components/inline-lists",
+//   "foundation/components/joyride",
+//   "foundation/components/keystrokes",
+//   "foundation/components/labels",
+//   "foundation/components/magellan",
+//   "foundation/components/orbit",
+//   "foundation/components/pagination",
+//   "foundation/components/panels",
+//   "foundation/components/pricing-tables",
+//   "foundation/components/progress-bars",
+//   "foundation/components/reveal",
+//   "foundation/components/side-nav",
+//   "foundation/components/split-buttons",
+//   "foundation/components/sub-nav",
+//   "foundation/components/switches",
+//   "foundation/components/tables",
+//   "foundation/components/tabs",
+//   "foundation/components/thumbs",
+//   "foundation/components/tooltips",
+//   "foundation/components/top-bar",
+//   "foundation/components/type",
+//   "foundation/components/offcanvas",
+//   "foundation/components/visibility";
+
+
+/**
+*
+* html, body, section
+*
+**/
+html, body {
+	-webkit-font-smoothing: antialiased !important;
+	-moz-osx-font-smoothing: grayscale !important;
+}
+
+section {
+	margin-top: 65px;
+	padding: 1.5em 0;
+}
+
+
+/**
+*
+* Top navigation bar
+*
+**/
+.topnav {
+	width: 100%;
+	height: 65px;
+	line-height: 65px;
+	background: white;
+	border-bottom: 1px solid $silver;
+	position: fixed;
+	top: 0;
+	left: 0;
+	z-index: 9;
+	font-size: 0.85em;
+	@include box-shadow(0 0 2px darken(rgba(44, 62, 80, 0.05), 40));
+
+	.left {
+		a {
+			margin-right: 15px;
+			&.brand {
+				font-weight: 700;
+				text-transform: uppercase;
+				letter-spacing: 2px;
+				font-size: 150%;
+			}
+		}
+	}
+	.right {
+		a {
+			margin-left: 15px;
+			font-weight: 500;
+		}
+	}
+}
+
+
+/**
+*
+* Register form
+*
+**/
+.register-form {
+	max-height: 0px;
+	overflow: hidden;
+	@include transition(all .3s ease);
+
+	&.open {
+		max-height: 1000px;
+	}
+}

@@ -1,0 +1,91 @@
+/*
+|--------------------------------------------
+| Misc
+|--------------------------------------------
+*/
+h3.mb {
+	margin-bottom: 25px;
+}
+
+
+.form-control {
+	width: 100%;
+	padding: 10px;
+	border: 1px solid $silver;
+	font-size: 0.85;
+	margin-bottom: 5px;
+	@include border-radius($global-radius);
+	&:focus {
+		border: 1px solid #c5c5c5;
+		outline: none;
+	}
+}
+
+.btn {
+	font-size: 0.85em !important;
+	font-weight: 700 !important;
+	color: white;
+	border-width: 1px !important;
+	border-style: solid !important;
+	text-decoration: none;
+	@include transition(all .1s ease);
+	@include button($button-tny, #aaa, $global-radius, false, false, false);
+	&.primary {
+		background: $primary-color;
+		border-color: darken($primary-color, 10);
+	}
+	&.secondary {
+		background: $secondary-color;
+		border-color: darken($secondary-color, 10);
+	}
+	&.success {
+		background: $success-color;
+		border-color: darken($success-color, 10);
+	}
+	&.big {
+		padding: 1em 3em;
+	}
+	&.disabled {
+		cursor: not-allowed;
+		background-color: #ccc;
+		border-color: #bbb;
+		&:active {
+			border-width: 1px;
+		}
+	}
+	&.full {
+		width: 100%;
+		display: block;
+		margin-bottom: 10px;
+	}
+	&.no-radius {
+		@include border-radius(0);
+	}
+}
+
+.panel {
+	background: white;
+	border-color: $silver;
+	padding: 1.5em;
+	@include border-radius(2px);
+}
+
+label {
+	font-weight: 700;
+}
+
+.pointer {
+	cursor: pointer;
+}
+
+.text-alert {
+	font-weight: 700;
+	color: $alert-color !important;
+	li {
+		color: $alert-color !important;
+	}
+}
+
+.smaller-fs {
+	font-size: 0.85em;
+}

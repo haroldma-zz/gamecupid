@@ -1,0 +1,47 @@
+@mixin breakpoint($var)
+{
+  @if $var == sm
+  {
+    @media only screen and (max-width: 40em)
+    {
+      @content;
+    }
+  }
+
+  @else if $var == md
+  {
+    @media only screen and (min-width: 40.063em)
+    {
+      @content;
+    }
+  }
+
+  @else if $var == lg
+  {
+    @media only screen and (min-width: 64.063em)
+    {
+      @content;
+    }
+  }
+
+  @else if $var == xl
+  {
+    @media only screen and (min-width: 90.063em)
+    {
+      @content;
+    }
+  }
+
+  @else if $var == xxl
+  {
+    @media only screen and (min-width: 120.063em)
+    {
+      @content;
+    }
+  }
+
+  @else
+  {
+    @warn "Breakpoint mixin supports: sm, md, lg, xl, xxl";
+  }
+}
