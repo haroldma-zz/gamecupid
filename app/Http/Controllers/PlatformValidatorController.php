@@ -41,7 +41,7 @@ class PlatformValidatorController extends Controller {
             ]);
 
         // 200? then the user has logged in successfully
-        $valid = $response->getStatusCode() == 200;
+        $valid = $response->getStatusCode() < 400;
 
         if ($valid) {
             // parsing the access token from the response
@@ -55,7 +55,7 @@ class PlatformValidatorController extends Controller {
                     ]
                 ]);
 
-            $valid = $response->getStatusCode() == 200;
+            $valid = $response->getStatusCode() < 400;
 
             if ($valid) {
                 // parsing the user id and username from response
