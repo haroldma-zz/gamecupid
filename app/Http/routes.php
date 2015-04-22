@@ -47,6 +47,11 @@ Route::group(['middleware' => 'auth'], function()
 	// GET routes
 	Route::get('/logout', 'UserController@logout');
 
+	Route::get('/account', 'PageController@account');
+	Route::get('/account/connect/psn', 'PageController@connectPsn');
+	Route::get('/account/connect/xboxlive', 'PageController@connectXbox');
+	Route::get('/account/connect/steam', 'PageController@connectSteam');
+
 
 	// POST routes
     Route::post('account/connect/psn', 'PlatformValidatorController@validatePsn');

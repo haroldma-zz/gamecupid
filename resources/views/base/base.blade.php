@@ -14,7 +14,7 @@
 				</div>
 				<div class="right">
 					@if(Auth::check())
-					<a>Logged in as <b>{{ Auth::user()->first_name . ' ' . Auth::user()->last_name }}</b></a>
+					<a href="{!! url('/account') !!}"><b>{{ Auth::user()->first_name . ' ' . Auth::user()->last_name }}</b></a>
 					<a href="{!! url('/logout') !!}">Logout</a>
 					@else
 					<a href="{!! url('/login') !!}">Login / Register</a>

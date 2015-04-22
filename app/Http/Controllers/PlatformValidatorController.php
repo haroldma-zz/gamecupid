@@ -9,10 +9,11 @@
 namespace App\Http\Controllers;
 
 use GuzzleHttp\Client;
+use App\Http\Requests\ConnectPsnFormRequest;
 
 class PlatformValidatorController extends Controller {
 
-    function validatePsn(LoginFormRequest $request) {
+    function validatePsn(ConnectPsnFormRequest $request) {
         // let's start by creating a Guzzle Client to make http request
         $client = new Client();
 

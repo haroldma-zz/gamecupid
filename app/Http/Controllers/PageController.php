@@ -33,4 +33,27 @@ class PageController extends Controller {
 		return view('pages.login');
 	}
 
+
+	/**
+	*
+	* User account page
+	*
+	**/
+	public function account()
+	{
+		return view('pages.account');
+	}
+
+
+	/**
+	*
+	* Connect PSN page
+	*
+	**/
+	public function connectPsn()
+	{
+		return view('pages.connect.psn');
+	}
+	
+
 }

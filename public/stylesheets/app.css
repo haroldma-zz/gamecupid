@@ -13022,12 +13022,22 @@ section {
   padding: 1.5em 0;
 }
 
+/* line 61, ../scss/app.scss */
+p {
+  font-size: 0.95em;
+}
+
+/* line 65, ../scss/app.scss */
+ul {
+  font-size: 0.95em !important;
+}
+
 /**
 *
 * Top navigation bar
 *
 **/
-/* line 67, ../scss/app.scss */
+/* line 74, ../scss/app.scss */
 .topnav {
   width: 100%;
   height: 65px;
@@ -13043,18 +13053,18 @@ section {
   -webkit-box-shadow: 0 0 2px rgba(0, 0, 0, 0.05);
   box-shadow: 0 0 2px rgba(0, 0, 0, 0.05);
 }
-/* line 81, ../scss/app.scss */
+/* line 88, ../scss/app.scss */
 .topnav .left a {
   margin-right: 15px;
 }
-/* line 83, ../scss/app.scss */
+/* line 90, ../scss/app.scss */
 .topnav .left a.brand {
   font-weight: 700;
   text-transform: uppercase;
   letter-spacing: 2px;
   font-size: 150%;
 }
-/* line 92, ../scss/app.scss */
+/* line 99, ../scss/app.scss */
 .topnav .right a {
   margin-left: 15px;
   font-weight: 500;
@@ -13065,7 +13075,7 @@ section {
 * Register form
 *
 **/
-/* line 105, ../scss/app.scss */
+/* line 112, ../scss/app.scss */
 .register-form {
   max-height: 0px;
   overflow: hidden;
@@ -13074,7 +13084,7 @@ section {
   -webkit-transition: all 0.3s ease;
   transition: all 0.3s ease;
 }
-/* line 110, ../scss/app.scss */
+/* line 117, ../scss/app.scss */
 .register-form.open {
   max-height: 1000px;
 }
