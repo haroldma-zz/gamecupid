@@ -35,6 +35,7 @@ class PlatformValidatorController extends Controller {
                     'password' => $request->get('password')
                 ],
                 'headers' => [
+                    // client id+client secret (base64)
                     'Authorization' => 'Basic YjBkMGQ3YWQtYmI5OS00YWIxLWIyNWUtYWZhMGM3NjU3N2IwOlpvNHk4ZUdJYTNvYXpJRXA='
                 ]
             ]);
@@ -42,8 +43,29 @@ class PlatformValidatorController extends Controller {
         // 200? then the user has logged in successfully
         $valid = $response->getStatusCode() == 200;
 
-        // TODO: if valid, add to database
+        if ($valid) {
+            // parsing the access token from the response
+            $json = $response->json();
+            $token = $json->access_token;
 
+            $response = $client.get('https://vl.api.np.km.playstation.net/vl/api/v1/mobile/users/me/info', [
+                    'headers' => [
+                        // To call psn api we use the following header to authenticate
+                        'X-NP-ACCESS-TOKEN' => $token
+                    ]
+                ]);
+
+            $valid = $response->getStatusCode() == 200;
+
+            if ($valid) {
+                // parsing the user id and username from response
+                $json = $response->json();
+                $user_id = $json->accountId;
+                $username = $json->onlineId;
+
+                // TODO save this in the database
+            }
+        }
         return view('user.profile.link', ['valid' => $valid]);
     }
 }
