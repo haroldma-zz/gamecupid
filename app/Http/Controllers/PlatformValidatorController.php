@@ -94,13 +94,19 @@ class PlatformValidatorController extends Controller
         // Make a get request to the login form,
         // we need to extract some data from the form to post the credentials later
         $response = $client->get('https://login.live.com/oauth20_authorize.srf?' . http_build_query($data), [
-            "exceptions" => false
+            'exceptions' => false,
+            'cookies' => true
         ]);
 
         $url_re = '%urlPost:\\\'([A-Za-z0-9:\?_\-\.&/=\%]+)%';
         $ppft_re = '%sFTTag:\\\'.*value="(.*)"/>%';
         $body = $response->getBody();
 
+        // To post to the login endpoint we need:
+        // 1. The url to post to
+        // 2. The PPFT value
+        // 3. and the Cookies
+        // otherwise it will fail
         preg_match($url_re, $body, $matches);
         $post_url = $matches[1];
         preg_match($ppft_re, $body, $matches);
@@ -114,20 +120,22 @@ class PlatformValidatorController extends Controller
                         'PPFT' => $ppft,
                         'login' => $request->get('email'),
                         'passwd' => $request->get('password'),
-                        'PPSX' => 'Passpor',
                         'SI' => 'Sign in',
                         'type' => '11',
+                        'PPSX' => 'Pas',
                         'NewUser' => '1',
                         'LoginOptions' => '1',
                         'i3' => '36728',
-                        'm1' => '768',
-                        'm2' => '1184',
+                        'm1' => '1080',
+                        'm2' => '1920',
                         'm3' => '0',
                         'i12' => '1',
                         'i17' => '0',
-                        'i18' => '__Login_Host|1'
+                        'i18' => '__Login_Host|1,'
                     ],
-                'exceptions' => false
+                'exceptions' => false,
+                'debug' => true,
+                'cookies' => true
             ],
             [
                 // we don't want to follow redirects with this request
