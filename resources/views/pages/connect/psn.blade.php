@@ -9,6 +9,11 @@
 					Login to Playstation Network
 				</h3>
 				<br>
+				@if (isset($error))
+					<ul class="no-bullet text-alert smaller-fs">
+						<li>{{ $error }}</li>
+					</ul>
+				@endif
 				<p>
 					Some text here to explain to the user that user needs to input the login details for PSN. If user doesn't have an PSN account user should create one first.
 				</p>
