@@ -41,7 +41,7 @@
 						<p>
 							<ul class="no-bullet">
 								<li><a href="{!! url('/account/connect/psn') !!}">Playstation Network</a></li>
-								<li><a href="{!! url('/account/connect/xboxlive') !!}">Xbox Live</a></li>
+								<li><a href="{!! url('/account/connect/xbl') !!}">Xbox Live</a></li>
 								<li><a href="{!! url('/account/connect/steam') !!}">Steam</a></li>
 							</ul>
 						</p>

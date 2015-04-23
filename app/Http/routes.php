@@ -49,12 +49,13 @@ Route::group(['middleware' => 'auth'], function()
 
 	Route::get('/account', 'PageController@account');
 	Route::get('/account/connect/psn', 'PageController@connectPsn');
-	Route::get('/account/connect/xboxlive', 'PageController@connectXbox');
+	Route::get('/account/connect/xbl', 'PageController@connectXbl');
 	Route::get('/account/connect/steam', 'PageController@connectSteam');
 
 
 	// POST routes
     Route::post('account/connect/psn', 'PlatformValidatorController@validatePsn');
+    Route::post('account/connect/xbl', 'PlatformValidatorController@validateXbl');
 
 });
 

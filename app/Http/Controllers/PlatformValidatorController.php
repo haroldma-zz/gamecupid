@@ -76,7 +76,7 @@ class PlatformValidatorController extends Controller
         return view('pages.connect.psn', ['error' => 'Couldn\'t verify PSN account.']);
     }
 
-    public function validateXboxLive(ConnectFormRequest $request)
+    public function validateXbl(ConnectFormRequest $request)
     {
         // xbox is tricky, can't use oauth because the client that has
         // access to xbox live scopes redirect uri can't be tamper with
@@ -169,7 +169,7 @@ class PlatformValidatorController extends Controller
 
         if ($valid)
             return redirect('/account')->with('notice', ['info', 'Your Xbox Live account has been connected.']);
-        return view('pages.connect.xboxlive', ['error' => 'Couldn\'t verify Xbox Live account.']);
+        return view('pages.connect.xbl', ['error' => 'Couldn\'t verify Xbox Live account.']);
     }
 
     function authenticateXbox(Client $client, $token)

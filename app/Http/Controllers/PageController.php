@@ -57,6 +57,17 @@ class PageController extends Controller {
 	{
 		return view('pages.connect.psn');
 	}
+
+
+	/**
+	*
+	* Connect XBL page
+	*
+	**/
+	public function connectXbl()
+	{
+		return view('pages.connect.xbl');
+	}
 	
 
 }
