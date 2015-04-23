@@ -134,11 +134,7 @@ class PlatformValidatorController extends Controller
                         'i18' => '__Login_Host|1,'
                     ],
                 'exceptions' => false,
-                'debug' => true,
-                'cookies' => true
-            ],
-            [
-                // we don't want to follow redirects with this request
+                'cookies' => true,
                 'allow_redirects' => false
             ]);
 
@@ -153,15 +149,14 @@ class PlatformValidatorController extends Controller
             $access_token = $fragment_query["access_token"];
 
             // now we need to get the authentication token
-            $users_token = authenticateXbox($client, $access_token);
+            $users_token = $this->authenticateXbox($client, $access_token);
 
             $valid = $users_token != null;
-
             if ($valid)
             {
-                $gamertag = authorizeXbox($client, $users_token);
+                $gamertag = $this->authorizeXbox($client, $users_token);
+                
                 $valid = $gamertag != null;
-
                 if ($valid)
                 {
                     $profile = new Profile;
@@ -210,11 +205,11 @@ class PlatformValidatorController extends Controller
         // Make a post request to the psn oauth api, if successful then we're golden!
         $response = $client->post('https://xsts.auth.xboxlive.com/xsts/authorize', [
             'json' => [
-                'RelyingParty' => 'http://auth.xboxlive.com',
+                'RelyingParty' => 'http://xboxlive.com',
                 'TokenType' => 'JWT',
                 'Properties' => [
-                    'SandboxId' => 'RETAIL',
-                    'UserTokens' => $token,
+                    'UserTokens' => [ $token ],
+                    'SandboxId' => 'RETAIL'
                 ]
             ],
             'exceptions' => false
