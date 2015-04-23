@@ -6,6 +6,15 @@
 		<div class="medium-12 columns">
 			<div class="panel">
 				<div class="row">
+                    @if (Session::has('notice'))
+                        @if (Session::get('notice')[0] == 'error')
+                            <ul class="no-bullet text-alert smaller-fs">
+                        @else
+                            <ul class="no-bullet smaller-fs">
+                        @endif
+                        <li>{{ Session::get('notice')[1] }}</li>
+                        </ul>
+                     @endif
 					<div class="medium-6 columns">
 						<h4>
 							Connected profiles ({{ Auth::user()->profiles()->count() }})
