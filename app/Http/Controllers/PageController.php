@@ -1,5 +1,7 @@
 <?php namespace App\Http\Controllers;
 
+use App\Models\Platform;
+
 class PageController extends Controller {
 
 	/*
@@ -19,7 +21,8 @@ class PageController extends Controller {
 	**/
 	public function index()
 	{
-		return view('pages.index');
+		$platforms = Platform::all();
+		return view('pages.index', [ 'platforms' => $platforms]);
 	}
 
 
