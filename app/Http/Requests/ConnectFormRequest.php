@@ -3,7 +3,7 @@
 use Session;
 use Illuminate\Foundation\Http\FormRequest;
 
-class ConnectPsnFormRequest extends FormRequest {
+class ConnectFormRequest extends FormRequest {
 
 	public function rules()
 	{
