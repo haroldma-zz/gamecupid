@@ -27,7 +27,10 @@
 							Connect your online gaming profiles by clicking on a platform under 'Connect'.
 						</p>
 						@else
-						list connected profiles
+                            @foreach (Auth::user()->profiles as $profile)
+                                <p>{{ $profile->online_id }}</p>
+                                <img src="{{ $profile->platform->logo_url  }}" width="200" />
+                            @endforeach
 						@endif
 					</div>
 					<div class="medium-3 columns">
