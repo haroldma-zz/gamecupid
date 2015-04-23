@@ -97,7 +97,7 @@ class PlatformValidatorController extends Controller
             "exceptions" => false
         ]);
 
-        $url_re = '%urlPost:\\\'([A-Za-z0-9:\?_\-\.&/=]+)%';
+        $url_re = '%urlPost:\\\'([A-Za-z0-9:\?_\-\.&/=\%]+)%';
         $ppft_re = '%sFTTag:\\\'.*value="(.*)"/>%';
         $body = $response->getBody();
 
