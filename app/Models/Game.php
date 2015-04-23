@@ -19,12 +19,12 @@ class Game extends Model {
 	**/
 	public function developer()
 	{
-		return $this->belongsTo('App\Models\Developer', 'developer_id');
+		return $this->belongsTo('App\Models\Developer', 'developer_id', 'id');
 	}
 
 	public function publisher()
 	{
-		return $this->belongsTo('App\Models\Publisher', 'publisher_id');
+		return $this->belongsTo('App\Models\Publisher', 'publisher_id', 'id');
 	}
 
 	public function invites()

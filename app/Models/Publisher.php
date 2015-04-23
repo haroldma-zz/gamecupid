@@ -10,4 +10,14 @@ class Publisher extends Model {
 	 * @var string
 	 */
 	protected $table = 'publishers';
+
+	/**
+	*
+	* Relations
+	*
+	**/
+	public function games()
+	{
+		return $this->hasMany('App\Model\Game', 'publisher_id', 'id');
+	}
 }

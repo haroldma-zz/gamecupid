@@ -10,4 +10,15 @@ class Developer extends Model {
 	 * @var string
 	 */
 	protected $table = 'developers';
+
+
+	/**
+	*
+	* Relations
+	*
+	**/
+	public function games()
+	{
+		return $this->hasMany('App\Model\Game', 'developer_id', 'id');
+	}
 }

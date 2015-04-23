@@ -10,4 +10,15 @@ class Console extends Model {
 	 * @var string
 	 */
 	protected $table = 'consoles';
+
+
+	/**
+	*
+	* Relations
+	*
+	**/
+	public function platform()
+	{
+		return $this->belongsTo('App\Models\Platform', 'platform_id', 'id');
+	}
 }

@@ -10,4 +10,15 @@ class Platform extends Model {
 	 * @var string
 	 */
 	protected $table = 'platforms';
+
+
+	/**
+	*
+	* Relations
+	*
+	**/
+	public function consoles()
+	{
+		return $this->hasMany('App\Model\Console', 'platform_id', 'id');
+	}
 }
