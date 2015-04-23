@@ -10,6 +10,8 @@ namespace App\Http\Controllers;
 
 use GuzzleHttp\Client;
 use App\Http\Requests\ConnectPsnFormRequest;
+use App\Models\Profile;
+use Illuminate\Support\Facades\Auth;
 
 class PlatformValidatorController extends Controller
 {
@@ -59,10 +61,17 @@ class PlatformValidatorController extends Controller
             if ($valid) {
                 // parsing the user id and username from response
                 $json = $response->json();
-                $user_id = $json["accountId"];
-                $username = $json["onlineId"];
 
-                // TODO save this in the database
+                $now = new \DateTime('now');
+                $profile = new Profile;
+
+                $profile->user_id = Auth::user()->id;
+                $profile->online_id = $json["onlineId"];
+                $profile->platform_id = 2;
+                $profile->created_at = $now;
+                $profile->updated_at = $now;
+
+                $profile->save();
             }
         }
 

@@ -7,7 +7,7 @@ class ConsolesTableSeeder extends Seeder {
 
     public function run()
     {
-        $now  = date("Y-m-d h:i:s");
+        $now = new DateTime('now');
         $console = new Console;
 
         // Create xbox 360 console
@@ -21,7 +21,7 @@ class ConsolesTableSeeder extends Seeder {
 
         $console->save();
 
-        $now  = date("Y-m-d h:i:s");
+        $now = new DateTime('now');
         $console = new Console;
 
         // Create xbox one console
@@ -35,7 +35,7 @@ class ConsolesTableSeeder extends Seeder {
 
         $console->save();
 
-        $now  = date("Y-m-d h:i:s");
+        $now = new DateTime('now');
         $console = new Console;
 
         // Create ps3 console
@@ -49,7 +49,7 @@ class ConsolesTableSeeder extends Seeder {
 
         $console->save();
 
-        $now  = date("Y-m-d h:i:s");
+        $now = new DateTime('now');
         $console = new Console;
 
         // Create ps4 console
