@@ -24,7 +24,7 @@ class PlatformsTableSeeder extends Seeder {
 
         // Create psn
         $platform->name = "PlayStation Network";
-        $platform->description  = "PlayStation Network, officially abbreviated PSN, is an entertainment service provided by Sony Computer Entertainment for use with the PlayStation family of video game consoles, Sony tablet and smartphones.[3] The PlayStation Network encompasses online gaming, music, television and movie streaming services.";
+        $platform->description  = "PlayStation Network, officially abbreviated PSN, is an entertainment service provided by Sony Computer Entertainment for use with the PlayStation family of video game consoles, Sony tablet and smartphones. The PlayStation Network encompasses online gaming, music, television and movie streaming services.";
         $platform->logo_url     = "http://all3games.com/wp-content/uploads/2013/11/psn.png";
         $platform->created_at = $now;
         $platform->updated_at = $now;
