@@ -16,31 +16,26 @@
 						</p>
 						<br>
 						{!! Form::open(['url' => '/invite', 'class' => 'form']) !!}
-						{!! Form::label('game_id', 'I want to submit an invite for...') !!}
-						{!! Form::select('game_id', [
-												'0' => 'Select a game'
-												 ],
-												0,
-												['class' => 'form-control']) !!}
-						{!! Form::label('console_id', 'on the...') !!}
-						{!! Form::select('console_id', ['0' => 'Select a console',
-													 '1' => 'Xbox 360',
-													 '2' => 'Xbox One',
-													 '3' => 'Playstation 3',
-													 '4' => 'Playstation 4',
-													 '5' => 'PC'],
-													0,['class' => 'form-control']) !!}
-						{!! Form::label('title', 'Title') !!}
-						{!! Form::text('title', '', ['form-control']) !!}
-						{!! Form::label('self_text', 'Description') !!}
-						{!! Form::textarea('self_text', '', ['form-control']) !!}
-						{!! Form::checkbox('requires_approval', 1) !!}
-						{!! Form::label('requires_approval', 'When someone wants to play with me, that person requires my approval.') !!}
+							{!! Form::label('console_id', 'I want to submit an invite for...') !!}
+							{!! Form::select('console_id', $consoleSelections,
+							0,['class' => 'form-control']) !!}
+                            {!! Form::label('game_id', 'for the game..') !!}
+                            {!! Form::select('game_id', [
+                            '0' => 'Select a game'
+                            ],
+                            0,
+                            ['class' => 'form-control']) !!}
+                            {!! Form::label('title', 'Title') !!}
+                            {!! Form::text('title', '', ['form-control']) !!}
+                            {!! Form::label('self_text', 'Description') !!}
+                            {!! Form::textarea('self_text', '', ['form-control']) !!}
+                            {!! Form::checkbox('requires_approval', 1) !!}
+                            {!! Form::label('requires_approval', 'When someone wants to play with me, that person requires my approval.') !!}
 
-						<br><br><br>
-						{!! Recaptcha::render() !!}
-						<br>
-						<button type="submit" class="btn big primary">Submit invite</button>
+                            <br><br><br>
+						    {!! Recaptcha::render() !!}
+						    <br>
+						    <button type="submit" class="btn big primary">Submit invite</button>
 						{!! Form::close() !!}
 					</div>
 				</div>

@@ -1,6 +1,7 @@
 <?php namespace App\Http\Controllers;
 
 use App\Models\Platform;
+use App\Models\Console;
 
 class PageController extends Controller {
 
@@ -88,7 +89,15 @@ class PageController extends Controller {
 	**/
 	public function invite()
 	{
-		return view('pages.invites.invite');
+		$consoles = Console::all();
+
+        $consoleSelections = ['0' => 'Select a console'];
+        foreach ($consoles as $console)
+        {
+            $consoleSelections[] = $console->name;
+        }
+
+		return view('pages.invites.invite', [ 'consoleSelections' => $consoleSelections]);
 	}
 
 
