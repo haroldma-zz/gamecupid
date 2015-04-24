@@ -155,16 +155,16 @@ class PlatformValidatorController extends Controller
             $valid = $users_token != null;
             if ($valid)
             {
-                $gamertag = $this->authorizeXbox($client, $users_token);
+                $json = $this->authorizeXbox($client, $users_token);
                 
-                $valid = $gamertag != null;
+                $valid = $json != null;
                 if ($valid)
                 {
                     $profile = new Profile;
 
                     $profile->user_id         = Auth::user()->id;
-                    $profile->online_id       = "idontknow";
-                    $profile->online_username = $gamertag;
+                    $profile->online_id       = $json['xid'];
+                    $profile->online_username = $json['gtg'];
                     $profile->platform_id     = 1;
 
                     $profile->save();
@@ -227,7 +227,7 @@ class PlatformValidatorController extends Controller
         if ($response->getStatusCode() < 400)
         {
             $json = $response->json();
-            return $json['DisplayClaims']['xui'][0]['gtg'];
+            return $json['DisplayClaims']['xui'][0];
         }
         else
             return null;
