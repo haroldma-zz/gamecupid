@@ -14,8 +14,10 @@
 	                    @if (Session::has('notice'))
 	                        @if (Session::get('notice')[0] == 'error')
 	                            <ul class="no-bullet text-alert smaller-fs">
-	                        @else
-	                            <ul class="no-bullet smaller-fs">
+	                        @elseif (Session::get('notice')[0] == 'info')
+	                            <ul class="no-bullet text-info smaller-fs">
+	                        @elseif (Session::get('notice')[0] == 'success')
+	                        	<ul class="no-bullet text-success smaller-fs">
 	                        @endif
 	                        <li>{{ Session::get('notice')[1] }}</li>
 	                        </ul>
@@ -32,7 +34,7 @@
 		                            <img src="{{ $profile->platform->logo_url  }}" />
 		                            <ul class="inline-list profiles-mini-list">
 		                            	<li>{{ $profile->online_username }}</li>
-		                            	<li><a href="/account/disconnect/{{ $profile->online_username }}" id="openDialog"
+		                            	<li><a href="/account/disconnect/{{ $profile->platform->shortname }}/{{ $profile->online_username }}" id="openDialog"
 		                            		data-type="confirm"
 		                            		data-message="Are you sure you want to disconnect {{ $profile->online_username }}?"
 		                            		>disconnect</a></li>

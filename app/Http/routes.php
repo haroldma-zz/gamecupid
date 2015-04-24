@@ -52,6 +52,8 @@ Route::group(['middleware' => 'auth'], function()
 	Route::get('/account/connect/xbl', 'PageController@connectXbl');
 	Route::get('/account/connect/steam', 'PageController@connectSteam');
 
+	Route::get('/account/disconnect/{platform}/{username}', 'ProfileController@disconnect');
+
 
 	// POST routes
     Route::post('account/connect/psn', 'PlatformValidatorController@validatePsn');

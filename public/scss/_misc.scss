@@ -86,6 +86,22 @@ label {
 	}
 }
 
+.text-info {
+	font-weight: 700;
+	color: $info-color !important;
+	li {
+		color: $info-color !important;
+	}
+}
+
+.text-success {
+	font-weight: 700;
+	color: $success-color !important;
+	li {
+		color: $success-color !important;
+	}
+}
+
 .smaller-fs {
 	font-size: 0.85em;
 }

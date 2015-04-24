@@ -9303,6 +9303,26 @@ label {
 }
 
 /* line 89, ../scss/_misc.scss */
+.text-info {
+  font-weight: 700;
+  color: #a0d3e8 !important;
+}
+/* line 92, ../scss/_misc.scss */
+.text-info li {
+  color: #a0d3e8 !important;
+}
+
+/* line 97, ../scss/_misc.scss */
+.text-success {
+  font-weight: 700;
+  color: #43AC6A !important;
+}
+/* line 100, ../scss/_misc.scss */
+.text-success li {
+  color: #43AC6A !important;
+}
+
+/* line 105, ../scss/_misc.scss */
 .smaller-fs {
   font-size: 0.85em;
 }
