@@ -160,10 +160,18 @@ class PlatformValidatorController extends Controller
                 $valid = $json != null;
                 if ($valid)
                 {
+                    $xid = $json['xid'];
+
+                    $count = Profile::where('online_id', '=', $xid)->count();
+                    $valid = $count == 0;
+
+                    if (!$valid)
+                        return view('pages.connect.xbl', ['error' => 'There is already an account with that profile.']);
+
                     $profile = new Profile;
 
                     $profile->user_id         = Auth::user()->id;
-                    $profile->online_id       = $json['xid'];
+                    $profile->online_id       = $xid;
                     $profile->online_username = $json['gtg'];
                     $profile->platform_id     = 1;
 
