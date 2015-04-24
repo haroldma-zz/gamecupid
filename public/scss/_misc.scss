@@ -21,6 +21,23 @@ h3.mb {
 	}
 }
 
+select.form-control {
+	padding: 5px 10px;
+}
+
+.form.extra {
+	label {
+		font-size: 1.15em;
+		font-weight: 500;
+		margin-bottom: 10px;
+	}
+	.form-control {
+		font-size: 1.15em;
+		padding: 20px 10px;
+		@include border-radius(3px);
+	}
+}
+
 .btn {
 	font-size: 0.85em !important;
 	font-weight: 700 !important;
@@ -68,10 +85,19 @@ h3.mb {
 	border-color: $silver;
 	padding: 1.5em;
 	@include border-radius(2px);
+
+	&.extra {
+		padding: 3em;
+		@include breakpoint(sm) {
+			padding: 1.5em;
+		}
+	}
 }
 
 label {
 	font-weight: 700;
+	margin: 10px 0;
+	margin-top: 20px;
 }
 
 .pointer {
@@ -104,4 +130,25 @@ label {
 
 .smaller-fs {
 	font-size: 0.85em;
+}
+
+.thin-header {
+	font-weight: 100;
+}
+
+.light-header {
+	font-weight: 300;
+}
+
+.normal-header {
+	font-weight: 500;
+}
+
+.bold-header {
+	font-weight: 700;
+}
+
+.super-header {
+	text-transform: uppercase;
+	letter-spacing: 10px;
 }

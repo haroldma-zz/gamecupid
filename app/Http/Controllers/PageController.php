@@ -81,4 +81,15 @@ class PageController extends Controller {
 	}
 
 
+	/**
+	*
+	* Invite page
+	*
+	**/
+	public function invite()
+	{
+		return view('pages.invites.invite');
+	}
+
+
 }

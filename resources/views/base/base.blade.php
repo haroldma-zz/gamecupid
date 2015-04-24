@@ -14,6 +14,7 @@
 				</div>
 				<div class="right">
 					@if(Auth::check())
+					<a href="{!! url('/invite') !!}"><i class="ion-plus"></i></a>
 					<a href="{!! url('/account') !!}"><b>{{ Auth::user()->first_name . ' ' . Auth::user()->last_name }}</b></a>
 					<a href="{!! url('/logout') !!}">Logout</a>
 					@else
