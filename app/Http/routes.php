@@ -61,6 +61,8 @@ Route::group(['middleware' => 'auth'], function()
     Route::post('account/connect/xbl', 'PlatformValidatorController@validateXbl');
     Route::post('account/connect/steam', 'PlatformValidatorController@validateSteam');
 
+    Route::post('/invite', 'InviteController@invite');
+
 });
 
 

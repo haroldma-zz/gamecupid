@@ -11,7 +11,7 @@
 				<hr>
 				<div class="row">
 					<div class="medium-8 medium-offset-2 columns">
-						{!! Form::open(['url' => '', 'class' => 'form']) !!}
+						{!! Form::open(['url' => '/invite', 'class' => 'form']) !!}
 						{!! Form::label('game', 'I want to submit an invite for...') !!}
 						{!! Form::select('game', [
 												'0' => 'Select a game'
@@ -27,7 +27,9 @@
 													 '5' => 'PC'],
 													0,['class' => 'form-control']) !!}
 
-						<br><br>
+						<br><br><br>
+						{!! Recaptcha::render() !!}
+						<br>
 						<button type="submit" class="btn big primary">Submit invite</button>
 						{!! Form::close() !!}
 					</div>

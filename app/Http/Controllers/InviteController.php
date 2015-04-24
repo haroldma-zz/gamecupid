@@ -7,7 +7,7 @@ class InviteController extends Controller {
 	* New an invite
 	*
 	**/
-	public function newInvite()
+	public function invite()
 	{
 		return 'swag';
 	}
