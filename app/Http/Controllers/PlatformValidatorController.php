@@ -118,39 +118,21 @@ class PlatformValidatorController extends Controller
             [
                 'body' =>
                     [
-<<<<<<< HEAD
-                        'PPFT' => $ppft,
-                        'login' => $request->get('email'),
-                        'passwd' => $request->get('password'),
-                        'SI' => 'Sign in',
-                        'type' => '11',
-                        'PPSX' => 'Pas',
-                        'NewUser' => '1',
-                        'LoginOptions' => '1',
-                        'i3' => '36728',
-                        'm1' => '1080',
-                        'm2' => '1920',
-                        'm3' => '0',
-                        'i12' => '1',
-                        'i17' => '0',
-                        'i18' => '__Login_Host|1,'
-=======
                         'PPFT'         => $ppft,
                         'login'        => $request->get('email'),
                         'passwd'       => $request->get('password'),
-                        'PPSX'         => 'Passpor',
                         'SI'           => 'Sign in',
                         'type'         => '11',
+                        'PPSX'         => 'Passpor',
                         'NewUser'      => '1',
                         'LoginOptions' => '1',
                         'i3'           => '36728',
-                        'm1'           => '768',
-                        'm2'           => '1184',
+                        'm1'           => '1080',
+                        'm2'           => '1920',
                         'm3'           => '0',
                         'i12'          => '1',
                         'i17'          => '0',
-                        'i18'          => '__Login_Host|1'
->>>>>>> xp-system
+                        'i18'          => '__Login_Host|1,'
                     ],
                 'exceptions' => false,
                 'cookies' => true,
@@ -232,19 +214,11 @@ class PlatformValidatorController extends Controller
         // Make a post request to the psn oauth api, if successful then we're golden!
         $response = $client->post('https://xsts.auth.xboxlive.com/xsts/authorize', [
             'json' => [
-<<<<<<< HEAD
-                'RelyingParty' => 'http://xboxlive.com',
-                'TokenType' => 'JWT',
-                'Properties' => [
-                    'UserTokens' => [ $token ],
-                    'SandboxId' => 'RETAIL'
-=======
-                    'RelyingParty' => 'http://auth.xboxlive.com',
+                    'RelyingParty' => 'http://xboxlive.com',
                     'TokenType' => 'JWT',
                     'Properties' => [
+                    'UserTokens' => [ $token ],
                     'SandboxId' => 'RETAIL',
-                    'UserTokens' => $token,
->>>>>>> xp-system
                 ]
             ],
             'exceptions' => false
