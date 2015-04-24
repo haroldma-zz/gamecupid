@@ -172,6 +172,13 @@ class PlatformValidatorController extends Controller
         return view('pages.connect.xbl', ['error' => 'Couldn\'t verify Xbox Live account.']);
     }
 
+    public function validateSteam(ConnectFormRequest $request)
+    {
+        // The Steam validation method
+    }
+
+
+
     function authenticateXbox(Client $client, $token)
     {
         // Make a post request to the psn oauth api, if successful then we're golden!

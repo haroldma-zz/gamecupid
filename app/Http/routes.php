@@ -56,6 +56,7 @@ Route::group(['middleware' => 'auth'], function()
 	// POST routes
     Route::post('account/connect/psn', 'PlatformValidatorController@validatePsn');
     Route::post('account/connect/xbl', 'PlatformValidatorController@validateXbl');
+    Route::post('account/connect/steam', 'PlatformValidatorController@validateSteam');
 
 });
 

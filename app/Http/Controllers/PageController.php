@@ -68,6 +68,17 @@ class PageController extends Controller {
 	{
 		return view('pages.connect.xbl');
 	}
-	
+
+
+	/**
+	*
+	* Connect Steam page
+	*
+	**/
+	public function connectSteam()
+	{
+		return view('pages.connect.steam');
+	}
+
 
 }
