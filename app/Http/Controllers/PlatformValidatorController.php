@@ -162,7 +162,7 @@ class PlatformValidatorController extends Controller
                 {
                     $xid = $json['xid'];
 
-                    $count = Profile::where('online_id', '=', $xid)->count();
+                    $count = Profile::where('online_id', $xid)->count();
                     $valid = $count == 0;
 
                     if (!$valid)
