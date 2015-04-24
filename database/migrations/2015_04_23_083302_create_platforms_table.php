@@ -17,6 +17,8 @@ class CreatePlatformsTable extends Migration {
             $table->string('name');
             $table->mediumText('description');
             $table->string('logo_url');
+            $table->string('shortname');
+            $table->string('slug');
             $table->timestamps();
         });
 	}

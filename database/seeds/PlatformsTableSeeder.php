@@ -14,6 +14,8 @@ class PlatformsTableSeeder extends Seeder {
         $platform->name = "Xbox Live";
         $platform->description  = "Xbox Live (trademarked as Xbox LIVE) is an online multiplayer gaming and digital media delivery service created and operated by Microsoft. It was first made available to the Xbox system in November 2002. An updated version of the service became available for the Xbox 360 console at the system's launch in November 2005, and a further enhanced version was released in 2013 with the Xbox One.";
         $platform->logo_url     = "http://upload.wikimedia.org/wikipedia/en/1/16/Xbox_Live_Logo.png";
+        $platform->shortname = "XBL";
+        $platform->slug = "xbox-live";
         $platform->created_at = $now;
         $platform->updated_at = $now;
 
@@ -26,6 +28,8 @@ class PlatformsTableSeeder extends Seeder {
         $platform->name = "PlayStation Network";
         $platform->description  = "PlayStation Network, officially abbreviated PSN, is an entertainment service provided by Sony Computer Entertainment for use with the PlayStation family of video game consoles, Sony tablet and smartphones. The PlayStation Network encompasses online gaming, music, television and movie streaming services.";
         $platform->logo_url     = "http://all3games.com/wp-content/uploads/2013/11/psn.png";
+        $platform->shortname = "PSN";
+        $platform->slug = "playstation-network";
         $platform->created_at = $now;
         $platform->updated_at = $now;
 
