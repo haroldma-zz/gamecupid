@@ -61,10 +61,18 @@ class PlatformValidatorController extends Controller
                 // parsing the online id from response
                 $json = $response->json();
 
+                $pid = $json['accountId'];
+
+                $count = Profile::where('online_id', $pid)->count();
+                $valid = $count == 0;
+
+                if (!$valid)
+                    return view('pages.connect.psn', ['error' => 'There is already an account with that profile.']);
+
                 $profile = new Profile;
 
                 $profile->user_id         = Auth::user()->id;
-                $profile->online_id       = "idontknow";
+                $profile->online_id       = $pid;
                 $profile->online_username = $json['onlineId'];
                 $profile->platform_id     = 2;
 
