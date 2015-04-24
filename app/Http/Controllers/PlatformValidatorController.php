@@ -63,7 +63,8 @@ class PlatformValidatorController extends Controller
 
                 $pid = $json['accountId'];
 
-                $count = Profile::where('online_id', $pid)->count();
+                // checking if there is a profile with that id, pertaining to the psn platform
+                $count = Profile::where('online_id', $pid)->where('platform_id', 2)->count();
                 $valid = $count == 0;
 
                 if (!$valid)
@@ -170,7 +171,8 @@ class PlatformValidatorController extends Controller
                 {
                     $xid = $json['xid'];
 
-                    $count = Profile::where('online_id', $xid)->count();
+                    // checking if there is a profile with that id, pertaining to the xbox platform
+                    $count = Profile::where('online_id', $xid)->where('platform_id', 1)->count();
                     $valid = $count == 0;
 
                     if (!$valid)
