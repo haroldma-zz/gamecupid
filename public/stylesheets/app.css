@@ -7712,7 +7712,7 @@ hr {
   border: solid #EFEFEF;
   border-width: 1px 0 0;
   clear: both;
-  margin: 1.25rem 0 1.1875rem;
+  margin: 2.5rem 0 2.4375rem;
   height: 0;
 }
 
@@ -9320,66 +9320,71 @@ label {
 }
 
 /* line 103, ../scss/_misc.scss */
+hr {
+  margin-top: 25px;
+}
+
+/* line 107, ../scss/_misc.scss */
 .pointer {
   cursor: pointer;
 }
 
-/* line 107, ../scss/_misc.scss */
+/* line 111, ../scss/_misc.scss */
 .text-alert {
   font-weight: 700;
   color: #f04124 !important;
 }
-/* line 110, ../scss/_misc.scss */
+/* line 114, ../scss/_misc.scss */
 .text-alert li {
   color: #f04124 !important;
 }
 
-/* line 115, ../scss/_misc.scss */
+/* line 119, ../scss/_misc.scss */
 .text-info {
   font-weight: 700;
   color: #a0d3e8 !important;
 }
-/* line 118, ../scss/_misc.scss */
+/* line 122, ../scss/_misc.scss */
 .text-info li {
   color: #a0d3e8 !important;
 }
 
-/* line 123, ../scss/_misc.scss */
+/* line 127, ../scss/_misc.scss */
 .text-success {
   font-weight: 700;
   color: #43AC6A !important;
 }
-/* line 126, ../scss/_misc.scss */
+/* line 130, ../scss/_misc.scss */
 .text-success li {
   color: #43AC6A !important;
 }
 
-/* line 131, ../scss/_misc.scss */
+/* line 135, ../scss/_misc.scss */
 .smaller-fs {
   font-size: 0.85em;
 }
 
-/* line 135, ../scss/_misc.scss */
+/* line 139, ../scss/_misc.scss */
 .thin-header {
   font-weight: 100;
 }
 
-/* line 139, ../scss/_misc.scss */
+/* line 143, ../scss/_misc.scss */
 .light-header {
   font-weight: 300;
 }
 
-/* line 143, ../scss/_misc.scss */
+/* line 147, ../scss/_misc.scss */
 .normal-header {
   font-weight: 500;
 }
 
-/* line 147, ../scss/_misc.scss */
+/* line 151, ../scss/_misc.scss */
 .bold-header {
   font-weight: 700;
 }
 
-/* line 151, ../scss/_misc.scss */
+/* line 155, ../scss/_misc.scss */
 .super-header {
   text-transform: uppercase;
   letter-spacing: 10px;
