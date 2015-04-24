@@ -51,11 +51,17 @@ Route::group(['middleware' => 'auth'], function()
 	Route::get('/account/connect/psn', 'PageController@connectPsn');
 	Route::get('/account/connect/xbl', 'PageController@connectXbl');
 	Route::get('/account/connect/steam', 'PageController@connectSteam');
+	Route::get('/account/disconnect/{platform}/{username}', 'ProfileController@disconnect');
+
+	Route::get('/invite', 'PageController@invite');
 
 
 	// POST routes
     Route::post('account/connect/psn', 'PlatformValidatorController@validatePsn');
     Route::post('account/connect/xbl', 'PlatformValidatorController@validateXbl');
+    Route::post('account/connect/steam', 'PlatformValidatorController@validateSteam');
+
+    Route::post('/invite', 'InviteController@invite');
 
 });
 

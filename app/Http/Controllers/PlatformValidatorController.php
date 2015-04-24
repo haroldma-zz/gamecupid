@@ -63,16 +63,17 @@ class PlatformValidatorController extends Controller
 
                 $profile = new Profile;
 
-                $profile->user_id = Auth::user()->id;
-                $profile->online_id = $json['onlineId'];
-                $profile->platform_id = 2;
+                $profile->user_id         = Auth::user()->id;
+                $profile->online_id       = "idontknow";
+                $profile->online_username = $json['onlineId'];
+                $profile->platform_id     = 2;
 
                 $profile->save();
             }
         }
 
         if ($valid)
-            return redirect('/account')->with('notice', ['info', 'Your PSN account has been connected.']);
+            return redirect('/account')->with('notice', ['success', 'Your PSN account has been connected.']);
         return view('pages.connect.psn', ['error' => 'Couldn\'t verify PSN account.']);
     }
 
@@ -117,6 +118,7 @@ class PlatformValidatorController extends Controller
             [
                 'body' =>
                     [
+<<<<<<< HEAD
                         'PPFT' => $ppft,
                         'login' => $request->get('email'),
                         'passwd' => $request->get('password'),
@@ -132,6 +134,23 @@ class PlatformValidatorController extends Controller
                         'i12' => '1',
                         'i17' => '0',
                         'i18' => '__Login_Host|1,'
+=======
+                        'PPFT'         => $ppft,
+                        'login'        => $request->get('email'),
+                        'passwd'       => $request->get('password'),
+                        'PPSX'         => 'Passpor',
+                        'SI'           => 'Sign in',
+                        'type'         => '11',
+                        'NewUser'      => '1',
+                        'LoginOptions' => '1',
+                        'i3'           => '36728',
+                        'm1'           => '768',
+                        'm2'           => '1184',
+                        'm3'           => '0',
+                        'i12'          => '1',
+                        'i17'          => '0',
+                        'i18'          => '__Login_Host|1'
+>>>>>>> xp-system
                     ],
                 'exceptions' => false,
                 'cookies' => true,
@@ -161,9 +180,10 @@ class PlatformValidatorController extends Controller
                 {
                     $profile = new Profile;
 
-                    $profile->user_id = Auth::user()->id;
-                    $profile->online_id = $gamertag;
-                    $profile->platform_id = 1;
+                    $profile->user_id         = Auth::user()->id;
+                    $profile->online_id       = "idontknow";
+                    $profile->online_username = $gamertag;
+                    $profile->platform_id     = 1;
 
                     $profile->save();
                 }
@@ -171,18 +191,25 @@ class PlatformValidatorController extends Controller
         }
 
         if ($valid)
-            return redirect('/account')->with('notice', ['info', 'Your Xbox Live account has been connected.']);
+            return redirect('/account')->with('notice', ['success', 'Your Xbox Live account has been connected.']);
         return view('pages.connect.xbl', ['error' => 'Couldn\'t verify Xbox Live account.']);
     }
+
+    public function validateSteam(ConnectFormRequest $request)
+    {
+        // The Steam validation method
+    }
+
+
 
     function authenticateXbox(Client $client, $token)
     {
         // Make a post request to the psn oauth api, if successful then we're golden!
         $response = $client->post('https://user.auth.xboxlive.com/user/authenticate', [
             'json' => [
-                'RelyingParty' => 'http://auth.xboxlive.com',
-                'TokenType' => 'JWT',
-                'Properties' => [
+                    'RelyingParty' => 'http://auth.xboxlive.com',
+                    'TokenType' => 'JWT',
+                    'Properties' => [
                     'AuthMethod' => 'RPS',
                     'SiteName' => 'user.auth.xboxlive.com',
                     'RpsTicket' => $token,
@@ -205,11 +232,19 @@ class PlatformValidatorController extends Controller
         // Make a post request to the psn oauth api, if successful then we're golden!
         $response = $client->post('https://xsts.auth.xboxlive.com/xsts/authorize', [
             'json' => [
+<<<<<<< HEAD
                 'RelyingParty' => 'http://xboxlive.com',
                 'TokenType' => 'JWT',
                 'Properties' => [
                     'UserTokens' => [ $token ],
                     'SandboxId' => 'RETAIL'
+=======
+                    'RelyingParty' => 'http://auth.xboxlive.com',
+                    'TokenType' => 'JWT',
+                    'Properties' => [
+                    'SandboxId' => 'RETAIL',
+                    'UserTokens' => $token,
+>>>>>>> xp-system
                 ]
             ],
             'exceptions' => false

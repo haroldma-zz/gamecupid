@@ -1,6 +1,7 @@
 @import "compass";
 @import "settings";
 @import "foundation";
+@import "mixins";
 @import "misc";
 @import "ionicons";
 
@@ -116,5 +117,42 @@ ul {
 
 	&.open {
 		max-height: 1000px;
+	}
+}
+
+
+/**
+*
+* Account page
+*
+**/
+.profile {
+	width: 100%;
+	border-bottom: 1px solid $silver;
+	padding: 1em 0;
+
+	&:last-of-type {
+		border: none;
+		padding-bottom: 0;
+	}
+
+	img {
+		height: 75px;
+		margin-bottom: 1.5em;
+	}
+
+	.profiles-mini-list {
+		li:first-of-type {
+			font-weight: 700;
+			color: $primary-color;
+		}
+
+		li > a {
+			color: #555;
+			font-weight: 500;
+			&:hover {
+				text-decoration: underline;
+			}
+		}
 	}
 }
