@@ -31,4 +31,9 @@ class Game extends Model {
 	{
 		return $this->hasMany('App\Models\Invite', 'game_id', 'id');
 	}
+
+	public function consoles()
+	{
+		return $this->hasMany('App\Models\AvailableConsole', 'game_id', 'id');
+	}
 }
