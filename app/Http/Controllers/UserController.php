@@ -81,4 +81,15 @@ class UserController extends Controller {
 		return redirect('/');
 	}
 
+
+	/**
+	*
+	* Check for notifications
+	*
+	**/
+	public function checkNotification()
+	{
+		return 1;
+	}
+
 }

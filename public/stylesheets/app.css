@@ -85,7 +85,7 @@ body {
 
 /* line 417, ../bower_components/foundation/scss/foundation/components/_global.scss */
 body {
-  background: #FFFFFF;
+  background: #F7F7F7;
   color: #222222;
   padding: 0;
   margin: 0;
@@ -5528,7 +5528,7 @@ ul.pagination li {
 }
 /* line 143, ../bower_components/foundation/scss/foundation/components/_pricing-tables.scss */
 .pricing-table .price {
-  background-color: #F6F6F6;
+  background-color: #F7F7F7;
   padding: 0.9375rem 1.25rem;
   text-align: center;
   color: #333333;
@@ -5567,7 +5567,7 @@ ul.pagination li {
 /* Progress Bar */
 /* line 57, ../bower_components/foundation/scss/foundation/components/_progress-bars.scss */
 .progress {
-  background-color: #F6F6F6;
+  background-color: #F7F7F7;
   height: 1.5625rem;
   border: 1px solid white;
   padding: 0.125rem;
@@ -9390,6 +9390,62 @@ hr {
   letter-spacing: 10px;
 }
 
+/**
+*
+* Notifier
+*
+**/
+/* line 168, ../scss/_misc.scss */
+.notification {
+  width: auto;
+  height: 50px;
+  min-width: 150px;
+  max-width: 320px;
+  position: fixed;
+  bottom: 10px;
+  right: 10px;
+  padding: 5px 15px;
+  padding-right: 35px;
+  background: white;
+  border: 1px solid #EFEFEF;
+  margin-top: 70px;
+  z-index: 9;
+  font-size: 0.7em;
+  line-height: 1.5;
+  overflow: hidden;
+  -moz-border-radius: 100px;
+  -webkit-border-radius: 100px;
+  border-radius: 100px;
+  -moz-box-shadow: 0 0 15px rgba(0, 0, 0, 0.12);
+  -webkit-box-shadow: 0 0 15px rgba(0, 0, 0, 0.12);
+  box-shadow: 0 0 15px rgba(0, 0, 0, 0.12);
+}
+/* line 187, ../scss/_misc.scss */
+.notification h6 {
+  font-weight: 400;
+  line-height: 1em !important;
+  color: #222;
+}
+/* line 191, ../scss/_misc.scss */
+.notification h6 small {
+  font-size: 70%;
+  font-weight: 500;
+  color: #777;
+}
+/* line 197, ../scss/_misc.scss */
+.notification .closer {
+  position: absolute;
+  top: 16.5px;
+  right: 6px;
+  font-size: 0.75em;
+  color: #888;
+  cursor: pointer;
+}
+/* line 204, ../scss/_misc.scss */
+.notification .closer:hover {
+  color: #333;
+}
+
 /*!
   Ionicons, v2.0.1
   Created by Ben Sperry for the Ionic Framework, http://ionicons.com/
@@ -13101,7 +13157,7 @@ html, body {
 
 /* line 57, ../scss/app.scss */
 section {
-  margin-top: 65px;
+  margin-top: 50px;
   padding: 1.5em 0;
 }
 

@@ -53,6 +53,8 @@ Route::group(['middleware' => 'auth'], function()
 	Route::get('/account/connect/steam', 'PageController@connectSteam');
 	Route::get('/account/disconnect/{platform}/{username}', 'ProfileController@disconnect');
 
+	Route::get('/notification', 'UserController@checkNotification');
+
 	Route::get('/invite', 'PageController@invite');
 
 

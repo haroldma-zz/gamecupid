@@ -27,9 +27,21 @@
 
 	@yield('page')
 
-	<footer></footer>
+	<div class="notification">
+		<h6>
+			Invite from noodles_ftw<br>
+			<small>Call of Duty: Advanced Warfare</small>
+			<div class="closer" onclick="closeSuperParent(this);">
+				<i class="ion-close"></i>
+			</div>
+		</h6>
+	</div>
+	<footer class="footer"></footer>
 
 	{!! HTML::script('bower_components/jquery/dist/jquery.min.js') !!}
 	{!! HTML::script('js/app.js') !!}
+	@if(Auth::check())
+	{!! HTML::script('js/notifier.js') !!}
+	@endif
 </body>
 </html>

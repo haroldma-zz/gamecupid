@@ -27,3 +27,10 @@ $('[id="openDialog"]').click(function(e)
 		break;
 	}
 });
+
+
+// closeSuperParent()
+function closeSuperParent(el)
+{
+	$(el).parent().parent().fadeOut();
+}
