@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
 	<meta charset="UTF-8">
-	<title>Gamebros</title>
+	<title>GameCupid</title>
 	{!! HTML::style('stylesheets/app.css') !!}
 </head>
 <body>
@@ -10,12 +10,12 @@
 		<div class="row">
 			<div class="medium-12 columns">
 				<div class="left">
-					<a class="brand" href="{!! url('/') !!}">gamebros</a>
+					<a class="brand" href="{!! url('/') !!}">gamecupid</a>
 				</div>
 				<div class="right">
 					@if(Auth::check())
 					<a href="{!! url('/invite') !!}"><i class="ion-plus"></i></a>
-					<a href="{!! url('/account') !!}"><b>{{ Auth::user()->first_name . ' ' . Auth::user()->last_name }}</b></a>
+					<a href="{!! url('/account') !!}"><b>{{ Auth::user()->username }}</b> <span class="rep-count">{{ Auth::user()->rep() }}</span></a>
 					<a href="{!! url('/logout') !!}">Logout</a>
 					@else
 					<a href="{!! url('/login') !!}">Login / Register</a>

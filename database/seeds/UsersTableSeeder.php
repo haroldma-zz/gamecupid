@@ -13,6 +13,7 @@ class UsersTableSeeder extends Seeder {
 
 		$user->first_name = "John";
 		$user->last_name  = "Doe";
+		$user->username   = "johnny_doe";
 		$user->email      = "john@doe.com";
 		$user->password   = Hash::make('test1234');
 		$user->banned     = false;

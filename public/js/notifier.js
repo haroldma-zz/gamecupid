@@ -1,10 +1,12 @@
-(function checkForNotification() {
-	setTimeout(function()
+function checkForNotification() {
+	$.get('/notification', function(res)
 	{
-		$.get('/notification', function(res)
-		{
-			console.log(res);
-			// checkForNotification();
-		});
-	}, 1000);
-})();
+		console.log(res);
+		// checkForNotification();
+	});
+}
+
+setTimeout(function()
+{
+	checkForNotification();
+}, 1000);
