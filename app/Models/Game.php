@@ -17,14 +17,14 @@ class Game extends Model {
 	* Relations
 	*
 	**/
-	public function developer()
+	public function developers()
 	{
-		return $this->belongsTo('App\Models\Developer', 'developer_id', 'id');
+		return $this->hasMany('App\Models\Developer', 'id', 'developer_id');
 	}
 
-	public function publisher()
+	public function publishers()
 	{
-		return $this->belongsTo('App\Models\Publisher', 'publisher_id', 'id');
+		return $this->hasMany('App\Models\Publisher', 'id', 'publisher_id');
 	}
 
 	public function invites()
