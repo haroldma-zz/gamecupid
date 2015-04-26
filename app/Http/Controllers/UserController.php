@@ -119,8 +119,7 @@ class UserController extends Controller {
 		$check = (isset($n->notified) ? $n->notified : false);
 
 		while ($check === false) {
-			usleep(1000);
-			clearstatcache();
+			usleep(5000);
 
 			$n     = Auth::user()->rNotifications()->where('notified', false)->orderBy('id', 'DESC')->first();
 			$check = (isset($n->notified) ? $n->notified : false);
