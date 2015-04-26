@@ -11,7 +11,7 @@
 				<br>
 				Accepts: {{ Auth::user()->accepts()->count() }}
 				<br>
-				Rep: {{ Auth::user()->level() }}
+				Level: {{ Auth::user()->level() }} ({{ Auth::user()->rep() }} rep)
 			@else
 				@foreach ($platforms as $platform)
 					<p>{{ $platform->name }}</p>
