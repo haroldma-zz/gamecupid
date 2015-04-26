@@ -1,26 +1,27 @@
 function checkForNotification() {
-	$.get('/notification', function(res)
+	$.getJSON('/notification', function(res)
 	{
 		if (res)
 		{
-			if ($('#notification').length)
-			{
-				$('#notification').remove();
-			}
+            if ($('#notification').length) {
+                $('#notification').remove();
+            }
+            for (var n in res) {
+                var not = res[n];
+                var notification = '';
 
-			var notification = '';
+                notification += '<div class="notification" id="notification">';
+                notification += '<h6>';
+                notification += '<a href="/notifications">' + not.title + '</a><br>';
+                notification += '<small>' + not.description + '</small>';
+                notification += '<div class="closer" onclick="closeSuperParent(this);">';
+                notification += '<i class="ion-close"></i>';
+                notification += '</div>';
+                notification += '</h6>';
+                notification += '</div>';
 
-			notification += '<div class="notification" id="notification">';
-			notification += '<h6>';
-			notification += '<a href="/notifications">' + res.title + '</a><br>';
-			notification += '<small>' + res.description + '</small>';
-			notification += '<div class="closer" onclick="closeSuperParent(this);">';
-			notification += '<i class="ion-close"></i>';
-			notification += '</div>';
-			notification += '</h6>';
-			notification += '</div>';
-
-			$('body').append(notification);
+                $('body').append(notification);
+            }
 		}
 		setTimeout(function()
 		{

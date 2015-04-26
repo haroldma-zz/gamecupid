@@ -128,21 +128,24 @@ class UserController extends Controller {
 		$start = time();
 		$end   = $start + 30;
 
-		$n     = Auth::user()->rNotifications()->where('notified', false)->orderBy('id', 'DESC')->first();
-		$check = ($n->notified == '' ? false : $n->notified);
+		$n     = Auth::user()->rNotifications()->where('notified', false)->orderBy('id', 'DESC')->get();
+		$check = count($n) > 0;
 
 		while ($check === false && $start < $end) {
 			sleep(5);
 
-			$n     = Auth::user()->rNotifications()->where('notified', false)->orderBy('id', 'DESC')->first();
-			$check = ($n->notified == '' ? false : $n->notified);
-			$start = date("m/d/Y h:i:s a", time());
+			$n     = Auth::user()->rNotifications()->where('notified', false)->orderBy('id', 'DESC')->get();
+            $check = count($n) > 0;
+			$start = time();
 		}
 
-		if ($n)
+		if ($check)
 		{
-			$n->notified = true;
-			$n->save();
+            foreach ($n as $not)
+            {
+                $not->notified = true;
+                $not->save();
+            }
 		}
 
 		return response()->json($n);
