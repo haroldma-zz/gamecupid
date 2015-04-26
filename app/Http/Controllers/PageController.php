@@ -1,11 +1,7 @@
 <?php namespace App\Http\Controllers;
 
-use App\Models\Game;
-use App\Models\Platform;
 use App\Models\Console;
 use App\Models\Invite;
-use DB;
-use Illuminate\Database\Eloquent\Collection;
 
 class PageController extends Controller {
 
@@ -26,7 +22,7 @@ class PageController extends Controller {
 	**/
 	public function index()
 	{
-        $query = 'SELECT *, calculateHotness(getInviteUpvotes(id), getInviteDownvotes(id), created_at) as hotness FROM invites ORDER BY hotness DESC;';
+        $query = "SELECT *, calculateHotness(getInviteUpvotes(id), getInviteDownvotes(id), created_at) as hotness FROM invites ORDER BY hotness DESC;";
         $invites = Invite::hydrateRaw($query);
 		return view('pages.index', ['invites' => $invites]);
 	}
