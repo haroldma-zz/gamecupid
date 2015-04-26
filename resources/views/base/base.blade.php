@@ -38,7 +38,17 @@
 
 	@yield('page')
 
-	<footer class="footer"></footer>
+	<footer class="footer">
+		<div class="row">
+			<div class="medium-12 columns">
+				<h5 class="super-header">GameCupid</h5>
+				<a href="">Link #</a>
+				<a href="">Link #</a>
+				<a href="">Link #</a>
+				<a href="">Link #</a>
+			</div>
+		</div>
+	</footer>
 
 	{!! HTML::script('bower_components/jquery/dist/jquery.min.js') !!}
 	{!! HTML::script('js/app.js') !!}

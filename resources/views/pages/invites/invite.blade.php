@@ -8,27 +8,50 @@
 				<div class="row">
 					<div class="medium-8 medium-offset-2 columns">
 						<h2 class="light-header">
-							Invite
+							Submit an invite
 						</h2>
 						<hr>
-						<p>
-							Lorem ipsum dolor sit amet, consectetur adipisicing elit. Aliquam, a, ea voluptate nemo asperiores cum ullam commodi neque voluptatem! Aut beatae delectus neque, assumenda ratione, odit possimus mollitia eum, ipsum dolor error.
-						</p>
-						<br>
+						@if(count($errors->all()) > 0)
+							<ul class="no-bullet text-alert smaller-fs">
+								@foreach($errors->all() as $error)
+								<li>{{ $error }}</li>
+								@endforeach
+							</ul>
+						@endif
+						@if (Session::has('notice'))
+							@if (Session::get('notice')[0] == 'error')
+							<ul class="no-bullet text-alert smaller-fs">
+							@else
+							<ul class="no-bullet smaller-fs">
+							@endif
+								<li>{{ Session::get('notice')[1] }}</li>
+							</ul>
+						@endif
 						{!! Form::open(['url' => '/invite', 'class' => 'form']) !!}
-							{!! Form::label('console_id', 'I want to submit an invite for...') !!}
+							<div class="row">
+								<div class="medium-3 columns">
+									{!! Form::label('player_count', 'I\'m looking for...') !!}
+									<input type="number" class="form-control inline" name="player_count" id="inviteFormPlayerCount" value="1" min="0">
+									player(s)
+								</div>
+								<div class="medium-9 columns">
+		                            {!! Form::label('game_search', 'to play the game...') !!}
+		                            {!! Form::text('game_search', '', ['class' => 'form-control', 'placeholder' => 'Type to search', 'id' => 'gameSearchInput', 'autocomplete' => 'off']) !!}
+		                            <div class="game-search-results-container">
+		                            	<div class="game-search-results" id="gameSearchResults"></div>
+		                            </div>
+								</div>
+	                            {!! Form::hidden('game_id', '', ['id' => 'selectedGameId']) !!}
+							</div>
+							{!! Form::label('console_id', 'on the...') !!}
 							{!! Form::select('console_id', $consoleSelections,
 							0,['class' => 'form-control']) !!}
-                            {!! Form::label('game_search', 'for the game..') !!}
-                            {!! Form::text('game_search', '', ['class' => 'form-control', 'placeholder' => 'Type to search', 'id' => 'gameSearchInput']) !!}
-                            {!! Form::hidden('game_id', '') !!}
-                            <div class="game-search-results-container">
-                            	<div class="game-search-results" id="gameSearchResults"></div>
-                            </div>
-                            {!! Form::label('title', 'Title') !!}
-                            {!! Form::text('title', '', ['form-control']) !!}
+
+                            <hr>
+                            {!! Form::label('title', 'Invite title') !!}
+                            {!! Form::text('title', '', ['class' => 'form-control']) !!}
                             {!! Form::label('self_text', 'Description') !!}
-                            {!! Form::textarea('self_text', '', ['form-control']) !!}
+                            {!! Form::textarea('self_text', '', ['class' => 'form-control']) !!}
                             {!! Form::checkbox('requires_approval', 1) !!}
                             {!! Form::label('requires_approval', 'When someone wants to play with me, that person requires my approval.') !!}
 

@@ -139,6 +139,8 @@ class UserController extends Controller {
 			$start = date("m/d/Y h:i:s a", time());
 		}
 
+		usleep(1500);
+
 		if ($n)
 		{
 			$n->notified = true;

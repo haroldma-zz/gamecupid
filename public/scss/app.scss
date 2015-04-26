@@ -195,3 +195,30 @@ ul {
 		}
 	}
 }
+
+
+
+/**
+*
+* Footer
+*
+**/
+.footer {
+	margin-top: 25px;
+	width: 100%;
+	min-height: 200px;
+	padding: 3em 0;
+	text-align: center;
+
+	.super-header {
+		color: #ccc;
+		margin-bottom: 20px;
+	}
+
+	a {
+		color: #ccc;
+		margin: 0 10px;
+		font-size: 0.8em;
+		font-weight: 700;
+	}
+}
