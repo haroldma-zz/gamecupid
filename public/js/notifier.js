@@ -1,7 +1,7 @@
 function checkForNotification() {
 	$.get('/notification', function(res)
 	{
-		if (res != '')
+		if (res)
 		{
 			if ($('#notification').length)
 			{
