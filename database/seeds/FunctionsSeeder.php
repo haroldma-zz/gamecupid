@@ -6,9 +6,11 @@ class FunctionsSeeder extends Seeder {
 
     public function run()
     {
-        // Let's create a helper function for getting total upvotes
-        DB::raw("DROP FUNCTION IF EXISTS getInviteUpvotes;");
-        DB::raw("DELIMITER $$
+        DB::transaction(function()
+        {
+            // Let's create a helper function for getting total upvotes
+            DB::statement("DROP FUNCTION IF EXISTS getInviteUpvotes;");
+            DB::statement("DELIMITER $$
         CREATE FUNCTION getInviteUpvotes(id INTEGER) RETURNS INTEGER
         BEGIN
           DECLARE votes INTEGER;
@@ -17,9 +19,9 @@ class FunctionsSeeder extends Seeder {
         END$$
         DELIMITER ;");
 
-        // Now for getting downvotes
-        DB::raw("DROP FUNCTION IF EXISTS getInviteDownvotes;");
-        DB::raw("DELIMITER $$
+            // Now for getting downvotes
+            DB::statement("DROP FUNCTION IF EXISTS getInviteDownvotes;");
+            DB::statement("DELIMITER $$
         CREATE FUNCTION getInviteDownvotes(id INTEGER) RETURNS INTEGER
         BEGIN
           DECLARE votes INTEGER;
@@ -28,9 +30,9 @@ class FunctionsSeeder extends Seeder {
         END$$
         DELIMITER ;");
 
-        // Finally a helper function for calculating hotness
-        DB::raw("DROP FUNCTION IF EXISTS calculateHotness;");
-        DB::raw("DELIMITER $$
+            // Finally a helper function for calculating hotness
+            DB::statement("DROP FUNCTION IF EXISTS calculateHotness;");
+            DB::statement("DELIMITER $$
         CREATE FUNCTION calculateHotness(ups INTEGER, downs INTEGER, created DATETIME)
         RETURNS INTEGER
         BEGIN
@@ -63,6 +65,7 @@ class FunctionsSeeder extends Seeder {
            SELECT *, getInviteUpvotes(id) as upvotes, getInviteDownvotes(id) as downvotes FROM invites;
            END //
          DELIMITER ;");
+        });
     }
 
 }
