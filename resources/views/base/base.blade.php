@@ -15,7 +15,8 @@
 				<div class="right">
 					@if(Auth::check())
 					<a href="{!! url('/invite') !!}"><i class="ion-plus"></i></a>
-					<a href="{!! url('/account') !!}"><b>{{ Auth::user()->username }}</b> <span class="rep-count">{{ Auth::user()->rep() }}</span></a>
+					<a href="{!! url('/notifications') !!}"><i class="ion-android-notifications-none"></i></a>
+					<a href="{!! url('/account') !!}">{{ Auth::user()->username }}:<span class="rep-count">{{ Auth::user()->rep() }}</span></a>
 					<a href="{!! url('/logout') !!}">Logout</a>
 					@else
 					<a href="{!! url('/login') !!}">Login / Register</a>
@@ -27,15 +28,6 @@
 
 	@yield('page')
 
-	<div class="notification">
-		<h6>
-			Invite from noodles_ftw<br>
-			<small>Call of Duty: Advanced Warfare</small>
-			<div class="closer" onclick="closeSuperParent(this);">
-				<i class="ion-close"></i>
-			</div>
-		</h6>
-	</div>
 	<footer class="footer"></footer>
 
 	{!! HTML::script('bower_components/jquery/dist/jquery.min.js') !!}

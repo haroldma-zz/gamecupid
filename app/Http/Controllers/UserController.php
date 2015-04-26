@@ -2,7 +2,9 @@
 
 use Hash;
 use Auth;
+use App\Models\Rep;
 use App\Models\User;
+use App\Models\Notification;
 use Illuminate\Http\Request;
 use App\Http\Requests\LoginFormRequest;
 use App\Http\Requests\RegisterFormRequest;
@@ -35,6 +37,23 @@ class UserController extends Controller {
 
 		if ($user->save())
 		{
+			// Give the user +1 rep
+			$rep          = new Rep;
+			$rep->amount  = 1;
+			$rep->event   = "Became member of GameCupid.";
+			$rep->user_id = $user->id;
+			$rep->save();
+
+			// Rep notification
+			$notification              = new Notification;
+			$notification->title       = "+1 rep";
+			$notification->description = $rep->event;
+			$notification->to_id       = $user->id;
+			$notification->from_id     = 0;
+			$notification->read        = false;
+			$notification->notified    = false;
+			$notification->save();
+
 			// Log the user in
 			if (Auth::attempt(['username' => $request->get('username'), 'password' => $request->get('password')]))
 			{
@@ -43,7 +62,7 @@ class UserController extends Controller {
 			else
 			{
 				// Login failed, let the user log in manually
-				return redirect('/login')->with('notice', ['info', 'You can now login with your e-mail address and password.']);
+				return redirect('/login')->with('notice', ['info', 'You can now login with your username and password.']);
 			}
 		}
 	}
@@ -96,7 +115,21 @@ class UserController extends Controller {
 			return redirect('/');
 		}
 
-		return 1;
+		$n     = Auth::user()->rNotifications()->where('notified', false)->orderBy('id', 'DESC')->first();
+		$check = (isset($n->notified) ? $n->notified : false);
+
+		while ($check === false) {
+			usleep(1000);
+			clearstatcache();
+
+			$n     = Auth::user()->rNotifications()->where('notified', false)->orderBy('id', 'DESC')->first();
+			$check = (isset($n->notified) ? $n->notified : false);
+		}
+
+		$n->notified = true;
+		$n->save();
+
+		return response()->json($n);
 	}
 
 }

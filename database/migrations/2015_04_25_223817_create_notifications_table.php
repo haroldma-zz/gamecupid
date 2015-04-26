@@ -18,6 +18,8 @@ class CreateNotificationsTable extends Migration {
             $table->mediumText('description');
             $table->integer('to_id');
             $table->integer('from_id');
+            $table->tinyInteger('read');
+            $table->tinyInteger('notified');
             $table->timestamps();
         });
 	}

@@ -9424,7 +9424,7 @@ hr {
 .notification h6 {
   font-weight: 400;
   line-height: 1em !important;
-  color: #222;
+  color: #446CB3;
 }
 /* line 191, ../scss/_misc.scss */
 .notification h6 small {
@@ -9448,7 +9448,6 @@ hr {
 
 /* line 210, ../scss/_misc.scss */
 .rep-count {
-  color: #999;
   font-size: 80%;
 }
 
