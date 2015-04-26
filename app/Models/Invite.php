@@ -32,6 +32,18 @@ class Invite extends Model {
         return $this->votes()->where('state', VoteStates::DOWN)->count();
     }
 
+    public function isUpvoted()
+    {
+        return Auth::user()->inviteVotes()->where('invite_id', $id)->where('state', VoteStates::UP)
+            ->first() != null;
+    }
+
+    public function isDownvoted()
+    {
+        return Auth::user()->inviteVotes()->where('invite_id', $id)->where('state', VoteStates::DOWN)
+            ->first() != null;
+    }
+
 	/**
 	*
 	* Relations
