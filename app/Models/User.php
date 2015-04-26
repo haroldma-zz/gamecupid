@@ -99,7 +99,7 @@ class User extends Model implements AuthenticatableContract, CanResetPasswordCon
     // Function to calculate level
     public function level()
     {
-        $rep = rep();
+        $rep = $this->rep();
         return 1+floor(pow($rep, 1/$this->factor));
     }
 
