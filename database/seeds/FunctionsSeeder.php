@@ -57,14 +57,7 @@ class FunctionsSeeder extends Seeder {
             SET seconds = UNIX_TIMESTAMP(created) - 1430006400;
             return ROUND(sign * hotness + seconds / 45000, 7);
         END$$
-        DELIMITER ;
-
-        DELIMITER //
-         CREATE PROCEDURE GetAllInvitesWithVoteCount()
-           BEGIN
-           SELECT *, getInviteUpvotes(id) as upvotes, getInviteDownvotes(id) as downvotes FROM invites;
-           END //
-         DELIMITER ;");
+        DELIMITER ;");
         });
     }
 
