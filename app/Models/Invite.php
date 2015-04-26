@@ -16,9 +16,19 @@ class Invite extends Model {
         return $this->votes()->where('state', 1)->get();
     }
 
+    public function upvoteCount()
+    {
+        return $this->votes()->where('state', 1)->count();
+    }
+
     public function downvotes()
     {
         return $this->votes()->where('state', 0)->get();
+    }
+
+    public function downvoteCount()
+    {
+        return $this->votes()->where('state', 0)->count();
     }
 
 	/**
