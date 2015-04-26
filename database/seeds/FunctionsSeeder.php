@@ -34,7 +34,7 @@ class FunctionsSeeder extends Seeder
             DB::statement("DROP FUNCTION IF EXISTS calculateHotness;");
             DB::statement("DELIMITER $$
         CREATE FUNCTION calculateHotness(ups INTEGER, downs INTEGER, created DATETIME)
-        RETURNS INTEGER
+        RETURNS FLOAT
         BEGIN
             DECLARE votes, hotness, sign INTEGER;
             DECLARE seconds FLOAT;
@@ -58,6 +58,28 @@ class FunctionsSeeder extends Seeder
             return ROUND(sign * hotness + seconds / 45000, 7);
         END$$
         DELIMITER ;");
+
+            // helper function for calculating controversy
+            DB::statement("DROP FUNCTION IF EXISTS calculateControversy;");
+            DB::statement("DELIMITER $$
+        CREATE FUNCTION calculateControversy(ups INTEGER, downs INTEGER)
+        RETURNS FLOAT
+        BEGIN
+            DECLARE magnitude, balance FLOAT;
+
+            IF (downs <= 0 or ups <= 0) then
+               return 0;
+            END IF;
+
+            SET magnitude = ups + downs;
+            if (ups > downs) then
+                SET balance = downs / ups;
+             ELSE
+                  SET balance = ups / downs;
+             END IF;
+
+            return magnitude * balance;
+        END$$");
 
             // Finally a helper function for calculating best
             DB::statement("DROP FUNCTION IF EXISTS calculateBest;");
