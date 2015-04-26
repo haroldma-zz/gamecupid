@@ -34,7 +34,6 @@ class TempController extends Controller {
         Schema::dropIfExists('notifications');
         Schema::dropIfExists('migrations');
 	}
-
 }
 
 

@@ -15,8 +15,6 @@ class CreateDevelopersTable extends Migration {
 		Schema::create('developers', function(Blueprint $table) {
             $table->increments('id');
             $table->string('name');
-            $table->string('logo_url');
-            $table->string('website_url');
             $table->string('slug');
             $table->timestamps();
         });

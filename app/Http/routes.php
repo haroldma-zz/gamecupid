@@ -30,7 +30,6 @@ Route::get('/login', 'PageController@login');
 Route::post('/login', ['as' => 'user.login', 'uses' => 'UserController@login']);
 Route::post('/register', ['as' => 'user.register', 'uses' => 'UserController@register']);
 
-
 /**
 *
 * User authenticated routes

@@ -18,6 +18,7 @@ class CreateInvitesTable extends Migration {
             $table->mediumText('self_text');
             $table->string('tag_text');
             $table->string('slug');
+            $table->integer('player_count');
             $table->tinyInteger('requires_approval');
             $table->datetime('starts');
             $table->datetime('expires');

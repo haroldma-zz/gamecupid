@@ -14,16 +14,13 @@ class CreateGamesTable extends Migration {
 	{
 		Schema::create('games', function(Blueprint $table) {
             $table->increments('id');
-            $table->string('name');
-            $table->mediumText('description');
-            $table->string('box_art_url');
-            $table->string('logo_url');
-            $table->string('clear_art_url');
-            $table->string('backdrop_url');
-            $table->date('release_date');
+            $table->string('title');
             $table->string('slug');
-            $table->tinyInteger('publisher_id');
-            $table->tinyInteger('developer_id');
+            $table->mediumText('description')->nullable();
+            $table->string('poster')->nullable();
+            $table->string('series')->nullable();
+            $table->string('trailer')->nullable();
+            $table->date('release_date');
             $table->timestamps();
         });
 	}

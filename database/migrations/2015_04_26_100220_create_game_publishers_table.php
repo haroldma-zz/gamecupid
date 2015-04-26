@@ -3,7 +3,7 @@
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Database\Migrations\Migration;
 
-class CreatePublishersTable extends Migration {
+class CreateGamePublishersTable extends Migration {
 
 	/**
 	 * Run the migrations.
@@ -12,10 +12,10 @@ class CreatePublishersTable extends Migration {
 	 */
 	public function up()
 	{
-		Schema::create('publishers', function(Blueprint $table) {
+		Schema::create('game_publishers', function(Blueprint $table) {
             $table->increments('id');
-            $table->string('name');
-            $table->string('slug');
+            $table->integer('game_id');
+            $table->integer('publisher_id');
             $table->timestamps();
         });
 	}
@@ -27,7 +27,7 @@ class CreatePublishersTable extends Migration {
 	 */
 	public function down()
 	{
-		Schema::drop('publishers');
+		Schema::drop('game_publishers');
 	}
 
 }
