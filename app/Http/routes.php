@@ -54,6 +54,7 @@ Route::group(['middleware' => 'auth'], function()
 	Route::get('/account/disconnect/{platform}/{username}', 'ProfileController@disconnect');
 
 	Route::get('/notification', 'UserController@checkNotification');
+	Route::get('/notifications', 'PageController@notifications');
 
 	Route::get('/invite', 'PageController@invite');
 
@@ -62,6 +63,8 @@ Route::group(['middleware' => 'auth'], function()
     Route::post('account/connect/psn', 'PlatformValidatorController@validatePsn');
     Route::post('account/connect/xbl', 'PlatformValidatorController@validateXbl');
     Route::post('account/connect/steam', 'PlatformValidatorController@validateSteam');
+
+    Route::post('/markasread', 'UserController@markNotificationAsRead');
 
     Route::post('/invite', 'InviteController@invite');
 

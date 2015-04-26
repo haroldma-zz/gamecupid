@@ -108,6 +108,14 @@ hr {
 	cursor: pointer;
 }
 
+.bold {
+	font-weight: 700 !important;
+}
+
+.text-primary {
+	color: $primary-color !important;
+}
+
 .text-alert {
 	font-weight: 700;
 	color: $alert-color !important;
@@ -209,4 +217,29 @@ hr {
 
 .rep-count {
 	font-size: 80%;
+}
+
+.notification-entry {
+	width: 100%;
+	border-bottom: 1px solid $silver;
+	margin-bottom: 10px;
+	padding: 0;
+	h5 {
+		margin: 0;
+		margin-bottom: 5px;
+	}
+	p {
+		margin-bottom: 5px;
+	}
+	.inline-list {
+		li > a {
+			color: #999;
+			font-weight: 500;
+			font-size: 0.85em;
+			&:hover {
+				text-decoration: underline;
+				color: #777;
+			}
+		}
+	}
 }

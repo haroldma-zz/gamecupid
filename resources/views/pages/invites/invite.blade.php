@@ -9,7 +9,7 @@
 					<div class="medium-8 medium-offset-2 columns">
 						<h2 class="light-header">
 							Invite
-						</h3>
+						</h2>
 						<hr>
 						<p>
 							Lorem ipsum dolor sit amet, consectetur adipisicing elit. Aliquam, a, ea voluptate nemo asperiores cum ullam commodi neque voluptatem! Aut beatae delectus neque, assumenda ratione, odit possimus mollitia eum, ipsum dolor error.

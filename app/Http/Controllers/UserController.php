@@ -112,14 +112,14 @@ class UserController extends Controller {
 	{
 		if (!$request->ajax())
 		{
-			return redirect('/');
+			return redirect('/notifications');
 		}
 
 		$n     = Auth::user()->rNotifications()->where('notified', false)->orderBy('id', 'DESC')->first();
 		$check = (isset($n->notified) ? $n->notified : false);
 
 		while ($check === false) {
-			usleep(5000);
+			sleep(5);
 
 			$n     = Auth::user()->rNotifications()->where('notified', false)->orderBy('id', 'DESC')->first();
 			$check = (isset($n->notified) ? $n->notified : false);
@@ -129,6 +129,43 @@ class UserController extends Controller {
 		$n->save();
 
 		return response()->json($n);
+	}
+
+
+	/**
+	*
+	* Mark a notification as read
+	*
+	**/
+	public function markNotificationAsRead(Request $request)
+	{
+		$n = Notification::find($request->get('id'));
+
+		if ($n)
+		{
+			if ($n->to->id === Auth::user()->id)
+			{
+				$c = $n->read == true;
+
+				if ($c)
+				{
+					$n->read = false;
+				}
+				else
+				{
+					$n->read = true;
+				}
+
+				if ($n->save())
+				{
+					return 'marked';
+				}
+				else
+				{
+					return 'fail';
+				}
+			}
+		}
 	}
 
 }

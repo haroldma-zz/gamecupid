@@ -19,12 +19,12 @@ class Notification extends Model {
 	**/
 	public function from()
 	{
-		$this->hasOne('App\Models\User', 'id', 'from_id');
+		return $this->hasOne('App\Models\User', 'id', 'from_id');
 	}
 
 	public function to()
 	{
-		$this->hasOne('App\Models\User', 'id', 'to_id');
+		return $this->hasOne('App\Models\User', 'id', 'to_id');
 	}
 
 }

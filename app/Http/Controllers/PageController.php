@@ -51,6 +51,17 @@ class PageController extends Controller {
 
 	/**
 	*
+	* Notifications page
+	*
+	**/
+	public function notifications()
+	{
+		return view('pages.notifications');
+	}
+
+
+	/**
+	*
 	* Connect PSN page
 	*
 	**/

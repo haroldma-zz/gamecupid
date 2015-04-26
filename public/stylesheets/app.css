@@ -9330,61 +9330,71 @@ hr {
 }
 
 /* line 111, ../scss/_misc.scss */
+.bold {
+  font-weight: 700 !important;
+}
+
+/* line 115, ../scss/_misc.scss */
+.text-primary {
+  color: #446CB3 !important;
+}
+
+/* line 119, ../scss/_misc.scss */
 .text-alert {
   font-weight: 700;
   color: #f04124 !important;
 }
-/* line 114, ../scss/_misc.scss */
+/* line 122, ../scss/_misc.scss */
 .text-alert li {
   color: #f04124 !important;
 }
 
-/* line 119, ../scss/_misc.scss */
+/* line 127, ../scss/_misc.scss */
 .text-info {
   font-weight: 700;
   color: #a0d3e8 !important;
 }
-/* line 122, ../scss/_misc.scss */
+/* line 130, ../scss/_misc.scss */
 .text-info li {
   color: #a0d3e8 !important;
 }
 
-/* line 127, ../scss/_misc.scss */
+/* line 135, ../scss/_misc.scss */
 .text-success {
   font-weight: 700;
   color: #43AC6A !important;
 }
-/* line 130, ../scss/_misc.scss */
+/* line 138, ../scss/_misc.scss */
 .text-success li {
   color: #43AC6A !important;
 }
 
-/* line 135, ../scss/_misc.scss */
+/* line 143, ../scss/_misc.scss */
 .smaller-fs {
   font-size: 0.85em;
 }
 
-/* line 139, ../scss/_misc.scss */
+/* line 147, ../scss/_misc.scss */
 .thin-header {
   font-weight: 100;
 }
 
-/* line 143, ../scss/_misc.scss */
+/* line 151, ../scss/_misc.scss */
 .light-header {
   font-weight: 300;
 }
 
-/* line 147, ../scss/_misc.scss */
+/* line 155, ../scss/_misc.scss */
 .normal-header {
   font-weight: 500;
 }
 
-/* line 151, ../scss/_misc.scss */
+/* line 159, ../scss/_misc.scss */
 .bold-header {
   font-weight: 700;
 }
 
-/* line 155, ../scss/_misc.scss */
+/* line 163, ../scss/_misc.scss */
 .super-header {
   text-transform: uppercase;
   letter-spacing: 10px;
@@ -9395,7 +9405,7 @@ hr {
 * Notifier
 *
 **/
-/* line 168, ../scss/_misc.scss */
+/* line 176, ../scss/_misc.scss */
 .notification {
   width: auto;
   height: 50px;
@@ -9420,19 +9430,19 @@ hr {
   -webkit-box-shadow: 0 0 15px rgba(0, 0, 0, 0.12);
   box-shadow: 0 0 15px rgba(0, 0, 0, 0.12);
 }
-/* line 187, ../scss/_misc.scss */
+/* line 195, ../scss/_misc.scss */
 .notification h6 {
   font-weight: 400;
   line-height: 1em !important;
   color: #446CB3;
 }
-/* line 191, ../scss/_misc.scss */
+/* line 199, ../scss/_misc.scss */
 .notification h6 small {
   font-size: 70%;
   font-weight: 500;
   color: #777;
 }
-/* line 197, ../scss/_misc.scss */
+/* line 205, ../scss/_misc.scss */
 .notification .closer {
   position: absolute;
   top: 16.5px;
@@ -9441,14 +9451,42 @@ hr {
   color: #888;
   cursor: pointer;
 }
-/* line 204, ../scss/_misc.scss */
+/* line 212, ../scss/_misc.scss */
 .notification .closer:hover {
   color: #333;
 }
 
-/* line 210, ../scss/_misc.scss */
+/* line 218, ../scss/_misc.scss */
 .rep-count {
   font-size: 80%;
+}
+
+/* line 222, ../scss/_misc.scss */
+.notification-entry {
+  width: 100%;
+  border-bottom: 1px solid #EFEFEF;
+  margin-bottom: 10px;
+  padding: 0;
+}
+/* line 227, ../scss/_misc.scss */
+.notification-entry h5 {
+  margin: 0;
+  margin-bottom: 5px;
+}
+/* line 231, ../scss/_misc.scss */
+.notification-entry p {
+  margin-bottom: 5px;
+}
+/* line 235, ../scss/_misc.scss */
+.notification-entry .inline-list li > a {
+  color: #999;
+  font-weight: 500;
+  font-size: 0.85em;
+}
+/* line 239, ../scss/_misc.scss */
+.notification-entry .inline-list li > a:hover {
+  text-decoration: underline;
+  color: #777;
 }
 
 /*!
