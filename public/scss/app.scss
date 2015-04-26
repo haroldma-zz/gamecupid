@@ -197,6 +197,119 @@ ul {
 }
 
 
+/**
+*
+* Feeds
+*
+**/
+.feed {
+	width: 100%;
+
+	.sort-by {
+		a {
+			color: #999;
+			font-weight: 500;
+			font-size: 0.8em;
+			margin-right: 15px;
+
+			&:hover {
+				color: #555;
+			}
+
+			&.active {
+				color: $primary-color;
+				font-weight: 700;
+			}
+		}
+	}
+
+	article.invite {
+		width: 100%;
+		padding-bottom: 15px;
+
+		header {
+			width: 100%;
+			height: 50px;
+			display: block;
+			.img {
+				width: 40px;
+				height: 40px;
+				background: #ccc;
+				float: left;
+				margin-right: 10px;
+				@include border-radius($global-radius);
+			}
+			.user-meta {
+				h6 {
+					font-weight: 500;
+					margin-bottom: 0;
+					font-size: 0.85em;
+				}
+				p {
+					font-size: 0.8em;
+					color: #555;
+				}
+			}
+		}
+
+		section {
+			margin: 0;
+			padding: 0;
+
+			h3 {
+				font-weight: 700;
+				position: relative;
+				padding-left: 50px;
+				padding-bottom: 5px;
+
+				.voters	{
+					position: absolute;
+					top: -5px;
+					left: 0;
+					height: 100%;
+					width: 45px;
+					color: #ccc;
+					font-size: 0.85em;
+					.arrows {
+						float: left;
+						width: 15px;
+						overflow: hidden;
+						margin-right: 5px;
+
+						i {
+							cursor: pointer;
+						}
+
+						#upvoter {
+							&:hover {
+								color: lighten($primary-color, 15);
+							}
+
+							&.activated {
+								color: lighten($primary-color, 15) !important;
+							}
+						}
+
+						#downvoter {
+							&:hover {
+								color: lighten($secondary-color, 15);
+							}
+
+							&.activated {
+								color: lighten($secondary-color, 15) !important;
+							}
+						}
+					}
+					.count {
+						font-size: 0.55em;
+						line-height: 45px;
+					}
+				}
+			}
+		}
+	}
+}
+
 
 /**
 *

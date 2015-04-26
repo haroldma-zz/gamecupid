@@ -199,6 +199,7 @@ return [
 		'HTML'      => 'Illuminate\Html\HtmlFacade',
 		'Entrust'   => 'Zizaco\Entrust\EntrustFacade',
 		'Recaptcha' => 'Greggilbert\Recaptcha\Facades\Recaptcha',
+		'Timeago'   => 'App\Models\Timeago',
 
 
 	],

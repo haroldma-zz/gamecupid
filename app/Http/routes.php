@@ -31,6 +31,9 @@ Route::post('/login', ['as' => 'user.login', 'uses' => 'UserController@login']);
 Route::post('/register', ['as' => 'user.register', 'uses' => 'UserController@register']);
 Route::post('/game/search', 'GameController@search');
 
+Route::post('/invite/upvote', 'InviteController@upvote');
+Route::post('/invite/downvote', 'InviteController@downvote');
+
 /**
 *
 * User authenticated routes
