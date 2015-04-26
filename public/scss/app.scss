@@ -283,21 +283,21 @@ ul {
 
 						#upvoter {
 							&:hover {
-								color: lighten($primary-color, 15);
-							}
-
-							i.activated {
-								color: lighten($primary-color, 15) !important;
-							}
-						}
-
-						#downvoter {
-							&:hover {
 								color: lighten($secondary-color, 15);
 							}
 
 							i.activated {
 								color: lighten($secondary-color, 15) !important;
+							}
+						}
+
+						#downvoter {
+							&:hover {
+								color: lighten($primary-color, 15);
+							}
+
+							i.activated {
+								color: lighten($primary-color, 15) !important;
 							}
 						}
 					}
