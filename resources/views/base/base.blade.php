@@ -15,8 +15,16 @@
 				<div class="right">
 					@if(Auth::check())
 					<a href="{!! url('/invite') !!}"><i class="ion-plus"></i></a>
-					<a href="{!! url('/notifications') !!}"><i class="ion-android-notifications-none"></i></a>
-					<a href="{!! url('/account') !!}">{{ Auth::user()->username }}:<span class="rep-count">{{ Auth::user()->rep() }}</span></a>
+					<a href="{!! url('/notifications') !!}" id="notificationsLink">
+						@if(Auth::user()->rNotifications()->where('read', false)->count() > 0)
+						<i class="ion-android-notifications orange-text" id="not-icon"></i>
+						<span class="orange-text" id="u-not-read-count">{{ Auth::user()->rNotifications()->where('read', false)->count() }}</span>
+						@else
+						<i class="ion-android-notifications-none" id="not-icon"></i>
+						<span class="orange-text" id="u-not-read-count"></span>
+						@endif
+					</a>
+					<a href="{!! url('/account') !!}">{{ Auth::user()->username }} <span class="header-rep-count">{{ Auth::user()->rep()}}</span></a>
 					<a href="{!! url('/logout') !!}">Logout</a>
 					@else
 					<a href="{!! url('/login') !!}">Login / Register</a>

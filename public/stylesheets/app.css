@@ -9489,6 +9489,25 @@ hr {
   color: #777;
 }
 
+/* line 247, ../scss/_misc.scss */
+.header-rep-count {
+  background: #446CB3;
+  color: white;
+  font-weight: 700;
+  font-size: 0.75em;
+  text-align: center;
+  padding: 1px 3px;
+  -moz-border-radius: 2px;
+  -webkit-border-radius: 2px;
+  border-radius: 2px;
+}
+
+/* line 257, ../scss/_misc.scss */
+.orange-text {
+  color: #ff3333;
+  font-weight: 700;
+}
+
 /*!
   Ionicons, v2.0.1
   Created by Ben Sperry for the Ionic Framework, http://ionicons.com/

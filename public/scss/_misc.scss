@@ -243,3 +243,18 @@ hr {
 		}
 	}
 }
+
+.header-rep-count {
+	background: $primary-color;
+	color: white;
+	font-weight: 700;
+	font-size: 0.75em;
+	text-align: center;
+	padding: 1px 3px;
+	@include border-radius(2px);
+}
+
+.orange-text {
+	color: lighten(red, 10);
+	font-weight: 700;
+}
