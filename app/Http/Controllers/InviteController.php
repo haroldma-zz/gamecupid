@@ -12,6 +12,7 @@ use App\Models\Notification;
 use Illuminate\Http\Request;
 use App\Http\Requests\InviteFormRequest;
 use Cocur\Slugify\Slugify;
+USE App\Enums\AjaxVoteResults;
 
 class InviteController extends Controller {
 
@@ -71,7 +72,7 @@ class InviteController extends Controller {
 			return redirect('/');
 
 		if (!Auth::check())
-			return 4;
+			return AjaxVoteResults::UNAUTHORIZED;
 
 		$id = $request->get('id');
 
@@ -84,17 +85,17 @@ class InviteController extends Controller {
 			if ($vote->state == VoteStates::UP)			// UNVOTED
 			{
 				$vote->delete();
-				return 2;
+				return AjaxVoteResults::UNVOTED;
 			}
 			else if ($vote->state == VoteStates::DOWN)	// UPVOTED FROM DOWNVOTE
 			{
 				$vote->state = VoteStates::UP;
 				$vote->save();
-				return 3;
+				return AjaxVoteResults::VOTE_SWITCH;
 			}
 			else
 			{
-				return 5; 								// Error
+				return AjaxVoteResults::ERROR; 								// Error
 			}
 		}
 		else
@@ -106,11 +107,11 @@ class InviteController extends Controller {
 
 			if ($vote->save())
 			{
-				return 1;
+				return AjaxVoteResults::NORMAL;
 			}
 			else
 			{
-				return 5;
+				return AjaxVoteResults::ERROR;
 			}
 		}
 	}
@@ -140,17 +141,17 @@ class InviteController extends Controller {
 			if ($vote->state == VoteStates::DOWN)		// UNVOTED
 			{
 				$vote->delete();
-				return 2;
+				return AjaxVoteResults::UNVOTED;
 			}
 			else if ($vote->state == VoteStates::UP)	// DOWNVOTED FROM UPVOTE
 			{
 				$vote->state = VoteStates::DOWN;
 				$vote->save();
-				return 3;
+				return AjaxVoteResults::VOTE_SWITCH;
 			}
 			else
 			{
-				return 5; 								// Error
+				return AjaxVoteResults::ERROR; 								// Error
 			}
 		}
 		else
@@ -162,11 +163,11 @@ class InviteController extends Controller {
 
 			if ($vote->save())
 			{
-				return 1;
+				return AjaxVoteResults::NORMAL;
 			}
 			else
 			{
-				return 5;
+				return AjaxVoteResults::ERROR;
 			}
 		}
 	}
