@@ -74,24 +74,17 @@ class User extends Model implements AuthenticatableContract, CanResetPasswordCon
 		return $this->hasMany('App\Models\Notification', 'from_id', 'id');
 	}
 
-    private $repAmount = -1;
-
 	// Function to return total rep amount (lazy loaded)
 	public function rep()
 	{
-        // if the field is already set then return it
-		if ($this->repAmount > -1)
-            return $this->repAmount;
-
-        // otherwise calculate total rep
-        $this->repAmount = 0;
+        $repAmount = 0;
 
 		foreach ($this->reps as $rep)
 		{
-            $this->repAmount += $rep->event->amount;
+            $repAmount += $rep->event->amount;
 		}
 
-		return $this->repAmount;
+		return $repAmount;
 	}
 
     private $factor = 3.0;
@@ -105,7 +98,7 @@ class User extends Model implements AuthenticatableContract, CanResetPasswordCon
 
     public function repToNextLevel()
     {
-        $level = level();
+        $level = $this->level();
         return $level^$this->factor;
     }
 }

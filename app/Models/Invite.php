@@ -11,6 +11,16 @@ class Invite extends Model {
 	 */
 	protected $table = 'invites';
 
+	public function upvotes()
+    {
+        return Invite::votes()->where('state', 1);
+    }
+
+    public function downvotes()
+    {
+        return Invite::votes()->where('state', 0);
+    }
+
 	/**
 	*
 	* Relations
@@ -40,5 +50,10 @@ class Invite extends Model {
 	{
 		return $this->hasMany('App\Models\Accept', 'invite_id', 'id');
 	}
+
+    public function votes()
+    {
+        return $this->hasMany('App\Models\InviteVote', 'invite_id', 'id');
+    }
 
 }

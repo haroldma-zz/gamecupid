@@ -26,7 +26,7 @@ class CreateInvitesTable extends Migration {
             $table->integer('user_id');
             $table->integer('game_id');
             $table->integer('console_id');
-            $table->integer('platform_id');
+
             $table->timestamps();
         });
 	}
