@@ -15,7 +15,7 @@ class GamesTableSeeder extends Seeder {
         $slugify = new Slugify();
         $slugify->addRule('+', 'plus');
 
-		$json = json_decode(file_get_contents(public_path() . '/games.json'));
+		$json = json_decode(file_get_contents(base_path() . '/database/seeds/games.json'));
 
 		foreach($json as $game)
 		{
