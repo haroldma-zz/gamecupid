@@ -6,18 +6,22 @@ use App\Models\Developer;
 use App\Models\Publisher;
 use App\Models\GameDeveloper;
 use App\Models\GamePublisher;
+use Cocur\Slugify\Slugify;
 
 class GamesTableSeeder extends Seeder {
 
     public function run()
     {
+        $slugify = new Slugify();
+        $slugify->addRule('+', 'plus');
+
 		$json = json_decode(file_get_contents(public_path() . '/games.json'));
 
 		foreach($json as $game)
 		{
 			$g               = new Game;
 			$g->title        = $game->title;
-			$g->slug         = str_slug($game->title, "-");
+			$g->slug         = $slugify->slugify($game->title, "-");
 			$g->description  = $game->description;
 			$g->poster       = $game->poster;
 			$g->series       = $game->series;
@@ -27,13 +31,13 @@ class GamesTableSeeder extends Seeder {
 
 			foreach ($game->developers as $d)
 			{
-				$dev = Developer::where('slug', str_slug($d->name))->first();
+				$dev = Developer::where('slug', $slugify->slugify($d->name))->first();
 
 				if (!$dev)
 				{
 					$dev       = new Developer;
 					$dev->name = $d->name;
-					$dev->slug = str_slug($d->name);
+					$dev->slug = $slugify->slugify($d->name);
 					$dev->save();
 				}
 
@@ -45,13 +49,13 @@ class GamesTableSeeder extends Seeder {
 
 			foreach ($game->publishers as $d)
 			{
-				$pub = Publisher::where('slug', str_slug($d->name))->first();
+				$pub = Publisher::where('slug', $slugify->slugify($d->name))->first();
 
 				if (!$pub)
 				{
 					$pub       = new Publisher;
 					$pub->name = $d->name;
-					$pub->slug = str_slug($d->name);
+					$pub->slug = $slugify->slugify($d->name);
 					$pub->save();
 				}
 
