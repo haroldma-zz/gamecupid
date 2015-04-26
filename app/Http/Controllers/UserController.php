@@ -38,16 +38,25 @@ class UserController extends Controller {
 		if ($user->save())
 		{
 			// Give the user +1 rep
-			$rep          = new Rep;
-			$rep->amount  = 1;
-			$rep->event   = "Became a member of GameCupid.";
-			$rep->user_id = $user->id;
+			$rep               = new Rep;
+			$rep->rep_event_id = 1;
+			$rep->user_id      = $user->id;
 			$rep->save();
 
 			// Rep notification
 			$notification              = new Notification;
-			$notification->title       = "+1 rep";
-			$notification->description = $rep->event;
+			$notification->title       = "+" . $rep->event->amount . " rep";
+			$notification->description = $rep->event->event;
+			$notification->to_id       = $user->id;
+			$notification->from_id     = 0;
+			$notification->read        = false;
+			$notification->notified    = false;
+			$notification->save();
+
+			// Confirm e-mail notification
+			$notification              = new Notification;
+			$notification->title       = "Confirm your e-mail address.";
+			$notification->description = "By confirming your e-mail address, you become a verified user. You will also earn some more Rep which brings you closer to being a GameCupid legend.";
 			$notification->to_id       = $user->id;
 			$notification->from_id     = 0;
 			$notification->read        = false;

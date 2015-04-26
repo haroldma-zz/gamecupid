@@ -11,4 +11,15 @@ class Rep extends Model {
 	 */
 	protected $table = 'reps';
 
+
+	/**
+	*
+	* Relations
+	*
+	**/
+	public function event()
+	{
+		return $this->hasOne('App\Models\RepEvent', 'id', 'rep_event_id');
+	}
+
 }

@@ -174,10 +174,8 @@ hr {
 *
 **/
 .notification {
-	width: auto;
+	width: 300px;
 	height: 50px;
-	min-width: 150px;
-	max-width: 320px;
 	position: fixed;
 	bottom: 10px;
 	right: 10px;
@@ -196,6 +194,10 @@ hr {
 		font-weight: 400;
 		line-height: 1em !important;
 		color: $primary-color;
+		white-space: nowrap;
+		text-overflow: ellipsis;
+		overflow: hidden;
+		width: 265px;
 		small {
 			font-size: 70%;
 			font-weight: 500;

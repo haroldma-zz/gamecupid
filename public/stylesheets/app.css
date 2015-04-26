@@ -9407,10 +9407,8 @@ hr {
 **/
 /* line 176, ../scss/_misc.scss */
 .notification {
-  width: auto;
+  width: 300px;
   height: 50px;
-  min-width: 150px;
-  max-width: 320px;
   position: fixed;
   bottom: 10px;
   right: 10px;
@@ -9430,19 +9428,23 @@ hr {
   -webkit-box-shadow: 0 0 15px rgba(0, 0, 0, 0.12);
   box-shadow: 0 0 15px rgba(0, 0, 0, 0.12);
 }
-/* line 195, ../scss/_misc.scss */
+/* line 193, ../scss/_misc.scss */
 .notification h6 {
   font-weight: 400;
   line-height: 1em !important;
   color: #446CB3;
+  white-space: nowrap;
+  text-overflow: ellipsis;
+  overflow: hidden;
+  width: 265px;
 }
-/* line 199, ../scss/_misc.scss */
+/* line 201, ../scss/_misc.scss */
 .notification h6 small {
   font-size: 70%;
   font-weight: 500;
   color: #777;
 }
-/* line 205, ../scss/_misc.scss */
+/* line 207, ../scss/_misc.scss */
 .notification .closer {
   position: absolute;
   top: 16.5px;
@@ -9451,45 +9453,45 @@ hr {
   color: #888;
   cursor: pointer;
 }
-/* line 212, ../scss/_misc.scss */
+/* line 214, ../scss/_misc.scss */
 .notification .closer:hover {
   color: #333;
 }
 
-/* line 218, ../scss/_misc.scss */
+/* line 220, ../scss/_misc.scss */
 .rep-count {
   font-size: 80%;
 }
 
-/* line 222, ../scss/_misc.scss */
+/* line 224, ../scss/_misc.scss */
 .notification-entry {
   width: 100%;
   border-bottom: 1px solid #EFEFEF;
   margin-bottom: 10px;
   padding: 0;
 }
-/* line 227, ../scss/_misc.scss */
+/* line 229, ../scss/_misc.scss */
 .notification-entry h5 {
   margin: 0;
   margin-bottom: 5px;
 }
-/* line 231, ../scss/_misc.scss */
+/* line 233, ../scss/_misc.scss */
 .notification-entry p {
   margin-bottom: 5px;
 }
-/* line 235, ../scss/_misc.scss */
+/* line 237, ../scss/_misc.scss */
 .notification-entry .inline-list li > a {
   color: #999;
   font-weight: 500;
   font-size: 0.85em;
 }
-/* line 239, ../scss/_misc.scss */
+/* line 241, ../scss/_misc.scss */
 .notification-entry .inline-list li > a:hover {
   text-decoration: underline;
   color: #777;
 }
 
-/* line 247, ../scss/_misc.scss */
+/* line 249, ../scss/_misc.scss */
 .header-rep-count {
   background: #afc1e1;
   border: 1px solid #9db3da;
@@ -9503,7 +9505,7 @@ hr {
   border-radius: 2px;
 }
 
-/* line 258, ../scss/_misc.scss */
+/* line 260, ../scss/_misc.scss */
 .orange-text {
   color: #ff3333;
   font-weight: 700;

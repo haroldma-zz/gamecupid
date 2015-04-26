@@ -29,6 +29,10 @@ class TempController extends Controller {
         Schema::dropIfExists('permissions');
         Schema::dropIfExists('role_user');
         Schema::dropIfExists('roles');
+        Schema::dropIfExists('reps');
+        Schema::dropIfExists('rep_events');
+        Schema::dropIfExists('notifications');
+        Schema::dropIfExists('migrations');
 	}
 
 }

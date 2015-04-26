@@ -9,7 +9,7 @@
 					<div class="medium-8 medium-offset-2 columns">
 						<h2 class="light-header">Notifications</h2>
 						<hr>
-						@foreach(Auth::user()->rNotifications as $n)
+						@foreach(Auth::user()->rNotifications()->orderBy('id', 'DESC')->get() as $n)
 							<div class="notification-entry">
 								<h5 class="text-primary {{ ($n->read == false ? 'bold' : '') }}">
 									<a href="">{{ $n->title }}</a>

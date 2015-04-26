@@ -83,7 +83,7 @@ class User extends Model implements AuthenticatableContract, CanResetPasswordCon
 
 		foreach ($this->reps as $rep)
 		{
-			$amount += $rep->amount;
+			$amount += $rep->event->amount;
 		}
 
 		return $amount;
