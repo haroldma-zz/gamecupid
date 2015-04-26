@@ -3,6 +3,7 @@
 use Hash;
 use Auth;
 use App\Models\Rep;
+use App\Enums\RepEvents;
 use App\Models\User;
 use App\Models\Notification;
 use Illuminate\Http\Request;
@@ -39,7 +40,7 @@ class UserController extends Controller {
 		{
 			// Give the user +1 rep
 			$rep               = new Rep;
-			$rep->rep_event_id = 1;
+			$rep->rep_event_id = RepEvents::REGISTERED;
 			$rep->user_id      = $user->id;
 			$rep->save();
 
