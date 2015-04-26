@@ -1,6 +1,7 @@
 <?php namespace App\Models;
 
 use Illuminate\Database\Eloquent\Model;
+use App\Enums\VoteStates;
 
 class Invite extends Model {
 
@@ -10,6 +11,26 @@ class Invite extends Model {
 	 * @var string
 	 */
 	protected $table = 'invites';
+
+	public function upvotes()
+    {
+        return $this->votes()->where('state', VoteStates::UP)->get();
+    }
+
+    public function upvoteCount()
+    {
+        return $this->votes()->where('state', VoteStates::UP)->count();
+    }
+
+    public function downvotes()
+    {
+        return $this->votes()->where('state', VoteStates::DOWN)->get();
+    }
+
+    public function downvoteCount()
+    {
+        return $this->votes()->where('state', VoteStates::DOWN)->count();
+    }
 
 	/**
 	*
@@ -40,5 +61,10 @@ class Invite extends Model {
 	{
 		return $this->hasMany('App\Models\Accept', 'invite_id', 'id');
 	}
+
+    public function votes()
+    {
+        return $this->hasMany('App\Models\InviteVote', 'invite_id', 'id');
+    }
 
 }

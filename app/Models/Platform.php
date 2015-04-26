@@ -19,6 +19,6 @@ class Platform extends Model {
 	**/
 	public function consoles()
 	{
-		return $this->hasMany('App\Model\Console', 'platform_id', 'id');
+		return $this->hasMany('App\Models\Console', 'platform_id', 'id');
 	}
 }

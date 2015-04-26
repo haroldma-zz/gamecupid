@@ -25,8 +25,8 @@
 				</ul>
 				@endif
 				{!! Form::open(['route' => 'user.login', 'class' => 'form']) !!}
-				{!! Form::label('email', 'E-mail') !!}
-				{!! Form::email('email', '', ['class' => 'form-control']) !!}
+				{!! Form::label('username', 'Username') !!}
+				{!! Form::text('username', '', ['class' => 'form-control']) !!}
 				{!! Form::label('password', 'Password') !!}
 				{!! Form::password('password', ['class' => 'form-control']) !!}
 				<br>
@@ -60,6 +60,8 @@
 							{!! Form::text('last_name', '', ['class' => 'form-control']) !!}
 						</div>
 					</div>
+					{!! Form::label('username', 'Choose a username. You use this to login.') !!}
+					{!! Form::text('username', '', ['class' => 'form-control']) !!}
 					{!! Form::label('email', 'Your e-mail address') !!}
 					{!! Form::email('email', '', ['class' => 'form-control', 'placeholder' => 'noodles@example.com']) !!}
 					{!! Form::label('password', 'Choose a password') !!}

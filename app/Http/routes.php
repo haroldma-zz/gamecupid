@@ -29,7 +29,7 @@ Route::get('/login', 'PageController@login');
 // POST routes
 Route::post('/login', ['as' => 'user.login', 'uses' => 'UserController@login']);
 Route::post('/register', ['as' => 'user.register', 'uses' => 'UserController@register']);
-
+Route::post('/game/search', 'GameController@search');
 
 /**
 *
@@ -47,9 +47,26 @@ Route::group(['middleware' => 'auth'], function()
 	// GET routes
 	Route::get('/logout', 'UserController@logout');
 
+	Route::get('/account', 'PageController@account');
+	Route::get('/account/connect/psn', 'PageController@connectPsn');
+	Route::get('/account/connect/xbl', 'PageController@connectXbl');
+	Route::get('/account/connect/steam', 'PageController@connectSteam');
+	Route::get('/account/disconnect/{platform}/{username}', 'ProfileController@disconnect');
+
+	Route::get('/notification', 'UserController@checkNotification');
+	Route::get('/notifications', 'PageController@notifications');
+
+	Route::get('/invite', 'PageController@invite');
+
 
 	// POST routes
+    Route::post('account/connect/psn', 'PlatformValidatorController@validatePsn');
+    Route::post('account/connect/xbl', 'PlatformValidatorController@validateXbl');
+    Route::post('account/connect/steam', 'PlatformValidatorController@validateSteam');
 
+    Route::post('/markasread', 'UserController@markNotificationAsRead');
+
+    Route::post('/invite', 'InviteController@invite');
 
 });
 

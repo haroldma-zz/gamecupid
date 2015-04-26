@@ -137,6 +137,7 @@ return [
 		'Illuminate\View\ViewServiceProvider',
 		'Illuminate\Html\HtmlServiceProvider',
 		'Zizaco\Entrust\EntrustServiceProvider',
+		'Greggilbert\Recaptcha\RecaptchaServiceProvider',
 
 		/*
 		 * Application Service Providers...
@@ -197,6 +198,7 @@ return [
 		'Form'      => 'Illuminate\Html\FormFacade',
 		'HTML'      => 'Illuminate\Html\HtmlFacade',
 		'Entrust'   => 'Zizaco\Entrust\EntrustFacade',
+		'Recaptcha' => 'Greggilbert\Recaptcha\Facades\Recaptcha',
 
 
 	],

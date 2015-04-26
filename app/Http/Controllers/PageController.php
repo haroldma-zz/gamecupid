@@ -1,5 +1,9 @@
 <?php namespace App\Http\Controllers;
 
+use App\Models\Game;
+use App\Models\Platform;
+use App\Models\Console;
+
 class PageController extends Controller {
 
 	/*
@@ -19,7 +23,9 @@ class PageController extends Controller {
 	**/
 	public function index()
 	{
-		return view('pages.index');
+		$platforms = Platform::all();
+		$games     = Game::all();
+		return view('pages.index', ['platforms' => $platforms, 'games' => $games]);
 	}
 
 
@@ -32,5 +38,80 @@ class PageController extends Controller {
 	{
 		return view('pages.login');
 	}
+
+
+	/**
+	*
+	* User account page
+	*
+	**/
+	public function account()
+	{
+		return view('pages.account');
+	}
+
+
+	/**
+	*
+	* Notifications page
+	*
+	**/
+	public function notifications()
+	{
+		return view('pages.notifications');
+	}
+
+
+	/**
+	*
+	* Connect PSN page
+	*
+	**/
+	public function connectPsn()
+	{
+		return view('pages.connect.psn');
+	}
+
+
+	/**
+	*
+	* Connect XBL page
+	*
+	**/
+	public function connectXbl()
+	{
+		return view('pages.connect.xbl');
+	}
+
+
+	/**
+	*
+	* Connect Steam page
+	*
+	**/
+	public function connectSteam()
+	{
+		return view('pages.connect.steam');
+	}
+
+
+	/**
+	*
+	* Invite page
+	*
+	**/
+	public function invite()
+	{
+		$consoles = Console::all();
+
+        $consoleSelections = ['0' => 'Select a console'];
+        foreach ($consoles as $console)
+        {
+            $consoleSelections[] = $console->name;
+        }
+
+		return view('pages.invites.invite', [ 'consoleSelections' => $consoleSelections]);
+	}
+
 
 }

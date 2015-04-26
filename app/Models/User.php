@@ -59,4 +59,46 @@ class User extends Model implements AuthenticatableContract, CanResetPasswordCon
 		return $this->hasMany('App\Models\Accept', 'user_id', 'id');
 	}
 
+	public function reps()
+	{
+		return $this->hasMany('App\Models\Rep', 'user_id', 'id');
+	}
+
+	public function rNotifications()
+	{
+		return $this->hasMany('App\Models\Notification', 'to_id', 'id');
+	}
+
+	public function sNotifications()
+	{
+		return $this->hasMany('App\Models\Notification', 'from_id', 'id');
+	}
+
+	// Function to return total rep amount (lazy loaded)
+	public function rep()
+	{
+        $repAmount = 0;
+
+		foreach ($this->reps as $rep)
+		{
+            $repAmount += $rep->event->amount;
+		}
+
+		return $repAmount;
+	}
+
+    private $factor = 3.0;
+
+    // Function to calculate level
+    public function level()
+    {
+        $rep = $this->rep();
+        return floor(pow($rep, 1/$this->factor));
+    }
+
+    public function repToNextLevel()
+    {
+        $level = $this->level();
+        return $level^$this->factor;
+    }
 }

@@ -1,6 +1,7 @@
 @import "compass";
 @import "settings";
 @import "foundation";
+@import "mixins";
 @import "misc";
 @import "ionicons";
 
@@ -54,10 +55,17 @@ html, body {
 }
 
 section {
-	margin-top: 65px;
+	margin-top: 40px;
 	padding: 1.5em 0;
 }
 
+p {
+	font-size: 0.95em;
+}
+
+ul {
+	font-size: 0.95em !important;
+}
 
 /**
 *
@@ -66,16 +74,20 @@ section {
 **/
 .topnav {
 	width: 100%;
-	height: 65px;
-	line-height: 65px;
-	background: white;
-	border-bottom: 1px solid $silver;
+	height: 50px;
+	line-height: 50px;
+	background: $primary-color;
+	border-bottom: 1px solid darken($primary-color, 5);
 	position: fixed;
 	top: 0;
 	left: 0;
 	z-index: 9;
 	font-size: 0.85em;
 	@include box-shadow(0 0 2px darken(rgba(44, 62, 80, 0.05), 40));
+
+	a {
+		color: white;
+	}
 
 	.left {
 		a {
@@ -109,5 +121,77 @@ section {
 
 	&.open {
 		max-height: 1000px;
+	}
+}
+
+
+/**
+*
+* Invite form
+*
+**/
+.game-search-results-container {
+	width: 100%;
+	position: relative;
+	.game-search-results {
+		width: 100%;
+		position: absolute;
+		top: -15px;
+		.game-search-result {
+			background: white;
+			padding: 5px;
+			border: 1px solid $silver;
+			border-bottom: none;
+			cursor: pointer;
+			font-size: 1em;
+
+			&:hover {
+				background: $primary-color;
+				a {
+					color: white;
+				}
+			}
+
+			&:last-of-type {
+				border-bottom: 1px solid $silver;
+			}
+		}
+	}
+}
+
+
+/**
+*
+* Account page
+*
+**/
+.profile {
+	width: 100%;
+	border-bottom: 1px solid $silver;
+	padding: 1em 0;
+
+	&:last-of-type {
+		border: none;
+		padding-bottom: 0;
+	}
+
+	img {
+		height: 75px;
+		margin-bottom: 1.5em;
+	}
+
+	.profiles-mini-list {
+		li:first-of-type {
+			font-weight: 700;
+			color: $primary-color;
+		}
+
+		li > a {
+			color: #555;
+			font-weight: 500;
+			&:hover {
+				text-decoration: underline;
+			}
+		}
 	}
 }

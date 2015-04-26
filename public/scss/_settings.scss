@@ -100,7 +100,7 @@ $font-weight-bold: bold;
 $white       : #FFFFFF;
 $ghost       : #FAFAFA;
 $snow        : #F9F9F9;
-$vapor       : #F6F6F6;
+$vapor       : #F7F7F7;
 $white-smoke : #F5F5F5;
 $silver      : #EFEFEF;
 $smoke       : #EEEEEE;
@@ -118,7 +118,7 @@ $jet         : #222222;
 $black       : #000000;
 
 // We use these as default colors throughout
-$primary-color: #2C3E50;
+$primary-color: #446CB3;
 $secondary-color: #e7e7e7;
 $alert-color: #f04124;
 $success-color: #43AC6A;
@@ -126,7 +126,7 @@ $warning-color: #f08a24;
 $info-color: #a0d3e8;
 
 // We use these to control various global styles
-$body-bg: $white;
+$body-bg: $vapor;
 $body-font-color: $jet;
 $body-font-family: $font-family-sans-serif;
 $body-font-weight: $font-weight-normal;
@@ -265,7 +265,7 @@ $anchor-font-color-hover: scale-color($anchor-font-color, $lightness: -14%);
 $hr-border-width: 1px;
 $hr-border-style: solid;
 $hr-border-color: $silver;
-$hr-margin: rem-calc(20);
+$hr-margin: rem-calc(40);
 
 // We use these to style lists
 // $list-font-family: $paragraph-font-family;

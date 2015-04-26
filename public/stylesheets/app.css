@@ -85,7 +85,7 @@ body {
 
 /* line 417, ../bower_components/foundation/scss/foundation/components/_global.scss */
 body {
-  background: #FFFFFF;
+  background: #F7F7F7;
   color: #222222;
   padding: 0;
   margin: 0;
@@ -1731,8 +1731,8 @@ select {
   padding: 0.875rem 1.5rem 0.875rem 0.875rem;
   font-size: 0.8125rem;
   transition: opacity 300ms ease-out;
-  background-color: #2C3E50;
-  border-color: #263545;
+  background-color: #446CB3;
+  border-color: #3a5d9a;
   color: #FFFFFF;
 }
 /* line 115, ../bower_components/foundation/scss/foundation/components/_alert-boxes.scss */
@@ -2345,7 +2345,7 @@ select {
   font-size: 0.6875rem;
   line-height: 0.6875rem;
   text-transform: uppercase;
-  color: #2C3E50;
+  color: #446CB3;
 }
 /* line 68, ../bower_components/foundation/scss/foundation/components/_breadcrumbs.scss */
 .breadcrumbs > *:hover a, .breadcrumbs > *:focus a {
@@ -2353,7 +2353,7 @@ select {
 }
 /* line 70, ../bower_components/foundation/scss/foundation/components/_breadcrumbs.scss */
 .breadcrumbs > * a {
-  color: #2C3E50;
+  color: #446CB3;
 }
 /* line 75, ../bower_components/foundation/scss/foundation/components/_breadcrumbs.scss */
 .breadcrumbs > *.current {
@@ -2425,14 +2425,14 @@ button, .button {
   padding-bottom: 1.0625rem;
   padding-left: 2rem;
   font-size: 1rem;
-  background-color: #2C3E50;
-  border-color: #233240;
+  background-color: #446CB3;
+  border-color: #36568f;
   color: #FFFFFF;
   transition: background-color 300ms ease-out;
 }
 /* line 162, ../bower_components/foundation/scss/foundation/components/_buttons.scss */
 button:hover, button:focus, .button:hover, .button:focus {
-  background-color: #233240;
+  background-color: #36568f;
 }
 /* line 168, ../bower_components/foundation/scss/foundation/components/_buttons.scss */
 button:hover, button:focus, .button:hover, .button:focus {
@@ -2558,8 +2558,8 @@ button.round, .button.round {
 }
 /* line 241, ../bower_components/foundation/scss/foundation/components/_buttons.scss */
 button.disabled, button[disabled], .button.disabled, .button[disabled] {
-  background-color: #2C3E50;
-  border-color: #233240;
+  background-color: #446CB3;
+  border-color: #36568f;
   color: #FFFFFF;
   cursor: default;
   opacity: 0.7;
@@ -2567,7 +2567,7 @@ button.disabled, button[disabled], .button.disabled, .button[disabled] {
 }
 /* line 162, ../bower_components/foundation/scss/foundation/components/_buttons.scss */
 button.disabled:hover, button.disabled:focus, button[disabled]:hover, button[disabled]:focus, .button.disabled:hover, .button.disabled:focus, .button[disabled]:hover, .button[disabled]:focus {
-  background-color: #233240;
+  background-color: #36568f;
 }
 /* line 168, ../bower_components/foundation/scss/foundation/components/_buttons.scss */
 button.disabled:hover, button.disabled:focus, button[disabled]:hover, button[disabled]:focus, .button.disabled:hover, .button.disabled:focus, .button[disabled]:hover, .button[disabled]:focus {
@@ -2575,7 +2575,7 @@ button.disabled:hover, button.disabled:focus, button[disabled]:hover, button[dis
 }
 /* line 179, ../bower_components/foundation/scss/foundation/components/_buttons.scss */
 button.disabled:hover, button.disabled:focus, button[disabled]:hover, button[disabled]:focus, .button.disabled:hover, .button.disabled:focus, .button[disabled]:hover, .button[disabled]:focus {
-  background-color: #2C3E50;
+  background-color: #446CB3;
 }
 /* line 242, ../bower_components/foundation/scss/foundation/components/_buttons.scss */
 button.disabled.secondary, button[disabled].secondary, .button.disabled.secondary, .button[disabled].secondary {
@@ -4536,7 +4536,7 @@ label.error {
 }
 /* line 182, ../bower_components/foundation/scss/foundation/components/_icon-bar.scss */
 .icon-bar > a:hover {
-  background: #2C3E50;
+  background: #446CB3;
 }
 /* line 186, ../bower_components/foundation/scss/foundation/components/_icon-bar.scss */
 .icon-bar > a:hover label {
@@ -4548,7 +4548,7 @@ label.error {
 }
 /* line 191, ../bower_components/foundation/scss/foundation/components/_icon-bar.scss */
 .icon-bar > a.active {
-  background: #2C3E50;
+  background: #446CB3;
 }
 /* line 195, ../bower_components/foundation/scss/foundation/components/_icon-bar.scss */
 .icon-bar > a.active label {
@@ -4963,7 +4963,7 @@ kbd {
   margin-bottom: auto;
   padding: 0.25rem 0.5rem 0.25rem;
   font-size: 0.6875rem;
-  background-color: #2C3E50;
+  background-color: #446CB3;
   color: #FFFFFF;
 }
 /* line 96, ../bower_components/foundation/scss/foundation/components/_labels.scss */
@@ -5402,14 +5402,14 @@ ul.pagination li.unavailable:hover a, ul.pagination li.unavailable a:focus, ul.p
 }
 /* line 68, ../bower_components/foundation/scss/foundation/components/_pagination.scss */
 ul.pagination li.current a, ul.pagination li.current button {
-  background: #2C3E50;
+  background: #446CB3;
   color: #FFFFFF;
   font-weight: bold;
   cursor: default;
 }
 /* line 74, ../bower_components/foundation/scss/foundation/components/_pagination.scss */
 ul.pagination li.current a:hover, ul.pagination li.current a:focus, ul.pagination li.current button:hover, ul.pagination li.current button:focus {
-  background: #2C3E50;
+  background: #446CB3;
 }
 /* line 136, ../bower_components/foundation/scss/foundation/components/_pagination.scss */
 ul.pagination li {
@@ -5464,10 +5464,10 @@ ul.pagination li {
 .panel.callout {
   border-style: solid;
   border-width: 1px;
-  border-color: #ced9e4;
+  border-color: #ccd8ec;
   margin-bottom: 1.25rem;
   padding: 1.25rem;
-  background: #f0f3f7;
+  background: #f4f6fb;
   color: #333333;
 }
 /* line 55, ../bower_components/foundation/scss/foundation/components/_panels.scss */
@@ -5493,11 +5493,11 @@ ul.pagination li {
 }
 /* line 84, ../bower_components/foundation/scss/foundation/components/_panels.scss */
 .panel.callout a:not(.button) {
-  color: #2C3E50;
+  color: #446CB3;
 }
 /* line 87, ../bower_components/foundation/scss/foundation/components/_panels.scss */
 .panel.callout a:not(.button):hover, .panel.callout a:not(.button):focus {
-  color: #263545;
+  color: #3a5d9a;
 }
 /* line 94, ../bower_components/foundation/scss/foundation/components/_panels.scss */
 .panel.radius {
@@ -5528,7 +5528,7 @@ ul.pagination li {
 }
 /* line 143, ../bower_components/foundation/scss/foundation/components/_pricing-tables.scss */
 .pricing-table .price {
-  background-color: #F6F6F6;
+  background-color: #F7F7F7;
   padding: 0.9375rem 1.25rem;
   text-align: center;
   color: #333333;
@@ -5567,7 +5567,7 @@ ul.pagination li {
 /* Progress Bar */
 /* line 57, ../bower_components/foundation/scss/foundation/components/_progress-bars.scss */
 .progress {
-  background-color: #F6F6F6;
+  background-color: #F7F7F7;
   height: 1.5625rem;
   border: 1px solid white;
   padding: 0.125rem;
@@ -5575,7 +5575,7 @@ ul.pagination li {
 }
 /* line 61, ../bower_components/foundation/scss/foundation/components/_progress-bars.scss */
 .progress .meter {
-  background: #2C3E50;
+  background: #446CB3;
   height: 100%;
   display: block;
 }
@@ -5657,12 +5657,12 @@ ul.pagination li {
 }
 /* line 148, ../bower_components/foundation/scss/foundation/components/_range-slider.scss */
 .range-slider.radius .range-slider-handle {
-  background: #2C3E50;
+  background: #446CB3;
   border-radius: 2px;
 }
 /* line 117, ../bower_components/foundation/scss/foundation/components/_range-slider.scss */
 .range-slider.radius .range-slider-handle:hover {
-  background: #273746;
+  background: #3c5f9e;
 }
 /* line 150, ../bower_components/foundation/scss/foundation/components/_range-slider.scss */
 .range-slider.round {
@@ -5671,12 +5671,12 @@ ul.pagination li {
 }
 /* line 152, ../bower_components/foundation/scss/foundation/components/_range-slider.scss */
 .range-slider.round .range-slider-handle {
-  background: #2C3E50;
+  background: #446CB3;
   border-radius: 1000px;
 }
 /* line 117, ../bower_components/foundation/scss/foundation/components/_range-slider.scss */
 .range-slider.round .range-slider-handle:hover {
-  background: #273746;
+  background: #3c5f9e;
 }
 /* line 154, ../bower_components/foundation/scss/foundation/components/_range-slider.scss */
 .range-slider.disabled, .range-slider[disabled] {
@@ -5686,13 +5686,13 @@ ul.pagination li {
 }
 /* line 156, ../bower_components/foundation/scss/foundation/components/_range-slider.scss */
 .range-slider.disabled .range-slider-handle, .range-slider[disabled] .range-slider-handle {
-  background: #2C3E50;
+  background: #446CB3;
   cursor: default;
   opacity: 0.7;
 }
 /* line 117, ../bower_components/foundation/scss/foundation/components/_range-slider.scss */
 .range-slider.disabled .range-slider-handle:hover, .range-slider[disabled] .range-slider-handle:hover {
-  background: #273746;
+  background: #3c5f9e;
 }
 
 /* line 159, ../bower_components/foundation/scss/foundation/components/_range-slider.scss */
@@ -5715,11 +5715,11 @@ ul.pagination li {
   cursor: pointer;
   -ms-touch-action: manipulation;
   touch-action: manipulation;
-  background: #2C3E50;
+  background: #446CB3;
 }
 /* line 117, ../bower_components/foundation/scss/foundation/components/_range-slider.scss */
 .range-slider-handle:hover {
-  background: #273746;
+  background: #3c5f9e;
 }
 
 /* line 169, ../bower_components/foundation/scss/foundation/components/_reveal.scss */
@@ -5901,18 +5901,18 @@ ul.pagination li {
 /* line 75, ../bower_components/foundation/scss/foundation/components/_side-nav.scss */
 .side-nav li a:not(.button) {
   display: block;
-  color: #2C3E50;
+  color: #446CB3;
   margin: 0;
   padding: 0.4375rem 0.875rem;
 }
 /* line 80, ../bower_components/foundation/scss/foundation/components/_side-nav.scss */
 .side-nav li a:not(.button):hover, .side-nav li a:not(.button):focus {
   background: rgba(0, 0, 0, 0.025);
-  color: #55789b;
+  color: #7a97cc;
 }
 /* line 87, ../bower_components/foundation/scss/foundation/components/_side-nav.scss */
 .side-nav li.active > a:first-child:not(.button) {
-  color: #55789b;
+  color: #7a97cc;
   font-weight: normal;
   font-family: "Helvetica Neue", Helvetica, Roboto, Arial, sans-serif;
 }
@@ -5926,7 +5926,7 @@ ul.pagination li {
 }
 /* line 101, ../bower_components/foundation/scss/foundation/components/_side-nav.scss */
 .side-nav li.heading {
-  color: #2C3E50;
+  color: #446CB3;
   font-size: 0.875rem;
   font-weight: bold;
   text-transform: uppercase;
@@ -6125,7 +6125,7 @@ ul.pagination li {
 .sub-nav li.active a {
   border-radius: 3px;
   font-weight: normal;
-  background: #2C3E50;
+  background: #446CB3;
   padding: 0.1875rem 1rem;
   cursor: default;
   color: #FFFFFF;
@@ -6134,7 +6134,7 @@ ul.pagination li {
 .sub-nav dt.active a:hover,
 .sub-nav dd.active a:hover,
 .sub-nav li.active a:hover {
-  background: #263545;
+  background: #3a5d9a;
 }
 
 /* line 212, ../bower_components/foundation/scss/foundation/components/_switches.scss */
@@ -6194,7 +6194,7 @@ ul.pagination li {
 }
 /* line 107, ../bower_components/foundation/scss/foundation/components/_switches.scss */
 .switch input:checked + label {
-  background: #2C3E50;
+  background: #446CB3;
 }
 /* line 111, ../bower_components/foundation/scss/foundation/components/_switches.scss */
 .switch input:checked + label:after {
@@ -6225,7 +6225,7 @@ ul.pagination li {
 }
 /* line 163, ../bower_components/foundation/scss/foundation/components/_switches.scss */
 .switch input:checked + label {
-  background: #2C3E50;
+  background: #446CB3;
 }
 /* line 123, ../bower_components/foundation/scss/foundation/components/_switches.scss */
 .switch.large label {
@@ -6491,7 +6491,7 @@ table tr td {
 }
 /* line 48, ../bower_components/foundation/scss/foundation/components/_thumbs.scss */
 .th:hover, .th:focus {
-  box-shadow: 0 0 6px 1px rgba(44, 62, 80, 0.5);
+  box-shadow: 0 0 6px 1px rgba(68, 108, 179, 0.5);
 }
 /* line 63, ../bower_components/foundation/scss/foundation/components/_thumbs.scss */
 .th.radius {
@@ -6508,8 +6508,8 @@ table tr td {
 }
 /* line 44, ../bower_components/foundation/scss/foundation/components/_tooltips.scss */
 .has-tip:hover, .has-tip:focus {
-  border-bottom: dotted 1px #141c24;
-  color: #2C3E50;
+  border-bottom: dotted 1px #1f3151;
+  color: #446CB3;
 }
 /* line 50, ../bower_components/foundation/scss/foundation/components/_tooltips.scss */
 .has-tip.tip-left, .has-tip.tip-right {
@@ -6562,8 +6562,8 @@ table tr td {
 }
 /* line 95, ../bower_components/foundation/scss/foundation/components/_tooltips.scss */
 .tooltip.opened {
-  color: #2C3E50 !important;
-  border-bottom: dotted 1px #141c24 !important;
+  color: #446CB3 !important;
+  border-bottom: dotted 1px #1f3151 !important;
 }
 
 /* line 101, ../bower_components/foundation/scss/foundation/components/_tooltips.scss */
@@ -6830,13 +6830,13 @@ meta.foundation-mq-topbar {
   font-size: 0.8125rem;
   padding-right: 0.9375rem;
   padding-left: 0.9375rem;
-  background-color: #2C3E50;
-  border-color: #233240;
+  background-color: #446CB3;
+  border-color: #36568f;
   color: #FFFFFF;
 }
 /* line 162, ../bower_components/foundation/scss/foundation/components/_buttons.scss */
 .top-bar-section ul li > a.button:hover, .top-bar-section ul li > a.button:focus {
-  background-color: #233240;
+  background-color: #36568f;
 }
 /* line 168, ../bower_components/foundation/scss/foundation/components/_buttons.scss */
 .top-bar-section ul li > a.button:hover, .top-bar-section ul li > a.button:focus {
@@ -6903,13 +6903,13 @@ meta.foundation-mq-topbar {
   font-size: 0.8125rem;
   padding-right: 0.9375rem;
   padding-left: 0.9375rem;
-  background-color: #2C3E50;
-  border-color: #233240;
+  background-color: #446CB3;
+  border-color: #36568f;
   color: #FFFFFF;
 }
 /* line 162, ../bower_components/foundation/scss/foundation/components/_buttons.scss */
 .top-bar-section ul li > button:hover, .top-bar-section ul li > button:focus {
-  background-color: #233240;
+  background-color: #36568f;
 }
 /* line 168, ../bower_components/foundation/scss/foundation/components/_buttons.scss */
 .top-bar-section ul li > button:hover, .top-bar-section ul li > button:focus {
@@ -6979,12 +6979,12 @@ meta.foundation-mq-topbar {
 }
 /* line 363, ../bower_components/foundation/scss/foundation/components/_top-bar.scss */
 .top-bar-section ul li.active > a {
-  background: #2C3E50;
+  background: #446CB3;
   color: #FFFFFF;
 }
 /* line 366, ../bower_components/foundation/scss/foundation/components/_top-bar.scss */
 .top-bar-section ul li.active > a:hover {
-  background: #263545;
+  background: #3a5d9a;
   color: #FFFFFF;
 }
 /* line 374, ../bower_components/foundation/scss/foundation/components/_top-bar.scss */
@@ -7189,11 +7189,11 @@ meta.foundation-mq-topbar {
     padding: 0 0.9375rem;
     line-height: 2.8125rem;
     color: #FFFFFF;
-    background: #2C3E50;
+    background: #446CB3;
   }
   /* line 534, ../bower_components/foundation/scss/foundation/components/_top-bar.scss */
   .top-bar-section li.active:not(.has-form) a:not(.button):hover {
-    background: #263545;
+    background: #3a5d9a;
     color: #FFFFFF;
   }
   /* line 544, ../bower_components/foundation/scss/foundation/components/_top-bar.scss */
@@ -7332,7 +7332,7 @@ meta.foundation-mq-topbar {
   }
   /* line 677, ../bower_components/foundation/scss/foundation/components/_top-bar.scss */
   .no-js .top-bar-section ul li:active > a {
-    background: #2C3E50;
+    background: #446CB3;
     color: #FFFFFF;
   }
   /* line 685, ../bower_components/foundation/scss/foundation/components/_top-bar.scss */
@@ -7614,13 +7614,13 @@ td {
 /* Default Link Styles */
 /* line 217, ../bower_components/foundation/scss/foundation/components/_type.scss */
 a {
-  color: #2C3E50;
+  color: #446CB3;
   text-decoration: none;
   line-height: inherit;
 }
 /* line 222, ../bower_components/foundation/scss/foundation/components/_type.scss */
 a:hover, a:focus {
-  color: #263545;
+  color: #3a5d9a;
 }
 /* line 230, ../bower_components/foundation/scss/foundation/components/_type.scss */
 a img {
@@ -7712,7 +7712,7 @@ hr {
   border: solid #EFEFEF;
   border-width: 1px 0 0;
   clear: both;
-  margin: 1.25rem 0 1.1875rem;
+  margin: 2.5rem 0 2.4375rem;
   height: 0;
 }
 
@@ -9186,6 +9186,26 @@ h3.mb {
 }
 
 /* line 24, ../scss/_misc.scss */
+select.form-control {
+  padding: 5px 10px;
+}
+
+/* line 29, ../scss/_misc.scss */
+.form.extra label {
+  font-size: 1.15em;
+  font-weight: 500;
+  margin-bottom: 10px;
+}
+/* line 34, ../scss/_misc.scss */
+.form.extra .form-control {
+  font-size: 1.15em;
+  padding: 20px 10px;
+  -moz-border-radius: 3px;
+  -webkit-border-radius: 3px;
+  border-radius: 3px;
+}
+
+/* line 41, ../scss/_misc.scss */
 .btn {
   font-size: 0.85em !important;
   font-weight: 700 !important;
@@ -9230,49 +9250,49 @@ h3.mb {
 .btn:hover, .btn:focus {
   color: #FFFFFF;
 }
-/* line 33, ../scss/_misc.scss */
+/* line 50, ../scss/_misc.scss */
 .btn.primary {
-  background: #2C3E50;
-  border-color: #1a242f;
+  background: #446CB3;
+  border-color: #36568e;
 }
-/* line 37, ../scss/_misc.scss */
+/* line 54, ../scss/_misc.scss */
 .btn.secondary {
   background: #e7e7e7;
   border-color: #cecece;
 }
-/* line 41, ../scss/_misc.scss */
+/* line 58, ../scss/_misc.scss */
 .btn.success {
   background: #43AC6A;
   border-color: #358753;
 }
-/* line 45, ../scss/_misc.scss */
+/* line 62, ../scss/_misc.scss */
 .btn.big {
   padding: 1em 3em;
 }
-/* line 48, ../scss/_misc.scss */
+/* line 65, ../scss/_misc.scss */
 .btn.disabled {
   cursor: not-allowed;
   background-color: #ccc;
   border-color: #bbb;
 }
-/* line 52, ../scss/_misc.scss */
+/* line 69, ../scss/_misc.scss */
 .btn.disabled:active {
   border-width: 1px;
 }
-/* line 56, ../scss/_misc.scss */
+/* line 73, ../scss/_misc.scss */
 .btn.full {
   width: 100%;
   display: block;
   margin-bottom: 10px;
 }
-/* line 61, ../scss/_misc.scss */
+/* line 78, ../scss/_misc.scss */
 .btn.no-radius {
   -moz-border-radius: 0;
   -webkit-border-radius: 0;
   border-radius: 0;
 }
 
-/* line 66, ../scss/_misc.scss */
+/* line 83, ../scss/_misc.scss */
 .panel {
   background: white;
   border-color: #EFEFEF;
@@ -9281,30 +9301,214 @@ h3.mb {
   -webkit-border-radius: 2px;
   border-radius: 2px;
 }
-
-/* line 73, ../scss/_misc.scss */
-label {
-  font-weight: 700;
+/* line 89, ../scss/_misc.scss */
+.panel.extra {
+  padding: 3em;
+}
+@media only screen and (max-width: 40em) {
+  /* line 89, ../scss/_misc.scss */
+  .panel.extra {
+    padding: 1.5em;
+  }
 }
 
-/* line 77, ../scss/_misc.scss */
+/* line 97, ../scss/_misc.scss */
+label {
+  font-weight: 700;
+  margin: 10px 0;
+  margin-top: 20px;
+}
+
+/* line 103, ../scss/_misc.scss */
+hr {
+  margin-top: 25px;
+}
+
+/* line 107, ../scss/_misc.scss */
 .pointer {
   cursor: pointer;
 }
 
-/* line 81, ../scss/_misc.scss */
+/* line 111, ../scss/_misc.scss */
+.bold {
+  font-weight: 700 !important;
+}
+
+/* line 115, ../scss/_misc.scss */
+.text-primary {
+  color: #446CB3 !important;
+}
+
+/* line 119, ../scss/_misc.scss */
 .text-alert {
   font-weight: 700;
   color: #f04124 !important;
 }
-/* line 84, ../scss/_misc.scss */
+/* line 122, ../scss/_misc.scss */
 .text-alert li {
   color: #f04124 !important;
 }
 
-/* line 89, ../scss/_misc.scss */
+/* line 127, ../scss/_misc.scss */
+.text-info {
+  font-weight: 700;
+  color: #a0d3e8 !important;
+}
+/* line 130, ../scss/_misc.scss */
+.text-info li {
+  color: #a0d3e8 !important;
+}
+
+/* line 135, ../scss/_misc.scss */
+.text-success {
+  font-weight: 700;
+  color: #43AC6A !important;
+}
+/* line 138, ../scss/_misc.scss */
+.text-success li {
+  color: #43AC6A !important;
+}
+
+/* line 143, ../scss/_misc.scss */
 .smaller-fs {
   font-size: 0.85em;
+}
+
+/* line 147, ../scss/_misc.scss */
+.thin-header {
+  font-weight: 100;
+}
+
+/* line 151, ../scss/_misc.scss */
+.light-header {
+  font-weight: 300;
+}
+
+/* line 155, ../scss/_misc.scss */
+.normal-header {
+  font-weight: 500;
+}
+
+/* line 159, ../scss/_misc.scss */
+.bold-header {
+  font-weight: 700;
+}
+
+/* line 163, ../scss/_misc.scss */
+.super-header {
+  text-transform: uppercase;
+  letter-spacing: 10px;
+}
+
+/**
+*
+* Notifier
+*
+**/
+/* line 176, ../scss/_misc.scss */
+.notification {
+  width: 300px;
+  height: 50px;
+  position: fixed;
+  bottom: 10px;
+  right: 10px;
+  padding: 5px 15px;
+  padding-right: 35px;
+  background: white;
+  border: 1px solid #EFEFEF;
+  margin-top: 70px;
+  z-index: 9;
+  font-size: 0.7em;
+  line-height: 1.5;
+  overflow: hidden;
+  -moz-border-radius: 100px;
+  -webkit-border-radius: 100px;
+  border-radius: 100px;
+  -moz-box-shadow: 0 0 15px rgba(0, 0, 0, 0.12);
+  -webkit-box-shadow: 0 0 15px rgba(0, 0, 0, 0.12);
+  box-shadow: 0 0 15px rgba(0, 0, 0, 0.12);
+}
+/* line 193, ../scss/_misc.scss */
+.notification h6 {
+  font-weight: 400;
+  line-height: 1em !important;
+  color: #446CB3;
+  white-space: nowrap;
+  text-overflow: ellipsis;
+  overflow: hidden;
+  width: 265px;
+}
+/* line 201, ../scss/_misc.scss */
+.notification h6 small {
+  font-size: 70%;
+  font-weight: 500;
+  color: #777;
+}
+/* line 207, ../scss/_misc.scss */
+.notification .closer {
+  position: absolute;
+  top: 16.5px;
+  right: 6px;
+  font-size: 0.75em;
+  color: #888;
+  cursor: pointer;
+}
+/* line 214, ../scss/_misc.scss */
+.notification .closer:hover {
+  color: #333;
+}
+
+/* line 220, ../scss/_misc.scss */
+.rep-count {
+  font-size: 80%;
+}
+
+/* line 224, ../scss/_misc.scss */
+.notification-entry {
+  width: 100%;
+  border-bottom: 1px solid #EFEFEF;
+  margin-bottom: 10px;
+  padding: 0;
+}
+/* line 229, ../scss/_misc.scss */
+.notification-entry h5 {
+  margin: 0;
+  margin-bottom: 5px;
+}
+/* line 233, ../scss/_misc.scss */
+.notification-entry p {
+  margin-bottom: 5px;
+}
+/* line 237, ../scss/_misc.scss */
+.notification-entry .inline-list li > a {
+  color: #999;
+  font-weight: 500;
+  font-size: 0.85em;
+}
+/* line 241, ../scss/_misc.scss */
+.notification-entry .inline-list li > a:hover {
+  text-decoration: underline;
+  color: #777;
+}
+
+/* line 249, ../scss/_misc.scss */
+.header-rep-count {
+  background: #8194B6;
+  border: 1px solid #7186ad;
+  color: white;
+  font-weight: 700;
+  font-size: 0.75em;
+  text-align: center;
+  padding: 1px 3px;
+  -moz-border-radius: 2px;
+  -webkit-border-radius: 2px;
+  border-radius: 2px;
+}
+
+/* line 260, ../scss/_misc.scss */
+.orange-text {
+  color: #fb800e;
+  font-weight: 700;
 }
 
 /*!
@@ -13010,16 +13214,26 @@ label {
 * html, body, section
 *
 **/
-/* line 51, ../scss/app.scss */
+/* line 52, ../scss/app.scss */
 html, body {
   -webkit-font-smoothing: antialiased !important;
   -moz-osx-font-smoothing: grayscale !important;
 }
 
-/* line 56, ../scss/app.scss */
+/* line 57, ../scss/app.scss */
 section {
-  margin-top: 65px;
+  margin-top: 40px;
   padding: 1.5em 0;
+}
+
+/* line 62, ../scss/app.scss */
+p {
+  font-size: 0.95em;
+}
+
+/* line 66, ../scss/app.scss */
+ul {
+  font-size: 0.95em !important;
 }
 
 /**
@@ -13027,13 +13241,13 @@ section {
 * Top navigation bar
 *
 **/
-/* line 67, ../scss/app.scss */
+/* line 75, ../scss/app.scss */
 .topnav {
   width: 100%;
-  height: 65px;
-  line-height: 65px;
-  background: white;
-  border-bottom: 1px solid #EFEFEF;
+  height: 50px;
+  line-height: 50px;
+  background: #446CB3;
+  border-bottom: 1px solid #3d61a1;
   position: fixed;
   top: 0;
   left: 0;
@@ -13043,18 +13257,22 @@ section {
   -webkit-box-shadow: 0 0 2px rgba(0, 0, 0, 0.05);
   box-shadow: 0 0 2px rgba(0, 0, 0, 0.05);
 }
-/* line 81, ../scss/app.scss */
+/* line 88, ../scss/app.scss */
+.topnav a {
+  color: white;
+}
+/* line 93, ../scss/app.scss */
 .topnav .left a {
   margin-right: 15px;
 }
-/* line 83, ../scss/app.scss */
+/* line 95, ../scss/app.scss */
 .topnav .left a.brand {
   font-weight: 700;
   text-transform: uppercase;
   letter-spacing: 2px;
   font-size: 150%;
 }
-/* line 92, ../scss/app.scss */
+/* line 104, ../scss/app.scss */
 .topnav .right a {
   margin-left: 15px;
   font-weight: 500;
@@ -13065,7 +13283,7 @@ section {
 * Register form
 *
 **/
-/* line 105, ../scss/app.scss */
+/* line 117, ../scss/app.scss */
 .register-form {
   max-height: 0px;
   overflow: hidden;
@@ -13074,7 +13292,81 @@ section {
   -webkit-transition: all 0.3s ease;
   transition: all 0.3s ease;
 }
-/* line 110, ../scss/app.scss */
+/* line 122, ../scss/app.scss */
 .register-form.open {
   max-height: 1000px;
+}
+
+/**
+*
+* Invite form
+*
+**/
+/* line 133, ../scss/app.scss */
+.game-search-results-container {
+  width: 100%;
+  position: relative;
+}
+/* line 136, ../scss/app.scss */
+.game-search-results-container .game-search-results {
+  width: 100%;
+  position: absolute;
+  top: -15px;
+}
+/* line 140, ../scss/app.scss */
+.game-search-results-container .game-search-results .game-search-result {
+  background: white;
+  padding: 5px;
+  border: 1px solid #EFEFEF;
+  border-bottom: none;
+  cursor: pointer;
+  font-size: 1em;
+}
+/* line 148, ../scss/app.scss */
+.game-search-results-container .game-search-results .game-search-result:hover {
+  background: #446CB3;
+}
+/* line 150, ../scss/app.scss */
+.game-search-results-container .game-search-results .game-search-result:hover a {
+  color: white;
+}
+/* line 155, ../scss/app.scss */
+.game-search-results-container .game-search-results .game-search-result:last-of-type {
+  border-bottom: 1px solid #EFEFEF;
+}
+
+/**
+*
+* Account page
+*
+**/
+/* line 168, ../scss/app.scss */
+.profile {
+  width: 100%;
+  border-bottom: 1px solid #EFEFEF;
+  padding: 1em 0;
+}
+/* line 173, ../scss/app.scss */
+.profile:last-of-type {
+  border: none;
+  padding-bottom: 0;
+}
+/* line 178, ../scss/app.scss */
+.profile img {
+  height: 75px;
+  margin-bottom: 1.5em;
+}
+/* line 184, ../scss/app.scss */
+.profile .profiles-mini-list li:first-of-type {
+  font-weight: 700;
+  color: #446CB3;
+}
+/* line 189, ../scss/app.scss */
+.profile .profiles-mini-list li > a {
+  color: #555;
+  font-weight: 500;
+}
+/* line 192, ../scss/app.scss */
+.profile .profiles-mini-list li > a:hover {
+  text-decoration: underline;
 }
