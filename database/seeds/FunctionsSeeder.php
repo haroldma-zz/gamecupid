@@ -2,12 +2,12 @@
 
 use Illuminate\Database\Seeder;
 
-class FunctionsSeeder extends Seeder {
+class FunctionsSeeder extends Seeder
+{
 
     public function run()
     {
-        DB::transaction(function()
-        {
+        DB::transaction(function () {
             // Let's create a helper function for getting total upvotes
             DB::statement("DROP FUNCTION IF EXISTS getInviteUpvotes;");
             DB::statement("DELIMITER $$
@@ -30,7 +30,7 @@ class FunctionsSeeder extends Seeder {
         END$$
         DELIMITER ;");
 
-            // Finally a helper function for calculating hotness
+            // helper function for calculating hotness
             DB::statement("DROP FUNCTION IF EXISTS calculateHotness;");
             DB::statement("DELIMITER $$
         CREATE FUNCTION calculateHotness(ups INTEGER, downs INTEGER, created DATETIME)
@@ -58,7 +58,30 @@ class FunctionsSeeder extends Seeder {
             return ROUND(sign * hotness + seconds / 45000, 7);
         END$$
         DELIMITER ;");
+
+            // Finally a helper function for calculating best
+            DB::statement("DROP FUNCTION IF EXISTS calculateBest;");
+            DB::statement("DELIMITER $$
+        CREATE FUNCTION calculateBest(ups INTEGER, downs INTEGER)
+        RETURNS FLOAT
+        BEGIN
+            DECLARE n, z, p, leftSide, rightSide, under FLOAT;
+
+            SET n = ups + downs;
+
+            IF (n = 0) THEN
+                return 0;
+            END IF;
+
+            SET z = 1.281551565545; # 80% confidence
+            SET p = ups / n;
+
+            SET leftSide = p + 1/(2*n)*z*z;
+            SET rightSide = z*sqrt(p*(1-p)/n + z*z/(4*n*n));
+            SET under = 1+1/n*z*z;
+
+            return (leftSide - rightSide) / under;
+        END$$");
         });
     }
-
 }
