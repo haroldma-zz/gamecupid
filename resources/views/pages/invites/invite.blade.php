@@ -19,12 +19,12 @@
 							{!! Form::label('console_id', 'I want to submit an invite for...') !!}
 							{!! Form::select('console_id', $consoleSelections,
 							0,['class' => 'form-control']) !!}
-                            {!! Form::label('game_id', 'for the game..') !!}
-                            {!! Form::select('game_id', [
-                            '0' => 'Select a game'
-                            ],
-                            0,
-                            ['class' => 'form-control']) !!}
+                            {!! Form::label('game_search', 'for the game..') !!}
+                            {!! Form::text('game_search', '', ['class' => 'form-control', 'placeholder' => 'Type to search', 'id' => 'gameSearchInput']) !!}
+                            {!! Form::hidden('game_id', '') !!}
+                            <div class="game-search-results-container">
+                            	<div class="game-search-results" id="gameSearchResults"></div>
+                            </div>
                             {!! Form::label('title', 'Title') !!}
                             {!! Form::text('title', '', ['form-control']) !!}
                             {!! Form::label('self_text', 'Description') !!}
@@ -43,4 +43,5 @@
 		</div>
 	</div>
 </section>
+<input type="hidden" value="{{ csrf_token() }}" id="csrfToken">
 @stop

@@ -1,5 +1,6 @@
 <?php namespace App\Http\Controllers;
 
+use App\Models\Game;
 use App\Models\Platform;
 use App\Models\Console;
 
@@ -23,7 +24,8 @@ class PageController extends Controller {
 	public function index()
 	{
 		$platforms = Platform::all();
-		return view('pages.index', [ 'platforms' => $platforms]);
+		$games     = Game::all();
+		return view('pages.index', ['platforms' => $platforms, 'games' => $games]);
 	}
 
 

@@ -29,6 +29,7 @@ Route::get('/login', 'PageController@login');
 // POST routes
 Route::post('/login', ['as' => 'user.login', 'uses' => 'UserController@login']);
 Route::post('/register', ['as' => 'user.register', 'uses' => 'UserController@register']);
+Route::post('/game/search', 'GameController@search');
 
 /**
 *

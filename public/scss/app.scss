@@ -127,6 +127,41 @@ ul {
 
 /**
 *
+* Invite form
+*
+**/
+.game-search-results-container {
+	width: 100%;
+	position: relative;
+	.game-search-results {
+		width: 100%;
+		position: absolute;
+		top: -15px;
+		.game-search-result {
+			background: white;
+			padding: 5px;
+			border: 1px solid $silver;
+			border-bottom: none;
+			cursor: pointer;
+			font-size: 1em;
+
+			&:hover {
+				background: $primary-color;
+				a {
+					color: white;
+				}
+			}
+
+			&:last-of-type {
+				border-bottom: 1px solid $silver;
+			}
+		}
+	}
+}
+
+
+/**
+*
 * Account page
 *
 **/

@@ -87,3 +87,34 @@ $('[id="markNotificationAsReadBtn"').click(function()
 		}
 	});
 });
+
+
+// game search input
+$('#gameSearchInput').on('keyup', function()
+{
+	var token = $('#csrfToken').val();
+	var input = $(this).val();
+
+	$.post('/game/search', {_token:token, title:input}, function(res)
+	{
+		if (res)
+		{
+			$('#gameSearchResults').html('');
+			$.each(res, function(idx, game)
+			{
+				var markup = '';
+
+				markup += '<div class="game-search-result">';
+				markup += '<a>' + game.title + '</a>';
+				markup += '</div>';
+
+				$('#gameSearchResults').append(markup);
+			});
+		}
+	});
+});
+
+
+
+
+
