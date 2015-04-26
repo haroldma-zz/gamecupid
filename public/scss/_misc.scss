@@ -245,7 +245,8 @@ hr {
 }
 
 .header-rep-count {
-	background: $primary-color;
+	background: lighten($primary-color, 30);
+	border: 1px solid lighten($primary-color, 25);
 	color: white;
 	font-weight: 700;
 	font-size: 0.75em;

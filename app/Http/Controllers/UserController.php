@@ -40,7 +40,7 @@ class UserController extends Controller {
 			// Give the user +1 rep
 			$rep          = new Rep;
 			$rep->amount  = 1;
-			$rep->event   = "Became member of GameCupid.";
+			$rep->event   = "Became a member of GameCupid.";
 			$rep->user_id = $user->id;
 			$rep->save();
 
@@ -115,18 +115,25 @@ class UserController extends Controller {
 			return redirect('/notifications');
 		}
 
+		$start = strtotime(time());
+		$end   = $start + 30;
+
 		$n     = Auth::user()->rNotifications()->where('notified', false)->orderBy('id', 'DESC')->first();
 		$check = (isset($n->notified) ? $n->notified : false);
 
-		while ($check === false) {
-			sleep(5);
+		while ($check === false && $start < $end) {
+			usleep(5000);
 
 			$n     = Auth::user()->rNotifications()->where('notified', false)->orderBy('id', 'DESC')->first();
 			$check = (isset($n->notified) ? $n->notified : false);
+			$start = strtotime(time());
 		}
 
-		$n->notified = true;
-		$n->save();
+		if ($n)
+		{
+			$n->notified = true;
+			$n->save();
+		}
 
 		return response()->json($n);
 	}

@@ -9491,7 +9491,8 @@ hr {
 
 /* line 247, ../scss/_misc.scss */
 .header-rep-count {
-  background: #446CB3;
+  background: #afc1e1;
+  border: 1px solid #9db3da;
   color: white;
   font-weight: 700;
   font-size: 0.75em;
@@ -9502,7 +9503,7 @@ hr {
   border-radius: 2px;
 }
 
-/* line 257, ../scss/_misc.scss */
+/* line 258, ../scss/_misc.scss */
 .orange-text {
   color: #ff3333;
   font-weight: 700;
@@ -13219,7 +13220,7 @@ html, body {
 
 /* line 57, ../scss/app.scss */
 section {
-  margin-top: 50px;
+  margin-top: 40px;
   padding: 1.5em 0;
 }
 
@@ -13241,10 +13242,10 @@ ul {
 /* line 75, ../scss/app.scss */
 .topnav {
   width: 100%;
-  height: 65px;
-  line-height: 65px;
-  background: white;
-  border-bottom: 1px solid #EFEFEF;
+  height: 50px;
+  line-height: 50px;
+  background: #446CB3;
+  border-bottom: 1px solid #3d61a1;
   position: fixed;
   top: 0;
   left: 0;
@@ -13254,18 +13255,22 @@ ul {
   -webkit-box-shadow: 0 0 2px rgba(0, 0, 0, 0.05);
   box-shadow: 0 0 2px rgba(0, 0, 0, 0.05);
 }
-/* line 89, ../scss/app.scss */
+/* line 88, ../scss/app.scss */
+.topnav a {
+  color: white;
+}
+/* line 93, ../scss/app.scss */
 .topnav .left a {
   margin-right: 15px;
 }
-/* line 91, ../scss/app.scss */
+/* line 95, ../scss/app.scss */
 .topnav .left a.brand {
   font-weight: 700;
   text-transform: uppercase;
   letter-spacing: 2px;
   font-size: 150%;
 }
-/* line 100, ../scss/app.scss */
+/* line 104, ../scss/app.scss */
 .topnav .right a {
   margin-left: 15px;
   font-weight: 500;
@@ -13276,7 +13281,7 @@ ul {
 * Register form
 *
 **/
-/* line 113, ../scss/app.scss */
+/* line 117, ../scss/app.scss */
 .register-form {
   max-height: 0px;
   overflow: hidden;
@@ -13285,7 +13290,7 @@ ul {
   -webkit-transition: all 0.3s ease;
   transition: all 0.3s ease;
 }
-/* line 118, ../scss/app.scss */
+/* line 122, ../scss/app.scss */
 .register-form.open {
   max-height: 1000px;
 }
@@ -13295,33 +13300,33 @@ ul {
 * Account page
 *
 **/
-/* line 129, ../scss/app.scss */
+/* line 133, ../scss/app.scss */
 .profile {
   width: 100%;
   border-bottom: 1px solid #EFEFEF;
   padding: 1em 0;
 }
-/* line 134, ../scss/app.scss */
+/* line 138, ../scss/app.scss */
 .profile:last-of-type {
   border: none;
   padding-bottom: 0;
 }
-/* line 139, ../scss/app.scss */
+/* line 143, ../scss/app.scss */
 .profile img {
   height: 75px;
   margin-bottom: 1.5em;
 }
-/* line 145, ../scss/app.scss */
+/* line 149, ../scss/app.scss */
 .profile .profiles-mini-list li:first-of-type {
   font-weight: 700;
   color: #446CB3;
 }
-/* line 150, ../scss/app.scss */
+/* line 154, ../scss/app.scss */
 .profile .profiles-mini-list li > a {
   color: #555;
   font-weight: 500;
 }
-/* line 153, ../scss/app.scss */
+/* line 157, ../scss/app.scss */
 .profile .profiles-mini-list li > a:hover {
   text-decoration: underline;
 }

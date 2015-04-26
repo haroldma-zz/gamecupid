@@ -2,6 +2,8 @@
 <html lang="en">
 <head>
 	<meta charset="UTF-8">
+	<meta http-equiv="X-UA-Compatible" content="IE=edge">
+	<meta name="viewport" content="width=device-width, initial-scale=1">
 	<title>GameCupid</title>
 	{!! HTML::style('stylesheets/app.css') !!}
 </head>
@@ -24,8 +26,8 @@
 						<span class="orange-text" id="u-not-read-count"></span>
 						@endif
 					</a>
-					<a href="{!! url('/account') !!}">{{ Auth::user()->username }} <span class="header-rep-count">{{ Auth::user()->rep()}}</span></a>
-					<a href="{!! url('/logout') !!}">Logout</a>
+					<a href="{!! url('/account') !!}"><span class="hide-for-small">{{ Auth::user()->username }}</span><span class="show-for-small"><i class="ion-person"></i></span> <span class="header-rep-count">{{ Auth::user()->rep()}}</span></a>
+					<a href="{!! url('/logout') !!}"><i class="ion-power"></i></a>
 					@else
 					<a href="{!! url('/login') !!}">Login / Register</a>
 					@endif

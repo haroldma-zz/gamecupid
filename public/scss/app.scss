@@ -55,7 +55,7 @@ html, body {
 }
 
 section {
-	margin-top: 50px;
+	margin-top: 40px;
 	padding: 1.5em 0;
 }
 
@@ -74,16 +74,20 @@ ul {
 **/
 .topnav {
 	width: 100%;
-	height: 65px;
-	line-height: 65px;
-	background: white;
-	border-bottom: 1px solid $silver;
+	height: 50px;
+	line-height: 50px;
+	background: $primary-color;
+	border-bottom: 1px solid darken($primary-color, 5);
 	position: fixed;
 	top: 0;
 	left: 0;
 	z-index: 9;
 	font-size: 0.85em;
 	@include box-shadow(0 0 2px darken(rgba(44, 62, 80, 0.05), 40));
+
+	a {
+		color: white;
+	}
 
 	.left {
 		a {

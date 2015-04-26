@@ -12,7 +12,7 @@ function checkForNotification() {
 
 			notification += '<div class="notification" id="notification">';
 			notification += '<h6>';
-			notification += res.title + '<br>';
+			notification += '<a href="/notifications">' + res.title + '</a><br>';
 			notification += '<small>' + res.description + '</small>';
 			notification += '<div class="closer" onclick="closeSuperParent(this);">';
 			notification += '<i class="ion-close"></i>';
@@ -22,7 +22,10 @@ function checkForNotification() {
 
 			$('body').append(notification);
 		}
-		checkForNotification();
+		setTimeout(function()
+		{
+			checkForNotification();
+		}, 10000);
 	});
 }
 
