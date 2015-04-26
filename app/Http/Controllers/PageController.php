@@ -23,7 +23,7 @@ class PageController extends Controller {
 	public function index()
 	{
         $query = "SELECT *, calculateHotness(getInviteUpvotes(id), getInviteDownvotes(id), created_at) as hotness FROM invites ORDER BY hotness DESC;";
-        $invites = Invite::hydrateRaw($query);
+        $invites = Invite::hydrateRaw($query)->take(10);
 		return view('pages.index', ['invites' => $invites]);
 	}
 
