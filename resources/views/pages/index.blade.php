@@ -11,7 +11,7 @@
 						<a href="{!! url('/?sort=hot') !!}" class="{{ (Request::get('sort') == 'hot' || Request::get('sort') == '' ? 'active' : '') }}">Hot</a>
 						<a href="{!! url('/?sort=new') !!}" class="{{ (Request::get('sort') == 'new' ? 'active' : '') }}">New</a>
 						<a href="{!! url('/?sort=controversial') !!}" class="{{ (Request::get('sort') == 'controversial' ? 'active' : '') }}">Controversial</a>
-						<a href="{!! url('/?sort=best') !!}" class="{{ (Request::get('sort') == 'best' ? 'active' : '') }}">Best</a>
+						<a href="{!! url('/?sort=top') !!}" class="{{ (Request::get('sort') == 'top' ? 'active' : '') }}">Top</a>
 					</div>
 					<hr>
 					@if (count($invites) > 0)
