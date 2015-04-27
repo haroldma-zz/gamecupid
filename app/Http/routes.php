@@ -25,6 +25,8 @@ Route::get('/makedb', 'TempController@makedb');
 Route::get('/', 'PageController@index');
 Route::get('/login', 'PageController@login');
 
+Route::get('/invite/{hashid}/{slug}', 'PageController@invite');
+
 
 // POST routes
 Route::post('/login', ['as' => 'user.login', 'uses' => 'UserController@login']);
@@ -33,6 +35,10 @@ Route::post('/game/search', 'GameController@search');
 
 Route::post('/invite/upvote', 'InviteController@upvote');
 Route::post('/invite/downvote', 'InviteController@downvote');
+Route::post('/invite/{hashid}/{slug}', 'InviteController@comment');
+
+Route::post('/comment/upvote', 'CommentController@upvote');
+Route::post('/comment/downvote', 'CommentController@downvote');
 
 /**
 *
@@ -59,7 +65,7 @@ Route::group(['middleware' => 'auth'], function()
 	Route::get('/notification', 'UserController@checkNotification');
 	Route::get('/notifications', 'PageController@notifications');
 
-	Route::get('/invite', 'PageController@invite');
+	Route::get('/invite', 'PageController@inviteForm');
 
 
 	// POST routes

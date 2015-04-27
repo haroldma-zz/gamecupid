@@ -1,24 +1,23 @@
 <?php namespace App\Models;
 
 use Auth;
-use Carbon\Carbon;
-use Illuminate\Database\Eloquent\Model;
 use App\Enums\VoteStates;
-use Vinkla\Hashids\Facades\Hashids;
+use Illuminate\Database\Eloquent\Model;
+use Carbon\Carbon;
 
-class Invite extends Model {
+class Comment extends Model {
 
 	/**
 	 * The database table used by the model.
 	 *
 	 * @var string
 	 */
-	protected $table = 'invites';
+	protected $table = 'comments';
 
     public function castVote($state)
     {
-        $vote            = new InviteVote;
-        $vote->invite_id = $this->id;
+        $vote            = new CommentVote;
+        $vote->comment_id = $this->id;
         $vote->user_id   = Auth::user()->id;
         $vote->state     = $state;
         return $vote->save();
@@ -29,19 +28,19 @@ class Invite extends Model {
         return $this->upvoteCount() - $this->downvoteCount();
     }
 
+	public function upvotes()
+    {
+        return $this->votes()->where('state', VoteStates::UP)->get();
+    }
+
     private $_commentCount = -1;
-    public function commentCount()
+    public function childCount()
     {
         if ($this->_commentCount != -1)
             return $this->_commentCount;
 
-        $this->_commentCount = $this->comments()->count();
+        $this->_commentCount = $this->children()->count();
         return $this->_commentCount;
-    }
-
-	public function upvotes()
-    {
-        return $this->votes()->where('state', VoteStates::UP)->get();
     }
 
     private $_upvoteCount = -1;
@@ -76,8 +75,8 @@ class Invite extends Model {
         if ($this->_isUpvoted != null)
             return $this->_isUpvoted;
 
-        $this->_isUpvoted = Auth::user()->inviteVotes()->where('invite_id', $this->id)->where('state', VoteStates::UP)
-            ->first() != null;
+        $this->_isUpvoted = Auth::user()->commentVotes()->where('comment_id', $this->id)->where('state', VoteStates::UP)
+                ->first() != null;
         return $this->_isUpvoted;
     }
 
@@ -90,22 +89,11 @@ class Invite extends Model {
         if ($this->_isDownvoted != null)
             return $this->_isDownvoted;
 
-        $this->_isDownvoted = Auth::user()->inviteVotes()->where('invite_id', $this->id)->where('state', VoteStates::DOWN)
-            ->first() != null;
+        $this->_isDownvoted = Auth::user()->commentVotes()->where('comment_id', $this->id)->where('state', VoteStates::DOWN)
+                ->first() != null;
         return $this->_isDownvoted;
     }
 
-    public function hashid()
-    {
-    	return Hashids::encode($this->id);
-    }
-
-    public function renderComments($sort)
-    {
-        $commentlist = new CommentsRenderer($this->sortParentComments($sort, 1), $sort);
-
-        return $commentlist->print_comments();
-    }
 
 	/**
 	*
@@ -114,42 +102,32 @@ class Invite extends Model {
 	**/
 	public function user()
 	{
-		return $this->belongsTo('App\Models\User', 'user_id', 'id');
+		return $this->hasOne('App\Models\User', 'id', 'user_id');
 	}
 
-	public function game()
+	public function invite()
 	{
-		return $this->belongsTo('App\Models\Game', 'game_id', 'id');
+		return $this->hasOne('App\Models\Invite', 'id', 'invite_id');
 	}
 
-	public function console()
+	public function children()
 	{
-		return $this->belongsTo('App\Models\Console', 'console_id', 'id');
+		return $this->hasMany('App\Models\Comment', 'parent_id', 'id');
 	}
 
-	public function platform()
+	public function parent()
 	{
-		return $this->belongsTo('App\Models\Platform', 'platform_id', 'id');
-	}
-
-	public function accepts()
-	{
-		return $this->hasMany('App\Models\Accept', 'invite_id', 'id');
+		return $this->hasOne('App\Models\Comment', 'id', 'parent_id');
 	}
 
     public function votes()
     {
-        return $this->hasMany('App\Models\InviteVote', 'invite_id', 'id');
+        return $this->hasMany('App\Models\CommentVote', 'comment_id', 'id');
     }
 
-    public function comments()
+    public function sortChildComments($sort, $page, $limit)
     {
-        return $this->hasMany('App\Models\Comment', 'invite_id', 'id');
-    }
-
-    public function sortParentComments($sort, $page)
-    {
-        $pageSize = 10;
+        $pageSize = $limit;
 
         if (!is_int($page))
             $page = 1;
@@ -171,21 +149,21 @@ class Invite extends Model {
 
         $query = "SELECT *, $sqlFunction as sort FROM comments
                   WHERE created_at BETWEEN '$time[0]' and '$time[1]'
-                  AND invite_id = $this->id AND parent_id = 0
+                  AND parent_id = $this->id
                   ORDER BY sort DESC LIMIT $page, $pageEnd;";
 
         if ($sort == "new")
             $query = "SELECT * FROM comments
                   WHERE created_at BETWEEN '$time[0]' and '$time[1]'
-                  AND invite_id = $this->id AND parent_id = 0
+                  AND parent_id = $this->id
                   ORDER BY created_at DESC LIMIT $page, $pageEnd;";
         else if ($sort == "top")
             $query = "SELECT *, getCommentUpvotes(id) as upvotes, getCommentDownvotes(id) as downvotes FROM comments
                   WHERE created_at BETWEEN '$time[0]' and '$time[1]'
-                  AND invite_id = $this->id AND parent_id = 0
+                  AND parent_id = $this->id
                   ORDER BY upvotes - downvotes DESC LIMIT $page, $pageEnd;";
 
-         return Comment::hydrateRaw($query);
+        return Comment::hydrateRaw($query);
     }
 
 }

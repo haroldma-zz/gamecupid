@@ -146,3 +146,10 @@ $('html, body').click(function(e)
 		$('#gameSearchResults').hide();
 	}
 });
+
+
+// reply to comment button
+$('body').on('click', '[id="replyToComment"]', function()
+{
+	$('#commentBox-' + $(this).data('id')).toggle();
+});

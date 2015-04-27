@@ -50,7 +50,7 @@
                             <hr>
                             {!! Form::label('title', 'Invite title') !!}
                             {!! Form::text('title', '', ['class' => 'form-control']) !!}
-                            {!! Form::label('self_text', 'Description') !!}
+                            {!! Form::label('self_text', 'Description [you can use Markdown]') !!}
                             {!! Form::textarea('self_text', '', ['class' => 'form-control']) !!}
                             {!! Form::checkbox('requires_approval', 1) !!}
                             {!! Form::label('requires_approval', 'When someone wants to play with me, that person requires my approval.') !!}
