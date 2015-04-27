@@ -48,9 +48,9 @@
 							<footer>
 								<a>{{ $invite->player_count }} player{{ ($invite->player_count > 1 ? 's' : '') }}</a>
 								<a>&middot;</a>
-								<a href=""><b>Let's play!</b></a>
+								<a href="{!! url('/invite/' . $invite->hashid() . '/' . $invite->slug) !!}"><b>Let's play!</b></a>
 								<a>&middot;</a>
-								<a href="">0 comments</a>
+								<a href="{!! url('/invite/' . $invite->hashid() . '/' . $invite->slug) !!}">0 comments</a>
 							</footer>
 							<hr>
 						</article>

@@ -12,7 +12,8 @@ use App\Models\Notification;
 use Illuminate\Http\Request;
 use App\Http\Requests\InviteFormRequest;
 use Cocur\Slugify\Slugify;
-USE App\Enums\AjaxVoteResults;
+use App\Enums\AjaxVoteResults;
+use Vinkla\Hashids\Facades\Hashids;
 
 class InviteController extends Controller {
 
