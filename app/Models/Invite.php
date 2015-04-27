@@ -113,6 +113,19 @@ class Invite extends Model {
         return $commentlist->print_comments();
     }
 
+    public function cacheGame()
+    {
+        # check cache
+        $key = generateCacheKeyWithId("model", "game", $this->game_id);
+        $cache = getCache($key);
+        if ($cache != null)
+            return json_decode($cache);
+
+        $game = $this->game()->first();
+
+        return json_decode(setCache($key, json_encode($game), Carbon::now()->addDay()));
+    }
+
 	/**
 	*
 	* Relations
