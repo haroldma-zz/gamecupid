@@ -109,7 +109,7 @@ class CommentsRenderer {
     		{
 	    		$comment = $comment;
 				$user    = User::find($comment->user_id);
-				$output .= '<article class="comment ' . $hierachy . '">';
+				$output .= '<article class="comment ' . $hierachy . ' ' . ($comment->children->count() > 0 ? 'no-pad-bot' : '') . '">';
 				$output .= '<header>';
 				$output .= '<div class="voters">';
 				$output .= '<div class="arrows">';
@@ -135,15 +135,13 @@ class CommentsRenderer {
 				$output .= '</p>';
 				$output .= '</div>';
 				$output .= '</header>';
-				$output .= '<section>';
-				$output .= '<p>';
+				$output .= '<section class="markdown-text">';
 				$output .= ($comment->deleted == true ? '<i>[ this comment was deleted ]</i>' : $comment->self_text);
-				$output .= '</p>';
 				$output .= '</section>';
 				$output .= '<footer>';
 				$output .= '<a id="replyToComment" data-id="' . $comment->id . '">reply</a>';
 				$output .= '<a>&middot;</a>';
-				$output .= '<a>0 comments</a>';
+				$output .= '<a>' . $comment->children->count() . ' comments</a>';
 				$output .= '</footer>';
 				$output .= '<div class="comment-box" id="commentBox-' . $comment->id . '">';
 				$output .= '<form method="POST" action="' . url('/invite/' . Hashids::encode($comment->invite->id) . '/' . $comment->invite->slug) . '" accept-charset="UTF-8">';
@@ -180,7 +178,7 @@ class CommentsRenderer {
 	    	{
 	    		$comment = $comment[0];
 				$user    = User::find($comment->user_id);
-				$output .= '<article class="comment parent">';
+				$output .= '<article class="comment parent ' . ($comment->children->count() > 0 ? 'no-pad-bot' : '') . '">';
 				$output .= '<header>';
 				$output .= '<div class="voters">';
 				$output .= '<div class="arrows">';
@@ -206,15 +204,13 @@ class CommentsRenderer {
 				$output .= '</p>';
 				$output .= '</div>';
 				$output .= '</header>';
-				$output .= '<section>';
-				$output .= '<p>';
+				$output .= '<section class="markdown-text">';
 				$output .= ($comment->deleted == true ? '<i>[ this comment was deleted ]</i>' : $comment->self_text);
-				$output .= '</p>';
 				$output .= '</section>';
 				$output .= '<footer>';
 				$output .= '<a id="replyToComment" data-id="' . $comment->id . '">reply</a>';
 				$output .= '<a>&middot;</a>';
-				$output .= '<a>0 comments</a>';
+				$output .= '<a>' . $comment->children->count() . ' comments</a>';
 				$output .= '</footer>';
 				$output .= '<div class="comment-box" id="commentBox-' . $comment->id . '">';
 				$output .= '<form method="POST" action="' . url('/invite/' . Hashids::encode($comment->invite->id) . '/' . $comment->invite->slug) . '" accept-charset="UTF-8">';

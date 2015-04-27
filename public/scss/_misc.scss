@@ -410,9 +410,29 @@ article.invite {
 * Comments
 *
 **/
+.comments-header {
+	small {
+		font-size: 60%;
+		a {
+			color: #ccc;
+			font-weight: 700;
+			text-transform: uppercase;
+			letter-spacing: 1px;
+			margin-left: 10px;
+
+			&:hover {
+				color: $primary-color;
+			}
+
+			&.active {
+				color: $primary-color;
+			}
+		}
+	}
+}
+
 .comments {
 	width: 100%;
-	font-size: 1.1em;
 
 	.comment-box {
 		width: 100%;
@@ -436,20 +456,35 @@ article.invite {
 			border-bottom: 1px solid $silver;
 		}
 
+		&.no-pad-bot {
+			padding-bottom: 0;
+		}
+
 		.children {
-			padding-left: 25px;
+			padding-left: 15px;
 		}
 
 		&.parent {
 			background: white;
+			border-bottom: none;
+			&:last-of-type {
+				border-bottom: 1px solid $silver;
+			}
 		}
 
 		&.child {
 			background: #f5f5f5;
-			padding-top: 7.5px;
 			border-right: none;
+			border-bottom: none;
+			&:first-of-type {
+				margin-top: 10px;
+			}
 			.parent {
-				padding-top: 7.5px;
+				border-right: none;
+				border-bottom: none;
+				&:first-of-type {
+					margin-top: 10px;
+				}
 			}
 		}
 
@@ -527,11 +562,7 @@ article.invite {
 		section {
 			margin: 0;
 			padding: 0;
-
-			p {
-				font-size: 1em;
-				font-weight: 400;
-			}
+			margin-bottom: 20px;
 		}
 
 		footer {
@@ -561,4 +592,30 @@ article.invite {
 		}
 	}
 
+}
+
+
+/**
+*
+* Markdown markup
+*
+**/
+.markdown-text {
+	h1 {
+		font-size: 1.5em;
+		font-weight: 700;
+	}
+	h2 {
+		font-size: 1.25em;
+		font-weight: 700;
+	}
+	h3, h4, h5, h6 {
+		font-size: 1em;
+		font-weight: 700;
+		padding-left: 0 !important;
+		margin-bottom: 0.625rem !important;
+	}
+	p, ul {
+		font-size: 0.9em !important;
+	}
 }

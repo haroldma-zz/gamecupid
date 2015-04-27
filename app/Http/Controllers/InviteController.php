@@ -7,6 +7,7 @@ use App\Models\Invite;
 use App\Models\InviteVote;
 use App\Models\Comment;
 use App\Models\RepEvent;
+use App\Models\Parsedown;
 use App\Enums\RepEvents;
 use App\Enums\VoteStates;
 use App\Models\Notification;
@@ -25,13 +26,15 @@ class InviteController extends Controller {
 	**/
 	public function invite(InviteFormRequest $request)
 	{
-        $slugify = new Slugify();
+		$parsedown = new Parsedown();
+		$slugify   = new Slugify();
         $slugify->addRule('+', 'plus');
 
 		$invite                    = new Invite;
 		$invite->title             = $request->get('title');
 		$invite->slug              = $slugify->slugify($request->get('title'), "-");
-		$invite->self_text         = $request->get('self_text');
+		$invite->self_text         = $parsedown->text($request->get('self_text'));
+		$invite->markdown_text     = $request->get('self_text');
 		$invite->tag_text          = '-';
 		$invite->player_count      = $request->get('player_count');
 		$invite->requires_approval = ($request->get('requires_approval') == '' ? false : true);
@@ -193,9 +196,10 @@ class InviteController extends Controller {
 		if ($invite->id != $request->get('invite_id'))
 			return redirect()->back()->withInput()->with('notice', ['error', 'Invalid action.']);
 
+		$parsedown              = new Parsedown();
 		$comment                = new Comment;
-		$comment->self_text     = $request->get('self_text');
-		$comment->markdown_text = '';
+		$comment->self_text     = $parsedown->text($request->get('self_text'));
+		$comment->markdown_text = $request->get('self_text');
 		$comment->deleted       = false;
 		$comment->parent_id     = $request->get('parent_id');
 		$comment->invite_id     = $invite->id;
