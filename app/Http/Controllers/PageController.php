@@ -33,8 +33,15 @@ class PageController extends Controller {
         $page = ($page - 1) * $pageSize;
         $pageEnd = $pageSize;
 
-        $query = "SELECT *, calculateHotness(getInviteUpvotes(id), getInviteDownvotes(id), created_at) as hotness FROM invites
-                  ORDER BY hotness DESC LIMIT $page, $pageEnd;";
+        $sort = $request->input('sort', 'hot');
+        $sqlFunction = "calculateHotness(getInviteUpvotes(id), getInviteDownvotes(id), created_at)";
+
+        if ($sort == "controversial")
+            $sqlFunction = "calculateControversy(getInviteUpvotes(id), getInviteDownvotes(id))";
+
+
+        $query = "SELECT *, $sqlFunction as sort FROM invites
+                  ORDER BY sort DESC LIMIT $page, $pageEnd;";
         $invites = Invite::hydrateRaw($query);
 		return view('pages.index', ['invites' => $invites]);
 	}
