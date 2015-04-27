@@ -3,6 +3,7 @@
 use App\Models\Game;
 use App\Models\Platform;
 use App\Models\Console;
+use App\Models\Invite;
 
 class PageController extends Controller {
 
@@ -23,9 +24,9 @@ class PageController extends Controller {
 	**/
 	public function index()
 	{
-		$platforms = Platform::all();
-		$games     = Game::all();
-		return view('pages.index', ['platforms' => $platforms, 'games' => $games]);
+		$invites = Invite::orderBy('id', 'DESC')->get();
+
+		return view('pages.index', ['invites' => $invites]);
 	}
 
 

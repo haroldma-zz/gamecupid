@@ -1,11 +1,15 @@
 <?php namespace App\Http\Controllers;
 
 use Auth;
+use Response;
 use App\Models\Rep;
 use App\Models\Invite;
+use App\Models\InviteVote;
 use App\Models\RepEvent;
 use App\Enums\RepEvents;
+use App\Enums\VoteStates;
 use App\Models\Notification;
+use Illuminate\Http\Request;
 use App\Http\Requests\InviteFormRequest;
 use Cocur\Slugify\Slugify;
 
@@ -55,4 +59,129 @@ class InviteController extends Controller {
 		}
 	}
 
+
+	/**
+	*
+	* Upvote an invite
+	*
+	**/
+	public function upvote(Request $request)
+	{
+		if (!$request->ajax())
+			return redirect('/');
+
+		if (!Auth::check())
+			return 4;
+
+		$id = $request->get('id');
+
+		$check = Auth::user()->inviteVotes()->where('invite_id', $id)->first();
+
+		if ($check)
+		{
+			$vote = $check;
+
+			if ($vote->state == VoteStates::UP)			// UNVOTED
+			{
+				$vote->delete();
+				return 2;
+			}
+			else if ($vote->state == VoteStates::DOWN)	// UPVOTED FROM DOWNVOTE
+			{
+				$vote->state = VoteStates::UP;
+				$vote->save();
+				return 3;
+			}
+			else
+			{
+				return 5; 								// Error
+			}
+		}
+		else
+		{
+			$vote            = new InviteVote;
+			$vote->invite_id = $id;
+			$vote->user_id   = Auth::user()->id;
+			$vote->state     = VoteStates::UP;
+
+			if ($vote->save())
+			{
+				return 1;
+			}
+			else
+			{
+				return 5;
+			}
+		}
+	}
+
+
+	/**
+	*
+	* Downvote an invite
+	*
+	**/
+	public function downvote(Request $request)
+	{
+		if (!$request->ajax())
+			return redirect('/');
+
+		if (!Auth::check())
+			return 4;
+
+		$id = $request->get('id');
+
+		$check = Auth::user()->inviteVotes()->where('invite_id', $id)->first();
+
+		if ($check)
+		{
+			$vote = $check;
+
+			if ($vote->state == VoteStates::DOWN)		// UNVOTED
+			{
+				$vote->delete();
+				return 2;
+			}
+			else if ($vote->state == VoteStates::UP)	// DOWNVOTED FROM UPVOTE
+			{
+				$vote->state = VoteStates::DOWN;
+				$vote->save();
+				return 3;
+			}
+			else
+			{
+				return 5; 								// Error
+			}
+		}
+		else
+		{
+			$vote            = new InviteVote;
+			$vote->invite_id = $id;
+			$vote->user_id   = Auth::user()->id;
+			$vote->state     = VoteStates::DOWN;
+
+			if ($vote->save())
+			{
+				return 1;
+			}
+			else
+			{
+				return 5;
+			}
+		}
+	}
+
 }
+
+
+
+
+
+
+
+
+
+
+
+
+
