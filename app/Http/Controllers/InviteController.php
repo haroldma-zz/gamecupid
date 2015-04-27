@@ -174,7 +174,8 @@ class InviteController extends Controller {
 	**/
 	public function comment($hashid, $slug, Request $request)
 	{
-		$invite = Invite::find(Hashids::decode($hashid));
+        $id = Hashids::decode($hashid)[0];
+		$invite = Invite::find($id);
 
 		if (!$invite)
 			return redirect()->back()->withInput()->with('notice', ['error', 'Invite not found.']);
