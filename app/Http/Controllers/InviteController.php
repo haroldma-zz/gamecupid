@@ -3,6 +3,8 @@
 use Auth;
 use App\Models\Rep;
 use App\Models\Invite;
+use App\Models\RepEvent;
+use App\Enums\RepEvents;
 use App\Models\Notification;
 use App\Http\Requests\InviteFormRequest;
 use Cocur\Slugify\Slugify;
@@ -32,14 +34,16 @@ class InviteController extends Controller {
 
 		if ($invite->save())
 		{
+			$repEvent = RepEvent::find(RepEvents::CREATED_INVITE);
+
 			$rep               = new Rep;
-			$rep->rep_event_id = 6;  					// #6 of rep_events in db
+			$rep->rep_event_id = $repEvent->id;
 			$rep->user_id      = Auth::user()->id;
 			$rep->save();
 
 			$not              = new Notification;
-			$not->title       = "+1 rep"; 					// double check in db
-			$not->description = "Submitted a invite.";  // double check in db
+			$not->title       = "+{$repEvent->amount} rep";
+			$not->description = $repEvent->event;
 			$not->to_id       = Auth::user()->id;
 			$not->save();
 

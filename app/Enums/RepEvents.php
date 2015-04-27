@@ -20,4 +20,3 @@ abstract class RepEvents
     const JOINED_CREW  = 10;
     const LEFT_CREW  = 11;
 }
-

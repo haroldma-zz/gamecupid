@@ -129,17 +129,15 @@ class UserController extends Controller {
 		$end   = $start + 30;
 
 		$n     = Auth::user()->rNotifications()->where('notified', false)->orderBy('id', 'DESC')->first();
-		$check = (isset($n->notified) ? $n->notified : false);
+		$check = ($n->notified == '' ? false : $n->notified);
 
 		while ($check === false && $start < $end) {
-			usleep(5000);
+			sleep(5);
 
 			$n     = Auth::user()->rNotifications()->where('notified', false)->orderBy('id', 'DESC')->first();
-			$check = (isset($n->notified) ? $n->notified : false);
+			$check = ($n->notified == '' ? false : $n->notified);
 			$start = date("m/d/Y h:i:s a", time());
 		}
-
-		usleep(1500);
 
 		if ($n)
 		{
