@@ -4,6 +4,7 @@ use App\Models\Console;
 use App\Models\Invite;
 use Vinkla\Hashids\Facades\Hashids;
 use Illuminate\Http\Request;
+use Carbon\Carbon;
 
 class PageController extends Controller {
 
@@ -33,6 +34,11 @@ class PageController extends Controller {
 		$page    = ($page - 1) * $pageSize;
 		$pageEnd = $pageSize;
 
+        $time = array(
+            Carbon::now()->subDay(),
+            Carbon::now()
+        );
+
 		$sort        = $request->input('sort', 'hot');
 		$sqlFunction = "calculateHotness(getInviteUpvotes(id), getInviteDownvotes(id), created_at)";
 
@@ -40,13 +46,16 @@ class PageController extends Controller {
             $sqlFunction = "calculateControversy(getInviteUpvotes(id), getInviteDownvotes(id))";
 
         $query = "SELECT *, $sqlFunction as sort FROM invites
+                  WHERE created_at BETWEEN '$time[0]' and '$time[1]'
                   ORDER BY sort DESC LIMIT $page, $pageEnd;";
 
         if ($sort == "new")
             $query = "SELECT * FROM invites
+                  WHERE created_at BETWEEN '$time[0]' and '$time[1]'
                   ORDER BY created_at DESC LIMIT $page, $pageEnd;";
         else if ($sort == "top")
             $query = "SELECT *, getInviteUpvotes(id) as upvotes, getInviteDownvotes(id) as downvotes FROM invites
+                  WHERE created_at BETWEEN '$time[0]' and '$time[1]'
                   ORDER BY upvotes - downvotes DESC LIMIT $page, $pageEnd;";
 
         $invites = Invite::hydrateRaw($query);
