@@ -138,6 +138,7 @@ return [
 		'Illuminate\Html\HtmlServiceProvider',
 		'Zizaco\Entrust\EntrustServiceProvider',
 		'Greggilbert\Recaptcha\RecaptchaServiceProvider',
+		'Vinkla\Hashids\HashidsServiceProvider',
 
 		/*
 		 * Application Service Providers...
@@ -200,6 +201,7 @@ return [
 		'Entrust'   => 'Zizaco\Entrust\EntrustFacade',
 		'Recaptcha' => 'Greggilbert\Recaptcha\Facades\Recaptcha',
 		'Timeago'   => 'App\Models\Timeago',
+		'Hashids'   => 'Vinkla\Hashids\Facades\Hashids',
 
 
 	],

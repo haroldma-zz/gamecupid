@@ -14,14 +14,13 @@ class CreateInvitesTable extends Migration {
 	{
 		Schema::create('invites', function(Blueprint $table) {
             $table->increments('id');
+            $table->string('hashid');
             $table->string('title');
             $table->mediumText('self_text');
             $table->string('tag_text');
             $table->string('slug');
             $table->integer('player_count');
             $table->tinyInteger('requires_approval');
-            $table->datetime('starts');
-            $table->datetime('expires');
             $table->tinyInteger('featured');
             $table->integer('user_id');
             $table->integer('game_id');

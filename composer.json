@@ -10,7 +10,8 @@
 		"guzzlehttp/guzzle": "~5.0",
 		"zizaco/entrust": "dev-laravel-5",
 		"greggilbert/recaptcha": "dev-master",
-		"cocur/slugify": "~1.1"
+		"cocur/slugify": "~1.1",
+		"vinkla/hashids": "~1.0"
 	},
 	"require-dev": {
 		"phpunit/phpunit": "~4.0",
