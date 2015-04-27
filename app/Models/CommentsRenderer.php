@@ -23,7 +23,7 @@ class CommentsRenderer {
     const CHILD_SUB_LIMIT = 10;
 
     // How much should the child limit decreased for each nest load
-    const CHILD_NEST_SUBTRACT = 2;
+    const CHILD_NEST_SUBTRACT = 1;
 
 	/**
 	*
