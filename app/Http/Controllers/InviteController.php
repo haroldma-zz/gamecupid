@@ -205,8 +205,10 @@ class InviteController extends Controller {
 		$comment->invite_id     = $invite->id;
 		$comment->user_id       = Auth::user()->id;
 
-		if ($comment->save())
-			return redirect()->back();
+		if ($comment->save()) {
+            $comment->castVote(VoteStates::UP);
+            return redirect()->back();
+        }
 
 		return redirect()->back()->withInput()->with('notice', ['error', 'Something went wrong, try again.']);
 	}

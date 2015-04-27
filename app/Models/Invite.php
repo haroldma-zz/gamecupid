@@ -20,14 +20,28 @@ class Invite extends Model {
         return $this->upvoteCount() - $this->downvoteCount();
     }
 
+    private $_commentCount = -1;
+    public function commentCount()
+    {
+        if ($this->_commentCount != -1)
+            return $this->_commentCount;
+
+        $this->_commentCount = $this->comments()->count();
+        return $this->_commentCount;
+    }
+
 	public function upvotes()
     {
         return $this->votes()->where('state', VoteStates::UP)->get();
     }
 
+    private $_upvoteCount = -1;
     public function upvoteCount()
     {
-        return $this->votes()->where('state', VoteStates::UP)->count();
+        if ($this->_upvoteCount != -1)
+            return $this->_upvoteCount;
+        $this->_upvoteCount = $this->votes()->where('state', VoteStates::UP)->count();
+        return $this->_upvoteCount;
     }
 
     public function downvotes()
@@ -35,27 +49,41 @@ class Invite extends Model {
         return $this->votes()->where('state', VoteStates::DOWN)->get();
     }
 
+    private $_downvoteCount = -1;
     public function downvoteCount()
     {
-        return $this->votes()->where('state', VoteStates::DOWN)->count();
+        if ($this->_downvoteCount != -1)
+            return $this->_downvoteCount;
+        $this->_downvoteCount = $this->votes()->where('state', VoteStates::DOWN)->count();
+        return $this->_downvoteCount;
     }
 
+    private $_isUpvoted = null;
     public function isUpvoted()
     {
         if (!Auth::check())
             return false;
 
-        return Auth::user()->inviteVotes()->where('invite_id', $this->id)->where('state', VoteStates::UP)
+        if ($this->_isUpvoted != null)
+            return $this->_isUpvoted;
+
+        $this->_isUpvoted = Auth::user()->inviteVotes()->where('invite_id', $this->id)->where('state', VoteStates::UP)
             ->first() != null;
+        return $this->_isUpvoted;
     }
 
+    private $_isDownvoted = null;
     public function isDownvoted()
     {
         if (!Auth::check())
             return false;
 
-        return Auth::user()->inviteVotes()->where('invite_id', $this->id)->where('state', VoteStates::DOWN)
+        if ($this->_isDownvoted != null)
+            return $this->_isDownvoted;
+
+        $this->_isDownvoted = Auth::user()->inviteVotes()->where('invite_id', $this->id)->where('state', VoteStates::DOWN)
             ->first() != null;
+        return $this->_isDownvoted;
     }
 
     public function hashid()

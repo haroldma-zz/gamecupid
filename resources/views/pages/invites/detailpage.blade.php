@@ -43,7 +43,7 @@
 						<a>&middot;</a>
 						<a href="{!! url('/invite/' . $invite->hashid() . '/' . $invite->slug) !!}"><b>Let's play!</b></a>
 						<a>&middot;</a>
-						<a href="{!! url('/invite/' . $invite->hashid() . '/' . $invite->slug) !!}">{{ $invite->comments->count() }} comment{{ $invite->comments->count() == 1 ? '' : 's' }}</a>
+						<a href="{!! url('/invite/' . $invite->hashid() . '/' . $invite->slug) !!}">{{ $invite->commentCount() }} comment{{ $invite->commentCount() == 1 ? '' : 's' }}</a>
 					</footer>
 					<hr>
 				</article>
@@ -67,7 +67,7 @@
 					<br>
 					<h6 class="comments-header">
 						<div class="left">
-							Comments ({{ $invite->comments->count() }})
+							Comments ({{ $invite->commentCount() }})
 						</div>
 						<div class="right">
 							<small>

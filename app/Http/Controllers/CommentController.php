@@ -1,5 +1,6 @@
 <?php namespace App\Http\Controllers;
 
+use App\Models\CommentsRenderer;
 use Auth;
 use Response;
 use App\Models\CommentVote;
@@ -27,43 +28,37 @@ class CommentController extends Controller {
 
 		$id = $request->get('id');
 
+		$comment = Comment::where('id', $id)->first();
+
+		if (!$comment)
+			return AjaxVoteResults::ERROR;
+
 		$check = Auth::user()->commentVotes()->where('comment_id', $id)->first();
 
 		if ($check)
 		{
-			$comment = $check;
+			$vote = $check;
 
-			if ($comment->state == VoteStates::UP)			// UNVOTED
+			if ($vote->state == VoteStates::UP)			// UNVOTED
 			{
-				$comment->delete();
+				$vote->delete();
 				return AjaxVoteResults::UNVOTED;
 			}
-			else if ($comment->state == VoteStates::DOWN)	// UPVOTED FROM DOWNVOTE
+			else if ($vote->state == VoteStates::DOWN)	// UPVOTED FROM DOWNVOTE
 			{
-				$comment->state = VoteStates::UP;
-				$comment->save();
+				$vote->state = VoteStates::UP;
+				$vote->save();
 				return AjaxVoteResults::VOTE_SWITCH;
 			}
 			else
-			{
-				return AjaxVoteResults::ERROR; 								// Error
-			}
+				return AjaxVoteResults::ERROR;
 		}
 		else
 		{
-			$comment            = new CommentVote;
-			$comment->comment_id = $id;
-			$comment->user_id   = Auth::user()->id;
-			$comment->state     = VoteStates::UP;
-
-			if ($comment->save())
-			{
+			if ($comment->castVote(VoteStates::UP))
 				return AjaxVoteResults::NORMAL;
-			}
 			else
-			{
 				return AjaxVoteResults::ERROR;
-			}
 		}
 	}
 
@@ -83,36 +78,34 @@ class CommentController extends Controller {
 
 		$id = $request->get('id');
 
+        $comment = Comment::where('id', $id)->first();
+
+        if (!$comment)
+            return AjaxVoteResults::ERROR;
+
 		$check = Auth::user()->commentVotes()->where('comment_id', $id)->first();
 
 		if ($check)
 		{
-			$comment = $check;
+			$vote = $check;
 
-			if ($comment->state == VoteStates::DOWN)		// UNVOTED
+			if ($vote->state == VoteStates::DOWN)		// UNVOTED
 			{
-				$comment->delete();
+                $vote->delete();
 				return AjaxVoteResults::UNVOTED;
 			}
-			else if ($comment->state == VoteStates::UP)	// DOWNVOTED FROM UPVOTE
+			else if ($vote->state == VoteStates::UP)	// DOWNVOTED FROM UPVOTE
 			{
-				$comment->state = VoteStates::DOWN;
-				$comment->save();
+                $vote->state = VoteStates::DOWN;
+                $vote->save();
 				return AjaxVoteResults::VOTE_SWITCH;
 			}
 			else
-			{
-				return AjaxVoteResults::ERROR; 								// Error
-			}
+                return AjaxVoteResults::ERROR;
 		}
 		else
 		{
-			$comment            = new CommentVote;
-			$comment->comment_id = $id;
-			$comment->user_id   = Auth::user()->id;
-			$comment->state     = VoteStates::DOWN;
-
-			if ($comment->save())
+			if ($comment->castVote(VoteStates::DOWN))
 			{
 				return AjaxVoteResults::NORMAL;
 			}

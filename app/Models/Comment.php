@@ -14,6 +14,14 @@ class Comment extends Model {
 	 */
 	protected $table = 'comments';
 
+    public function castVote($state)
+    {
+        $vote            = new CommentVote;
+        $vote->comment_id = $this->id;
+        $vote->user_id   = Auth::user()->id;
+        $vote->state     = $state;
+        return $vote->save();
+    }
 
     public function totalVotes()
     {
@@ -25,9 +33,23 @@ class Comment extends Model {
         return $this->votes()->where('state', VoteStates::UP)->get();
     }
 
+    private $_commentCount = -1;
+    public function childCount()
+    {
+        if ($this->_commentCount != -1)
+            return $this->_commentCount;
+
+        $this->_commentCount = $this->children()->count();
+        return $this->_commentCount;
+    }
+
+    private $_upvoteCount = -1;
     public function upvoteCount()
     {
-        return $this->votes()->where('state', VoteStates::UP)->count();
+        if ($this->_upvoteCount != -1)
+            return $this->_upvoteCount;
+        $this->_upvoteCount = $this->votes()->where('state', VoteStates::UP)->count();
+        return $this->_upvoteCount;
     }
 
     public function downvotes()
@@ -35,27 +57,41 @@ class Comment extends Model {
         return $this->votes()->where('state', VoteStates::DOWN)->get();
     }
 
+    private $_downvoteCount = -1;
     public function downvoteCount()
     {
-        return $this->votes()->where('state', VoteStates::DOWN)->count();
+        if ($this->_downvoteCount != -1)
+            return $this->_downvoteCount;
+        $this->_downvoteCount = $this->votes()->where('state', VoteStates::DOWN)->count();
+        return $this->_downvoteCount;
     }
 
+    private $_isUpvoted = null;
     public function isUpvoted()
     {
         if (!Auth::check())
             return false;
 
-        return Auth::user()->commentVotes()->where('comment_id', $this->id)->where('state', VoteStates::UP)
-            ->first() != null;
+        if ($this->_isUpvoted != null)
+            return $this->_isUpvoted;
+
+        $this->_isUpvoted = Auth::user()->commentVotes()->where('comment_id', $this->id)->where('state', VoteStates::UP)
+                ->first() != null;
+        return $this->_isUpvoted;
     }
 
+    private $_isDownvoted = null;
     public function isDownvoted()
     {
         if (!Auth::check())
             return false;
 
-        return Auth::user()->commentVotes()->where('comment_id', $this->id)->where('state', VoteStates::DOWN)
-            ->first() != null;
+        if ($this->_isDownvoted != null)
+            return $this->_isDownvoted;
+
+        $this->_isDownvoted = Auth::user()->commentVotes()->where('comment_id', $this->id)->where('state', VoteStates::DOWN)
+                ->first() != null;
+        return $this->_isDownvoted;
     }
 
 

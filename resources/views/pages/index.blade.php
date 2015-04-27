@@ -51,7 +51,7 @@
 								<a>&middot;</a>
 								<a href="{!! url('/invite/' . $invite->hashid() . '/' . $invite->slug) !!}"><b>Let's play!</b></a>
 								<a>&middot;</a>
-								<a href="{!! url('/invite/' . $invite->hashid() . '/' . $invite->slug) !!}">{{ $invite->comments->count() }} comments</a>
+								<a href="{!! url('/invite/' . $invite->hashid() . '/' . $invite->slug) !!}">{{ $invite->commentCount() }} comments</a>
 							</footer>
 							<hr>
 						</article>
