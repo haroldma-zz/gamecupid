@@ -130,7 +130,7 @@ class CommentsRenderer {
 				$output .= '&nbsp;';
 				$output .= '&middot;';
 				$output .= '&nbsp;';
-				$output .= '<span id="voteCountComment-' . $comment->id . '">' . ($comment->upvoteCount() - $comment->downvoteCount()) . '</span> points';
+				$output .= '<span id="voteCountComment-' . $comment->id . '">' . $comment->totalVotes() . '</span> point' . ($comment->totalVotes() == 1 ? '' : 's');
 				$output .= '</p>';
 				$output .= '</div>';
 				$output .= '</header>';
@@ -140,7 +140,7 @@ class CommentsRenderer {
 				$output .= '<footer>';
 				$output .= '<a id="replyToComment" data-id="' . $comment->id . '">reply</a>';
 				$output .= '<a>&middot;</a>';
-				$output .= '<a>' . $comment->children->count() . ' comments</a>';
+				$output .= '<a>' . $comment->children->count() . ' comment' . ($comment->children->count() == 1 ? '' : 's') . '</a>';
 				$output .= '</footer>';
 				$output .= '<div class="comment-box" id="commentBox-' . $comment->id . '">';
 				$output .= '<form method="POST" action="' . url('/invite/' . Hashids::encode($comment->invite->id) . '/' . $comment->invite->slug) . '" accept-charset="UTF-8">';
@@ -199,7 +199,7 @@ class CommentsRenderer {
 				$output .= '&nbsp;';
 				$output .= '&middot;';
 				$output .= '&nbsp;';
-				$output .= '<span id="voteCountComment-' . $comment->id . '">' . ($comment->upvoteCount() - $comment->downvoteCount()) . '</span> points';
+                $output .= '<span id="voteCountComment-' . $comment->id . '">' . $comment->totalVotes() . '</span> point' . ($comment->totalVotes() == 1 ? '' : 's');
 				$output .= '</p>';
 				$output .= '</div>';
 				$output .= '</header>';
@@ -209,7 +209,7 @@ class CommentsRenderer {
 				$output .= '<footer>';
 				$output .= '<a id="replyToComment" data-id="' . $comment->id . '">reply</a>';
 				$output .= '<a>&middot;</a>';
-				$output .= '<a>' . $comment->children->count() . ' comments</a>';
+                $output .= '<a>' . $comment->children->count() . ' comment' . ($comment->children->count() == 1 ? '' : 's') . '</a>';
 				$output .= '</footer>';
 				$output .= '<div class="comment-box" id="commentBox-' . $comment->id . '">';
 				$output .= '<form method="POST" action="' . url('/invite/' . Hashids::encode($comment->invite->id) . '/' . $comment->invite->slug) . '" accept-charset="UTF-8">';

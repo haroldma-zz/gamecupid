@@ -15,6 +15,11 @@ class Comment extends Model {
 	protected $table = 'comments';
 
 
+    public function totalVotes()
+    {
+        return $this->upvoteCount() - $this->downvoteCount();
+    }
+
 	public function upvotes()
     {
         return $this->votes()->where('state', VoteStates::UP)->get();

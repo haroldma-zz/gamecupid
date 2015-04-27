@@ -15,6 +15,11 @@ class Invite extends Model {
 	 */
 	protected $table = 'invites';
 
+    public function totalVotes()
+    {
+        return $this->upvoteCount() - $this->downvoteCount();
+    }
+
 	public function upvotes()
     {
         return $this->votes()->where('state', VoteStates::UP)->get();

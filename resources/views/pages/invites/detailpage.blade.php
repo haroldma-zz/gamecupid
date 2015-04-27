@@ -29,7 +29,7 @@
 									</div>
 								</div>
 								<div class="count" id="voteCount-{{ $invite->id }}">
-									{{ $invite->upvoteCount() - $invite->downvoteCount() }}
+									{{ $invite->totalVotes() }}
 								</div>
 							</div>
 							{{ $invite->title }}
@@ -43,7 +43,7 @@
 						<a>&middot;</a>
 						<a href="{!! url('/invite/' . $invite->hashid() . '/' . $invite->slug) !!}"><b>Let's play!</b></a>
 						<a>&middot;</a>
-						<a href="{!! url('/invite/' . $invite->hashid() . '/' . $invite->slug) !!}">0 comments</a>
+						<a href="{!! url('/invite/' . $invite->hashid() . '/' . $invite->slug) !!}">{{ $invite->comments->count() }} comment{{ $invite->comments->count() == 1 ? '' : 's' }}</a>
 					</footer>
 					<hr>
 				</article>

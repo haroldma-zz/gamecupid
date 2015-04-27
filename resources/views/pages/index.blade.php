@@ -40,7 +40,7 @@
 											</div>
 										</div>
 										<div class="count" id="voteCount-{{ $invite->id }}">
-											{{ $invite->upvoteCount() - $invite->downvoteCount() }}
+											{{ $invite->totalVotes() }}
 										</div>
 									</div>
 									{{ $invite->title }}
