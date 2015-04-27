@@ -38,8 +38,10 @@ class Invite extends Model {
         # check cache
         $key = generateCacheKeyWithId("invite", "commentCount", $this->id);
         $cache = getCache($key);
-        if ($cache != null)
+        if ($cache != null) {
+            $this->_commentCount = $cache;
             return $cache;
+        }
 
         $this->_commentCount = $this->comments()->count();
         return setCacheCount($key, $this->_commentCount);
