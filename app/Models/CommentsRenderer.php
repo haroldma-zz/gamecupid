@@ -107,7 +107,7 @@ class CommentsRenderer {
     		foreach($this->children[$parent] as $comment)
     		{
 	    		$comment = $comment;
-				$user    = User::find($comment->user_id);
+                $user    = $comment->user();
 				$output .= '<article class="comment ' . $hierachy . ' ' . ($comment->childCount() > 0 ? 'no-pad-bot' : '') . '">';
 				$output .= '<header>';
 				$output .= '<div class="voters">';
@@ -176,7 +176,7 @@ class CommentsRenderer {
 	    	foreach ($this->parents as $comment)
 	    	{
 	    		$comment = $comment[0];
-				$user    = User::find($comment->user_id);
+				$user    = $comment->user();
 				$output .= '<article class="comment parent ' . ($comment->childCount() > 0 ? 'no-pad-bot' : '') . '">';
 				$output .= '<header>';
 				$output .= '<div class="voters">';

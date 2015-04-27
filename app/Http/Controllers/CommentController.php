@@ -28,7 +28,7 @@ class CommentController extends Controller {
 
 		$id = $request->get('id');
 
-		$comment = Comment::where('id', $id)->first();
+		$comment = Comment::find($id);
 
 		if (!$comment)
 			return AjaxVoteResults::ERROR;
@@ -78,7 +78,7 @@ class CommentController extends Controller {
 
 		$id = $request->get('id');
 
-        $comment = Comment::where('id', $id)->first();
+        $comment = Comment::find($id);
 
         if (!$comment)
             return AjaxVoteResults::ERROR;

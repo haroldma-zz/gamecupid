@@ -82,7 +82,7 @@ class InviteController extends Controller {
 			return AjaxVoteResults::UNAUTHORIZED;
 
 		$id = $request->get('id');
-        $invite = Invite::find($id)->first();
+        $invite = Invite::find($id);
 
         if (!$invite)
             return AjaxVoteResults::ERROR;
@@ -128,10 +128,10 @@ class InviteController extends Controller {
 			return redirect('/');
 
 		if (!Auth::check())
-			return 4;
+			return AjaxVoteResults::UNAUTHORIZED;
 
 		$id = $request->get('id');
-        $invite = Invite::find($id)->first();
+        $invite = Invite::find($id);
 
         if (!$invite)
             return AjaxVoteResults::ERROR;
@@ -174,7 +174,7 @@ class InviteController extends Controller {
 	**/
 	public function comment($hashid, $slug, Request $request)
 	{
-		$invite = Invite::find(Hashids::decode($hashid))->first();
+		$invite = Invite::find(Hashids::decode($hashid));
 
 		if (!$invite)
 			return redirect()->back()->withInput()->with('notice', ['error', 'Invite not found.']);
