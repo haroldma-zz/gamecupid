@@ -1,5 +1,6 @@
 <?php namespace App\Models;
 
+use Auth;
 use Illuminate\Database\Eloquent\Model;
 use App\Enums\VoteStates;
 
@@ -34,13 +35,13 @@ class Invite extends Model {
 
     public function isUpvoted()
     {
-        return Auth::user()->inviteVotes()->where('invite_id', $id)->where('state', VoteStates::UP)
+        return Auth::user()->inviteVotes()->where('invite_id', $this->id)->where('state', VoteStates::UP)
             ->first() != null;
     }
 
     public function isDownvoted()
     {
-        return Auth::user()->inviteVotes()->where('invite_id', $id)->where('state', VoteStates::DOWN)
+        return Auth::user()->inviteVotes()->where('invite_id', $this->id)->where('state', VoteStates::DOWN)
             ->first() != null;
     }
 

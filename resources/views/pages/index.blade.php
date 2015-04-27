@@ -32,10 +32,10 @@
 									<div class="voters">
 										<div class="arrows">
 											<div id="upvoter" data-invite-id="{{ $invite->id }}">
-												<i class="ion-arrow-up-a" id="upvoter-{{ $invite->id }}"></i>
+												<i class="ion-arrow-up-a {{ ($invite->isUpvoted() ? 'activated' : '') }}" id="upvoter-{{ $invite->id }}"></i>
 											</div>
 											<div id="downvoter" data-invite-id="{{ $invite->id }}">
-												<i class="ion-arrow-down-a" id="downvoter-{{ $invite->id }}"></i>
+												<i class="ion-arrow-down-a {{ ($invite->isDownvoted() ? 'activated' : '') }}" id="downvoter-{{ $invite->id }}"></i>
 											</div>
 										</div>
 										<div class="count" id="voteCount-{{ $invite->id }}">
