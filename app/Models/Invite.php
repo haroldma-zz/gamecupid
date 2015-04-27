@@ -13,12 +13,12 @@ class Invite extends Model {
 
 	public function upvotes()
     {
-        return Invite::votes()->where('state', 1);
+        return $this->votes()->where('state', 1)->get();
     }
 
     public function downvotes()
     {
-        return Invite::votes()->where('state', 0);
+        return $this->votes()->where('state', 0)->get();
     }
 
 	/**
