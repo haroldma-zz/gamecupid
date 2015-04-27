@@ -24,10 +24,10 @@ class PageController extends Controller {
 	**/
 	public function index(Request $request)
     {
+        $pageSize = 10;
         $page = $request->input('page', 1);
-        $page -= 1;
-        $page *= 10;
-        $pageEnd = $page + 10;
+        $page = ($page - 1) * $pageSize;
+        $pageEnd = $pageSize;
 
         $query = "SELECT *, calculateHotness(getInviteUpvotes(id), getInviteDownvotes(id), created_at) as hotness FROM invites
                   ORDER BY hotness DESC LIMIT $page, $pageEnd;";
