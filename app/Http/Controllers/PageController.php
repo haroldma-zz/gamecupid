@@ -24,17 +24,17 @@ class PageController extends Controller {
 	**/
 	public function index(Request $request)
     {
-        $pageSize = 10;
-        $page = $request->input('page', 1);
+		$pageSize = 10;
+		$page     = $request->input('page', 1);
 
         if (!is_int($page))
             $page = 1;
 
-        $page = ($page - 1) * $pageSize;
-        $pageEnd = $pageSize;
+		$page    = ($page - 1) * $pageSize;
+		$pageEnd = $pageSize;
 
-        $sort = $request->input('sort', 'hot');
-        $sqlFunction = "calculateHotness(getInviteUpvotes(id), getInviteDownvotes(id), created_at)";
+		$sort        = $request->input('sort', 'hot');
+		$sqlFunction = "calculateHotness(getInviteUpvotes(id), getInviteDownvotes(id), created_at)";
 
         if ($sort == "controversial")
             $sqlFunction = "calculateControversy(getInviteUpvotes(id), getInviteDownvotes(id))";

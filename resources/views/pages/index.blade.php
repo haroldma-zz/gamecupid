@@ -7,10 +7,11 @@
 			<div class="panel">
 				<div class="feed">
 					<div class="sort-by">
-						<a href="">Featured</a>
-						<a href="" class="active">Hot</a>
-						<a href="">New</a>
-						<a href="">Best</a>
+						<a href="{!! url('/') !!}">Featured</a>
+						<a href="{!! url('/?sort=hot') !!}" class="{{ (Request::get('sort') == 'hot' || Request::get('sort') == '' ? 'active' : '') }}">Hot</a>
+						<a href="{!! url('/?sort=new') !!}" class="{{ (Request::get('sort') == 'new' ? 'active' : '') }}">New</a>
+						<a href="{!! url('/?sort=controversial') !!}" class="{{ (Request::get('sort') == 'controversial' ? 'active' : '') }}">Controversial</a>
+						<a href="{!! url('/?sort=best') !!}" class="{{ (Request::get('sort') == 'best' ? 'active' : '') }}">Best</a>
 					</div>
 					<hr>
 					@if (count($invites) > 0)

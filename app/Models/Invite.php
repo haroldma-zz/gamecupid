@@ -37,12 +37,18 @@ class Invite extends Model {
 
     public function isUpvoted()
     {
+        if (!Auth::check())
+            return false;
+
         return Auth::user()->inviteVotes()->where('invite_id', $this->id)->where('state', VoteStates::UP)
             ->first() != null;
     }
 
     public function isDownvoted()
     {
+        if (!Auth::check())
+            return false;
+
         return Auth::user()->inviteVotes()->where('invite_id', $this->id)->where('state', VoteStates::DOWN)
             ->first() != null;
     }
