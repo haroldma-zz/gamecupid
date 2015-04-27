@@ -54,10 +54,6 @@ function setCacheCount($key, $value)
 
 function calculateExpiry($count)
 {
-    if ($count < 50)
-        return Carbon::now()->addSeconds(5);
-    if ($count < 100)
-        return Carbon::now()->addSeconds(30);
     if ($count < 500)
         return Carbon::now()->addMinute(1);
     return Carbon::now()->addMinute(5);
