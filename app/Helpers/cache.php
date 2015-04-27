@@ -8,15 +8,16 @@
 
 use Illuminate\Support\Facades\Cache;
 use Carbon\Carbon;
+use Illuminate\Support\Facades\Auth;
 
 function generateCacheKey($model, $action)
 {
     return 'm_'. $model . '_ac_' . $action;
 }
 
-function generateAuthCacheKey($model, $action, $auth)
+function generateAuthCacheKey($model, $action)
 {
-    return generateCacheKey($model, $action) . '_au_' . $auth;
+    return generateCacheKey($model, $action) . '_au_' . Auth::user()->id;
 }
 
 function generateCacheKeyWithId($model, $action, $id)
@@ -24,9 +25,9 @@ function generateCacheKeyWithId($model, $action, $id)
     return generateCacheKey($model, $action) . '_id_'. $id;
 }
 
-function generateAuthCacheKeyWithId($model, $action, $auth, $id)
+function generateAuthCacheKeyWithId($model, $action, $id)
 {
-    return generateAuthCacheKey($model, $action, $auth) . '_id_' . $id;
+    return generateAuthCacheKey($model, $action) . '_id_' . $id;
 }
 
 function invalidateCache($key)
