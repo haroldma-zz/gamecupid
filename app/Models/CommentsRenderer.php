@@ -37,7 +37,7 @@ class CommentsRenderer {
         foreach ($comments as $comment)
         {
             $limit = CommentsRenderer::PARENT_SUB_LIMIT;
-            $child   = $comment->sortChildComments($sort, 1, CommentsRenderer::CHILD_SUB_LIMIT);;
+            $child   = $comment->sortChildComments($sort, 1, CommentsRenderer::CHILD_SUB_LIMIT);
 
         	$this->theComments[] = $comment;
 
