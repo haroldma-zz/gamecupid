@@ -35,8 +35,14 @@ class Invite extends Model {
         if ($this->_commentCount != -1)
             return $this->_commentCount;
 
+        # check cache
+        $key = generateCacheKeyWithId("invite", "commentCount", $this->id);
+        $cache = getCache($key);
+        if ($cache != null)
+            return $cache;
+
         $this->_commentCount = $this->comments()->count();
-        return $this->_commentCount;
+        return setCacheCount($key, $this->_commentCount);
     }
 
 	public function upvotes()
