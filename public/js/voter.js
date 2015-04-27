@@ -3,7 +3,7 @@ $('body').on('click', '[id="upvoter"]', function()
 	var token = $('#csrfToken').val(),
 		id    = $(this).data("invite-id");
 
-	$.post('invite/upvote', {_token:token, id:id}, function(res)
+	$.post('/invite/upvote', {_token:token, id:id}, function(res)
 	{
 		if (res == 1)			// NORMAL UPVOTE
 		{
@@ -38,7 +38,7 @@ $('body').on('click', '[id="downvoter"]', function()
 	var token = $('#csrfToken').val(),
 		id    = $(this).data("invite-id");
 
-	$.post('invite/downvote', {_token:token, id:id}, function(res)
+	$.post('/invite/downvote', {_token:token, id:id}, function(res)
 	{
 		if (res == 1)			// NORMAL DOWNVOTE
 		{

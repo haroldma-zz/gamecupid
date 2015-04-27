@@ -5,6 +5,7 @@ use Response;
 use App\Models\Rep;
 use App\Models\Invite;
 use App\Models\InviteVote;
+use App\Models\Comment;
 use App\Models\RepEvent;
 use App\Enums\RepEvents;
 use App\Enums\VoteStates;
@@ -171,6 +172,39 @@ class InviteController extends Controller {
 				return AjaxVoteResults::ERROR;
 			}
 		}
+	}
+
+
+	/**
+	*
+	* Comment on invite
+	*
+	**/
+	public function comment($hashid, $slug, Request $request)
+	{
+		$invite = Invite::find(Hashids::decode($hashid));
+
+		if (!$invite)
+			return redirect()->back()->withInput()->with('notice', ['error', 'Invite not found.']);
+
+		if ($request->get('self_text') == '')
+			return redirect()->back()->withInput()->with('notice', ['error', 'You forgot to write a comment.']);
+
+		if ($invite[0]->id !== $request->get('invite_id'))
+			return redirect()->back()->withInput()->with('notice', ['error', 'Invalid action.']);
+
+		$comment                = new Comment;
+		$comment->self_text     = $request->get('self_text');
+		$comment->markdown_text = '';
+		$comment->deleted       = false;
+		$comment->parent_id     = $request->get('parent_id');
+		$comment->invite_id     = $invite[0]->id;
+		$comment->user_id       = Auth::user()->id;
+
+		if ($comment->save())
+			return redirect()->back();
+
+		return redirect()->back()->withInput()->with('notice', ['error', 'Something went wrong, try again.']);
 	}
 
 }

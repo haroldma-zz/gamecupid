@@ -1,6 +1,7 @@
 <?php namespace App\Models;
 
 use Auth;
+use App\Models\CommentsRenderer;
 use Illuminate\Database\Eloquent\Model;
 use App\Enums\VoteStates;
 use Vinkla\Hashids\Facades\Hashids;
@@ -51,6 +52,20 @@ class Invite extends Model {
     	return Hashids::encode($this->id);
     }
 
+    public function renderComments()
+    {
+        $commentsids = [];
+
+        foreach ($this->comments as $c)
+        {
+            $commentsids[] = $c->id;
+        }
+
+        $commentlist = new CommentsRenderer($commentsids);
+
+        return $commentlist->print_comments();
+    }
+
 	/**
 	*
 	* Relations
@@ -84,6 +99,11 @@ class Invite extends Model {
     public function votes()
     {
         return $this->hasMany('App\Models\InviteVote', 'invite_id', 'id');
+    }
+
+    public function comments()
+    {
+        return $this->hasMany('App\Models\Comment', 'invite_id', 'id');
     }
 
 }

@@ -2,6 +2,7 @@
 
 use App\Models\Console;
 use App\Models\Invite;
+use Vinkla\Hashids\Facades\Hashids;
 
 class PageController extends Controller {
 
@@ -96,10 +97,10 @@ class PageController extends Controller {
 
 	/**
 	*
-	* Invite page
+	* Invite Form page
 	*
 	**/
-	public function invite()
+	public function inviteForm()
 	{
 		$consoles = Console::all();
 
@@ -110,6 +111,22 @@ class PageController extends Controller {
         }
 
 		return view('pages.invites.invite', [ 'consoleSelections' => $consoleSelections]);
+	}
+
+
+	/**
+	*
+	* Invite details page
+	*
+	**/
+	public function invite($hashid, $slug)
+	{
+		$invite = Invite::find(Hashids::decode($hashid));
+
+		if (!$invite)
+			return redirect('/page-not-found');
+
+		return view('pages.invites.detailpage', ['invite' => $invite[0]]);
 	}
 
 
