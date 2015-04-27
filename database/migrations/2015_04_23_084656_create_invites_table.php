@@ -14,7 +14,6 @@ class CreateInvitesTable extends Migration {
 	{
 		Schema::create('invites', function(Blueprint $table) {
             $table->increments('id');
-            $table->string('hashid');
             $table->string('title');
             $table->mediumText('self_text');
             $table->string('tag_text');

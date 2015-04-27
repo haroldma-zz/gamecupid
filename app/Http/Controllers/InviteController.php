@@ -27,11 +27,7 @@ class InviteController extends Controller {
         $slugify = new Slugify();
         $slugify->addRule('+', 'plus');
 
-        $check = Invite::orderBy('id', 'DESC')->first();
-        (count($check) > 0 ? $lastId = $check->id : $lastId = 0);
-
 		$invite                    = new Invite;
-		$invite->hashid 		   = Hashids::encode($lastId + 1);
 		$invite->title             = $request->get('title');
 		$invite->slug              = $slugify->slugify($request->get('title'), "-");
 		$invite->self_text         = $request->get('self_text');
