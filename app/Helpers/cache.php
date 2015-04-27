@@ -32,15 +32,12 @@ function generateAuthCacheKeyWithId($model, $action, $id)
 
 function invalidateCache($key)
 {
-    if (Cache::has($key))
-        Cache::forget($key);
+    Cache::forget($key);
 }
 
 function getCache($key)
 {
-    if (Cache::has($key))
-        return Cache::get($key);
-    return null;
+    return Cache::get($key);
 }
 
 function setCache($key, $value, $expire)
