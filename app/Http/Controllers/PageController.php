@@ -39,9 +39,16 @@ class PageController extends Controller {
         if ($sort == "controversial")
             $sqlFunction = "calculateControversy(getInviteUpvotes(id), getInviteDownvotes(id))";
 
-
         $query = "SELECT *, $sqlFunction as sort FROM invites
                   ORDER BY sort DESC LIMIT $page, $pageEnd;";
+
+        if ($sort == "new")
+            $query = "SELECT * FROM invites
+                  ORDER BY created_at DESC LIMIT $page, $pageEnd;";
+        else if ($sort == "top")
+            $query = "SELECT *, getInviteUpvotes(id) as upvotes, getInviteDownvotes(id) as downvotes FROM invites
+                  ORDER BY upvotes - downvotes DESC LIMIT $page, $pageEnd;";
+
         $invites = Invite::hydrateRaw($query);
 		return view('pages.index', ['invites' => $invites]);
 	}
