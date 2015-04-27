@@ -44,6 +44,8 @@ class InviteController extends Controller {
 
 		if ($invite->save())
 		{
+            $invite->castVote(VoteStates::UP);
+            
 			$repEvent = RepEvent::find(RepEvents::CREATED_INVITE);
 
 			$rep               = new Rep;
@@ -80,6 +82,10 @@ class InviteController extends Controller {
 			return AjaxVoteResults::UNAUTHORIZED;
 
 		$id = $request->get('id');
+        $invite = Invite::find($id)->first();
+
+        if (!$invite)
+            return AjaxVoteResults::ERROR;
 
 		$check = Auth::user()->inviteVotes()->where('invite_id', $id)->first();
 
@@ -99,25 +105,14 @@ class InviteController extends Controller {
 				return AjaxVoteResults::VOTE_SWITCH;
 			}
 			else
-			{
-				return AjaxVoteResults::ERROR; 								// Error
-			}
+				return AjaxVoteResults::ERROR;
 		}
 		else
 		{
-			$vote            = new InviteVote;
-			$vote->invite_id = $id;
-			$vote->user_id   = Auth::user()->id;
-			$vote->state     = VoteStates::UP;
-
-			if ($vote->save())
-			{
+			if ($invite->castVote(VoteStates::UP))
 				return AjaxVoteResults::NORMAL;
-			}
 			else
-			{
 				return AjaxVoteResults::ERROR;
-			}
 		}
 	}
 
@@ -136,6 +131,10 @@ class InviteController extends Controller {
 			return 4;
 
 		$id = $request->get('id');
+        $invite = Invite::find($id)->first();
+
+        if (!$invite)
+            return AjaxVoteResults::ERROR;
 
 		$check = Auth::user()->inviteVotes()->where('invite_id', $id)->first();
 
@@ -155,27 +154,17 @@ class InviteController extends Controller {
 				return AjaxVoteResults::VOTE_SWITCH;
 			}
 			else
-			{
-				return AjaxVoteResults::ERROR; 								// Error
-			}
+				return AjaxVoteResults::ERROR;
 		}
 		else
 		{
-			$vote            = new InviteVote;
-			$vote->invite_id = $id;
-			$vote->user_id   = Auth::user()->id;
-			$vote->state     = VoteStates::DOWN;
+            if ($invite->castVote(VoteStates::DOWN))
+                return AjaxVoteResults::NORMAL;
+            else
+                return AjaxVoteResults::ERROR;
+            }
 
-			if ($vote->save())
-			{
-				return AjaxVoteResults::NORMAL;
-			}
-			else
-			{
-				return AjaxVoteResults::ERROR;
-			}
-		}
-	}
+        }
 
 
 	/**

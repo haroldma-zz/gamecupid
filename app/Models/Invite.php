@@ -15,6 +15,15 @@ class Invite extends Model {
 	 */
 	protected $table = 'invites';
 
+    public function castVote($state)
+    {
+        $vote            = new InviteVote;
+        $vote->invite_id = $this->id;
+        $vote->user_id   = Auth::user()->id;
+        $vote->state     = $state;
+        return $vote->save();
+    }
+
     public function totalVotes()
     {
         return $this->upvoteCount() - $this->downvoteCount();
