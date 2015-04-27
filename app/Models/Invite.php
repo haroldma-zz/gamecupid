@@ -3,6 +3,7 @@
 use Auth;
 use Illuminate\Database\Eloquent\Model;
 use App\Enums\VoteStates;
+use Vinkla\Hashids\Facades\Hashids;
 
 class Invite extends Model {
 
@@ -43,6 +44,11 @@ class Invite extends Model {
     {
         return Auth::user()->inviteVotes()->where('invite_id', $this->id)->where('state', VoteStates::DOWN)
             ->first() != null;
+    }
+
+    public function hashid()
+    {
+    	return Hashids::encode($this->id);
     }
 
 	/**
