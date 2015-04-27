@@ -130,7 +130,7 @@ class CommentsRenderer {
 				$output .= '&nbsp;';
 				$output .= '&middot;';
 				$output .= '&nbsp;';
-				$output .= '<span id="voteCountComment-' . $comment->id . '">' . $comment->upvoteCount() - $comment->downvoteCount() . '</span> points';
+				$output .= '<span id="voteCountComment-' . $comment->id . '">' . ($comment->upvoteCount() - $comment->downvoteCount()) . '</span> points';
 				$output .= '</p>';
 				$output .= '</div>';
 				$output .= '</header>';
@@ -199,7 +199,7 @@ class CommentsRenderer {
 				$output .= '&nbsp;';
 				$output .= '&middot;';
 				$output .= '&nbsp;';
-				$output .= '<span id="voteCountComment-' . $comment->id . '">' . $comment->upvoteCount() - $comment->downvoteCount() . '</span> points';
+				$output .= '<span id="voteCountComment-' . $comment->id . '">' . ($comment->upvoteCount() - $comment->downvoteCount()) . '</span> points';
 				$output .= '</p>';
 				$output .= '</div>';
 				$output .= '</header>';
