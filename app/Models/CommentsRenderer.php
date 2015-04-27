@@ -28,8 +28,6 @@ class CommentsRenderer {
         foreach ($comments as $c)
         {
 			$comment = Comment::find($c);
-			$child   = Comment::where('parent_id', '=', $c)->get();
-
         	$this->theComments[] = $comment->id;
         }
 

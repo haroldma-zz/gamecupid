@@ -182,7 +182,7 @@ class InviteController extends Controller {
 	**/
 	public function comment($hashid, $slug, Request $request)
 	{
-		$invite = Invite::find(Hashids::decode($hashid));
+		$invite = Invite::find(Hashids::decode($hashid))->first();
 
 		if (!$invite)
 			return redirect()->back()->withInput()->with('notice', ['error', 'Invite not found.']);
@@ -190,7 +190,7 @@ class InviteController extends Controller {
 		if ($request->get('self_text') == '')
 			return redirect()->back()->withInput()->with('notice', ['error', 'You forgot to write a comment.']);
 
-		if ($invite[0]->id != $request->get('invite_id'))
+		if ($invite->id != $request->get('invite_id'))
 			return redirect()->back()->withInput()->with('notice', ['error', 'Invalid action.']);
 
 		$comment                = new Comment;
@@ -198,7 +198,7 @@ class InviteController extends Controller {
 		$comment->markdown_text = '';
 		$comment->deleted       = false;
 		$comment->parent_id     = $request->get('parent_id');
-		$comment->invite_id     = $invite[0]->id;
+		$comment->invite_id     = $invite->id;
 		$comment->user_id       = Auth::user()->id;
 
 		if ($comment->save())
