@@ -39,7 +39,7 @@ class CommentsRenderer {
             $limit = CommentsRenderer::PARENT_SUB_LIMIT;
             $child   = $comment->sortChildComments($sort, 1, CommentsRenderer::CHILD_SUB_LIMIT);;
 
-        	$this->theComments[] = $comment->id;
+        	$this->theComments[] = $comment;
 
             if (count($child) > 0)
             {
@@ -48,16 +48,15 @@ class CommentsRenderer {
                     if ($limit == 0) break;
                     $limit--;
 
-                    $this->theComments[] = $c->id;
+                    $this->theComments[] = $c;
                     $this->getChildsComments($c, $sort, 1, 1);
                 }
             }
 
         }
 
-        foreach ($this->theComments as $c)
+        foreach ($this->theComments as $comment)
         {
-        	$comment = Comment::find($c);
             if ($comment->parent_id == 0)
             {
             	$this->parents[$comment->id][] = $comment;
@@ -86,7 +85,7 @@ class CommentsRenderer {
         {
             foreach ($child as $c)
             {
-                $this->theComments[] = $c->id;
+                $this->theComments[] = $c;
 
                 $nesting++;
                 $this->getChildsComments($c, $sort, 1, $nesting);
