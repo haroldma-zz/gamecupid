@@ -3,6 +3,7 @@
 use Auth;
 use App\Enums\VoteStates;
 use Illuminate\Database\Eloquent\Model;
+use Carbon\Carbon;
 
 class Comment extends Model {
 
@@ -81,6 +82,47 @@ class Comment extends Model {
     public function votes()
     {
         return $this->hasMany('App\Models\CommentVote', 'comment_id', 'id');
+    }
+
+    public function sortChildComments($sort, $page, $limit)
+    {
+        $pageSize = $limit;
+
+        if (!is_int($page))
+            $page = 1;
+
+        $page    = ($page - 1) * $pageSize;
+        $pageEnd = $pageSize;
+
+        $time = array(
+            Carbon::now()->subDay(),
+            Carbon::now()
+        );
+
+        $sqlFunction = "calculateHotness(getCommentUpvotes(id), getCommentDownvotes(id), created_at)";
+
+        if ($sort == "controversial")
+            $sqlFunction = "calculateControversy(getCommentUpvotes(id), getCommentDownvotes(id))";
+        else if ($sort == "best")
+            $sqlFunction = "calculateBest(getCommentUpvotes(id), getCommentDownvotes(id))";
+
+        $query = "SELECT *, $sqlFunction as sort FROM comments
+                  WHERE created_at BETWEEN '$time[0]' and '$time[1]'
+                  AND parent_id = $this->id
+                  ORDER BY sort DESC LIMIT $page, $pageEnd;";
+
+        if ($sort == "new")
+            $query = "SELECT * FROM comments
+                  WHERE created_at BETWEEN '$time[0]' and '$time[1]'
+                  AND parent_id = $this->id
+                  ORDER BY created_at DESC LIMIT $page, $pageEnd;";
+        else if ($sort == "top")
+            $query = "SELECT *, getCommentUpvotes(id) as upvotes, getCommentDownvotes(id) as downvotes FROM comments
+                  WHERE created_at BETWEEN '$time[0]' and '$time[1]'
+                  AND parent_id = $this->id
+                  ORDER BY upvotes - downvotes DESC LIMIT $page, $pageEnd;";
+
+        return Comment::hydrateRaw($query);
     }
 
 }

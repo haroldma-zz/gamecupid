@@ -1,7 +1,7 @@
 <?php namespace App\Models;
 
 use Auth;
-use App\Models\CommentsRenderer;
+use Carbon\Carbon;
 use Illuminate\Database\Eloquent\Model;
 use App\Enums\VoteStates;
 use Vinkla\Hashids\Facades\Hashids;
@@ -58,16 +58,9 @@ class Invite extends Model {
     	return Hashids::encode($this->id);
     }
 
-    public function renderComments()
+    public function renderComments($sort)
     {
-        $commentsids = [];
-
-        foreach ($this->comments as $c)
-        {
-            $commentsids[] = $c->id;
-        }
-
-        $commentlist = new CommentsRenderer($commentsids);
+        $commentlist = new CommentsRenderer($this->sortParentComments($sort, 1), $sort);
 
         return $commentlist->print_comments();
     }
@@ -110,6 +103,47 @@ class Invite extends Model {
     public function comments()
     {
         return $this->hasMany('App\Models\Comment', 'invite_id', 'id');
+    }
+
+    public function sortParentComments($sort, $page)
+    {
+        $pageSize = 10;
+
+        if (!is_int($page))
+            $page = 1;
+
+        $page    = ($page - 1) * $pageSize;
+        $pageEnd = $pageSize;
+
+        $time = array(
+            Carbon::now()->subDay(),
+            Carbon::now()
+        );
+
+        $sqlFunction = "calculateHotness(getCommentUpvotes(id), getCommentDownvotes(id), created_at)";
+
+        if ($sort == "controversial")
+            $sqlFunction = "calculateControversy(getCommentUpvotes(id), getCommentDownvotes(id))";
+        else if ($sort == "best")
+            $sqlFunction = "calculateBest(getCommentUpvotes(id), getCommentDownvotes(id))";
+
+        $query = "SELECT *, $sqlFunction as sort FROM comments
+                  WHERE created_at BETWEEN '$time[0]' and '$time[1]'
+                  AND invite_id = $this->id AND parent_id = 0
+                  ORDER BY sort DESC LIMIT $page, $pageEnd;";
+
+        if ($sort == "new")
+            $query = "SELECT * FROM comments
+                  WHERE created_at BETWEEN '$time[0]' and '$time[1]'
+                  AND invite_id = $this->id AND parent_id = 0
+                  ORDER BY created_at DESC LIMIT $page, $pageEnd;";
+        else if ($sort == "top")
+            $query = "SELECT *, getCommentUpvotes(id) as upvotes, getCommentDownvotes(id) as downvotes FROM comments
+                  WHERE created_at BETWEEN '$time[0]' and '$time[1]'
+                  AND invite_id = $this->id AND parent_id = 0
+                  ORDER BY upvotes - downvotes DESC LIMIT $page, $pageEnd;";
+
+         return Comment::hydrateRaw($query);
     }
 
 }

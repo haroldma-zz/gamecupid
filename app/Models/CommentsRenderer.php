@@ -16,6 +16,15 @@ class CommentsRenderer {
 	public $children    = [];
 	public $theComments = [];
 
+    // How many parent comments to get (parent_id = 0)
+    const PARENT_SUB_LIMIT = 100;
+
+    // How many child comments to get
+    const CHILD_SUB_LIMIT = 10;
+
+    // How much should the child limit decreased for each nest load
+    const CHILD_NEST_SUBTRACT = 2;
+
 	/**
 	*
 	* The constructer function fetches all the comments and their child comments
@@ -23,12 +32,27 @@ class CommentsRenderer {
 	* See App\Models\Invite @ renderComments()
 	*
 	**/
-    function __construct($comments)
+    function __construct($comments, $sort)
     {
-        foreach ($comments as $c)
+        foreach ($comments as $comment)
         {
-			$comment = Comment::find($c);
+            $limit = CommentsRenderer::PARENT_SUB_LIMIT;
+            $child   = $comment->sortChildComments($sort, 1, CommentsRenderer::CHILD_SUB_LIMIT);;
+
         	$this->theComments[] = $comment->id;
+
+            if (count($child) > 0)
+            {
+                foreach ($child as $c)
+                {
+                    if ($limit == 0) break;
+                    $limit--;
+
+                    $this->theComments[] = $c->id;
+                    $this->getChildsComments($c, $sort, 1, 1);
+                }
+            }
+
         }
 
         foreach ($this->theComments as $c)
@@ -41,6 +65,31 @@ class CommentsRenderer {
             else
             {
                 $this->children[$comment->parent_id][] = $comment;
+            }
+        }
+    }
+
+    /**
+     *
+     * Function to get id's of all child comments of a given comment id
+     *
+     **/
+    private function getChildsComments($c, $sort, $page, $nesting)
+    {
+        $nestingLimit = CommentsRenderer::CHILD_SUB_LIMIT - (CommentsRenderer::CHILD_NEST_SUBTRACT * $nesting);
+
+        if ($nestingLimit <= 0) return;
+
+        $child = $c->sortChildComments($sort, $page, $nestingLimit);
+
+        if (count($child) > 0)
+        {
+            foreach ($child as $c)
+            {
+                $this->theComments[] = $c->id;
+
+                $nesting++;
+                $this->getChildsComments($c, $sort, 1, $nesting);
             }
         }
     }

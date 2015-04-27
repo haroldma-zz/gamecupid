@@ -67,7 +67,7 @@
 						@endif
 					</div>
 					<br>
-					{!! $invite->renderComments() !!}
+					{!! $invite->renderComments("best") !!}
 				</div>
 			</div>
 		</div>
