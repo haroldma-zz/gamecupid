@@ -123,7 +123,8 @@ class Invite extends Model {
 
         $game = $this->game()->first();
 
-        return json_decode(setCache($key, json_encode($game), Carbon::now()->addDay()));
+        setCache($key, json_encode($game), Carbon::now()->addDay());
+        return $game;
     }
 
 	/**
