@@ -14,9 +14,10 @@ class CreateAvailableConsoleTable extends Migration {
 	{
 		Schema::create('available_console', function(Blueprint $table) {
             $table->increments('id');
-            $table->string('poster_url');
             $table->integer('game_id');
             $table->integer('console_id');
+            $table->date('release_date');
+            $table->string('region')->nullable();
             $table->timestamps();
         });
 	}
