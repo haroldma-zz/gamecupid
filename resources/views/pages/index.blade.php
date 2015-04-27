@@ -45,6 +45,14 @@
 									{{ $invite->title }}
 								</h3>
 							</section>
+							<footer>
+								<a>{{ $invite->player_count }} player{{ ($invite->player_count > 1 ? 's' : '') }}</a>
+								<a>&middot;</a>
+								<a href=""><b>Let's play!</b></a>
+								<a>&middot;</a>
+								<a href="">0 comments</a>
+							</footer>
+							<hr>
 						</article>
 						@endforeach
 					@else

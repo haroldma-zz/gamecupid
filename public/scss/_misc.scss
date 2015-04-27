@@ -68,6 +68,9 @@ select.form-control {
 	&.big {
 		padding: 1em 3em;
 	}
+	&.medium {
+		padding: 0.5em 1.25em;
+	}
 	&.disabled {
 		cursor: not-allowed;
 		background-color: #ccc;
