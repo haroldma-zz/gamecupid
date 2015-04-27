@@ -95,11 +95,17 @@ class InviteController extends Controller {
 
 			if ($vote->state == VoteStates::UP)			// UNVOTED
 			{
+                // invalidate cache
+                invalidateCache(generateAuthCacheKeyWithId("invite", "isUpvoted", $id));
+
 				$vote->delete();
 				return AjaxVoteResults::UNVOTED;
 			}
 			else if ($vote->state == VoteStates::DOWN)	// UPVOTED FROM DOWNVOTE
 			{
+                // invalidate cache
+                invalidateCache(generateAuthCacheKeyWithId("invite", "isDownvoted", $id));
+
 				$vote->state = VoteStates::UP;
 				$vote->save();
 				return AjaxVoteResults::VOTE_SWITCH;
@@ -144,11 +150,17 @@ class InviteController extends Controller {
 
 			if ($vote->state == VoteStates::DOWN)		// UNVOTED
 			{
+                // invalidate cache
+                invalidateCache(generateAuthCacheKeyWithId("invite", "isDownvoted", $id));
+
 				$vote->delete();
 				return AjaxVoteResults::UNVOTED;
 			}
 			else if ($vote->state == VoteStates::UP)	// DOWNVOTED FROM UPVOTE
 			{
+                // invalidate cache
+                invalidateCache(generateAuthCacheKeyWithId("invite", "isUpvoted", $id));
+
 				$vote->state = VoteStates::DOWN;
 				$vote->save();
 				return AjaxVoteResults::VOTE_SWITCH;
