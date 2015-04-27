@@ -1,8 +1,8 @@
-<?php namespace App;
+<?php namespace App\Models;
 
 use Illuminate\Database\Eloquent\Model;
 
-class CrewRequest extends Model {
+class CrewMember extends Model {
 
     /**
      *
@@ -18,5 +18,4 @@ class CrewRequest extends Model {
     {
         return $this->belongsTo('App\Models\Crew', 'crew_id', 'id');
     }
-
 }
