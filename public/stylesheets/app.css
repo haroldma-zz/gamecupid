@@ -9172,7 +9172,7 @@ h3.mb {
 .form-control {
   width: 100%;
   padding: 10px;
-  border: 1px solid #EFEFEF;
+  border: 1px solid #EFEFEF !important;
   font-size: 0.85;
   margin-bottom: 5px;
   -moz-border-radius: 2px;
@@ -9184,19 +9184,25 @@ h3.mb {
   border: 1px solid #c5c5c5;
   outline: none;
 }
+/* line 23, ../scss/_misc.scss */
+.form-control.inline {
+  width: 50px;
+  display: inline;
+  margin-right: 10px;
+}
 
-/* line 24, ../scss/_misc.scss */
+/* line 30, ../scss/_misc.scss */
 select.form-control {
   padding: 5px 10px;
 }
 
-/* line 29, ../scss/_misc.scss */
+/* line 35, ../scss/_misc.scss */
 .form.extra label {
   font-size: 1.15em;
   font-weight: 500;
   margin-bottom: 10px;
 }
-/* line 34, ../scss/_misc.scss */
+/* line 40, ../scss/_misc.scss */
 .form.extra .form-control {
   font-size: 1.15em;
   padding: 20px 10px;
@@ -9205,7 +9211,7 @@ select.form-control {
   border-radius: 3px;
 }
 
-/* line 41, ../scss/_misc.scss */
+/* line 47, ../scss/_misc.scss */
 .btn {
   font-size: 0.85em !important;
   font-weight: 700 !important;
@@ -9250,49 +9256,49 @@ select.form-control {
 .btn:hover, .btn:focus {
   color: #FFFFFF;
 }
-/* line 50, ../scss/_misc.scss */
+/* line 56, ../scss/_misc.scss */
 .btn.primary {
   background: #446CB3;
   border-color: #36568e;
 }
-/* line 54, ../scss/_misc.scss */
+/* line 60, ../scss/_misc.scss */
 .btn.secondary {
   background: #e7e7e7;
   border-color: #cecece;
 }
-/* line 58, ../scss/_misc.scss */
+/* line 64, ../scss/_misc.scss */
 .btn.success {
   background: #43AC6A;
   border-color: #358753;
 }
-/* line 62, ../scss/_misc.scss */
+/* line 68, ../scss/_misc.scss */
 .btn.big {
   padding: 1em 3em;
 }
-/* line 65, ../scss/_misc.scss */
+/* line 71, ../scss/_misc.scss */
 .btn.disabled {
   cursor: not-allowed;
   background-color: #ccc;
   border-color: #bbb;
 }
-/* line 69, ../scss/_misc.scss */
+/* line 75, ../scss/_misc.scss */
 .btn.disabled:active {
   border-width: 1px;
 }
-/* line 73, ../scss/_misc.scss */
+/* line 79, ../scss/_misc.scss */
 .btn.full {
   width: 100%;
   display: block;
   margin-bottom: 10px;
 }
-/* line 78, ../scss/_misc.scss */
+/* line 84, ../scss/_misc.scss */
 .btn.no-radius {
   -moz-border-radius: 0;
   -webkit-border-radius: 0;
   border-radius: 0;
 }
 
-/* line 83, ../scss/_misc.scss */
+/* line 89, ../scss/_misc.scss */
 .panel {
   background: white;
   border-color: #EFEFEF;
@@ -9301,100 +9307,100 @@ select.form-control {
   -webkit-border-radius: 2px;
   border-radius: 2px;
 }
-/* line 89, ../scss/_misc.scss */
+/* line 95, ../scss/_misc.scss */
 .panel.extra {
   padding: 3em;
 }
 @media only screen and (max-width: 40em) {
-  /* line 89, ../scss/_misc.scss */
+  /* line 95, ../scss/_misc.scss */
   .panel.extra {
     padding: 1.5em;
   }
 }
 
-/* line 97, ../scss/_misc.scss */
+/* line 103, ../scss/_misc.scss */
 label {
   font-weight: 700;
   margin: 10px 0;
   margin-top: 20px;
 }
 
-/* line 103, ../scss/_misc.scss */
+/* line 109, ../scss/_misc.scss */
 hr {
   margin-top: 25px;
 }
 
-/* line 107, ../scss/_misc.scss */
+/* line 113, ../scss/_misc.scss */
 .pointer {
   cursor: pointer;
 }
 
-/* line 111, ../scss/_misc.scss */
+/* line 117, ../scss/_misc.scss */
 .bold {
   font-weight: 700 !important;
 }
 
-/* line 115, ../scss/_misc.scss */
+/* line 121, ../scss/_misc.scss */
 .text-primary {
   color: #446CB3 !important;
 }
 
-/* line 119, ../scss/_misc.scss */
+/* line 125, ../scss/_misc.scss */
 .text-alert {
   font-weight: 700;
   color: #f04124 !important;
 }
-/* line 122, ../scss/_misc.scss */
+/* line 128, ../scss/_misc.scss */
 .text-alert li {
   color: #f04124 !important;
 }
 
-/* line 127, ../scss/_misc.scss */
+/* line 133, ../scss/_misc.scss */
 .text-info {
   font-weight: 700;
   color: #a0d3e8 !important;
 }
-/* line 130, ../scss/_misc.scss */
+/* line 136, ../scss/_misc.scss */
 .text-info li {
   color: #a0d3e8 !important;
 }
 
-/* line 135, ../scss/_misc.scss */
+/* line 141, ../scss/_misc.scss */
 .text-success {
   font-weight: 700;
   color: #43AC6A !important;
 }
-/* line 138, ../scss/_misc.scss */
+/* line 144, ../scss/_misc.scss */
 .text-success li {
   color: #43AC6A !important;
 }
 
-/* line 143, ../scss/_misc.scss */
+/* line 149, ../scss/_misc.scss */
 .smaller-fs {
   font-size: 0.85em;
 }
 
-/* line 147, ../scss/_misc.scss */
+/* line 153, ../scss/_misc.scss */
 .thin-header {
   font-weight: 100;
 }
 
-/* line 151, ../scss/_misc.scss */
+/* line 157, ../scss/_misc.scss */
 .light-header {
   font-weight: 300;
 }
 
-/* line 155, ../scss/_misc.scss */
+/* line 161, ../scss/_misc.scss */
 .normal-header {
   font-weight: 500;
 }
 
-/* line 159, ../scss/_misc.scss */
+/* line 165, ../scss/_misc.scss */
 .bold-header {
   font-weight: 700;
 }
 
-/* line 163, ../scss/_misc.scss */
+/* line 169, ../scss/_misc.scss */
 .super-header {
   text-transform: uppercase;
   letter-spacing: 10px;
@@ -9405,7 +9411,7 @@ hr {
 * Notifier
 *
 **/
-/* line 176, ../scss/_misc.scss */
+/* line 182, ../scss/_misc.scss */
 .notification {
   width: 300px;
   height: 50px;
@@ -9428,7 +9434,7 @@ hr {
   -webkit-box-shadow: 0 0 15px rgba(0, 0, 0, 0.12);
   box-shadow: 0 0 15px rgba(0, 0, 0, 0.12);
 }
-/* line 193, ../scss/_misc.scss */
+/* line 199, ../scss/_misc.scss */
 .notification h6 {
   font-weight: 400;
   line-height: 1em !important;
@@ -9438,13 +9444,13 @@ hr {
   overflow: hidden;
   width: 265px;
 }
-/* line 201, ../scss/_misc.scss */
+/* line 207, ../scss/_misc.scss */
 .notification h6 small {
   font-size: 70%;
   font-weight: 500;
   color: #777;
 }
-/* line 207, ../scss/_misc.scss */
+/* line 213, ../scss/_misc.scss */
 .notification .closer {
   position: absolute;
   top: 16.5px;
@@ -9453,45 +9459,45 @@ hr {
   color: #888;
   cursor: pointer;
 }
-/* line 214, ../scss/_misc.scss */
+/* line 220, ../scss/_misc.scss */
 .notification .closer:hover {
   color: #333;
 }
 
-/* line 220, ../scss/_misc.scss */
+/* line 226, ../scss/_misc.scss */
 .rep-count {
   font-size: 80%;
 }
 
-/* line 224, ../scss/_misc.scss */
+/* line 230, ../scss/_misc.scss */
 .notification-entry {
   width: 100%;
   border-bottom: 1px solid #EFEFEF;
   margin-bottom: 10px;
   padding: 0;
 }
-/* line 229, ../scss/_misc.scss */
+/* line 235, ../scss/_misc.scss */
 .notification-entry h5 {
   margin: 0;
   margin-bottom: 5px;
 }
-/* line 233, ../scss/_misc.scss */
+/* line 239, ../scss/_misc.scss */
 .notification-entry p {
   margin-bottom: 5px;
 }
-/* line 237, ../scss/_misc.scss */
+/* line 243, ../scss/_misc.scss */
 .notification-entry .inline-list li > a {
   color: #999;
   font-weight: 500;
   font-size: 0.85em;
 }
-/* line 241, ../scss/_misc.scss */
+/* line 247, ../scss/_misc.scss */
 .notification-entry .inline-list li > a:hover {
   text-decoration: underline;
   color: #777;
 }
 
-/* line 249, ../scss/_misc.scss */
+/* line 255, ../scss/_misc.scss */
 .header-rep-count {
   background: #8194B6;
   border: 1px solid #7186ad;
@@ -9505,7 +9511,7 @@ hr {
   border-radius: 2px;
 }
 
-/* line 260, ../scss/_misc.scss */
+/* line 266, ../scss/_misc.scss */
 .orange-text {
   color: #fb800e;
   font-weight: 700;
@@ -13369,4 +13375,30 @@ ul {
 /* line 192, ../scss/app.scss */
 .profile .profiles-mini-list li > a:hover {
   text-decoration: underline;
+}
+
+/**
+*
+* Footer
+*
+**/
+/* line 206, ../scss/app.scss */
+.footer {
+  margin-top: 25px;
+  width: 100%;
+  min-height: 200px;
+  padding: 3em 0;
+  text-align: center;
+}
+/* line 213, ../scss/app.scss */
+.footer .super-header {
+  color: #ccc;
+  margin-bottom: 20px;
+}
+/* line 218, ../scss/app.scss */
+.footer a {
+  color: #ccc;
+  margin: 0 10px;
+  font-size: 0.8em;
+  font-weight: 700;
 }

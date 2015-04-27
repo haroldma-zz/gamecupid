@@ -104,7 +104,7 @@ $('#gameSearchInput').on('keyup', function()
 			{
 				var markup = '';
 
-				markup += '<div class="game-search-result">';
+				markup += '<div class="game-search-result" id="selectGame" data-id="' + game.id + '" data-title="' + game.title + '">';
 				markup += '<a>' + game.title + '</a>';
 				markup += '</div>';
 
@@ -114,7 +114,35 @@ $('#gameSearchInput').on('keyup', function()
 	});
 });
 
+// game search input focus
+$('#gameSearchInput').click(function(e)
+{
+	var gsr = $('#gameSearchResults');
 
+	if (gsr.length && gsr[0].childElementCount > 0)
+	{
+		e.stopPropagation();
+		$('#gameSearchResults').show();
+	}
+});
 
+// game selected
+$('body').on('click', '[id="selectGame"]', function()
+{
+	var id     = $(this).data('id'),
+		title  = $(this).data('title');
 
+	$('#gameSearchInput').val(title);
+	$('#selectedGameId').val(id);
+});
 
+// hide game select box if user in- or outside of it
+$('html, body').click(function(e)
+{
+	var gsr = $('#gameSearchResults');
+
+	if (gsr.length && gsr[0].childElementCount > 0)
+	{
+		$('#gameSearchResults').hide();
+	}
+});

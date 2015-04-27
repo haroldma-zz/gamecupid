@@ -11,13 +11,19 @@ h3.mb {
 .form-control {
 	width: 100%;
 	padding: 10px;
-	border: 1px solid $silver;
+	border: 1px solid $silver !important;
 	font-size: 0.85;
 	margin-bottom: 5px;
 	@include border-radius($global-radius);
 	&:focus {
 		border: 1px solid #c5c5c5;
 		outline: none;
+	}
+
+	&.inline {
+		width: 50px;
+		display: inline;
+		margin-right: 10px;
 	}
 }
 
