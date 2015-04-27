@@ -3,6 +3,7 @@
 use App\Models\Console;
 use App\Models\Invite;
 use Vinkla\Hashids\Facades\Hashids;
+use Illuminate\Http\Request;
 
 class PageController extends Controller {
 
@@ -21,10 +22,16 @@ class PageController extends Controller {
 	* Show the application's index page
 	*
 	**/
-	public function index()
-	{
-        $query = "SELECT *, calculateHotness(getInviteUpvotes(id), getInviteDownvotes(id), created_at) as hotness FROM invites ORDER BY hotness DESC;";
-        $invites = Invite::hydrateRaw($query)->take(10);
+	public function index(Request $request)
+    {
+        $page = $request->input('page', 1);
+        $page -= 1;
+        $page *= 10;
+        $pageEnd = $page + 10;
+
+        $query = "SELECT *, calculateHotness(getInviteUpvotes(id), getInviteDownvotes(id), created_at) as hotness FROM invites
+                  ORDER BY hotness DESC LIMIT $page, $pageEnd;";
+        $invites = Invite::hydrateRaw($query);
 		return view('pages.index', ['invites' => $invites]);
 	}
 
