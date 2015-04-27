@@ -261,6 +261,7 @@ ul {
 				position: relative;
 				padding-left: 50px;
 				padding-bottom: 5px;
+				margin-bottom: 15px;
 
 				.voters	{
 					position: absolute;
@@ -285,7 +286,7 @@ ul {
 								color: lighten($primary-color, 15);
 							}
 
-							&.activated {
+							i.activated {
 								color: lighten($primary-color, 15) !important;
 							}
 						}
@@ -295,7 +296,7 @@ ul {
 								color: lighten($secondary-color, 15);
 							}
 
-							&.activated {
+							i.activated {
 								color: lighten($secondary-color, 15) !important;
 							}
 						}
@@ -306,6 +307,43 @@ ul {
 					}
 				}
 			}
+
+			.panel {
+				padding: 10px;
+			}
+
+			p {
+				font-size: 1.15em;
+				font-weight: 400;
+			}
+		}
+
+		footer {
+			width: 100%;
+			margin-top: 25px;
+
+			a {
+				font-size: 0.85em;
+				color: #777;
+				margin-right: 15px;
+
+				&:hover {
+					text-decoration: underline;
+				}
+
+				&:nth-child(1), &:nth-child(2) {
+					cursor: default;
+					&:hover {
+						text-decoration: none;
+					}
+				}
+			}
+		}
+
+		hr {
+			width: 35px;
+			margin: 25px 0;
+			margin-bottom: 15px;
 		}
 	}
 }
