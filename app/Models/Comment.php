@@ -4,7 +4,6 @@ use Auth;
 use App\Enums\VoteStates;
 use Illuminate\Database\Eloquent\Model;
 use Carbon\Carbon;
-use Vinkla\Hashids\Facades\Hashids;
 
 class Comment extends Model {
 
@@ -31,12 +30,7 @@ class Comment extends Model {
 
     public function getPermalink()
     {
-        return $this->invite()->getPermalink() . $this->hashid() . '/';
-    }
-
-    public function hashid()
-    {
-        return Hashids::encode($this->id);
+        return $this->invite()->getPermalink() . hashId($this->id) . '/';
     }
 
     public function castVote($state)

@@ -4,7 +4,6 @@ use Auth;
 use Carbon\Carbon;
 use Illuminate\Database\Eloquent\Model;
 use App\Enums\VoteStates;
-use Vinkla\Hashids\Facades\Hashids;
 
 class Invite extends Model {
 
@@ -36,7 +35,7 @@ class Invite extends Model {
     **/
     public function getPermalink()
     {
-        return '/invite/' . $this->hashid() . '/' . $this->slug . '/';
+        return '/invite/' . hashId($this->id) . '/' . $this->slug . '/';
     }
 
     public function castVote($state)
@@ -142,11 +141,6 @@ class Invite extends Model {
         $this->_isDownvoted = Auth::user()->inviteVotes()->where('invite_id', $this->id)->where('state', VoteStates::DOWN)
                               ->first() != null;
         return setCache($key, $this->_isDownvoted, Carbon::now()->addDay());
-    }
-
-    public function hashid()
-    {
-    	return Hashids::encode($this->id);
     }
 
     public function renderComments($sort)

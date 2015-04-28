@@ -2,8 +2,6 @@
 
 use App\Models\Console;
 use App\Models\Invite;
-use App\Models\Comment;
-use Vinkla\Hashids\Facades\Hashids;
 use Illuminate\Http\Request;
 use Carbon\Carbon;
 
@@ -156,7 +154,7 @@ class PageController extends Controller {
 	**/
 	public function invite($hashid, $slug)
 	{
-		$invite = Invite::find(Hashids::decode($hashid));
+		$invite = Invite::find(decodeHashId($hashid));
 
 		if (!$invite)
 			return redirect('/page-not-found');
