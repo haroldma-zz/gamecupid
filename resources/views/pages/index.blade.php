@@ -32,14 +32,14 @@
 								<h3>
 									<div class="voters">
 										<div class="arrows">
-											<div id="upvoter" data-invite-id="{{ $invite->id }}">
-												<i class="ion-arrow-up-a {{ ($invite->isUpvoted() ? 'activated' : '') }}" id="upvoter-{{ $invite->id }}"></i>
+											<div id="upvoter" data-invite-id="{{ hashId($invite->id) }}">
+												<i class="ion-arrow-up-a {{ ($invite->isUpvoted() ? 'activated' : '') }}" id="upvoter-{{ hashId($invite->id) }}"></i>
 											</div>
-											<div id="downvoter" data-invite-id="{{ $invite->id }}">
-												<i class="ion-arrow-down-a {{ ($invite->isDownvoted() ? 'activated' : '') }}" id="downvoter-{{ $invite->id }}"></i>
+											<div id="downvoter" data-invite-id="{{ hashId($invite->id) }}">
+												<i class="ion-arrow-down-a {{ ($invite->isDownvoted() ? 'activated' : '') }}" id="downvoter-{{ hashId($invite->id) }}"></i>
 											</div>
 										</div>
-										<div class="count" id="voteCount-{{ $invite->id }}">
+										<div class="count" id="voteCount-{{ hashId($invite->id) }}">
 											{{ $invite->totalVotes() }}
 										</div>
 									</div>
