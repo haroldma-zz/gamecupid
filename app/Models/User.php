@@ -79,6 +79,11 @@ class User extends Model implements AuthenticatableContract, CanResetPasswordCon
 		return $this->hasMany('App\Models\InviteVote', 'user_id', 'id');
 	}
 
+	public function commentVotes()
+	{
+		return $this->hasMany('App\Models\CommentVote', 'user_id', 'id');
+	}
+
 	// Function to return total rep amount (lazy loaded)
 	public function rep()
 	{

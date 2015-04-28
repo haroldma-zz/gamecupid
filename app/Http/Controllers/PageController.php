@@ -2,6 +2,7 @@
 
 use App\Models\Console;
 use App\Models\Invite;
+use App\Models\Comment;
 use Vinkla\Hashids\Facades\Hashids;
 use Illuminate\Http\Request;
 use Carbon\Carbon;
@@ -160,7 +161,9 @@ class PageController extends Controller {
 		if (!$invite)
 			return redirect('/page-not-found');
 
-		return view('pages.invites.detailpage', ['invite' => $invite[0]]);
+		$comment = Comment::find(2);
+
+		return view('pages.invites.detailpage', ['invite' => $invite[0], 'comment' => $comment]);
 	}
 
 

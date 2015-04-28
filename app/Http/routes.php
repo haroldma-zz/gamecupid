@@ -37,6 +37,9 @@ Route::post('/invite/upvote', 'InviteController@upvote');
 Route::post('/invite/downvote', 'InviteController@downvote');
 Route::post('/invite/{hashid}/{slug}', 'InviteController@comment');
 
+Route::post('/comment/upvote', 'CommentController@upvote');
+Route::post('/comment/downvote', 'CommentController@downvote');
+
 /**
 *
 * User authenticated routes

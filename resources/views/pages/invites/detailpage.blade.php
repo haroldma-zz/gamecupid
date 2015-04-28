@@ -56,7 +56,6 @@
 						{!! Form::hidden('invite_id', $invite->id) !!}
 						{!! Form::label('self_text', 'You can use Markdown to write comments.') !!}
 						{!! Form::textarea('self_text', '', ['class' => 'form-control', 'placeholder' => 'Write a comment']) !!}
-						<br>
 						<button type="submit" class="btn primary medium">Comment</button>
 						{!! Form::close() !!}
 						@if(Session::has('notice'))
@@ -67,85 +66,8 @@
 							@endif
 						@endif
 					</div>
-					<article class="comment parent">
-						<header>
-							<div class="voters">
-								<div class="arrows">
-									<div id="upvoter" data-invite-id="{{ $invite->id }}">
-										<i class="ion-arrow-up-a {{ ($invite->isUpvoted() ? 'activated' : '') }}" id="upvoter-{{ $invite->id }}"></i>
-									</div>
-									<div id="downvoter" data-invite-id="{{ $invite->id }}">
-										<i class="ion-arrow-down-a {{ ($invite->isDownvoted() ? 'activated' : '') }}" id="downvoter-{{ $invite->id }}"></i>
-									</div>
-								</div>
-							</div>
-							<div class="img"></div>
-							<div class="user-meta">
-								<h6>
-									<a href="{!! url('/') !!}">{{ $invite->user->username }}</a>
-								</h6>
-								<p>
-									{{ Timeago::convert($invite->created_at) }}
-									&nbsp;
-									&middot;
-									&nbsp;
-									<span id="voteCount-{{ $invite->id }}">{{ $invite->upvoteCount() - $invite->downvoteCount() }} points</span>
-								</p>
-							</div>
-						</header>
-						<section>
-							<p>
-								{{ $invite->self_text }}
-							</p>
-						</section>
-						<footer>
-							<a>reply</a>
-							<a>&middot;</a>
-							<a href="{!! url('/invite/' . $invite->hashid() . '/' . $invite->slug) !!}">0 comments</a>
-						</footer>
-						<div class="children">
-							<article class="comment child">
-								<header>
-									<div class="voters">
-										<div class="arrows">
-											<div id="upvoter" data-invite-id="{{ $invite->id }}">
-												<i class="ion-arrow-up-a {{ ($invite->isUpvoted() ? 'activated' : '') }}" id="upvoter-{{ $invite->id }}"></i>
-											</div>
-											<div id="downvoter" data-invite-id="{{ $invite->id }}">
-												<i class="ion-arrow-down-a {{ ($invite->isDownvoted() ? 'activated' : '') }}" id="downvoter-{{ $invite->id }}"></i>
-											</div>
-										</div>
-									</div>
-									<div class="img"></div>
-									<div class="user-meta">
-										<h6>
-											<a href="{!! url('/') !!}">{{ $invite->user->username }}</a>
-										</h6>
-										<p>
-											{{ Timeago::convert($invite->created_at) }}
-											&nbsp;
-											&middot;
-											&nbsp;
-											<span id="voteCount-{{ $invite->id }}">{{ $invite->upvoteCount() - $invite->downvoteCount() }} points</span>
-										</p>
-									</div>
-								</header>
-								<section>
-									<p>
-										{{ $invite->self_text }}
-									</p>
-								</section>
-								<footer>
-									<a>reply</a>
-									<a>&middot;</a>
-									<a href="{!! url('/invite/' . $invite->hashid() . '/' . $invite->slug) !!}">0 comments</a>
-								</footer>
-								<div class="children">
-									<!-- children -->
-								</div>
-							</article>
-						</div>
-					</article>
+					<br>
+					{!! $invite->renderComments() !!}
 				</div>
 			</div>
 		</div>
