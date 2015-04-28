@@ -54,9 +54,7 @@ class Invite extends Model {
             return $this->_commentCount;
 
         $key   = generateCacheKeyWithId("invite", "commentCount", $this->id);
-        $cache = getCache($key);
-
-        if ($cache != null) {
+        if (hasCache($key, $cache)) {
             $this->_commentCount = $cache;
             return $cache;
         }
@@ -76,9 +74,7 @@ class Invite extends Model {
             return $this->_upvoteCount;
 
         $key   = generateCacheKeyWithId("invite", "upvoteCount", $this->id);
-        $cache = getCache($key);
-
-        if ($cache != null) {
+        if (hasCache($key, $cache)) {
             $this->_upvoteCount = $cache;
             return $cache;
         }
@@ -98,9 +94,7 @@ class Invite extends Model {
             return $this->_downvoteCount;
 
         $key   = generateCacheKeyWithId("invite", "downvoteCount", $this->id);
-        $cache = getCache($key);
-
-        if ($cache != null) {
+        if (hasCache($key, $cache)) {
             $this->_downvoteCount = $cache;
             return $cache;
         }
@@ -119,8 +113,7 @@ class Invite extends Model {
 
         $key   = generateCacheKeyWithId("invite", "isUpvoted", $this->id);
         $cache = getCache($key);
-
-        if ($cache != null) {
+        if (hasCache($key, $cache)) {
             $this->_isUpvoted = $cache;
             return $cache;
         }
@@ -140,8 +133,7 @@ class Invite extends Model {
 
         $key   = generateCacheKeyWithId("invite", "isDownvoted", $this->id);
         $cache = getCache($key);
-
-        if ($cache != null) {
+        if (hasCache($key, $cache)) {
             $this->_isDownvoted = $cache;
             return $cache;
         }
@@ -169,10 +161,7 @@ class Invite extends Model {
             return $this->_cacheGame;
 
         $key   = generateCacheKeyWithId("model", "game", $this->game_id);
-        $cache = getCache($key);
-
-        if ($cache != null)
-        {
+        if (hasCache($key, $cache)) {
             $this->_cacheGame = json_decode($cache);
             return $this->_cacheGame;
         }
