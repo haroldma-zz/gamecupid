@@ -10,7 +10,6 @@ use Illuminate\Http\Request;
 use App\Http\Requests\LoginFormRequest;
 use App\Http\Requests\RegisterFormRequest;
 use Illuminate\Database\Eloquent\Collection;
-USE App\Enums\NotificationTypes;
 
 class UserController extends Controller {
 
@@ -47,11 +46,7 @@ class UserController extends Controller {
 			$rep->save();
 
 			// Rep notification
-            $not              = new Notification;
-            $not->type    = NotificationTypes::REP;
-            $not->thing_id    = RepEvents::REGISTERED;
-            $not->to_id       = $user->id;
-            $not->save();
+            notifiedAboutRepEvent(RepEvents::REGISTERED);
 
 			// Confirm e-mail notification
 			/*$notification              = new Notification;

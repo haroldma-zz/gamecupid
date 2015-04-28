@@ -27,9 +27,9 @@ class Notification extends Model {
     {
         $type = $this->type;
         if ($type == NotificationTypes::REP)
-            $description = "+".$this->repEvent->amount." rep";
+            $description = "+".$this->repEvent()->amount." rep";
         else if ($type == NotificationTypes::COMMENT_REPLY)
-            $description = $this->comment->invite()->title;
+            $description = $this->comment()->invite()->title;
 
         return new Laravel5DTO([
             'title' => $this->title(),

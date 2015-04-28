@@ -5,12 +5,9 @@ use Response;
 use App\Models\Rep;
 use App\Models\Invite;
 use App\Models\Comment;
-use App\Models\RepEvent;
 use App\Models\Parsedown;
 use App\Enums\RepEvents;
 use App\Enums\VoteStates;
-USE App\Enums\NotificationTypes;
-use App\Models\Notification;
 use Illuminate\Http\Request;
 use App\Http\Requests\InviteFormRequest;
 use Cocur\Slugify\Slugify;
@@ -50,11 +47,7 @@ class InviteController extends Controller {
 			$rep->user_id      = Auth::user()->id;
 			$rep->save();
 
-			$not              = new Notification;
-			$not->type    = NotificationTypes::REP;
-			$not->thing_id    = RepEvents::CREATED_INVITE;
-			$not->to_id       = Auth::user()->id;
-			$not->save();
+            notifiedAboutRepEvent(RepEvents::CREATED_INVITE);
 
 			return redirect('/');
 		}
@@ -214,11 +207,7 @@ class InviteController extends Controller {
             $comment->castVote(VoteStates::UP);
 
             if ($parentId != 0) {
-                $not              = new Notification;
-                $not->type       = NotificationTypes::COMMENT_REPLY;
-                $not->thing_id = $comment->id;
-                $not->to_id       = $parent->user_id;
-                $not->save();
+                notifiedAboutComment($comment->id, $parent->user_id);
             }
 
             return redirect()->back();
