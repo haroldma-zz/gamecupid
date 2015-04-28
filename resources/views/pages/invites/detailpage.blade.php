@@ -67,6 +67,21 @@
 						@endif
 					</div>
 					<br>
+					<h6 class="comments-header">
+						<div class="left">
+							Comments ({{ $invite->comments->count() }})
+						</div>
+						<div class="right">
+							<small>
+								<a href="?comments_sort=best" class="{{ (Request::get('comments_sort') == 'best' || Request::get('comments_sort') == '' ? 'active' : '') }}">best</a>
+								<a href="?comments_sort=hot" class="{{ (Request::get('comments_sort') == 'hot' ? 'active' : '') }}">hot</a>
+								<a href="?comments_sort=new" class="{{ (Request::get('comments_sort') == 'new' ? 'active' : '') }}">new</a>
+								<a href="?comments_sort=top" class="{{ (Request::get('comments_sort') == 'top' ? 'active' : '') }}">top</a>
+								<a href="?comments_sort=controversial" class="{{ (Request::get('comments_sort') == 'controversial' ? 'active' : '') }}">controversial</a>
+							</small>
+						</div>
+						<div class="clearfix"></div>
+					</h6>
 					{!! $invite->renderComments() !!}
 				</div>
 			</div>

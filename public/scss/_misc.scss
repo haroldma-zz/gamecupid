@@ -410,6 +410,27 @@ article.invite {
 * Comments
 *
 **/
+.comments-header {
+	small {
+		font-size: 60%;
+		a {
+			color: #ccc;
+			font-weight: 700;
+			text-transform: uppercase;
+			letter-spacing: 1px;
+			margin-left: 10px;
+
+			&:hover {
+				color: $primary-color;
+			}
+
+			&.active {
+				color: $primary-color;
+			}
+		}
+	}
+}
+
 .comments {
 	width: 100%;
 	font-size: 1.1em;
@@ -436,20 +457,35 @@ article.invite {
 			border-bottom: 1px solid $silver;
 		}
 
+		&.no-pad-bot {
+			padding-bottom: 0;
+		}
+
 		.children {
-			padding-left: 25px;
+			padding-left: 15px;
 		}
 
 		&.parent {
 			background: white;
+			border-bottom: none;
+			&:last-of-type {
+				border-bottom: 1px solid $silver;
+			}
 		}
 
 		&.child {
 			background: #f5f5f5;
-			padding-top: 7.5px;
 			border-right: none;
+			border-bottom: none;
+			&:first-of-type {
+				margin-top: 10px;
+			}
 			.parent {
-				padding-top: 7.5px;
+				border-right: none;
+				border-bottom: none;
+				&:first-of-type {
+					margin-top: 10px;
+				}
 			}
 		}
 
@@ -529,7 +565,7 @@ article.invite {
 			padding: 0;
 
 			p {
-				font-size: 1em;
+				font-size: 0.9em;
 				font-weight: 400;
 			}
 		}
