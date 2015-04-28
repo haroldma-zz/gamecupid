@@ -71,11 +71,11 @@
 						</div>
 						<div class="right">
 							<small>
-								<a href="?comments_sort=best" class="{{ (Request::get('comments_sort') == 'best' || Request::get('comments_sort') == '' ? 'active' : '') }}">best</a>
-								<a href="?comments_sort=hot" class="{{ (Request::get('comments_sort') == 'hot' ? 'active' : '') }}">hot</a>
-								<a href="?comments_sort=new" class="{{ (Request::get('comments_sort') == 'new' ? 'active' : '') }}">new</a>
-								<a href="?comments_sort=top" class="{{ (Request::get('comments_sort') == 'top' ? 'active' : '') }}">top</a>
-								<a href="?comments_sort=controversial" class="{{ (Request::get('comments_sort') == 'controversial' ? 'active' : '') }}">controversial</a>
+								<a href="?sort=best" class="{{ (Request::get('sort') == 'best' || Request::get('sort') == '' ? 'active' : '') }}">best</a>
+								<a href="?sort=hot" class="{{ (Request::get('sort') == 'hot' ? 'active' : '') }}">hot</a>
+								<a href="?sort=new" class="{{ (Request::get('sort') == 'new' ? 'active' : '') }}">new</a>
+								<a href="?sort=top" class="{{ (Request::get('sort') == 'top' ? 'active' : '') }}">top</a>
+								<a href="?sort=controversial" class="{{ (Request::get('sort') == 'controversial' ? 'active' : '') }}">controversial</a>
 							</small>
 						</div>
 						<div class="clearfix"></div>
