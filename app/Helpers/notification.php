@@ -6,7 +6,7 @@ use App\Enums\NotificationTypes;
 
 function createNotification($thingId, $userId = null) {
     $not              = new Notification;
-    $not->to_id       = $userId != null ? $userId : Auth::user()->id;
+    $not->to_id       = $userId || Auth::user()->id;
     $not->thing_id    = $thingId;
     $not->notified    = false;
     $not->read    = false;
