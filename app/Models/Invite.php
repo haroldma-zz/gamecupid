@@ -75,8 +75,16 @@ class Invite extends Model {
         if ($this->_upvoteCount != -1)
             return $this->_upvoteCount;
 
+        $key   = generateCacheKeyWithId("invite", "upvoteCount", $this->id);
+        $cache = getCache($key);
+
+        if ($cache != null) {
+            $this->_upvoteCount = $cache;
+            return $cache;
+        }
+
         $this->_upvoteCount = $this->votes()->where('state', VoteStates::UP)->count();
-        return $this->_upvoteCount;
+        return setCacheCount($key, $this->_upvoteCount);
     }
 
     public function downvotes()
