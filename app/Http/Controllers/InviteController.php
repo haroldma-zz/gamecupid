@@ -89,6 +89,9 @@ class InviteController extends Controller {
 
 		$check = Auth::user()->inviteVotes()->where('invite_id', $id)->first();
 
+        invalidateCache(generateAuthCacheKeyWithId("invite", "isUpvoted", $id));
+        invalidateCache(generateAuthCacheKeyWithId("invite", "isDownvoted", $id));
+
 		if ($check)
 		{
 			$vote = $check;
