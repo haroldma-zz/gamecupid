@@ -31,22 +31,12 @@ class CommentsRenderer {
 			$child   = Comment::where('parent_id', '=', $c)->get();
 
         	$this->theComments[] = $comment->id;
-
-        	if (count($child) > 0)
-        	{
-        		foreach ($child as $c)
-        		{
-        			$this->theComments[] = $c->id;
-
-        			$this->getChildsComments($c->id);
-        		}
-        	}
         }
 
         foreach ($this->theComments as $c)
         {
         	$comment = Comment::find($c);
-            if ($comment->parent_id === '0')
+            if ($comment->parent_id == 0)
             {
             	$this->parents[$comment->id][] = $comment;
             }
@@ -55,26 +45,6 @@ class CommentsRenderer {
                 $this->children[$comment->parent_id][] = $comment;
             }
         }
-    }
-
-
-    /**
-    *
-    * Function to get id's of all child comments of a given comment id
-    *
-    **/
-    private function getChildsComments($c)
-    {
-			$child = Comment::where('parent_id', '=', $c)->get();
-
-        	if (count($child) > 0)
-        	{
-        		foreach ($child as $c)
-        		{
-        			$this->theComments[] = $c->id;
-        			$this->getChildsComments($c->id);
-        		}
-        	}
     }
 
 
@@ -217,7 +187,7 @@ class CommentsRenderer {
     	}
     	else
     	{
-    		$output = '<p>There are no comments in this thread yet.</p>';
+    		$output = '<p>There are no comments on this invite yet.</p>';
     	}
 
     	echo $output;

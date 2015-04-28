@@ -190,7 +190,7 @@ class InviteController extends Controller {
 		if ($request->get('self_text') == '')
 			return redirect()->back()->withInput()->with('notice', ['error', 'You forgot to write a comment.']);
 
-		if ($invite[0]->id !== $request->get('invite_id'))
+		if ($invite[0]->id != $request->get('invite_id'))
 			return redirect()->back()->withInput()->with('notice', ['error', 'Invalid action.']);
 
 		$comment                = new Comment;

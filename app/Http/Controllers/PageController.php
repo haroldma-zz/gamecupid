@@ -161,9 +161,7 @@ class PageController extends Controller {
 		if (!$invite)
 			return redirect('/page-not-found');
 
-		$comment = Comment::find(2);
-
-		return view('pages.invites.detailpage', ['invite' => $invite[0], 'comment' => $comment]);
+		return view('pages.invites.detailpage', ['invite' => $invite[0]]);
 	}
 
 
