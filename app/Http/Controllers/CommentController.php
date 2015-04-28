@@ -87,7 +87,7 @@ class CommentController extends Controller {
 
 		$check = Auth::user()->commentVotes()->where('comment_id', $id)->first();
 
-        invalidateCache(generateAuthCacheKeyWithId("comment", "isDownvoted", $id));
+        invalidateCache(generateAuthCacheKeyWithId("comment", "isUpvoted", $id));
         invalidateCache(generateAuthCacheKeyWithId("comment", "isDownvoted", $id));
 
 		if ($check)
