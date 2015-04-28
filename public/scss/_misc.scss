@@ -3,6 +3,26 @@
 | Misc
 |--------------------------------------------
 */
+
+.row {
+	max-width: 1140px;
+	// margin: 0;
+
+	@include breakpoint(sm) {
+		max-width: 100%;
+	}
+	@include breakpoint(md) {
+		max-width: 100%;
+	}
+	@include breakpoint(lg) {
+		max-width: 100%;
+	}
+	@include breakpoint(xl) {
+		max-width: 1440px;
+	}
+}
+
+
 h3.mb {
 	margin-bottom: 25px;
 }
