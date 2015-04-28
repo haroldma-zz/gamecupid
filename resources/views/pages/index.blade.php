@@ -49,9 +49,9 @@
 							<footer>
 								<a>{{ $invite->player_count }} player{{ ($invite->player_count > 1 ? 's' : '') }}</a>
 								<a>&middot;</a>
-								<a href="{!! url('/invite/' . $invite->hashid() . '/' . $invite->slug) !!}"><b>Let's play!</b></a>
+								<a href="{!! $invite->getPermalink() !!}"><b>Let's play!</b></a>
 								<a>&middot;</a>
-								<a href="{!! url('/invite/' . $invite->hashid() . '/' . $invite->slug) !!}">{{ $invite->commentCount() }} comment{{ $invite->commentCount() == 1 ? "" : "s" }}</a>
+								<a href="{!! $invite->getPermalink() !!}">{{ $invite->commentCount() }} comment{{ $invite->commentCount() == 1 ? "" : "s" }}</a>
 							</footer>
 							<hr>
 						</article>

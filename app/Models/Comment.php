@@ -4,6 +4,7 @@ use Auth;
 use App\Enums\VoteStates;
 use Illuminate\Database\Eloquent\Model;
 use Carbon\Carbon;
+use Vinkla\Hashids\Facades\Hashids;
 
 class Comment extends Model {
 
@@ -26,6 +27,11 @@ class Comment extends Model {
     private $_isUpvoted     = null;
     private $_isDownvoted   = null;
 
+
+    public function hashid()
+    {
+        return Hashids::encode($this->id);
+    }
 
     public function castVote($state)
     {

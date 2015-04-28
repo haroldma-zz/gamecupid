@@ -34,6 +34,11 @@ class Invite extends Model {
     * Custom functions
     *
     **/
+    public function getPermalink()
+    {
+        return '/invite/' . $this->hashid() . '/' . $this->slug . '/';
+    }
+
     public function castVote($state)
     {
         $vote            = new InviteVote;

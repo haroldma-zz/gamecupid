@@ -141,7 +141,7 @@ class CommentsRenderer {
 				$output .= '<footer>';
 				$output .= '<a id="replyToComment" data-id="' . $comment->id . '">reply</a>';
 				$output .= '<a>&middot;</a>';
-				$output .= '<a>' . $comment->childCount() . ' comment' . ($comment->childCount() == 1 ? '' : 's') . '</a>';
+				$output .= '<a href="' . $comment->hashid() . '">permalink</a>';
 				$output .= '</footer>';
 				$output .= '<div class="comment-box" id="commentBox-' . $comment->id . '">';
 				$output .= '<form method="POST" action="' . url('/invite/' . Hashids::encode($comment->invite->id) . '/' . $comment->invite->slug) . '" accept-charset="UTF-8">';
@@ -214,7 +214,7 @@ class CommentsRenderer {
 				$output .= '<footer>';
 				$output .= '<a id="replyToComment" data-id="' . $comment->id . '">reply</a>';
 				$output .= '<a>&middot;</a>';
-                $output .= '<a>' . $comment->childCount() . ' comment' . ($comment->childCount() == 1 ? '' : 's') . '</a>';
+                $output .= '<a href="' . $comment->hashid() . '">permalink</a>';
 				$output .= '</footer>';
 				$output .= '<div class="comment-box" id="commentBox-' . $comment->id . '">';
 				$output .= '<form method="POST" action="' . url('/invite/' . Hashids::encode($comment->invite->id) . '/' . $comment->invite->slug) . '" accept-charset="UTF-8">';
