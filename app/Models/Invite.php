@@ -117,9 +117,17 @@ class Invite extends Model {
         if ($this->_isUpvoted != null)
             return $this->_isUpvoted;
 
+        $key   = generateCacheKeyWithId("invite", "isUpvoted", $this->id);
+        $cache = getCache($key);
+
+        if ($cache != null) {
+            $this->_isUpvoted = $cache;
+            return $cache;
+        }
+
         $this->_isUpvoted = Auth::user()->inviteVotes()->where('invite_id', $this->id)->where('state', VoteStates::UP)
                             ->first() != null;
-        return $this->_isUpvoted;
+        return setCacheCount($key, $this->_isUpvoted);
     }
 
     public function isDownvoted()
@@ -130,9 +138,17 @@ class Invite extends Model {
         if ($this->_isDownvoted != null)
             return $this->_isDownvoted;
 
+        $key   = generateCacheKeyWithId("invite", "isDownvoted", $this->id);
+        $cache = getCache($key);
+
+        if ($cache != null) {
+            $this->_isDownvoted = $cache;
+            return $cache;
+        }
+
         $this->_isDownvoted = Auth::user()->inviteVotes()->where('invite_id', $this->id)->where('state', VoteStates::DOWN)
                               ->first() != null;
-        return $this->_isDownvoted;
+        return setCacheCount($key, $this->_isDownvoted);
     }
 
     public function hashid()
