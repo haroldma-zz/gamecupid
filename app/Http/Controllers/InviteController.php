@@ -195,7 +195,7 @@ class InviteController extends Controller {
                 return redirect()->back()->withInput()->with('notice', ['error', 'Invalid invite id.']);
         }
 
-		if (!$parent && !$invite)
+		if (($parentId != 0 && !$parent) || ($parentId == 0 && !$invite))
 			return redirect()->back()->withInput()->with('notice', ['error', 'Invite not found.']);
 
 		if ($request->get('self_text') == '')
