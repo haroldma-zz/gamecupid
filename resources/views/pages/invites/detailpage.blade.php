@@ -21,14 +21,14 @@
 						<h3>
 							<div class="voters">
 								<div class="arrows">
-									<div id="upvoter" data-invite-id="{{ $invite->id }}">
-										<i class="ion-arrow-up-a {{ ($invite->isUpvoted() ? 'activated' : '') }}" id="upvoter-{{ $invite->id }}"></i>
+									<div id="upvoter" data-invite-id="{{ hashId($invite->id) }}">
+										<i class="ion-arrow-up-a {{ ($invite->isUpvoted() ? 'activated' : '') }}" id="upvoter-{{ hashId($invite->id) }}"></i>
 									</div>
-									<div id="downvoter" data-invite-id="{{ $invite->id }}">
-										<i class="ion-arrow-down-a {{ ($invite->isDownvoted() ? 'activated' : '') }}" id="downvoter-{{ $invite->id }}"></i>
+									<div id="downvoter" data-invite-id="{{ hashId($invite->id) }}">
+										<i class="ion-arrow-down-a {{ ($invite->isDownvoted() ? 'activated' : '') }}" id="downvoter-{{ hashId($invite->id) }}"></i>
 									</div>
 								</div>
-								<div class="count" id="voteCount-{{ $invite->id }}">
+								<div class="count" id="voteCount-{{ hashId($invite->id) }}">
 									{{ $invite->totalVotes() }}
 								</div>
 							</div>
@@ -41,17 +41,16 @@
 					<footer>
 						<a>{{ $invite->player_count }} player{{ ($invite->player_count > 1 ? 's' : '') }}</a>
 						<a>&middot;</a>
-						<a href="{!! url('/invite/' . $invite->hashid() . '/' . $invite->slug) !!}/"><b>Let's play!</b></a>
+						<a href="{!! url('/invite/' . hashId($invite->id) . '/' . $invite->slug) !!}/"><b>Let's play!</b></a>
 						<a>&middot;</a>
-						<a href="{!! url('/invite/' . $invite->hashid() . '/' . $invite->slug) !!}/">{{ $invite->commentCount() }} comment{{ $invite->commentCount() == 1 ? '' : 's' }}</a>
+						<a href="{!! url('/invite/' . hashId($invite->id) . '/' . $invite->slug) !!}/">{{ $invite->commentCount() }} comment{{ $invite->commentCount() == 1 ? '' : 's' }}</a>
 					</footer>
 					<hr>
 				</article>
 				<div class="comments">
 					<div class="comment-box">
-						{!! Form::open(['url' => '/invite/' . Hashids::encode($invite->id) . '/' . $invite->slug]) !!}
+						{!! Form::open(['url' => $invite->getPermalink()]) !!}
 						{!! Form::hidden('parent_id', 0) !!}
-						{!! Form::hidden('invite_id', $invite->id) !!}
 						{!! Form::label('self_text', 'You can use Markdown to write comments.') !!}
 						{!! Form::textarea('self_text', '', ['class' => 'form-control', 'placeholder' => 'Write a comment']) !!}
 						<button type="submit" class="btn primary medium">Comment</button>

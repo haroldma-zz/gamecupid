@@ -193,15 +193,12 @@ class InviteController extends Controller {
 		if ($request->get('self_text') == '')
 			return redirect()->back()->withInput()->with('notice', ['error', 'You forgot to write a comment.']);
 
-		if ($invite->id != $request->get('invite_id'))
-			return redirect()->back()->withInput()->with('notice', ['error', 'Invalid action.']);
-
 		$parsedown              = new Parsedown();
 		$comment                = new Comment;
 		$comment->self_text     = $parsedown->text($request->get('self_text'));
 		$comment->markdown_text = $request->get('self_text');
 		$comment->deleted       = false;
-		$comment->parent_id     = $request->get('parent_id');
+		$comment->parent_id     = decodeHashId($request->get('parent_id'));
 		$comment->invite_id     = $invite->id;
 		$comment->user_id       = Auth::user()->id;
 

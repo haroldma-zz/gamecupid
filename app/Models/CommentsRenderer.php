@@ -146,7 +146,6 @@ class CommentsRenderer {
 				$output .= '<form method="POST" action="' . $comment->invite()->getPermalink() . '" accept-charset="UTF-8">';
 				$output .= '<input type="hidden" name="_token" value="' . csrf_token() . '">';
 				$output .= '<input type="hidden" name="parent_id" value="' . $comment->hashid() . '">';
-				$output .= '<input type="hidden" name="invite_id" value="' . $comment->invite()->hashid() . '">';
 				$output .= '<label for="self_text">You can use Markdown to write comments.</label>';
 				$output .= '<textarea name="self_text" class="form-control" placeholder="Write a comment"></textarea>';
 				$output .= '<button type="submit" class="btn primary medium">Reply</button>';
@@ -176,7 +175,6 @@ class CommentsRenderer {
 	    	foreach ($this->parents as $comment)
 	    	{
 	    		$comment = $comment[0];
-				$user    = $comment->user();
 				$output .= '<article class="comment parent ' . ($comment->childCount() > 0 ? 'no-pad-bot' : '') . '">';
 				$output .= '<div class="collapser" id="collapseComment">';
 				$output .= '<i class="ion-chevron-up"></i>';
@@ -219,7 +217,6 @@ class CommentsRenderer {
 				$output .= '<form method="POST" action="' . $comment->invite()->getPermalink() . '" accept-charset="UTF-8">';
 				$output .= '<input type="hidden" name="_token" value="' . csrf_token() . '">';
 				$output .= '<input type="hidden" name="parent_id" value="' . $comment->hashid() . '">';
-				$output .= '<input type="hidden" name="invite_id" value="' . $comment->invite()->hashid() . '">';
 				$output .= '<label for="self_text">You can use Markdown to write comments.</label>';
 				$output .= '<textarea name="self_text" class="form-control" placeholder="Write a comment"></textarea>';
 				$output .= '<button type="submit" class="btn primary medium">Reply</button>';
