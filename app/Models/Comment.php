@@ -69,9 +69,7 @@ class Comment extends Model {
             return $this->_upvoteCount;
 
         $key   = generateCacheKeyWithId("comment", "upvoteCount", $this->id);
-        $cache = getCache($key);
-
-        if ($cache != null) {
+        if (hasCache($key, $cache)) {
             $this->_upvoteCount = $cache;
             return $this->_upvoteCount;
         }
@@ -91,9 +89,7 @@ class Comment extends Model {
             return $this->_downvoteCount;
 
         $key   = generateCacheKeyWithId("comment", "downvoteCount", $this->id);
-        $cache = getCache($key);
-
-        if ($cache != null) {
+        if (hasCache($key, $cache)) {
             $this->_downvoteCount = $cache;
             return $this->_downvoteCount;
         }
@@ -109,20 +105,14 @@ class Comment extends Model {
 
         $key   = generateAuthCacheKeyWithId("comment", "isUpvoted", $this->id);
 
-        if (getCache($key) != null) {
-            return true;
+        if (hasCache($key, $cache)) {
+            return $cache;
         }
 
         $check = Auth::user()->commentVotes()->where('comment_id', $this->id)->where('state', VoteStates::UP)
                             ->first() != null;
 
-        if ($check != null)
-        {
-            setCacheCount($key, true);
-            return true;
-        }
-
-        return false;
+        return setCache($key, $check, Carbon::now()->addDay());
     }
 
     public function isDownvoted()
@@ -132,20 +122,14 @@ class Comment extends Model {
 
         $key   = generateAuthCacheKeyWithId("comment", "isDownvoted", $this->id);
 
-        if (getCache($key) != null) {
-            return true;
+        if (hasCache($key, $cache)) {
+            return $cache;
         }
 
         $check = Auth::user()->commentVotes()->where('comment_id', $this->id)->where('state', VoteStates::DOWN)
                             ->first() != null;
 
-        if ($check != null)
-        {
-            setCacheCount($key, true);
-            return true;
-        }
-
-        return false;
+        return setCache($key, $check, Carbon::now()->addDay());
     }
 
 

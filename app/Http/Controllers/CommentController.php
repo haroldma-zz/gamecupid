@@ -35,23 +35,20 @@ class CommentController extends Controller {
 
 		$check = Auth::user()->commentVotes()->where('comment_id', $id)->first();
 
+        invalidateCache(generateAuthCacheKeyWithId("comment", "isUpvoted", $id));
+        invalidateCache(generateAuthCacheKeyWithId("comment", "isDownvoted", $id));
+
 		if ($check)
 		{
 			$vote = $check;
 
 			if ($vote->state == VoteStates::UP)			// UNVOTED
 			{
-                // invalidate cache
-                invalidateCache(generateAuthCacheKeyWithId("comment", "isUpvoted", $id));
-
 				$vote->delete();
 				return AjaxVoteResults::UNVOTED;
 			}
 			else if ($vote->state == VoteStates::DOWN)	// UPVOTED FROM DOWNVOTE
 			{
-                // invalidate cache
-                invalidateCache(generateAuthCacheKeyWithId("comment", "isDownvoted", $id));
-
 				$vote->state = VoteStates::UP;
 				$vote->save();
 				return AjaxVoteResults::VOTE_SWITCH;
@@ -90,23 +87,20 @@ class CommentController extends Controller {
 
 		$check = Auth::user()->commentVotes()->where('comment_id', $id)->first();
 
+        invalidateCache(generateAuthCacheKeyWithId("comment", "isDownvoted", $id));
+        invalidateCache(generateAuthCacheKeyWithId("comment", "isDownvoted", $id));
+
 		if ($check)
 		{
 			$vote = $check;
 
 			if ($vote->state == VoteStates::DOWN)			// UNVOTED
 			{
-                // invalidate cache
-                invalidateCache(generateAuthCacheKeyWithId("comment", "isDownvoted", $id));
-
 				$vote->delete();
 				return AjaxVoteResults::UNVOTED;
 			}
 			else if ($vote->state == VoteStates::UP)	// DOWNVOTED FROM UPVOTE
 			{
-                // invalidate cache
-                invalidateCache(generateAuthCacheKeyWithId("comment", "isUpvoted", $id));
-
 				$vote->state = VoteStates::DOWN;
 				$vote->save();
 				return AjaxVoteResults::VOTE_SWITCH;

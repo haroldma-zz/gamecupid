@@ -144,23 +144,20 @@ class InviteController extends Controller {
 
 		$check = Auth::user()->inviteVotes()->where('invite_id', $id)->first();
 
+        invalidateCache(generateAuthCacheKeyWithId("invite", "isUpvoted", $id));
+        invalidateCache(generateAuthCacheKeyWithId("invite", "isDownvoted", $id));
+
 		if ($check)
 		{
 			$vote = $check;
 
 			if ($vote->state == VoteStates::DOWN)		// UNVOTED
 			{
-                // invalidate cache
-                invalidateCache(generateAuthCacheKeyWithId("invite", "isDownvoted", $id));
-
 				$vote->delete();
 				return AjaxVoteResults::UNVOTED;
 			}
 			else if ($vote->state == VoteStates::UP)	// DOWNVOTED FROM UPVOTE
 			{
-                // invalidate cache
-                invalidateCache(generateAuthCacheKeyWithId("invite", "isUpvoted", $id));
-
 				$vote->state = VoteStates::DOWN;
 				$vote->save();
 				return AjaxVoteResults::VOTE_SWITCH;
