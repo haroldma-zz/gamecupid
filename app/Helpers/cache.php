@@ -62,7 +62,7 @@ function setCacheCount($key, $value)
 function calculateExpiry($count)
 {
     if ($count < 50)
-        return 5;
+        return 10;
     if ($count < 100)
         return 30;
     if ($count < 500)
