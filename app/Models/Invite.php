@@ -158,13 +158,13 @@ class Invite extends Model {
 
         $key   = generateCacheKeyWithId("model", "game", $this->game_id);
         if (hasCache($key, $cache)) {
-            $this->_cacheGame = json_decode($cache);
+            $this->_cacheGame = $cache;
             return $this->_cacheGame;
         }
 
         $game = $this->game()->first();
 
-        setCache($key, json_encode($game), Carbon::now()->addDay());
+        setCache($key, $game, Carbon::now()->addDay());
         $this->_cacheGame = $game;
         return $game;
     }
