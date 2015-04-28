@@ -146,8 +146,10 @@ class Invite extends Model {
 
     public function renderComments($sort)
     {
+        if (empty($sort))
+            $sort = "best";
+        
         $commentlist = new CommentsRenderer($this->sortParentComments($sort, 1), $sort);
-
         return $commentlist->print_comments();
     }
 
@@ -225,12 +227,12 @@ class Invite extends Model {
             Carbon::now()
         );
 
-        $sqlFunction = "calculateHotness(getCommentUpvotes(id), getCommentDownvotes(id), created_at)";
+        $sqlFunction = "calculateBest(getCommentUpvotes(id), getCommentDownvotes(id))";
 
         if ($sort == "controversial")
             $sqlFunction = "calculateControversy(getCommentUpvotes(id), getCommentDownvotes(id))";
-        else if ($sort == "best")
-            $sqlFunction = "calculateBest(getCommentUpvotes(id), getCommentDownvotes(id))";
+        else if ($sort == "hot")
+            $sqlFunction = "calculateHotness(getCommentUpvotes(id), getCommentDownvotes(id), created_at)";
 
         $query = "SELECT *, $sqlFunction as sort FROM comments
                   WHERE created_at BETWEEN '$time[0]' and '$time[1]'
@@ -248,7 +250,10 @@ class Invite extends Model {
                   AND invite_id = $this->id AND parent_id = 0
                   ORDER BY upvotes - downvotes DESC LIMIT $page, $pageEnd;";
 
-         return Comment::hydrateRaw($query);
+        $key = generateCacheKeyWithId("invite", "comment-parents-$sort-p-$page-t-day", $this->id);
+        if (hasCache($key, $cache))
+            return $cache;
+        return setCacheWithSeconds($key, Comment::hydrateRaw($query), 10);
     }
 
 }

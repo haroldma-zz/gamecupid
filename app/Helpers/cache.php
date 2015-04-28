@@ -53,6 +53,12 @@ function setCache($key, $value, $expire)
     return $value;
 }
 
+function setCacheWithSeconds($key, $value, $expire)
+{
+    Redis::setex("laravel:" . $key, $expire, serialize($value));
+    return $value;
+}
+
 function setCacheCount($key, $value)
 {
     Redis::setex("laravel:" . $key, calculateExpiry($value), $value);

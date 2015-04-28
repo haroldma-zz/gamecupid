@@ -178,12 +178,12 @@ class Comment extends Model {
             Carbon::now()
         );
 
-        $sqlFunction = "calculateHotness(getCommentUpvotes(id), getCommentDownvotes(id), created_at)";
+        $sqlFunction = "calculateBest(getCommentUpvotes(id), getCommentDownvotes(id))";
 
         if ($sort == "controversial")
             $sqlFunction = "calculateControversy(getCommentUpvotes(id), getCommentDownvotes(id))";
-        else if ($sort == "best")
-            $sqlFunction = "calculateBest(getCommentUpvotes(id), getCommentDownvotes(id))";
+        else if ($sort == "hot")
+            $sqlFunction = "calculateHotness(getCommentUpvotes(id), getCommentDownvotes(id), created_at)";
 
         $query = "SELECT *, $sqlFunction as sort FROM comments
                   WHERE created_at BETWEEN '$time[0]' and '$time[1]'
@@ -201,7 +201,10 @@ class Comment extends Model {
                   AND parent_id = $this->id
                   ORDER BY upvotes - downvotes DESC LIMIT $page, $pageEnd;";
 
-        return Comment::hydrateRaw($query);
+        $key = generateCacheKeyWithId("comment", "children-$sort-p-$page-l-$limit-t-day", $this->id);
+        if (hasCache($key, $cache))
+            return $cache;
+        return setCacheWithSeconds($key, Comment::hydrateRaw($query), 10);
     }
 
 }
