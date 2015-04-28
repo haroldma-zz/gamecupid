@@ -54,9 +54,7 @@ class Invite extends Model {
             return $this->_commentCount;
 
         $key   = generateCacheKeyWithId("invite", "commentCount", $this->id);
-        $cache = getCache($key);
-
-        if ($cache != null) {
+        if (hasCache($key, $cache)) {
             $this->_commentCount = $cache;
             return $this->_commentCount;
         }
@@ -76,9 +74,7 @@ class Invite extends Model {
             return $this->_upvoteCount;
 
         $key   = generateCacheKeyWithId("invite", "upvoteCount", $this->id);
-        $cache = getCache($key);
-
-        if ($cache != null) {
+        if (hasCache($key, $cache)) {
             $this->_upvoteCount = $cache;
             return $this->_upvoteCount;
         }
@@ -98,9 +94,7 @@ class Invite extends Model {
             return $this->_downvoteCount;
 
         $key   = generateCacheKeyWithId("invite", "downvoteCount", $this->id);
-        $cache = getCache($key);
-
-        if ($cache != null) {
+        if (hasCache($key, $cache)) {
             $this->_downvoteCount = $cache;
             return $this->_downvoteCount;
         }
@@ -114,22 +108,19 @@ class Invite extends Model {
         if (!Auth::check())
             return false;
 
-        $key   = generateAuthCacheKeyWithId("invite", "isUpvoted", $this->id);
+        if ($this->_isUpvoted != null)
+            return $this->_isUpvoted;
 
-        if (getCache($key) != null) {
-            return true;
+        $key   = generateAuthCacheKeyWithId("invite", "isUpvoted", $this->id);
+        if (hasCache($key, $cache)) {
+            $this->_isUpvoted = $cache;
+            return $cache;
         }
 
-        $check = Auth::user()->inviteVotes()->where('invite_id', $this->id)->where('state', VoteStates::UP)
+        $this->_isUpvoted = Auth::user()->inviteVotes()->where('invite_id', $this->id)->where('state', VoteStates::UP)
                             ->first() != null;
 
-        if ($check != null)
-        {
-            setCacheCount($key, true);
-            return true;
-        }
-
-        return false;
+        return setCache($key, $this->_isUpvoted);
     }
 
     public function isDownvoted()
@@ -138,21 +129,14 @@ class Invite extends Model {
             return false;
 
         $key   = generateAuthCacheKeyWithId("invite", "isDownvoted", $this->id);
-
-        if (getCache($key) != null) {
-            return true;
+        if (hasCache($key, $cache)) {
+            $this->_isDownvoted = $cache;
+            return $cache;
         }
 
-        $check = Auth::user()->inviteVotes()->where('invite_id', $this->id)->where('state', VoteStates::DOWN)
-                            ->first() != null;
-
-        if ($check != null)
-        {
-            setCacheCount($key, true);
-            return true;
-        }
-
-        return false;
+        $this->_isDownvoted = Auth::user()->inviteVotes()->where('invite_id', $this->id)->where('state', VoteStates::DOWN)
+                              ->first() != null;
+        return setCache($key, $this->_isDownvoted);
     }
 
     public function hashid()
@@ -173,10 +157,7 @@ class Invite extends Model {
             return $this->_cacheGame;
 
         $key   = generateCacheKeyWithId("model", "game", $this->game_id);
-        $cache = getCache($key);
-
-        if ($cache != null)
-        {
+        if (hasCache($key, $cache)) {
             $this->_cacheGame = json_decode($cache);
             return $this->_cacheGame;
         }

@@ -36,6 +36,12 @@ function invalidateCache($key)
     Cache::forget($key);
 }
 
+function hasCache($key, &$cache)
+{
+    $cache = getCache($key);
+    return $cache != null;
+}
+
 function getCache($key)
 {
     return Cache::get($key);
