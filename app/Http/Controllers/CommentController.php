@@ -27,7 +27,7 @@ class CommentController extends Controller {
 		if (!Auth::check())
 			return AjaxVoteResults::UNAUTHORIZED;
 
-		$id = $request->get('id');
+        $id = decodeHashId($request->get('id'));
 		$comment = Comment::find($id);
 
 		if (!$comment)
@@ -79,7 +79,7 @@ class CommentController extends Controller {
 		if (!Auth::check())
 			return AjaxVoteResults::UNAUTHORIZED;
 
-		$id = $request->get('id');
+		$id = decodeHashId($request->get('id'));
 		$comment = Comment::find($id);
 
 		if (!$comment)

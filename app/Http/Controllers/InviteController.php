@@ -4,7 +4,6 @@ use Auth;
 use Response;
 use App\Models\Rep;
 use App\Models\Invite;
-use App\Models\InviteVote;
 use App\Models\Comment;
 use App\Models\RepEvent;
 use App\Models\Parsedown;
@@ -15,7 +14,6 @@ use Illuminate\Http\Request;
 use App\Http\Requests\InviteFormRequest;
 use Cocur\Slugify\Slugify;
 use App\Enums\AjaxVoteResults;
-use Vinkla\Hashids\Facades\Hashids;
 
 class InviteController extends Controller {
 
@@ -81,7 +79,7 @@ class InviteController extends Controller {
 		if (!Auth::check())
 			return AjaxVoteResults::UNAUTHORIZED;
 
-		$id = $request->get('id');
+		$id = decodeHashId($request->get('id'));
         $invite = Invite::find($id);
 
         if (!$invite)
@@ -139,7 +137,7 @@ class InviteController extends Controller {
 		if (!Auth::check())
 			return AjaxVoteResults::UNAUTHORIZED;
 
-		$id = $request->get('id');
+		$id = decodeHashId($request->get('id'));
         $invite = Invite::find($id);
 
         if (!$invite)
@@ -186,7 +184,7 @@ class InviteController extends Controller {
 	**/
 	public function comment($hashid, $slug, Request $request)
 	{
-        $id = Hashids::decode($hashid)[0];
+        $id = decodeHashId($hashid);
 		$invite = Invite::find($id);
 
 		if (!$invite)
