@@ -39,7 +39,7 @@ function invalidateCache($key)
 function hasCache($key, &$cache)
 {
     $cache = getCache($key);
-    return $cache != null;
+    return $cache !== null;
 }
 
 function getCache($key)
