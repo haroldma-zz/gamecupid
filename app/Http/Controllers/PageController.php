@@ -4,6 +4,8 @@ use App\Models\Console;
 use App\Models\Invite;
 use Illuminate\Http\Request;
 use Carbon\Carbon;
+use Kumuwai\DataTransferObject\Laravel5DTO;
+use Illuminate\Database\Eloquent\Collection;
 
 class PageController extends Controller {
 
@@ -59,7 +61,7 @@ class PageController extends Controller {
         $invites = Invite::hydrateRaw($query);
 
         if ($request->ajax())
-        	return $invites;
+            return invitesToDtos($invites);
 
 		return view('pages.index', ['invites' => $invites]);
 	}

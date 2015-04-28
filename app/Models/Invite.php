@@ -185,16 +185,24 @@ class Invite extends Model {
             return $this->_cacheGame;
         }
 
-        $game = $this->belongsTo('App\Models\Game', 'game_id', 'id')->first();
-
-        setCache($key, $game, Carbon::now()->addDay());
-        $this->_cacheGame = $game;
-        return $game;
+        $this->_cacheGame = $this->belongsTo('App\Models\Game', 'game_id', 'id')->first();
+        return setCache($key, $this->_cacheGame, Carbon::now()->addDay());;
 	}
 
+    private $_console;
 	public function console()
 	{
-		return $this->belongsTo('App\Models\Console', 'console_id', 'id');
+        if ($this->_console != null)
+            return $this->_console;
+
+        $key   = generateCacheKeyWithId("model", "console", $this->console_id);
+        if (hasCache($key, $cache)) {
+            $this->_console = $cache;
+            return $this->_console;
+        }
+
+        $this->_console = $this->belongsTo('App\Models\Console', 'console_id', 'id')->first();
+        return setCache($key, $this->_console, Carbon::now()->addDay());;
 	}
 
 	public function platform()
