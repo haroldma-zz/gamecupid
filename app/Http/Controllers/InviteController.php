@@ -198,9 +198,8 @@ class InviteController extends Controller {
 		if ($comment->save()) {
             $comment->castVote(VoteStates::UP);
 
-            if ($parentId != 0) {
+            if ($parentId != 0 && $parent->user_id != $comment->user_id)
                 notifiedAboutComment($comment->id, $parent->user_id);
-            }
 
             return redirect()->back();
         }
