@@ -29,9 +29,6 @@ class PageController extends Controller {
 		$pageSize = 10;
 		$page     = $request->input('page', 1);
 
-        if ($request->ajax())
-            return $page;
-
         if (is_int($page) != false)
             $page = 1;
 
