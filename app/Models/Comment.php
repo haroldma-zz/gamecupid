@@ -107,12 +107,10 @@ class Comment extends Model {
         if (!Auth::check())
             return false;
 
-        $key   = generateCacheKeyWithId("comment", "isUpvoted", $this->id);
-        $cache = getCache($key);
+        $key   = generateAuthCacheKeyWithId("comment", "isUpvoted", $this->id);
 
-        if ($cache != null) {
-            $this->_isUpvoted = $cache;
-            return $this->_isUpvoted;
+        if (getCache($key) != null) {
+            return true;
         }
 
         $check = Auth::user()->commentVotes()->where('comment_id', $this->id)->where('state', VoteStates::UP)
@@ -120,8 +118,8 @@ class Comment extends Model {
 
         if ($check != null)
         {
-            $this->_isUpvoted = true;
-            return setCacheCount($key, $this->_isUpvoted);
+            setCacheCount($key, true);
+            return true;
         }
 
         return false;
@@ -132,12 +130,10 @@ class Comment extends Model {
         if (!Auth::check())
             return false;
 
-        $key   = generateCacheKeyWithId("comment", "isDownvoted", $this->id);
-        $cache = getCache($key);
+        $key   = generateAuthCacheKeyWithId("comment", "isDownvoted", $this->id);
 
-        if ($cache != null) {
-            $this->_isDownvoted = $cache;
-            return $this->_isDownvoted;
+        if (getCache($key) != null) {
+            return true;
         }
 
         $check = Auth::user()->commentVotes()->where('comment_id', $this->id)->where('state', VoteStates::DOWN)
@@ -145,8 +141,8 @@ class Comment extends Model {
 
         if ($check != null)
         {
-            $this->_isDownvoted = true;
-            return setCacheCount($key, $this->_isDownvoted);
+            setCacheCount($key, true);
+            return true;
         }
 
         return false;
