@@ -109,7 +109,7 @@ class CommentsRenderer {
 				$output .= '<div class="collapser" id="collapseComment">';
 				$output .= '<i class="ion-chevron-up"></i>';
 				$output .= '</div>';
-				$output .= '<div class="collapsed-content"><small><a href="">' . $comment->user->username . '</a> &middot; ' . $comment->totalVotes() . ' point' . ($comment->totalVotes() == 1 ? '' : 's') . '</small></div>';
+				$output .= '<div class="collapsed-content"><small><a href="">' . $comment->user->username . '</a> &middot; ' . $comment->totalVotes() . ' point' . ($comment->totalVotes() == 1 ? '' : 's') . ' <span class="comment-collapsed-child-count"></span></small></div>';
 				$output .= '<header>';
 				$output .= '<div class="voters">';
 				$output .= '<div class="arrows">';
@@ -182,7 +182,7 @@ class CommentsRenderer {
 				$output .= '<div class="collapser" id="collapseComment">';
 				$output .= '<i class="ion-chevron-up"></i>';
 				$output .= '</div>';
-				$output .= '<div class="collapsed-content"><small><a href="">' . $comment->user->username . '</a> &middot; ' . $comment->totalVotes() . ' point' . ($comment->totalVotes() == 1 ? '' : 's') . '</small></div>';
+				$output .= '<div class="collapsed-content"><small><a href="">' . $comment->user->username . '</a> &middot; ' . $comment->totalVotes() . ' point' . ($comment->totalVotes() == 1 ? '' : 's') . ' <span class="comment-collapsed-child-count"></span></span></small></div>';
 				$output .= '<header>';
 				$output .= '<div class="voters">';
 				$output .= '<div class="arrows">';
