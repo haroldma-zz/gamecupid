@@ -148,8 +148,20 @@ class Invite extends Model {
     {
         if (empty($sort))
             $sort = "best";
-        
-        $commentlist = new CommentsRenderer($this->sortParentComments($sort, 1), $sort);
+
+        $count = $this->commentCount();
+        $expire = 20;
+
+        if ($count < 10)
+            $expire = 0;
+        else if ($count < 50)
+            $expire = 5;
+        else if ($count < 100)
+            $expire = 10;
+        else if ($count < 500)
+            $expire = 15;
+
+        $commentlist = new CommentsRenderer($this, $sort, $expire);
         return $commentlist->print_comments();
     }
 
@@ -212,15 +224,19 @@ class Invite extends Model {
         return $this->hasMany('App\Models\Comment', 'invite_id', 'id');
     }
 
-    public function sortParentComments($sort, $page)
+    public function sortParentComments($sort, $page, $limit, $cacheExpire)
     {
-        $pageSize = 10;
-
         if (!is_int($page))
             $page = 1;
 
-        $page    = ($page - 1) * $pageSize;
-        $pageEnd = $pageSize;
+        $key = generateCacheKeyWithId("invite", "comment-parents-$sort-p-$page-l-$limit-t-day", $this->id);
+        if ($cacheExpire != 0) {
+            if (hasCache($key, $cache))
+                return $cache;
+        }
+
+        $page    = ($page - 1) * $limit;
+        $pageEnd = $limit;
 
         $time = array(
             Carbon::now()->subDay(),
@@ -250,10 +266,10 @@ class Invite extends Model {
                   AND invite_id = $this->id AND parent_id = 0
                   ORDER BY upvotes - downvotes DESC LIMIT $page, $pageEnd;";
 
-        $key = generateCacheKeyWithId("invite", "comment-parents-$sort-p-$page-t-day", $this->id);
-        if (hasCache($key, $cache))
-            return $cache;
-        return setCacheWithSeconds($key, Comment::hydrateRaw($query), 10);
+        $hydrated = Comment::hydrateRaw($query);
+        if ($cacheExpire == 0)
+            return $hydrated;
+        return setCacheWithSeconds($key, $hydrated, $cacheExpire);
     }
 
 }

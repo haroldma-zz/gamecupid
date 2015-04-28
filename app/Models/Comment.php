@@ -163,12 +163,18 @@ class Comment extends Model {
         return $this->hasMany('App\Models\CommentVote', 'comment_id', 'id');
     }
 
-    public function sortChildComments($sort, $page, $limit)
+    public function sortChildComments($sort, $page, $limit, $cacheExpire)
     {
         $pageSize = $limit;
 
         if (!is_int($page))
             $page = 1;
+
+        $key = generateCacheKeyWithId("invite", "comment-parents-$sort-p-$page-l-$limit-t-day", $this->id);
+        if ($cacheExpire != 0) {
+            if (hasCache($key, $cache))
+                return $cache;
+        }
 
         $page    = ($page - 1) * $pageSize;
         $pageEnd = $pageSize;
@@ -201,10 +207,10 @@ class Comment extends Model {
                   AND parent_id = $this->id
                   ORDER BY upvotes - downvotes DESC LIMIT $page, $pageEnd;";
 
-        $key = generateCacheKeyWithId("comment", "children-$sort-p-$page-l-$limit-t-day", $this->id);
-        if (hasCache($key, $cache))
-            return $cache;
-        return setCacheWithSeconds($key, Comment::hydrateRaw($query), 10);
+        $hydrated = Comment::hydrateRaw($query);
+        if ($cacheExpire == 0)
+            return $hydrated;
+        return setCacheWithSeconds($key, $hydrated, $cacheExpire);
     }
 
 }

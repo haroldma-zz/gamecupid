@@ -32,12 +32,12 @@ class CommentsRenderer {
 	* See App\Models\Invite @ renderComments()
 	*
 	**/
-    function __construct($comments, $sort)
+    function __construct($invite, $sort, $cacheExpire)
     {
+        $comments = $invite->sortParentComments($sort, 1, CommentsRenderer::PARENT_SUB_LIMIT, $cacheExpire);
         foreach ($comments as $comment)
         {
-            $limit = CommentsRenderer::PARENT_SUB_LIMIT;
-            $child   = $comment->sortChildComments($sort, 1, CommentsRenderer::CHILD_SUB_LIMIT);
+            $child   = $comment->sortChildComments($sort, 1, CommentsRenderer::CHILD_SUB_LIMIT, $cacheExpire);
 
         	$this->theComments[] = $comment;
 
@@ -45,11 +45,8 @@ class CommentsRenderer {
             {
                 foreach ($child as $c)
                 {
-                    if ($limit == 0) break;
-                    $limit--;
-
                     $this->theComments[] = $c;
-                    $this->getChildsComments($c, $sort, 1, 1);
+                    $this->getChildsComments($c, $sort, 1, 1, $cacheExpire);
                 }
             }
 
@@ -73,13 +70,13 @@ class CommentsRenderer {
      * Function to get id's of all child comments of a given comment id
      *
      **/
-    private function getChildsComments($c, $sort, $page, $nesting)
+    private function getChildsComments($c, $sort, $page, $nesting, $cacheExpire)
     {
         $nestingLimit = CommentsRenderer::CHILD_SUB_LIMIT - (CommentsRenderer::CHILD_NEST_SUBTRACT * $nesting);
 
         if ($nestingLimit <= 0) return;
 
-        $child = $c->sortChildComments($sort, $page, $nestingLimit);
+        $child = $c->sortChildComments($sort, $page, $nestingLimit, $cacheExpire);
 
         if (count($child) > 0)
         {
@@ -88,7 +85,7 @@ class CommentsRenderer {
                 $this->theComments[] = $c;
 
                 $nesting++;
-                $this->getChildsComments($c, $sort, 1, $nesting);
+                $this->getChildsComments($c, $sort, 1, $nesting, $cacheExpire);
             }
         }
     }
