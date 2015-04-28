@@ -120,7 +120,7 @@ class Invite extends Model {
         $this->_isUpvoted = Auth::user()->inviteVotes()->where('invite_id', $this->id)->where('state', VoteStates::UP)
                             ->first() != null;
 
-        return setCache($key, $this->_isUpvoted);
+        return setCache($key, $this->_isUpvoted, Carbon::now()->addDay());
     }
 
     public function isDownvoted()
@@ -136,7 +136,7 @@ class Invite extends Model {
 
         $this->_isDownvoted = Auth::user()->inviteVotes()->where('invite_id', $this->id)->where('state', VoteStates::DOWN)
                               ->first() != null;
-        return setCache($key, $this->_isDownvoted);
+        return setCache($key, $this->_isDownvoted, Carbon::now()->addDay());
     }
 
     public function hashid()
