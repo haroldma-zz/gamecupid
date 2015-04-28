@@ -203,6 +203,7 @@ return [
 		'Timeago'          => 'App\Models\Timeago',
 		'CommentsRenderer' => 'App\Models\CommentsRenderer',
 		'Hashids'          => 'Vinkla\Hashids\Facades\Hashids',
+		'Parsedown'        => 'App\Models\Parsedown',
 
 
 	],

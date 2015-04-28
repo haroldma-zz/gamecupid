@@ -16,6 +16,7 @@ class CreateInvitesTable extends Migration {
             $table->increments('id');
             $table->string('title');
             $table->mediumText('self_text');
+            $table->mediumText('markdown_text');
             $table->string('tag_text');
             $table->string('slug');
             $table->integer('player_count');

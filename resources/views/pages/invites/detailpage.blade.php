@@ -34,10 +34,8 @@
 							</div>
 							{{ $invite->title }}
 						</h3>
-						<div class="panel">
-							<p>
-								{{ $invite->self_text }}
-							</p>
+						<div class="panel markdown-text">
+							{!! $invite->self_text !!}
 						</div>
 					</section>
 					<footer>

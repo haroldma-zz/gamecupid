@@ -86,10 +86,8 @@ class CommentsRenderer {
 				$output .= '</p>';
 				$output .= '</div>';
 				$output .= '</header>';
-				$output .= '<section>';
-				$output .= '<p>';
+				$output .= '<section class="markdown-text">';
 				$output .= ($comment->deleted == true ? '<i>[ this comment was deleted ]</i>' : $comment->self_text);
-				$output .= '</p>';
 				$output .= '</section>';
 				$output .= '<footer>';
 				$output .= '<a id="replyToComment" data-id="' . $comment->id . '">reply</a>';
@@ -157,10 +155,8 @@ class CommentsRenderer {
 				$output .= '</p>';
 				$output .= '</div>';
 				$output .= '</header>';
-				$output .= '<section>';
-				$output .= '<p>';
+				$output .= '<section class="markdown-text">';
 				$output .= ($comment->deleted == true ? '<i>[ this comment was deleted ]</i>' : $comment->self_text);
-				$output .= '</p>';
 				$output .= '</section>';
 				$output .= '<footer>';
 				$output .= '<a id="replyToComment" data-id="' . $comment->id . '">reply</a>';
