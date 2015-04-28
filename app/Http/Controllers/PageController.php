@@ -45,7 +45,6 @@ class PageController extends Controller {
             $sqlFunction = "calculateControversy(getInviteUpvotes(id), getInviteDownvotes(id))";
 
         $query = "SELECT *, $sqlFunction as sort FROM invites
-                  WHERE created_at BETWEEN '$time[0]' and '$time[1]'
                   ORDER BY sort DESC LIMIT $page, $pageEnd;";
 
         if ($sort == "new")

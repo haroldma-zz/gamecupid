@@ -1,7 +1,7 @@
 $('body').on('click', '[id="collapseComment"]', function()
 {
-	$(this).find('i').toggleClass('ion-chevron-down');
-	$(this).find('i').toggleClass('ion-chevron-up');
+    var collapsed = $(this).parent().hasClass("collapsed")
+    $(this).find('span').text(collapsed ? "[–]" : "[+]")
 	$(this).parent().toggleClass('collapsed');
 });
 

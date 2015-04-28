@@ -106,7 +106,7 @@ class CommentsRenderer {
 	    		$comment = $comment;
 				$output .= '<article class="comment ' . $hierachy . ' ' . ($comment->childCount() > 0 ? 'no-pad-bot' : '') . '">';
 				$output .= '<div class="collapser" id="collapseComment">';
-				$output .= '<i class="ion-chevron-up"></i>';
+                $output .= '<span>[–]</span>';
 				$output .= '</div>';
 				$output .= '<div class="collapsed-content"><small><a href="">' . $comment->user->username . '</a> &middot; ' . $comment->totalVotes() . ' point' . ($comment->totalVotes() == 1 ? '' : 's') . ' <span class="comment-collapsed-child-count"></span></small></div>';
 				$output .= '<header>';
@@ -177,7 +177,7 @@ class CommentsRenderer {
 	    		$comment = $comment[0];
 				$output .= '<article class="comment parent ' . ($comment->childCount() > 0 ? 'no-pad-bot' : '') . '">';
 				$output .= '<div class="collapser" id="collapseComment">';
-				$output .= '<i class="ion-chevron-up"></i>';
+				$output .= '<span>[–]</span>';
 				$output .= '</div>';
 				$output .= '<div class="collapsed-content"><small><a href="">' . $comment->user->username . '</a> &middot; ' . $comment->totalVotes() . ' point' . ($comment->totalVotes() == 1 ? '' : 's') . ' <span class="comment-collapsed-child-count"></span></span></small></div>';
 				$output .= '<header>';
