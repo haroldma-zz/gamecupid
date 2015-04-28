@@ -9,6 +9,8 @@ use App\Models\Notification;
 use Illuminate\Http\Request;
 use App\Http\Requests\LoginFormRequest;
 use App\Http\Requests\RegisterFormRequest;
+use Illuminate\Database\Eloquent\Collection;
+USE App\Enums\NotificationTypes;
 
 class UserController extends Controller {
 
@@ -45,24 +47,19 @@ class UserController extends Controller {
 			$rep->save();
 
 			// Rep notification
-			$notification              = new Notification;
-			$notification->title       = "+" . $rep->event->amount . " rep";
-			$notification->description = $rep->event->event;
-			$notification->to_id       = $user->id;
-			$notification->from_id     = 0;
-			$notification->read        = false;
-			$notification->notified    = false;
-			$notification->save();
+            $not              = new Notification;
+            $not->type    = NotificationTypes::REP;
+            $not->thing_id    = RepEvents::REGISTERED;
+            $not->to_id       = $user->id;
+            $not->save();
 
 			// Confirm e-mail notification
-			$notification              = new Notification;
+			/*$notification              = new Notification;
+            $not->type    = NotificationTypes::TEXT;
 			$notification->title       = "Confirm your e-mail address.";
 			$notification->description = "By confirming your e-mail address, you become a verified user. You will also earn some more Rep which brings you closer to being a GameCupid legend.";
 			$notification->to_id       = $user->id;
-			$notification->from_id     = 0;
-			$notification->read        = false;
-			$notification->notified    = false;
-			$notification->save();
+			$notification->save();*/
 
 			// Log the user in
 			if (Auth::attempt(['username' => $request->get('username'), 'password' => $request->get('password')]))
@@ -128,27 +125,31 @@ class UserController extends Controller {
 		$start = time();
 		$end   = $start + 30;
 
-		$n     = Auth::user()->rNotifications()->where('notified', false)->orderBy('id', 'DESC')->get();
-		$check = count($n) > 0;
+        $n = [];
+		$notifications     = Auth::user()->rNotifications()->where('notified', false)->orderBy('id', 'DESC')->get();
+		$check = count($notifications) > 0;
 
 		while ($check === false && $start < $end) {
 			sleep(5);
-            
-			$n     = Auth::user()->rNotifications()->where('notified', false)->orderBy('id', 'DESC')->get();
-            $check = count($n) > 0;
+
+            $notifications     = Auth::user()->rNotifications()->where('notified', false)->orderBy('id', 'DESC')->get();
+            $check = count($notifications) > 0;
 			$start = time();
 		}
 
 		if ($check)
 		{
-            foreach ($n as $not)
+            foreach ($notifications as $not)
             {
                 $not->notified = true;
                 $not->save();
+
+                // create the dto
+                $n[] = $not->createDto();
             }
 		}
 
-		return response()->json($n);
+		return response()->json(new Collection($n));
 	}
 
 

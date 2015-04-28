@@ -9,6 +9,7 @@ use App\Models\RepEvent;
 use App\Models\Parsedown;
 use App\Enums\RepEvents;
 use App\Enums\VoteStates;
+USE App\Enums\NotificationTypes;
 use App\Models\Notification;
 use Illuminate\Http\Request;
 use App\Http\Requests\InviteFormRequest;
@@ -43,17 +44,15 @@ class InviteController extends Controller {
 		if ($invite->save())
 		{
             $invite->castVote(VoteStates::UP);
-            
-			$repEvent = RepEvent::find(RepEvents::CREATED_INVITE);
 
 			$rep               = new Rep;
-			$rep->rep_event_id = $repEvent->id;
+			$rep->rep_event_id = RepEvents::CREATED_INVITE;
 			$rep->user_id      = Auth::user()->id;
 			$rep->save();
 
 			$not              = new Notification;
-			$not->title       = "+{$repEvent->amount} rep";
-			$not->description = $repEvent->event;
+			$not->type    = NotificationTypes::REP;
+			$not->thing_id    = RepEvents::CREATED_INVITE;
 			$not->to_id       = Auth::user()->id;
 			$not->save();
 
@@ -185,9 +184,18 @@ class InviteController extends Controller {
 	public function comment($hashid, $slug, Request $request)
 	{
         $id = decodeHashId($hashid);
-		$invite = Invite::find($id);
+        $parentId = decodeHashId($request->get('parent_id'));
 
-		if (!$invite)
+        if ($parentId == 0)
+		    $invite = Invite::find($id);
+        else {
+            $parent = Comment::find($parentId);
+
+            if ($parent->invite_id != $id)
+                return redirect()->back()->withInput()->with('notice', ['error', 'Invalid invite id.']);
+        }
+
+		if (!$parent && !$invite)
 			return redirect()->back()->withInput()->with('notice', ['error', 'Invite not found.']);
 
 		if ($request->get('self_text') == '')
@@ -198,12 +206,21 @@ class InviteController extends Controller {
 		$comment->self_text     = $parsedown->text($request->get('self_text'));
 		$comment->markdown_text = $request->get('self_text');
 		$comment->deleted       = false;
-		$comment->parent_id     = decodeHashId($request->get('parent_id'));
-		$comment->invite_id     = $invite->id;
+		$comment->parent_id     = $parentId;
+		$comment->invite_id     = $id;
 		$comment->user_id       = Auth::user()->id;
 
 		if ($comment->save()) {
             $comment->castVote(VoteStates::UP);
+
+            if ($parentId != 0) {
+                $not              = new Notification;
+                $not->type       = NotificationTypes::COMMENT_REPLY;
+                $not->thing_id = $comment->id;
+                $not->to_id       = $parent->user_id;
+                $not->save();
+            }
+
             return redirect()->back();
         }
 

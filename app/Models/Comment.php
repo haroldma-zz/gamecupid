@@ -30,7 +30,7 @@ class Comment extends Model {
 
     public function getPermalink()
     {
-        return $this->invite()->getPermalink() . hashId($this->id) . '/';
+        return $this->invite()->getPermalink() . hashId($this->id);
     }
 
     public function castVote($state)
