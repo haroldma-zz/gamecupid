@@ -8,6 +8,11 @@ function giveRepAndNotified($repEvent, $userId = null) {
     $rep->user_id      = $userId != null ? $userId : Auth::user()->id;
     if ($rep->save()) {
         notifiedAboutRepEvent($repEvent);
+
+        // invalidate the rep count
+        $key = generateCacheKeyWithId("user", "rep", $rep->user_id);
+        invalidateCache($key);
+
         return true;
     }
     else
