@@ -153,3 +153,10 @@ $('body').on('click', '[id="replyToComment"]', function()
 {
 	$('#commentBox-' + $(this).data('id')).toggle();
 });
+
+
+// timeago.js
+$(document).ready(function()
+{
+	$('time').timeago();
+});

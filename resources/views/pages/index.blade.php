@@ -24,7 +24,7 @@
 										<a href="{!! url('/') !!}">{{ $invite->user->username }}</a>
 									</h6>
 									<p>
-										{{ Timeago::convert($invite->created_at) }}
+										<time datetime="{{ $invite->created_at }}"></time>
 									</p>
 								</div>
 							</header>

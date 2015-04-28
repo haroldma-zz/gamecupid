@@ -126,7 +126,7 @@ class CommentsRenderer {
 				$output .= '<a href="' . url('/') . '">' . $comment->user->username . '</a>';
 				$output .= '</h6>';
 				$output .= '<p>';
-				$output .= Timeago::convert($comment->created_at);
+				$output .= '<time datetime="' . $comment->created_at . '"></time>';
 				$output .= '&nbsp;';
 				$output .= '&middot;';
 				$output .= '&nbsp;';
@@ -195,7 +195,7 @@ class CommentsRenderer {
 				$output .= '<a href="' . url('/') . '">' . $comment->user->username . '</a>';
 				$output .= '</h6>';
 				$output .= '<p>';
-				$output .= Timeago::convert($comment->created_at);
+				$output .= '<time datetime="' . $comment->created_at . '"></time>';
 				$output .= '&nbsp;';
 				$output .= '&middot;';
 				$output .= '&nbsp;';
