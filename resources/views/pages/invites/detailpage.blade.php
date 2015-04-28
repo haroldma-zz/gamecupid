@@ -80,7 +80,7 @@
 						</div>
 						<div class="clearfix"></div>
 					</h6>
-					{!! $invite->renderComments("best) !!}
+					{!! $invite->renderComments("best") !!}
 				</div>
 			</div>
 		</div>
