@@ -159,7 +159,7 @@ class PageController extends Controller {
 		if (!$invite)
 			return redirect('/page-not-found');
 
-		return view('pages.invites.detailpage', ['invite' => $invite[0]]);
+		return view('pages.invites.detailpage', ['invite' => $invite]);
 	}
 
 
