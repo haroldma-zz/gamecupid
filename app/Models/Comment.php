@@ -195,7 +195,7 @@ class Comment extends Model {
         if (!is_int($page))
             $page = 1;
 
-        $key = generateCacheKeyWithId("invite", "comment-parents-$sort-p-$page-l-$limit-t-day", $this->id);
+        $key = generateCacheKeyWithId("invite", "comment-parents-$sort-p-$page-l-$limit", $this->id);
         if ($cacheExpire != 0) {
             if (hasCache($key, $cache))
                 return $cache;
@@ -203,11 +203,6 @@ class Comment extends Model {
 
         $page    = ($page - 1) * $pageSize;
         $pageEnd = $pageSize;
-
-        $time = array(
-            Carbon::now()->subDay(),
-            Carbon::now()
-        );
 
         $sqlFunction = "calculateBest(getCommentUpvotes(id), getCommentDownvotes(id))";
 
@@ -217,19 +212,16 @@ class Comment extends Model {
             $sqlFunction = "calculateHotness(getCommentUpvotes(id), getCommentDownvotes(id), created_at)";
 
         $query = "SELECT *, $sqlFunction as sort FROM comments
-                  WHERE created_at BETWEEN '$time[0]' and '$time[1]'
-                  AND parent_id = $this->id
+                  WHERE parent_id = $this->id
                   ORDER BY sort DESC LIMIT $page, $pageEnd;";
 
         if ($sort == "new")
             $query = "SELECT * FROM comments
-                  WHERE created_at BETWEEN '$time[0]' and '$time[1]'
-                  AND parent_id = $this->id
+                  WHERE parent_id = $this->id
                   ORDER BY created_at DESC LIMIT $page, $pageEnd;";
         else if ($sort == "top")
             $query = "SELECT *, getCommentUpvotes(id) as upvotes, getCommentDownvotes(id) as downvotes FROM comments
-                  WHERE created_at BETWEEN '$time[0]' and '$time[1]'
-                  AND parent_id = $this->id
+                  WHERE parent_id = $this->id
                   ORDER BY upvotes - downvotes DESC LIMIT $page, $pageEnd;";
 
         $hydrated = Comment::hydrateRaw($query);
