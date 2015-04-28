@@ -9,6 +9,7 @@
 use Illuminate\Support\Facades\Cache;
 use Carbon\Carbon;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Redis;
 
 function generateCacheKey($model, $action)
 {
@@ -48,13 +49,17 @@ function setCache($key, $value, $expire)
 
 function setCacheCount($key, $value)
 {
-    Cache::put($key, $value, calculateExpiry($value));
+    Redis::setex("laravel:" . $key, calculateExpiry($value), $value);
     return $value;
 }
 
 function calculateExpiry($count)
 {
+    if ($count < 50)
+        return 5;
+    if ($count < 100)
+        return 30;
     if ($count < 500)
-        return Carbon::now()->addMinute(1);
-    return Carbon::now()->addMinute(5);
+        return 60;
+    return 60 * 5;
 }

@@ -124,8 +124,7 @@ class Invite extends Model {
         # check cache
         $key = generateCacheKeyWithId("model", "game", $this->game_id);
         $cache = getCache($key);
-        if ($cache != null)
-        {
+        if ($cache != null) {
             $this->_cacheGame = json_decode($cache);
             return $this->_cacheGame;
         }
