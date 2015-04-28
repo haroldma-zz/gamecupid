@@ -31,6 +31,8 @@ class PageController extends Controller {
 
         if (!is_numeric($page) || $page < 1)
             $page = 1;
+        else
+            $page = (int)$page;
 
         $page = ($page - 1) * $pageSize;
 
