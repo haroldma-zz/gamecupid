@@ -170,25 +170,6 @@ class Invite extends Model {
         return $commentlist->print_comments();
     }
 
-    public function cacheGame()
-    {
-        if ($this->_cacheGame != null)
-            return $this->_cacheGame;
-
-        $key   = generateCacheKeyWithId("model", "game", $this->game_id);
-        if (hasCache($key, $cache)) {
-            $this->_cacheGame = $cache;
-            return $this->_cacheGame;
-        }
-
-        $game = $this->game()->first();
-
-        setCache($key, $game, Carbon::now()->addDay());
-        $this->_cacheGame = $game;
-        return $game;
-    }
-
-
 	/**
 	*
 	* Relations
@@ -201,7 +182,20 @@ class Invite extends Model {
 
 	public function game()
 	{
-		return $this->belongsTo('App\Models\Game', 'game_id', 'id');
+        if ($this->_cacheGame != null)
+            return $this->_cacheGame;
+
+        $key   = generateCacheKeyWithId("model", "game", $this->game_id);
+        if (hasCache($key, $cache)) {
+            $this->_cacheGame = $cache;
+            return $this->_cacheGame;
+        }
+
+        $game = $this->belongsTo('App\Models\Game', 'game_id', 'id')->first();
+
+        setCache($key, $game, Carbon::now()->addDay());
+        $this->_cacheGame = $game;
+        return $game;
 	}
 
 	public function console()

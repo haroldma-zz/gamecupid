@@ -87,10 +87,10 @@
 		<div class="medium-3 columns">
 			<div class="panel">
 				<h6>
-					<b>{{ $invite->cacheGame()->title }}</b>
+					<b>{{ $invite->game()->title }}</b>
 				</h6>
 				<p>
-					{{ $invite->cacheGame()->description }}
+					{{ $invite->game()->description }}
 				</p>
 			</div>
 		</div>

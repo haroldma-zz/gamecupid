@@ -26,7 +26,13 @@ class Comment extends Model {
     private $_downvoteCount = -1;
     private $_isUpvoted     = null;
     private $_isDownvoted   = null;
+    private $_invite   = null;
 
+
+    public function getPermalink()
+    {
+        return $this->invite()->getPermalink() . $this->hashid() . '/';
+    }
 
     public function hashid()
     {
@@ -109,16 +115,20 @@ class Comment extends Model {
         if (!Auth::check())
             return false;
 
+        if ($this->_isUpvoted != null)
+            return $this->_isUpvoted;
+
         $key   = generateAuthCacheKeyWithId("comment", "isUpvoted", $this->id);
 
         if (hasCache($key, $cache)) {
+            $this->_isUpvoted = $cache;
             return $cache;
         }
 
-        $check = Auth::user()->commentVotes()->where('comment_id', $this->id)->where('state', VoteStates::UP)
+        $this->_isUpvoted = Auth::user()->commentVotes()->where('comment_id', $this->id)->where('state', VoteStates::UP)
                             ->first() != null;
 
-        return setCache($key, $check, Carbon::now()->addDay());
+        return setCache($key, $this->_isUpvoted, Carbon::now()->addDay());
     }
 
     public function isDownvoted()
@@ -126,16 +136,20 @@ class Comment extends Model {
         if (!Auth::check())
             return false;
 
+        if ($this->_isDownvoted != null)
+            return $this->_isDownvoted;
+
         $key   = generateAuthCacheKeyWithId("comment", "isDownvoted", $this->id);
 
         if (hasCache($key, $cache)) {
+            $this->_isDownvoted = $cache;
             return $cache;
         }
 
-        $check = Auth::user()->commentVotes()->where('comment_id', $this->id)->where('state', VoteStates::DOWN)
+        $this->_isDownvoted = Auth::user()->commentVotes()->where('comment_id', $this->id)->where('state', VoteStates::DOWN)
                             ->first() != null;
 
-        return setCache($key, $check, Carbon::now()->addDay());
+        return setCache($key, $this->_isDownvoted, Carbon::now()->addDay());
     }
 
 
@@ -151,7 +165,18 @@ class Comment extends Model {
 
 	public function invite()
 	{
-		return $this->hasOne('App\Models\Invite', 'id', 'invite_id');
+        if ($this->_invite != null)
+            return $this->_invite;
+
+        $key = generateCacheKeyWithId("model", "invite", $this->invite_id);
+        if (hasCache($key, $cache)) {
+            $this->_invite = $cache;
+            return $cache;
+        }
+
+        $this->_invite = $this->hasOne('App\Models\Invite', 'id', 'invite_id')->first();
+
+        return setCache($key, $this->_invite, Carbon::now()->addDay());
 	}
 
 	public function children()
