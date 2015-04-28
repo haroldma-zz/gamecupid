@@ -2,7 +2,6 @@
 
 use Auth;
 use Response;
-use App\Models\Rep;
 use App\Models\Invite;
 use App\Models\Comment;
 use App\Models\Parsedown;
@@ -41,14 +40,7 @@ class InviteController extends Controller {
 		if ($invite->save())
 		{
             $invite->castVote(VoteStates::UP);
-
-			$rep               = new Rep;
-			$rep->rep_event_id = RepEvents::CREATED_INVITE;
-			$rep->user_id      = Auth::user()->id;
-			$rep->save();
-
-            notifiedAboutRepEvent(RepEvents::CREATED_INVITE);
-
+            giveRepAndNotified(RepEvents::CREATED_INVITE);
 			return redirect('/');
 		}
 		else

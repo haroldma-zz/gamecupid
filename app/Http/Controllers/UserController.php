@@ -2,7 +2,6 @@
 
 use Hash;
 use Auth;
-use App\Models\Rep;
 use App\Enums\RepEvents;
 use App\Models\User;
 use App\Models\Notification;
@@ -39,14 +38,8 @@ class UserController extends Controller {
 
 		if ($user->save())
 		{
-			// Give the user +1 rep
-			$rep               = new Rep;
-			$rep->rep_event_id = RepEvents::REGISTERED;
-			$rep->user_id      = $user->id;
-			$rep->save();
-
-			// Rep notification
-            notifiedAboutRepEvent(RepEvents::REGISTERED);
+			// Give the user rep
+            giveRepAndNotified(RepEvents::REGISTERED);
 
 			// Confirm e-mail notification
 			/*$notification              = new Notification;
