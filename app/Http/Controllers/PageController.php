@@ -29,7 +29,7 @@ class PageController extends Controller {
 		$pageSize = 10;
 		$page     = $request->input('page', 1);
 
-        if (is_int($page) != false)
+        if (!is_numeric($page) || $page < 1)
             $page = 1;
 
         $page = ($page - 1) * $pageSize;
