@@ -77,7 +77,7 @@
 	</div>
 </section>
 <input type="hidden" id="csrfToken" value="{{ csrf_token() }}">
-<input id="pageCount" type="hidden" value="{{ Request::get('page', 1) }}">
+<input id="pageCount" type="hidden" value="{{ Request::get('page', 1) + 1 }}">
 <input id="sortType" type="hidden" value="{{ Request::get('sort', 'hot') }}">
 @stop
 

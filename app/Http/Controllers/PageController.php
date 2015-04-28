@@ -29,18 +29,13 @@ class PageController extends Controller {
 		$pageSize = 10;
 		$page     = $request->input('page', 1);
 
-        if (!is_int($page))
+        if ($request->ajax())
+            return $page;
+
+        if (is_int($page) != false)
             $page = 1;
 
-
-        if ($request->ajax())
-        {
-        	$page = $page * $pageSize;
-        }
-        else
-        {
-        	$page = ($page - 1) * $pageSize;
-        }
+        $page = ($page - 1) * $pageSize;
 
 		$pageEnd = $pageSize;
 
