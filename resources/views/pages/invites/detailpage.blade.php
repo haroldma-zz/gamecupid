@@ -98,3 +98,7 @@
 </section>
 <input type="hidden" id="csrfToken" value="{{ csrf_token() }}">
 @stop
+
+@section('scripts')
+	{!! HTML::script('js/comment-collapser.js') !!}
+@stop

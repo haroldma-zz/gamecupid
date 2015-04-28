@@ -57,5 +57,6 @@
 	@if(Auth::check())
 	{!! HTML::script('js/notifier.js') !!}
 	@endif
+	@yield('scripts')
 </body>
 </html>
