@@ -1,5 +1,6 @@
 <?php namespace App\Http\Controllers;
 
+use Cache;
 use App\Models\CommentsRenderer;
 use Auth;
 use Response;
@@ -42,12 +43,27 @@ class CommentController extends Controller {
 			if ($vote->state == VoteStates::UP)			// UNVOTED
 			{
 				$vote->delete();
+
+				// Remove from cache if cached
+		        $key   = generateCacheKeyWithId("comment", "isUpvoted", $comment->id);
+
+		        if (Cache::has($key))
+		            return invalidateCache($key);
+
 				return AjaxVoteResults::UNVOTED;
 			}
 			else if ($vote->state == VoteStates::DOWN)	// UPVOTED FROM DOWNVOTE
 			{
 				$vote->state = VoteStates::UP;
 				$vote->save();
+
+				// Remove from cache if cached
+		        $key   = generateCacheKeyWithId("comment", "isDownvoted", $comment->id);
+		        $cache = getCache($key);
+
+		        if ($cache != null)
+		            return invalidateCache($key);
+
 				return AjaxVoteResults::VOTE_SWITCH;
 			}
 			else

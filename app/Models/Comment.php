@@ -14,12 +14,25 @@ class Comment extends Model {
 	 */
 	protected $table = 'comments';
 
+
+    /**
+    *
+    * Vars
+    *
+    **/
+    private $_commentCount  = -1;
+    private $_upvoteCount   = -1;
+    private $_downvoteCount = -1;
+    private $_isUpvoted     = null;
+    private $_isDownvoted   = null;
+
+
     public function castVote($state)
     {
-        $vote            = new CommentVote;
+        $vote             = new CommentVote;
         $vote->comment_id = $this->id;
-        $vote->user_id   = Auth::user()->id;
-        $vote->state     = $state;
+        $vote->user_id    = Auth::user()->id;
+        $vote->state      = $state;
         return $vote->save();
     }
 
@@ -33,23 +46,38 @@ class Comment extends Model {
         return $this->votes()->where('state', VoteStates::UP)->get();
     }
 
-    private $_commentCount = -1;
     public function childCount()
     {
         if ($this->_commentCount != -1)
             return $this->_commentCount;
 
+        $key   = generateCacheKeyWithId("comment", "childrenCount", $this->id);
+        $cache = getCache($key);
+
+        if ($cache != null) {
+            $this->_commentCount = $cache;
+            return $this->_commentCount;
+        }
+
         $this->_commentCount = $this->children()->count();
-        return $this->_commentCount;
+        return setCacheCount($key, $this->_commentCount);
     }
 
-    private $_upvoteCount = -1;
     public function upvoteCount()
     {
         if ($this->_upvoteCount != -1)
             return $this->_upvoteCount;
+
+        $key   = generateCacheKeyWithId("comment", "upvoteCount", $this->id);
+        $cache = getCache($key);
+
+        if ($cache != null) {
+            $this->_upvoteCount = $cache;
+            return $this->_upvoteCount;
+        }
+
         $this->_upvoteCount = $this->votes()->where('state', VoteStates::UP)->count();
-        return $this->_upvoteCount;
+        return setCacheCount($key, $this->_upvoteCount);
     }
 
     public function downvotes()
@@ -57,41 +85,71 @@ class Comment extends Model {
         return $this->votes()->where('state', VoteStates::DOWN)->get();
     }
 
-    private $_downvoteCount = -1;
     public function downvoteCount()
     {
         if ($this->_downvoteCount != -1)
             return $this->_downvoteCount;
+
+        $key   = generateCacheKeyWithId("comment", "downvoteCount", $this->id);
+        $cache = getCache($key);
+
+        if ($cache != null) {
+            $this->_downvoteCount = $cache;
+            return $this->_downvoteCount;
+        }
+
         $this->_downvoteCount = $this->votes()->where('state', VoteStates::DOWN)->count();
-        return $this->_downvoteCount;
+        return setCacheCount($key, $this->_downvoteCount);
     }
 
-    private $_isUpvoted = null;
     public function isUpvoted()
     {
         if (!Auth::check())
             return false;
 
-        if ($this->_isUpvoted != null)
-            return $this->_isUpvoted;
+        $key   = generateCacheKeyWithId("comment", "isUpvoted", $this->id);
+        $cache = getCache($key);
 
-        $this->_isUpvoted = Auth::user()->commentVotes()->where('comment_id', $this->id)->where('state', VoteStates::UP)
-                ->first() != null;
-        return $this->_isUpvoted;
+        if ($cache != null) {
+            $this->_isUpvoted = $cache;
+            return $this->_isUpvoted;
+        }
+
+        $check = Auth::user()->commentVotes()->where('comment_id', $this->id)->where('state', VoteStates::UP)
+                            ->first() != null;
+
+        if ($check != null)
+        {
+            $this->_isUpvoted = true;
+            return setCacheCount($key, $this->_isUpvoted);
+        }
+
+        return false;
     }
 
-    private $_isDownvoted = null;
     public function isDownvoted()
     {
         if (!Auth::check())
             return false;
 
-        if ($this->_isDownvoted != null)
-            return $this->_isDownvoted;
+        $key   = generateCacheKeyWithId("comment", "isDownvoted", $this->id);
+        $cache = getCache($key);
 
-        $this->_isDownvoted = Auth::user()->commentVotes()->where('comment_id', $this->id)->where('state', VoteStates::DOWN)
-                ->first() != null;
-        return $this->_isDownvoted;
+        if ($cache != null) {
+            $this->_isDownvoted = $cache;
+            return $this->_isDownvoted;
+        }
+
+        $check = Auth::user()->commentVotes()->where('comment_id', $this->id)->where('state', VoteStates::DOWN)
+                            ->first() != null;
+
+        if ($check != null)
+        {
+            $this->_isDownvoted = true;
+            return setCacheCount($key, $this->_isDownvoted);
+        }
+
+        return false;
     }
 
 
