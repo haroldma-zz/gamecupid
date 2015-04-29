@@ -70,7 +70,10 @@ class PageController extends Controller {
         $invites = Invite::hydrateRaw($query);
 
         if ($request->ajax())
+        {
+        	sleep(1);
             return invitesToDtos($invites);
+        }
 
 		return view('pages.index', ['invites' => $invites]);
 	}
