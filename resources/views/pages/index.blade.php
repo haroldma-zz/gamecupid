@@ -61,11 +61,11 @@
 							There are no invites yet...
 						</h5>
 					@endif
-					<div id="feedLoader" class="hide loader">
-					  <div class="diamond"></div>
-					  <div class="diamond"></div>
-					  <div class="diamond"></div>
-					</div>
+				</div>
+				<div id="feedLoader" class="hide loader">
+				  <div class="diamond"></div>
+				  <div class="diamond"></div>
+				  <div class="diamond"></div>
 				</div>
 			</div>
 		</div>

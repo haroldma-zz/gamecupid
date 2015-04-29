@@ -52,7 +52,6 @@
 
 				for (var i = 0; i < res.length; i++)
 				{
-					console.log(res[i]);
 					var output = '';
 						output += '<article class="invite">';
 						output += '<header>';
