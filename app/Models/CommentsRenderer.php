@@ -222,7 +222,7 @@ class CommentsRenderer {
 
         if ($this->commentContext != null) {
             $output .= '<div class="infobar">you are viewing a single comment\'s thread.<p>';
-            $output .= '<a href="$parent->invite()->getPermalink()">view the rest of the comments</a>&nbsp;→';
+            $output .= '<a href="'. $this->commentContext->invite()->getPermalink() .'">view the rest of the comments</a>&nbsp;→';
             if ($this->contextParent != null && $this->contextParent->parent_id != 0)
                 $output .= '&nbsp;<a href="?context=10000">view the full context</a>&nbsp;→';
             $output .= '</p></div>';
