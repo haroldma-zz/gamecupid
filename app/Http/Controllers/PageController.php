@@ -39,22 +39,29 @@ class PageController extends Controller {
         );
 
 		$sort        = $request->input('sort', 'hot');
-		$sqlFunction = "calculateHotness(getInviteUpvotes(id), getInviteDownvotes(id), created_at)";
+		$sqlFunction = "calculateHotness(ups, downs, created_at)";
 
         if ($sort == "controversial")
-            $sqlFunction = "calculateControversy(getInviteUpvotes(id), getInviteDownvotes(id))";
+            $sqlFunction = "calculateControversy(ups, downs)";
 
-        $query = "SELECT *, $sqlFunction as sort FROM invites
-                  ORDER BY sort DESC LIMIT $page, $pageEnd;";
+        $voteQuery = "SELECT cm.*, v.ups, v.downs FROM invites AS cm
+                INNER JOIN (SELECT invite_id,
+                SUM(IF(state = 1, 1, 0)) as ups,
+				SUM(IF(state = 0, 1, 0)) as downs
+                FROM invite_votes
+                GROUP BY invite_id) AS v
+                  ON v.invite_id=cm.id";
+
+        $query = "SELECT *, $sqlFunction as sort FROM ($voteQuery) e ORDER by sort desc LIMIT $page, $pageEnd;";
 
         if ($sort == "new")
             $query = "SELECT * FROM invites
                   WHERE created_at BETWEEN '$time[0]' and '$time[1]'
                   ORDER BY created_at DESC LIMIT $page, $pageEnd;";
         else if ($sort == "top")
-            $query = "SELECT *, getInviteUpvotes(id) as upvotes, getInviteDownvotes(id) as downvotes FROM invites
+            $query = "SELECT * FROM ($voteQuery) e
                   WHERE created_at BETWEEN '$time[0]' and '$time[1]'
-                  ORDER BY upvotes - downvotes DESC LIMIT $page, $pageEnd;";
+                  ORDER BY ups - downs DESC LIMIT $page, $pageEnd;";
 
         $invites = Invite::hydrateRaw($query);
 		return view('pages.index', ['invites' => $invites]);

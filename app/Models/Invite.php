@@ -231,25 +231,33 @@ class Invite extends Model {
         $page    = ($page - 1) * $limit;
         $pageEnd = $limit;
 
-        $sqlFunction = "calculateBest(getCommentUpvotes(id), getCommentDownvotes(id))";
+        $sqlFunction = "calculateBest(ups, downs)";
 
         if ($sort == "controversial")
-            $sqlFunction = "calculateControversy(getCommentUpvotes(id), getCommentDownvotes(id))";
+            $sqlFunction = "calculateControversy(ups, downs)";
         else if ($sort == "hot")
-            $sqlFunction = "calculateHotness(getCommentUpvotes(id), getCommentDownvotes(id), created_at)";
+            $sqlFunction = "calculateHotness(ups, downs, created_at)";
 
-        $query = "SELECT *, $sqlFunction as sort FROM comments
-                  WHERE invite_id = $this->id AND parent_id = 0
-                  ORDER BY sort DESC LIMIT $page, $pageEnd;";
+        $voteQuery = "SELECT cm.*, v.ups, v.downs FROM comments AS cm
+                INNER JOIN (SELECT comment_id,
+                SUM(IF(state = 1, 1, 0)) as ups,
+				SUM(IF(state = 0, 1, 0)) as downs
+                FROM comment_votes
+                GROUP BY comment_id) AS v
+                ON v.comment_id=cm.id
+                WHERE cm.parent_id = 0
+                AND cm.invite_id = $this->id";
+
+        $query = "SELECT *, $sqlFunction as sort FROM ($voteQuery) e ORDER by sort desc LIMIT $page, $pageEnd;";
 
         if ($sort == "new")
             $query = "SELECT * FROM comments
-                  WHERE invite_id = $this->id AND parent_id = 0
+                  WHERE invite_id = $this->id
+                  AND parent_id = 0
                   ORDER BY created_at DESC LIMIT $page, $pageEnd;";
         else if ($sort == "top")
-            $query = "SELECT *, getCommentUpvotes(id) as upvotes, getCommentDownvotes(id) as downvotes FROM comments
-                  WHERE invite_id = $this->id AND parent_id = 0
-                  ORDER BY upvotes - downvotes DESC LIMIT $page, $pageEnd;";
+            $query = "SELECT * FROM ($voteQuery) e
+                  ORDER BY ups - downs DESC LIMIT $page, $pageEnd;";
 
         $hydrated = Comment::hydrateRaw($query);
         if ($cacheExpire == 0)
