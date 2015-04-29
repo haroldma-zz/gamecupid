@@ -39,7 +39,7 @@ class UserController extends Controller {
 		if ($user->save())
 		{
 			// Give the user rep
-            giveRepAndNotified(RepEvents::REGISTERED);
+            giveRepAndNotified(RepEvents::REGISTERED, $user->id); # User not logged in yet, need to pass $user->id
 
 			// Confirm e-mail notification
 			/*$notification              = new Notification;
