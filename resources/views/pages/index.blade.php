@@ -5,7 +5,7 @@
 	<div class="row">
 		<div class="medium-8 columns">
 			<div class="panel">
-				<div class="feed">
+				<div class="feed" id="feedContainer" data-page="1" data-sort="hot">
 					<div class="sort-by">
 						<a href="{!! url('/') !!}">Featured</a>
 						<a href="{!! url('/?sort=hot') !!}" class="{{ (Request::get('sort') == 'hot' || Request::get('sort') == '' ? 'active' : '') }}">Hot</a>
@@ -62,6 +62,11 @@
 						</h5>
 					@endif
 				</div>
+				<div id="feedLoader" class="hide loader">
+				  <div class="diamond"></div>
+				  <div class="diamond"></div>
+				  <div class="diamond"></div>
+				</div>
 			</div>
 		</div>
 		<div class="medium-3 medium-offset-1 columns">
@@ -72,4 +77,10 @@
 	</div>
 </section>
 <input type="hidden" id="csrfToken" value="{{ csrf_token() }}">
+<input id="pageCount" type="hidden" value="{{ Request::get('page', 1) + 1 }}">
+<input id="sortType" type="hidden" value="{{ Request::get('sort', 'hot') }}">
+@stop
+
+@section('scripts')
+@include('js.feed-loader')
 @stop
