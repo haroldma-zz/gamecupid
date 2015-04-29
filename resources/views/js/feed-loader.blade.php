@@ -34,7 +34,7 @@
 			$('#sortType').val(sort);
 			$('#pageCount').val(page);
 
-			$.get('/a/i/?sort=' + sort + '&page=' + page, function(res)
+			$.get('/?sort=' + sort + '&page=' + page, function(res)
 			{
 				$('#feedLoader').addClass('hide');
 
