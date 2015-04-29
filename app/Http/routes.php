@@ -25,6 +25,7 @@ Route::get('/makedb', 'TempController@makedb');
 Route::get('/', 'PageController@index');
 Route::get('/login', 'PageController@login');
 
+Route::get('/a/i', 'PageController@loadMoreInvites');
 Route::get('/invite/{hashid}/{slug}', 'PageController@invite');
 
 

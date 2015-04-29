@@ -63,6 +63,52 @@ class PageController extends Controller {
 
 	/**
 	*
+	* Get more invites via Ajax
+	*
+	**/
+	public function loadMoreInvites(Request $request)
+    {
+    	if (!$request->ajax())
+    		return redirect('/');
+
+		$pageSize = 10;
+		$page     = $request->input('page', 1);
+
+        if (!is_int($page))
+            $page = 1;
+
+		$page    = ($page - 1) * $pageSize;
+		$pageEnd = $pageSize;
+
+        $time = array(
+            Carbon::now()->subDay(),
+            Carbon::now()
+        );
+
+		$sort        = $request->input('sort', 'hot');
+		$sqlFunction = "calculateHotness(getInviteUpvotes(id), getInviteDownvotes(id), created_at)";
+
+        if ($sort == "controversial")
+            $sqlFunction = "calculateControversy(getInviteUpvotes(id), getInviteDownvotes(id))";
+
+        $query = "SELECT *, $sqlFunction as sort FROM invites
+                  ORDER BY sort DESC LIMIT $page, $pageEnd;";
+
+        if ($sort == "new")
+            $query = "SELECT * FROM invites
+                  WHERE created_at BETWEEN '$time[0]' and '$time[1]'
+                  ORDER BY created_at DESC LIMIT $page, $pageEnd;";
+        else if ($sort == "top")
+            $query = "SELECT *, getInviteUpvotes(id) as upvotes, getInviteDownvotes(id) as downvotes FROM invites
+                  WHERE created_at BETWEEN '$time[0]' and '$time[1]'
+                  ORDER BY upvotes - downvotes DESC LIMIT $page, $pageEnd;";
+
+        return Invite::hydrateRaw($query);
+	}
+
+
+	/**
+	*
 	* The login / register page
 	*
 	**/
