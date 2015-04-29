@@ -29,27 +29,25 @@ class PageController extends Controller {
 		$limit    = (int)$request->input('limit', 10);
 		$after    = decodeHashId($request->input('after', 0));
         $sort     = $request->input('sort', 'hot');
+        $t     = $request->input('t', 'day');
 
         $guardedLimit = min($limit, 100);
         $guardedLimit = max($guardedLimit, 1);
 
-        $time = array(
-            Carbon::now()->subDays(5),
-            Carbon::now()
-        );
+        $to   = Carbon::now();
+        $from = stringToFromDate($t);
 
-
-        $query = "CALL GetHotInvites($after, $guardedLimit);";
+        $query = "GetHotInvites($after, $guardedLimit)";
 
         if ($sort == "controversial")
-            $query = "CALL GetControversialInvites($after, $guardedLimit, '$time[0]', '$time[1]');";
+            $query = "GetControversialInvites($after, $guardedLimit, '$from', '$to')";
         else if ($sort == "top")
-            $query = "call GetTopInvites($after, $guardedLimit, '$time[0]', '$time[1]');";
+            $query = "GetTopInvites($after, $guardedLimit, '$from', '$to')";
         else if ($sort == "new")
-            $query = "call GetNewInvites($after, $guardedLimit);";
+            $query = "GetNewInvites($after, $guardedLimit)";
 
 
-        $invites = Invite::hydrateRaw($query);
+        $invites = Invite::hydrateRaw('CALL ' . $query);
 
         if ($request->ajax())
             return invitesToDtos($invites);
