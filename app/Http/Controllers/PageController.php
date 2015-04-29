@@ -24,44 +24,25 @@ class PageController extends Controller {
 	**/
 	public function index(Request $request)
     {
-		$pageSize = 10;
-		$page     = $request->input('page', 1);
-
-        if (!is_int($page))
-            $page = 1;
-
-		$page    = ($page - 1) * $pageSize;
-		$pageEnd = $pageSize;
+		$limit    = 10;
+		$after    = decodeHashId($request->input('after', 0));
+        $sort     = $request->input('sort', 'hot');
 
         $time = array(
-            Carbon::now()->subDay(),
+            Carbon::now()->subDays(5),
             Carbon::now()
         );
 
-		$sort        = $request->input('sort', 'hot');
-		$sqlFunction = "calculateHotness(ups, downs, created_at)";
+
+        $query = "CALL GetHotInvites($after, $limit);";
 
         if ($sort == "controversial")
-            $sqlFunction = "calculateControversy(ups, downs)";
-
-        $voteQuery = "SELECT cm.*, v.ups, v.downs FROM invites AS cm
-                INNER JOIN (SELECT invite_id,
-                SUM(IF(state = 1, 1, 0)) as ups,
-				SUM(IF(state = 0, 1, 0)) as downs
-                FROM invite_votes
-                GROUP BY invite_id) AS v
-                  ON v.invite_id=cm.id";
-
-        $query = "SELECT *, $sqlFunction as sort FROM ($voteQuery) e ORDER by sort desc LIMIT $page, $pageEnd;";
-
-        if ($sort == "new")
-            $query = "SELECT * FROM invites
-                  WHERE created_at BETWEEN '$time[0]' and '$time[1]'
-                  ORDER BY created_at DESC LIMIT $page, $pageEnd;";
+            $query = "CALL GetControversialInvites($after, $limit, '$time[0]', '$time[1]');";
         else if ($sort == "top")
-            $query = "SELECT * FROM ($voteQuery) e
-                  WHERE created_at BETWEEN '$time[0]' and '$time[1]'
-                  ORDER BY ups - downs DESC LIMIT $page, $pageEnd;";
+            $query = "call GetTopInvites($after, $limit, '$time[0]', '$time[1]');";
+        else if ($sort == "new")
+            $query = "call GetNewInvites($after, $limit);";
+
 
         $invites = Invite::hydrateRaw($query);
 		return view('pages.index', ['invites' => $invites]);
