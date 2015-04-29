@@ -16,7 +16,7 @@
 					<hr>
 					@if (count($invites) > 0)
 						@foreach($invites as $invite)
-						<article class="invite">
+						<article data-id="{{  hashId($invite->id) }}" class="invite">
 							<header>
 								<div class="img"></div>
 								<div class="user-meta">
@@ -77,8 +77,8 @@
 	</div>
 </section>
 <input type="hidden" id="csrfToken" value="{{ csrf_token() }}">
-<input id="pageCount" type="hidden" value="{{ Request::get('page', 1) + 1 }}">
 <input id="sortType" type="hidden" value="{{ Request::get('sort', 'hot') }}">
+<input id="limit" type="hidden" value="{{ Request::get('limit', 10) }}">
 @stop
 
 @section('scripts')

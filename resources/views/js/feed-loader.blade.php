@@ -28,13 +28,13 @@
 
 		if (canLoadMore == null || canLoadMore === true)
 		{
+			var limit = getUrlParameter('limit') || $('#limit').val() || 10;
 			var sort = getUrlParameter('sort') || $('#sortType').val() || 'hot';
-			var page = getUrlParameter('page') || $('#pageCount').val() || '1';
+			var after = $($("article.invite").slice(-1)[0]).attr("data-id");
 
 			$('#sortType').val(sort);
-			$('#pageCount').val(page);
 
-			$.get('/?sort=' + sort + '&page=' + page, function(res)
+			$.get('/?sort=' + sort + '&after=' + after + '&limit=' + limit, function(res)
 			{
 				$('#feedLoader').addClass('hide');
 
@@ -42,7 +42,7 @@
 					case 0:
 						$(window).data('canLoadMore', false);		// No more invites to load
 						break;
-					case 10:
+					case limit:
 						$(window).data('canLoadMore', true);		// Probably more invites to load
 						break;
 					default:
@@ -53,7 +53,7 @@
 				for (var i = 0; i < res.length; i++)
 				{
 					var output = '';
-						output += '<article class="invite">';
+						output += '<article data-id="' + res[i].id +'" class="invite">';
 						output += '<header>';
 						output += '<div class="img"></div>';
 						output += '<div class="user-meta">';

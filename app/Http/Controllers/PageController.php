@@ -26,9 +26,12 @@ class PageController extends Controller {
 	**/
 	public function index(Request $request)
     {
-		$limit    = 10;
+		$limit    = (int)$request->input('limit', 10);
 		$after    = decodeHashId($request->input('after', 0));
         $sort     = $request->input('sort', 'hot');
+
+        $guardedLimit = min($limit, 100);
+        $guardedLimit = max($guardedLimit, 0);
 
         $time = array(
             Carbon::now()->subDays(5),
@@ -36,23 +39,20 @@ class PageController extends Controller {
         );
 
 
-        $query = "CALL GetHotInvites($after, $limit);";
+        $query = "CALL GetHotInvites($after, $guardedLimit);";
 
         if ($sort == "controversial")
-            $query = "CALL GetControversialInvites($after, $limit, '$time[0]', '$time[1]');";
+            $query = "CALL GetControversialInvites($after, $guardedLimit, '$time[0]', '$time[1]');";
         else if ($sort == "top")
-            $query = "call GetTopInvites($after, $limit, '$time[0]', '$time[1]');";
+            $query = "call GetTopInvites($after, $guardedLimit, '$time[0]', '$time[1]');";
         else if ($sort == "new")
-            $query = "call GetNewInvites($after, $limit);";
+            $query = "call GetNewInvites($after, $guardedLimit);";
 
 
         $invites = Invite::hydrateRaw($query);
 
         if ($request->ajax())
-        {
-        	sleep(1);
             return invitesToDtos($invites);
-        }
 
 		return view('pages.index', ['invites' => $invites]);
 	}
