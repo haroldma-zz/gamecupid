@@ -217,7 +217,7 @@ class InviteController extends Controller {
                 notifiedAboutComment($comment->id, $parent->user_id);
 
             if ($request->ajax())
-            	return ['3', ['created_at' => $comment->created_at, 'hashId' => hashId($comment->id), 'self_text' => $comment->self_text, 'permalink' => $comment->getPermalink()]]; 			# comment success
+            	return ['3', ['created_at' => $comment->created_at, 'hashId' => hashId($comment->id), 'self_text' => $comment->self_text, 'permalink' => $comment->invite()->getPermalink()]]; 			# comment success
 
             return redirect()->back();
         }
