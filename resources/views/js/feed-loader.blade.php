@@ -6,7 +6,7 @@
 		var $this     = $(this);
 		var distance  = $(window).scrollTop();
 		var border    = $('#feedContainer').find('article:last')[0].offsetTop;
-		var threshold = border * 0.2;
+		var threshold = border * 0.3;
 
 		if ($this.data('loading') !== true && distance > border - threshold)
 		{
@@ -109,7 +109,7 @@
 		var parameters = window.location.search.substring(1);
 		var variables  = parameters.split('&');
 
-	    for (var i = 0; i < variables.length; i++) 
+	    for (var i = 0; i < variables.length; i++)
 	    {
 	        var name = variables[i].split('=');
 	        if (parameters[0] == param)
