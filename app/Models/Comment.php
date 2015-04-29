@@ -188,21 +188,35 @@ class Comment extends Model {
         return $this->hasMany('App\Models\CommentVote', 'comment_id', 'id');
     }
 
-    public function sortChildComments($sort, $page, $limit, $cacheExpire)
+    public function renderComments($sort)
     {
-        $pageSize = $limit;
+        if (empty($sort))
+            $sort = "best";
 
-        if (!is_int($page))
-            $page = 1;
+        $count = $this->childCount();
+        $expire = 20;
 
-        $key = generateCacheKeyWithId("invite", "comment-parents-$sort-p-$page-l-$limit", $this->id);
+        if ($count < 10)
+            $expire = 0;
+        else if ($count < 50)
+            $expire = 5;
+        else if ($count < 100)
+            $expire = 10;
+        else if ($count < 500)
+            $expire = 15;
+
+        $commentlist = new CommentsRenderer;
+        $commentlist->prepareForContext($this, $sort, $expire);
+        return $commentlist->print_comments();
+    }
+
+    public function sortChildComments($sort, $limit, $cacheExpire)
+    {
+        $key = generateCacheKeyWithId("invite", "comment-parents-$sort-l-$limit", $this->id);
         if ($cacheExpire != 0) {
             if (hasCache($key, $cache))
                 return $cache;
         }
-
-        $page    = ($page - 1) * $pageSize;
-        $pageEnd = $pageSize;
 
         $sqlFunction = "calculateBest(ups, downs)";
 
@@ -220,15 +234,15 @@ class Comment extends Model {
                 ON v.comment_id=cm.id
                 WHERE cm.parent_id = $this->id";
 
-        $query = "SELECT *, $sqlFunction as sort FROM ($voteQuery) e ORDER by sort desc LIMIT $page, $pageEnd;";
+        $query = "SELECT *, $sqlFunction as sort FROM ($voteQuery) e ORDER by sort desc LIMIT 0, 10;";
 
         if ($sort == "new")
             $query = "SELECT * FROM comments
                   WHERE parent_id = $this->id
-                  ORDER BY created_at DESC LIMIT $page, $pageEnd;";
+                  ORDER BY created_at DESC LIMIT 0, 10;";
         else if ($sort == "top")
             $query = "SELECT * FROM ($voteQuery) e
-                  ORDER BY ups - downs DESC LIMIT $page, $pageEnd;";
+                  ORDER BY ups - downs DESC LIMIT 0, 10;";
 
         $hydrated = Comment::hydrateRaw($query);
         if ($cacheExpire == 0)

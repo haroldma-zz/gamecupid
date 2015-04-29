@@ -79,7 +79,11 @@
 						</div>
 						<div class="clearfix"></div>
 					</h6>
-					{!! $invite->renderComments(Request::get("sort")) !!}
+					@if (isset($context))
+						{!! $context->renderComments(Request::get("sort")) !!}
+					@else
+						{!! $invite->renderComments(Request::get("sort")) !!}
+					@endif
 				</div>
 			</div>
 		</div>

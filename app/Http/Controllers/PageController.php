@@ -4,8 +4,7 @@ use App\Models\Console;
 use App\Models\Invite;
 use Illuminate\Http\Request;
 use Carbon\Carbon;
-use Kumuwai\DataTransferObject\Laravel5DTO;
-use Illuminate\Database\Eloquent\Collection;
+use App\Models\Comment;
 
 class PageController extends Controller {
 
@@ -155,6 +154,26 @@ class PageController extends Controller {
 
 		return view('pages.invites.detailpage', ['invite' => $invite]);
 	}
+
+    /**
+     *
+     * Invite details page
+     *
+     **/
+    public function inviteWithContext($hashid, $slug, $context)
+    {
+        $invite = Invite::find(decodeHashId($hashid));
+
+        if (!$invite)
+            return redirect('/page-not-found');
+
+        $context = Comment::find(decodeHashId($context));
+
+        if (!$context)
+            return redirect('/page-not-found');
+
+        return view('pages.invites.detailpage', ['invite' => $invite, 'context' => $context]);
+    }
 
 
 }

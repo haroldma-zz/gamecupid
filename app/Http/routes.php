@@ -26,6 +26,7 @@ Route::get('/', 'PageController@index');
 Route::get('/login', 'PageController@login');
 
 Route::get('/invite/{hashid}/{slug}', 'PageController@invite');
+Route::get('/invite/{hashid}/{slug}/{context}', 'PageController@inviteWithContext');
 
 
 // POST routes

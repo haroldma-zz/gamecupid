@@ -160,7 +160,8 @@ class Invite extends Model {
         else if ($count < 500)
             $expire = 15;
 
-        $commentlist = new CommentsRenderer($this, $sort, $expire);
+        $commentlist = new CommentsRenderer;
+        $commentlist->prepareForInvite($this, $sort, $expire);
         return $commentlist->print_comments();
     }
 

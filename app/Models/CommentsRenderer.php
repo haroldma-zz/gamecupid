@@ -17,36 +17,36 @@ class CommentsRenderer {
 	public $theComments = [];
 
     // How many parent comments to get (parent_id = 0)
-    const PARENT_SUB_LIMIT = 100;
+    const PARENT_SUB_LIMIT = 50;
 
     // How many child comments to get
     const CHILD_SUB_LIMIT = 10;
 
     // How much should the child limit decreased for each nest load
-    const CHILD_NEST_SUBTRACT = 1;
+    const CHILD_DEPTH_SUBTRACT = 1;
 
 	/**
 	*
-	* The constructer function fetches all the comments and their child comments
+	* The function fetches all the comments and their child comments
 	* of a given array of id's
 	* See App\Models\Invite @ renderComments()
 	*
 	**/
-    function __construct($invite, $sort, $cacheExpire)
+    function prepareForInvite($invite, $sort, $cacheExpire)
     {
         $comments = $invite->sortParentComments($sort, 1, CommentsRenderer::PARENT_SUB_LIMIT, $cacheExpire);
         foreach ($comments as $comment)
         {
-            $child   = $comment->sortChildComments($sort, 1, CommentsRenderer::CHILD_SUB_LIMIT, $cacheExpire);
+            $child   = $comment->sortChildComments($sort, CommentsRenderer::CHILD_SUB_LIMIT, $cacheExpire);
 
-        	$this->theComments[] = $comment;
+            $this->theComments[] = $comment;
 
             if (count($child) > 0)
             {
                 foreach ($child as $c)
                 {
                     $this->theComments[] = $c;
-                    $this->getChildsComments($c, $sort, 1, 1, $cacheExpire);
+                    $this->getChildsComments($c, $sort, 1, $cacheExpire);
                 }
             }
 
@@ -56,7 +56,7 @@ class CommentsRenderer {
         {
             if ($comment->parent_id == 0)
             {
-            	$this->parents[$comment->id][] = $comment;
+                $this->parents[$comment->id][] = $comment;
             }
             else
             {
@@ -65,18 +65,36 @@ class CommentsRenderer {
         }
     }
 
+    function prepareForContext($comment, $sort, $cacheExpire)
+    {
+        $child = $comment->sortChildComments($sort, CommentsRenderer::CHILD_SUB_LIMIT, $cacheExpire);
+
+        if (count($child) > 0) {
+            foreach ($child as $c) {
+                $this->theComments[] = $c;
+                $this->getChildsComments($c, $sort, 1, $cacheExpire);
+            }
+        }
+
+        $this->parents[$comment->id][] = $comment;
+
+        foreach ($this->theComments as $comment) {
+            $this->children[$comment->parent_id][] = $comment;
+        }
+    }
+
     /**
      *
      * Function to get id's of all child comments of a given comment id
      *
      **/
-    private function getChildsComments($c, $sort, $page, $nesting, $cacheExpire)
+    private function getChildsComments($c, $sort, $limit, $cacheExpire)
     {
-        $nestingLimit = CommentsRenderer::CHILD_SUB_LIMIT - (CommentsRenderer::CHILD_NEST_SUBTRACT * $nesting);
+        $depthLimit = CommentsRenderer::CHILD_SUB_LIMIT - (CommentsRenderer::CHILD_DEPTH_SUBTRACT * $limit);
 
-        if ($nestingLimit <= 0) return;
+        if ($depthLimit <= 0) return;
 
-        $child = $c->sortChildComments($sort, $page, $nestingLimit, $cacheExpire);
+        $child = $c->sortChildComments($sort, $depthLimit, $cacheExpire);
 
         if (count($child) > 0)
         {
@@ -84,8 +102,8 @@ class CommentsRenderer {
             {
                 $this->theComments[] = $c;
 
-                $nesting++;
-                $this->getChildsComments($c, $sort, 1, $nesting, $cacheExpire);
+                $limit++;
+                $this->getChildsComments($c, $sort, $limit, $cacheExpire);
             }
         }
     }
@@ -141,6 +159,10 @@ class CommentsRenderer {
 				$output .= '<a id="replyToComment" data-id="' . hashId($comment->id) . '">reply</a>';
 				$output .= '<a>&middot;</a>';
 				$output .= '<a href="' . $comment->getPermalink() . '">permalink</a>';
+                if ($comment->parent_id != 0) {
+                    $output .= '<a>&middot;</a>';
+                    $output .= '<a href="' . $comment->parent->getPermalink() . '">parent</a>';
+                }
 				$output .= '</footer>';
 				$output .= '<div class="comment-box" id="commentBox-' . hashId($comment->id) . '">';
 				$output .= '<form method="POST" action="' . $comment->invite()->getPermalink() . '" accept-charset="UTF-8">';
@@ -212,6 +234,10 @@ class CommentsRenderer {
 				$output .= '<a id="replyToComment" data-id="' . hashId($comment->id) . '">reply</a>';
 				$output .= '<a>&middot;</a>';
                 $output .= '<a href="' . $comment->getPermalink() . '">permalink</a>';
+                if ($comment->parent_id != 0) {
+                    $output .= '<a>&middot;</a>';
+                    $output .= '<a href="' . $comment->parent->getPermalink() . '">parent</a>';
+                }
 				$output .= '</footer>';
 				$output .= '<div class="comment-box" id="commentBox-' . hashId($comment->id) . '">';
 				$output .= '<form method="POST" action="' . $comment->invite()->getPermalink() . '" accept-charset="UTF-8">';
