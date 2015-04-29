@@ -42,10 +42,8 @@
 		<div class="row">
 			<div class="medium-12 columns">
 				<h5 class="super-header">GameCupid</h5>
-				<a href="">Link #</a>
-				<a href="">Link #</a>
-				<a href="">Link #</a>
-				<a href="">Link #</a>
+				<br><br>
+				<script type="text/javascript" src="//www.redditstatic.com/button/button1.js"></script>
 			</div>
 		</div>
 	</footer>
