@@ -113,9 +113,9 @@ class UserController extends Controller {
 		$start = time();
 		$end   = $start + 30;
 
-        $n = [];
-		$notifications     = Auth::user()->rNotifications()->where('notified', false)->orderBy('id', 'DESC')->get();
-		$check = count($notifications) > 0;
+		$n             = [];
+		$notifications = Auth::user()->rNotifications()->where('notified', false)->orderBy('id', 'DESC')->get();
+		$check         = count($notifications) > 0;
 
 		while ($check === false && $start < $end) {
 			sleep(5);

@@ -1,6 +1,7 @@
 function checkForNotification() {
 	$.getJSON('/notification', function(res)
 	{
+        console.log(res);
 		if (res)
 		{
             if ($('#notification').length) {
