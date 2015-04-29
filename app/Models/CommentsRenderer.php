@@ -156,13 +156,13 @@ class CommentsRenderer {
 				$output .= ($comment->deleted == true ? '<i>[ this comment was deleted ]</i>' : $comment->self_text);
 				$output .= '</section>';
 				$output .= '<footer>';
-				$output .= '<a id="replyToComment" data-id="' . hashId($comment->id) . '">reply</a>';
-				$output .= '<a>&middot;</a>';
 				$output .= '<a href="' . $comment->getPermalink() . '">permalink</a>';
                 if ($comment->parent_id != 0) {
                     $output .= '<a>&middot;</a>';
-                    $output .= '<a href="' . $comment->parent->getPermalink() . '">parent</a>';
+                    $output .= '<a href="' . $comment->invite()->getPermalink() . hashId($comment->parent_id) . '">parent</a>';
                 }
+                $output .= '<a>&middot;</a>';
+                $output .= '<a id="replyToComment" data-id="' . hashId($comment->id) . '">reply</a>';
 				$output .= '</footer>';
 				$output .= '<div class="comment-box" id="commentBox-' . hashId($comment->id) . '">';
 				$output .= '<form method="POST" action="' . $comment->invite()->getPermalink() . '" accept-charset="UTF-8">';
@@ -231,13 +231,13 @@ class CommentsRenderer {
 				$output .= ($comment->deleted == true ? '<i>[ this comment was deleted ]</i>' : $comment->self_text);
 				$output .= '</section>';
 				$output .= '<footer>';
-				$output .= '<a id="replyToComment" data-id="' . hashId($comment->id) . '">reply</a>';
-				$output .= '<a>&middot;</a>';
                 $output .= '<a href="' . $comment->getPermalink() . '">permalink</a>';
                 if ($comment->parent_id != 0) {
                     $output .= '<a>&middot;</a>';
-                    $output .= '<a href="' . $comment->parent->getPermalink() . '">parent</a>';
+                    $output .= '<a href="' . $comment->invite()->getPermalink() . hashId($comment->parent_id) . '">parent</a>';
                 }
+                $output .= '<a>&middot;</a>';
+                $output .= '<a id="replyToComment" data-id="' . hashId($comment->id) . '">reply</a>';
 				$output .= '</footer>';
 				$output .= '<div class="comment-box" id="commentBox-' . hashId($comment->id) . '">';
 				$output .= '<form method="POST" action="' . $comment->invite()->getPermalink() . '" accept-charset="UTF-8">';
