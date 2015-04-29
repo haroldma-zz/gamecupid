@@ -99,6 +99,9 @@ class User extends Model implements AuthenticatableContract, CanResetPasswordCon
             return $cache;
         }
 
+		if ($this->_rep == null)
+            $this->_rep = 0;
+
 		$this->_rep = DB::SELECT(DB::RAW("SELECT SUM(x.total) as total FROM
                     (SELECT
                       (SELECT sum(amount) FROM rep_events WHERE id=rep_event_id) as total
