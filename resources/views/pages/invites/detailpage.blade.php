@@ -79,13 +79,8 @@
 						</div>
 						<div class="clearfix"></div>
 					</h6>
-					@if (isset($context))
-                        <div class="infobar">you are viewing a single comment's thread.
-                            <p>
-                                <a href="{!! $invite->getPermalink() !!}">view the rest of the comments</a>&nbsp;→
-                            </p>
-                        </div>
-						{!! $context->renderComments(Request::get("sort")) !!}
+					@if (isset($comment))
+                        {!! $comment->renderComments(Request::get("sort"), $context) !!}
 					@else
 						{!! $invite->renderComments(Request::get("sort")) !!}
 					@endif

@@ -188,7 +188,7 @@ class Comment extends Model {
         return $this->hasMany('App\Models\CommentVote', 'comment_id', 'id');
     }
 
-    public function renderComments($sort)
+    public function renderComments($sort, $context)
     {
         if (empty($sort))
             $sort = "best";
@@ -206,7 +206,7 @@ class Comment extends Model {
             $expire = 15;
 
         $commentlist = new CommentsRenderer;
-        $commentlist->prepareForContext($this, $sort, $expire);
+        $commentlist->prepareForContext($this, $sort, $expire, $context);
         return $commentlist->print_comments();
     }
 

@@ -15,6 +15,8 @@ class CommentsRenderer {
 	public $parents     = [];
 	public $children    = [];
 	public $theComments = [];
+	public $commentContext = null;
+	public $contextParent = null;
 
     // How many parent comments to get (parent_id = 0)
     const PARENT_SUB_LIMIT = 50;
@@ -65,7 +67,33 @@ class CommentsRenderer {
         }
     }
 
-    function prepareForContext($comment, $sort, $cacheExpire)
+    function prepareForContext($comment, $sort, $cacheExpire, $contextDepth)
+    {
+        $this->commentContext = $comment;
+        // first we load the requested context count
+        $depth = 0;
+        $context = $comment;
+        while ($depth < $contextDepth) {
+            if ($context->parent_id == 0)
+                break;
+            $context = $context->parent;
+            $this->children[$context->parent_id][] = $context;
+            $depth++;
+        }
+
+        if ($context != null) {
+            $this->contextParent = $context;
+            $this->parents[$context->id][] = $context;
+            $this->children[$comment->parent_id][] = $comment;
+        }
+        else
+            $this->parents[$comment->id][] = $comment;
+
+        // now we load all children (the comment's thread)
+        $this->loadCommentThread($comment, $sort, $cacheExpire);
+    }
+
+    private function loadCommentThread($comment, $sort, $cacheExpire)
     {
         $child = $comment->sortChildComments($sort, CommentsRenderer::CHILD_SUB_LIMIT, $cacheExpire);
 
@@ -75,8 +103,6 @@ class CommentsRenderer {
                 $this->getChildsComments($c, $sort, 1, $cacheExpire);
             }
         }
-
-        $this->parents[$comment->id][] = $comment;
 
         foreach ($this->theComments as $comment) {
             $this->children[$comment->parent_id][] = $comment;
@@ -117,12 +143,14 @@ class CommentsRenderer {
     private function print_children($parent, $hierachy)
     {
 		$output = '';
+
+
     	if (isset($this->children[$parent]))
     	{
     		foreach($this->children[$parent] as $comment)
     		{
 	    		$comment = $comment;
-				$output .= '<article class="comment ' . $hierachy . ' ' . ($comment->childCount() > 0 ? 'no-pad-bot' : '') . '">';
+				$output .= '<article class="comment' . ' ' . $hierachy . ' ' . ($comment->childCount() > 0 ? 'no-pad-bot' : '') . '">';
 				$output .= '<div class="collapser" id="collapseComment">';
                 $output .= '<span>[–]</span>';
 				$output .= '</div>';
@@ -152,7 +180,7 @@ class CommentsRenderer {
 				$output .= '</p>';
 				$output .= '</div>';
 				$output .= '</header>';
-				$output .= '<section class="markdown-text">';
+				$output .= '<section class="markdown-text'. ($this->commentContext != null && $this->commentContext == $comment ? ' comment-context ' : '') .'">';
 				$output .= ($comment->deleted == true ? '<i>[ this comment was deleted ]</i>' : $comment->self_text);
 				$output .= '</section>';
 				$output .= '<footer>';
@@ -192,6 +220,14 @@ class CommentsRenderer {
     {
     	$output  = '';
 
+        if ($this->commentContext != null) {
+            $output .= '<div class="infobar">you are viewing a single comment\'s thread.<p>';
+            $output .= '<a href="$parent->invite()->getPermalink()">view the rest of the comments</a>&nbsp;→';
+            if ($this->contextParent != null && $this->contextParent->parent_id != 0)
+                $output .= '&nbsp;<a href="?context=10000">view the full context</a>&nbsp;→';
+            $output .= '</p></div>';
+        }
+
     	if (count($this->parents) > 0)
     	{
 	    	foreach ($this->parents as $comment)
@@ -227,7 +263,7 @@ class CommentsRenderer {
 				$output .= '</p>';
 				$output .= '</div>';
 				$output .= '</header>';
-				$output .= '<section class="markdown-text">';
+				$output .= '<section class="markdown-text'. ($this->commentContext != null && $this->commentContext == $comment ? ' comment-context ' : '') .'">';
 				$output .= ($comment->deleted == true ? '<i>[ this comment was deleted ]</i>' : $comment->self_text);
 				$output .= '</section>';
 				$output .= '<footer>';

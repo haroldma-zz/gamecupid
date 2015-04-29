@@ -160,19 +160,21 @@ class PageController extends Controller {
      * Invite details page
      *
      **/
-    public function inviteWithContext($hashid, $slug, $context)
+    public function inviteWithContext(Request $request, $hashid, $slug, $context)
     {
         $invite = Invite::find(decodeHashId($hashid));
 
         if (!$invite)
             return redirect('/page-not-found');
 
-        $context = Comment::find(decodeHashId($context));
+        $comment = Comment::find(decodeHashId($context));
 
-        if (!$context)
+        if (!$comment)
             return redirect('/page-not-found');
 
-        return view('pages.invites.detailpage', ['invite' => $invite, 'context' => $context]);
+        $context = max((int)$request->input("context", 1), 0);
+
+        return view('pages.invites.detailpage', ['invite' => $invite, 'context' => $context, 'comment' => $comment]);
     }
 
 
