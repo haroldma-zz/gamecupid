@@ -9738,8 +9738,8 @@ article.invite hr {
 .comments article.comment .collapser {
   position: absolute;
   height: 24px;
-  top: 10px;
-  right: 10px;
+  top: 19px;
+  left: 10px;
   font-size: 0.85em;
   color: #777;
   cursor: pointer;
@@ -9753,7 +9753,7 @@ article.invite hr {
 /* line 491, ../scss/_misc.scss */
 .comments article.comment.collapsed .collapser {
   top: -3px;
-  right: 5px;
+  left: 5px;
 }
 /* line 495, ../scss/_misc.scss */
 .comments article.comment.collapsed header, .comments article.comment.collapsed section, .comments article.comment.collapsed footer {
@@ -9767,110 +9767,115 @@ article.invite hr {
 .comments article.comment .collapsed-content {
   display: none;
   line-height: 16px;
+  padding-left: 20px;
 }
-/* line 506, ../scss/_misc.scss */
+/* line 507, ../scss/_misc.scss */
 .comments article.comment .collapsed-content small {
   font-size: 85%;
   color: #ccc;
   letter-spacing: 1px;
   margin-left: 10px;
 }
-/* line 511, ../scss/_misc.scss */
+/* line 512, ../scss/_misc.scss */
 .comments article.comment .collapsed-content small a {
   font-weight: 700;
 }
-/* line 517, ../scss/_misc.scss */
+/* line 518, ../scss/_misc.scss */
 .comments article.comment:last-of-type {
   border-bottom: 1px solid #e9e9e9;
 }
-/* line 521, ../scss/_misc.scss */
+/* line 522, ../scss/_misc.scss */
 .comments article.comment.no-pad-bot {
   padding-bottom: 0;
 }
-/* line 525, ../scss/_misc.scss */
+/* line 526, ../scss/_misc.scss */
 .comments article.comment .children {
   padding-left: 15px;
 }
-/* line 529, ../scss/_misc.scss */
+/* line 530, ../scss/_misc.scss */
 .comments article.comment.parent {
   background: white;
   border-bottom: none;
 }
-/* line 532, ../scss/_misc.scss */
+/* line 533, ../scss/_misc.scss */
 .comments article.comment.parent:last-of-type {
   border-bottom: 1px solid #e9e9e9;
 }
-/* line 537, ../scss/_misc.scss */
+/* line 538, ../scss/_misc.scss */
 .comments article.comment.child {
   background: #f5f5f5;
   border-right: none;
   border-bottom: none;
 }
-/* line 541, ../scss/_misc.scss */
+/* line 542, ../scss/_misc.scss */
 .comments article.comment.child:first-of-type {
   margin-top: 10px;
 }
-/* line 544, ../scss/_misc.scss */
+/* line 545, ../scss/_misc.scss */
+.comments article.comment.child:last-of-type {
+  padding-bottom: 0;
+}
+/* line 548, ../scss/_misc.scss */
 .comments article.comment.child .parent {
   border-right: none;
   border-bottom: none;
 }
-/* line 547, ../scss/_misc.scss */
+/* line 551, ../scss/_misc.scss */
 .comments article.comment.child .parent:first-of-type {
   margin-top: 10px;
 }
-/* line 553, ../scss/_misc.scss */
+/* line 557, ../scss/_misc.scss */
 .comments article.comment header {
   width: 100%;
   height: 40px;
   display: block;
   position: relative;
-  padding-left: 25px;
+  padding-left: 45px;
   margin-bottom: 5px;
 }
-/* line 560, ../scss/_misc.scss */
+/* line 564, ../scss/_misc.scss */
 .comments article.comment header .voters {
   position: absolute;
   top: -5px;
-  left: 0;
+  left: 20px;
   height: 100%;
   width: 25px;
   color: #ccc;
   font-size: 1.25em;
 }
-/* line 568, ../scss/_misc.scss */
+/* line 572, ../scss/_misc.scss */
 .comments article.comment header .voters .arrows {
   float: left;
   width: 15px;
   overflow: hidden;
   margin-right: 5px;
 }
-/* line 574, ../scss/_misc.scss */
+/* line 578, ../scss/_misc.scss */
 .comments article.comment header .voters .arrows i {
   cursor: pointer;
 }
-/* line 579, ../scss/_misc.scss */
+/* line 583, ../scss/_misc.scss */
 .comments article.comment header .voters .arrows #comment-upvoter:hover {
   color: #fbb450;
 }
-/* line 583, ../scss/_misc.scss */
+/* line 587, ../scss/_misc.scss */
 .comments article.comment header .voters .arrows #comment-upvoter i.activated {
   color: #fbb450 !important;
 }
-/* line 589, ../scss/_misc.scss */
+/* line 593, ../scss/_misc.scss */
 .comments article.comment header .voters .arrows #comment-downvoter:hover {
   color: #7896cc;
 }
-/* line 593, ../scss/_misc.scss */
+/* line 597, ../scss/_misc.scss */
 .comments article.comment header .voters .arrows #comment-downvoter i.activated {
   color: #7896cc !important;
 }
-/* line 598, ../scss/_misc.scss */
+/* line 602, ../scss/_misc.scss */
 .comments article.comment header .voters .count {
   font-size: 0.75em;
   line-height: 40px;
 }
-/* line 603, ../scss/_misc.scss */
+/* line 607, ../scss/_misc.scss */
 .comments article.comment header .img {
   width: 30px;
   height: 30px;
@@ -9881,44 +9886,46 @@ article.invite hr {
   -webkit-border-radius: 2px;
   border-radius: 2px;
 }
-/* line 612, ../scss/_misc.scss */
+/* line 616, ../scss/_misc.scss */
 .comments article.comment header .user-meta h6 {
   font-weight: 500;
   margin-bottom: 0;
   font-size: 0.8em;
 }
-/* line 617, ../scss/_misc.scss */
+/* line 621, ../scss/_misc.scss */
 .comments article.comment header .user-meta p {
   font-size: 0.75em;
   color: #555;
 }
-/* line 624, ../scss/_misc.scss */
+/* line 628, ../scss/_misc.scss */
 .comments article.comment section {
   margin: 0;
   padding: 0;
+  padding-left: 20px;
   margin-bottom: 20px;
 }
-/* line 630, ../scss/_misc.scss */
+/* line 635, ../scss/_misc.scss */
 .comments article.comment footer {
   width: 100%;
+  padding-left: 20px;
   margin-top: -20px;
 }
-/* line 634, ../scss/_misc.scss */
+/* line 640, ../scss/_misc.scss */
 .comments article.comment footer a {
   font-size: 0.75em;
   color: #888;
   margin-right: 5px;
   font-weight: 500;
 }
-/* line 640, ../scss/_misc.scss */
+/* line 646, ../scss/_misc.scss */
 .comments article.comment footer a:hover {
   text-decoration: underline;
 }
-/* line 646, ../scss/_misc.scss */
+/* line 652, ../scss/_misc.scss */
 .comments article.comment .comment-box {
   display: none;
 }
-/* line 650, ../scss/_misc.scss */
+/* line 656, ../scss/_misc.scss */
 .comments article.comment hr {
   width: 35px;
   margin: 25px 0;
@@ -9930,24 +9937,24 @@ article.invite hr {
 * Markdown markup
 *
 **/
-/* line 666, ../scss/_misc.scss */
+/* line 672, ../scss/_misc.scss */
 .markdown-text h1 {
   font-size: 1.5em;
   font-weight: 700;
 }
-/* line 670, ../scss/_misc.scss */
+/* line 676, ../scss/_misc.scss */
 .markdown-text h2 {
   font-size: 1.25em;
   font-weight: 700;
 }
-/* line 674, ../scss/_misc.scss */
+/* line 680, ../scss/_misc.scss */
 .markdown-text h3, .markdown-text h4, .markdown-text h5, .markdown-text h6 {
   font-size: 1em;
   font-weight: 700;
   padding-left: 0 !important;
   margin-bottom: 0.625rem !important;
 }
-/* line 680, ../scss/_misc.scss */
+/* line 686, ../scss/_misc.scss */
 .markdown-text p, .markdown-text ul {
   font-size: 0.9em !important;
 }
