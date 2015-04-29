@@ -31,7 +31,7 @@ class PageController extends Controller {
         $sort     = $request->input('sort', 'hot');
 
         $guardedLimit = min($limit, 100);
-        $guardedLimit = max($guardedLimit, 0);
+        $guardedLimit = max($guardedLimit, 1);
 
         $time = array(
             Carbon::now()->subDays(5),
