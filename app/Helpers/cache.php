@@ -39,7 +39,7 @@ function invalidateCache($key)
 function hasCache($key, &$cache)
 {
     $cache = getCache($key);
-    return $cache != null;
+    return $cache !== null;
 }
 
 function getCache($key)
@@ -53,6 +53,12 @@ function setCache($key, $value, $expire)
     return $value;
 }
 
+function setCacheWithSeconds($key, $value, $expire)
+{
+    Redis::setex("laravel:" . $key, $expire, serialize($value));
+    return $value;
+}
+
 function setCacheCount($key, $value)
 {
     Redis::setex("laravel:" . $key, calculateExpiry($value), $value);
@@ -62,7 +68,7 @@ function setCacheCount($key, $value)
 function calculateExpiry($count)
 {
     if ($count < 50)
-        return 5;
+        return 10;
     if ($count < 100)
         return 30;
     if ($count < 500)

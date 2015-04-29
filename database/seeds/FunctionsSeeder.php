@@ -8,28 +8,6 @@ class FunctionsSeeder extends Seeder
     public function run()
     {
         DB::transaction(function () {
-            // Let's create a helper function for getting total upvotes
-            DB::statement("DROP FUNCTION IF EXISTS getInviteUpvotes;");
-            DB::statement("DELIMITER $$
-        CREATE FUNCTION getInviteUpvotes(id INTEGER) RETURNS INTEGER
-        BEGIN
-          DECLARE votes INTEGER;
-          SELECT count(*) INTO votes FROM invite_votes WHERE state = 1 and invite_id = id;
-          RETURN votes;
-        END$$
-        DELIMITER ;");
-
-            // Now for getting downvotes
-            DB::statement("DROP FUNCTION IF EXISTS getInviteDownvotes;");
-            DB::statement("DELIMITER $$
-        CREATE FUNCTION getInviteDownvotes(id INTEGER) RETURNS INTEGER
-        BEGIN
-          DECLARE votes INTEGER;
-          SELECT count(*) INTO votes FROM invite_votes WHERE state = 0 and invite_id = id;
-          RETURN votes;
-        END$$
-        DELIMITER ;");
-
             // helper function for calculating hotness
             DB::statement("DROP FUNCTION IF EXISTS calculateHotness;");
             DB::statement("DELIMITER $$

@@ -12,7 +12,8 @@
 		"greggilbert/recaptcha": "dev-master",
 		"cocur/slugify": "~1.1",
 		"vinkla/hashids": "~1.0",
-		"predis/predis": "~1.0"
+		"predis/predis": "~1.0",
+		"kumuwai/data-transfer-object": "0.0.4.*"
 	},
 	"require-dev": {
 		"phpunit/phpunit": "~4.0",

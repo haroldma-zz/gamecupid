@@ -32,12 +32,12 @@ class CommentsRenderer {
 	* See App\Models\Invite @ renderComments()
 	*
 	**/
-    function __construct($comments, $sort)
+    function __construct($invite, $sort, $cacheExpire)
     {
+        $comments = $invite->sortParentComments($sort, 1, CommentsRenderer::PARENT_SUB_LIMIT, $cacheExpire);
         foreach ($comments as $comment)
         {
-            $limit = CommentsRenderer::PARENT_SUB_LIMIT;
-            $child   = $comment->sortChildComments($sort, 1, CommentsRenderer::CHILD_SUB_LIMIT);
+            $child   = $comment->sortChildComments($sort, 1, CommentsRenderer::CHILD_SUB_LIMIT, $cacheExpire);
 
         	$this->theComments[] = $comment;
 
@@ -45,11 +45,8 @@ class CommentsRenderer {
             {
                 foreach ($child as $c)
                 {
-                    if ($limit == 0) break;
-                    $limit--;
-
                     $this->theComments[] = $c;
-                    $this->getChildsComments($c, $sort, 1, 1);
+                    $this->getChildsComments($c, $sort, 1, 1, $cacheExpire);
                 }
             }
 
@@ -73,13 +70,13 @@ class CommentsRenderer {
      * Function to get id's of all child comments of a given comment id
      *
      **/
-    private function getChildsComments($c, $sort, $page, $nesting)
+    private function getChildsComments($c, $sort, $page, $nesting, $cacheExpire)
     {
         $nestingLimit = CommentsRenderer::CHILD_SUB_LIMIT - (CommentsRenderer::CHILD_NEST_SUBTRACT * $nesting);
 
         if ($nestingLimit <= 0) return;
 
-        $child = $c->sortChildComments($sort, $page, $nestingLimit);
+        $child = $c->sortChildComments($sort, $page, $nestingLimit, $cacheExpire);
 
         if (count($child) > 0)
         {
@@ -88,7 +85,7 @@ class CommentsRenderer {
                 $this->theComments[] = $c;
 
                 $nesting++;
-                $this->getChildsComments($c, $sort, 1, $nesting);
+                $this->getChildsComments($c, $sort, 1, $nesting, $cacheExpire);
             }
         }
     }
@@ -107,16 +104,19 @@ class CommentsRenderer {
     		foreach($this->children[$parent] as $comment)
     		{
 	    		$comment = $comment;
-                $user    = $comment->user();
 				$output .= '<article class="comment ' . $hierachy . ' ' . ($comment->childCount() > 0 ? 'no-pad-bot' : '') . '">';
+				$output .= '<div class="collapser" id="collapseComment">';
+                $output .= '<span>[–]</span>';
+				$output .= '</div>';
+				$output .= '<div class="collapsed-content"><small><a href="">' . $comment->user->username . '</a> &middot; ' . $comment->totalVotes() . ' point' . ($comment->totalVotes() == 1 ? '' : 's') . ' <span class="comment-collapsed-child-count"></span></small></div>';
 				$output .= '<header>';
 				$output .= '<div class="voters">';
 				$output .= '<div class="arrows">';
-				$output .= '<div id="comment-upvoter" data-comment-id="' . $comment->id . '">';
-				$output .= '<i class="ion-arrow-up-a ' . ($comment->isUpvoted() ? 'activated' : '') . ' " id="comment-upvoter-' . $comment->id . '"></i>';
+				$output .= '<div id="comment-upvoter" data-comment-id="' . hashId($comment->id) . '">';
+				$output .= '<i class="ion-arrow-up-a ' . ($comment->isUpvoted() ? 'activated' : '') . ' " id="comment-upvoter-' . hashId($comment->id) . '"></i>';
 				$output .= '</div>';
-				$output .= '<div id="comment-downvoter" data-comment-id="' . $comment->id . '">';
-				$output .= '<i class="ion-arrow-down-a ' . ($comment->isDownvoted() ? 'activated' : '') . ' " id="comment-downvoter-' . $comment->id . '"></i>';
+				$output .= '<div id="comment-downvoter" data-comment-id="' . hashId($comment->id) . '">';
+				$output .= '<i class="ion-arrow-down-a ' . ($comment->isDownvoted() ? 'activated' : '') . ' " id="comment-downvoter-' . hashId($comment->id) . '"></i>';
 				$output .= '</div>';
 				$output .= '</div>';
 				$output .= '</div>';
@@ -126,11 +126,11 @@ class CommentsRenderer {
 				$output .= '<a href="' . url('/') . '">' . $comment->user->username . '</a>';
 				$output .= '</h6>';
 				$output .= '<p>';
-				$output .= Timeago::convert($comment->created_at);
+				$output .= '<time datetime="' . $comment->created_at . '"></time>';
 				$output .= '&nbsp;';
 				$output .= '&middot;';
 				$output .= '&nbsp;';
-				$output .= '<span id="voteCountComment-' . $comment->id . '">' . $comment->totalVotes() . '</span> point' . ($comment->totalVotes() == 1 ? '' : 's');
+				$output .= '<span id="voteCountComment-' . hashId($comment->id) . '">' . $comment->totalVotes() . '</span> point' . ($comment->totalVotes() == 1 ? '' : 's');
 				$output .= '</p>';
 				$output .= '</div>';
 				$output .= '</header>';
@@ -138,15 +138,14 @@ class CommentsRenderer {
 				$output .= ($comment->deleted == true ? '<i>[ this comment was deleted ]</i>' : $comment->self_text);
 				$output .= '</section>';
 				$output .= '<footer>';
-				$output .= '<a id="replyToComment" data-id="' . $comment->id . '">reply</a>';
+				$output .= '<a id="replyToComment" data-id="' . hashId($comment->id) . '">reply</a>';
 				$output .= '<a>&middot;</a>';
-				$output .= '<a>' . $comment->childCount() . ' comment' . ($comment->childCount() == 1 ? '' : 's') . '</a>';
+				$output .= '<a href="' . $comment->getPermalink() . '">permalink</a>';
 				$output .= '</footer>';
-				$output .= '<div class="comment-box" id="commentBox-' . $comment->id . '">';
-				$output .= '<form method="POST" action="' . url('/invite/' . Hashids::encode($comment->invite->id) . '/' . $comment->invite->slug) . '" accept-charset="UTF-8">';
+				$output .= '<div class="comment-box" id="commentBox-' . hashId($comment->id) . '">';
+				$output .= '<form method="POST" action="' . $comment->invite()->getPermalink() . '" accept-charset="UTF-8">';
 				$output .= '<input type="hidden" name="_token" value="' . csrf_token() . '">';
-				$output .= '<input type="hidden" name="parent_id" value="' . $comment->id . '">';
-				$output .= '<input type="hidden" name="invite_id" value="' . $comment->invite->id . '">';
+				$output .= '<input type="hidden" name="parent_id" value="' . hashId($comment->id) . '">';
 				$output .= '<label for="self_text">You can use Markdown to write comments.</label>';
 				$output .= '<textarea name="self_text" class="form-control" placeholder="Write a comment"></textarea>';
 				$output .= '<button type="submit" class="btn primary medium">Reply</button>';
@@ -176,16 +175,19 @@ class CommentsRenderer {
 	    	foreach ($this->parents as $comment)
 	    	{
 	    		$comment = $comment[0];
-				$user    = $comment->user();
 				$output .= '<article class="comment parent ' . ($comment->childCount() > 0 ? 'no-pad-bot' : '') . '">';
+				$output .= '<div class="collapser" id="collapseComment">';
+				$output .= '<span>[–]</span>';
+				$output .= '</div>';
+				$output .= '<div class="collapsed-content"><small><a href="">' . $comment->user->username . '</a> &middot; ' . $comment->totalVotes() . ' point' . ($comment->totalVotes() == 1 ? '' : 's') . ' <span class="comment-collapsed-child-count"></span></span></small></div>';
 				$output .= '<header>';
 				$output .= '<div class="voters">';
 				$output .= '<div class="arrows">';
-				$output .= '<div id="comment-upvoter" data-comment-id="' . $comment->id . '">';
-				$output .= '<i class="ion-arrow-up-a ' . ($comment->isUpvoted() ? 'activated' : '') . ' " id="comment-upvoter-' . $comment->id . '"></i>';
+				$output .= '<div id="comment-upvoter" data-comment-id="' . hashId($comment->id) . '">';
+				$output .= '<i class="ion-arrow-up-a ' . ($comment->isUpvoted() ? 'activated' : '') . ' " id="comment-upvoter-' . hashId($comment->id) . '"></i>';
 				$output .= '</div>';
-				$output .= '<div id="comment-downvoter" data-comment-id="' . $comment->id . '">';
-				$output .= '<i class="ion-arrow-down-a ' . ($comment->isDownvoted() ? 'activated' : '') . ' " id="comment-downvoter-' . $comment->id . '"></i>';
+				$output .= '<div id="comment-downvoter" data-comment-id="' . hashId($comment->id) . '">';
+				$output .= '<i class="ion-arrow-down-a ' . ($comment->isDownvoted() ? 'activated' : '') . ' " id="comment-downvoter-' . hashId($comment->id) . '"></i>';
 				$output .= '</div>';
 				$output .= '</div>';
 				$output .= '</div>';
@@ -195,11 +197,11 @@ class CommentsRenderer {
 				$output .= '<a href="' . url('/') . '">' . $comment->user->username . '</a>';
 				$output .= '</h6>';
 				$output .= '<p>';
-				$output .= Timeago::convert($comment->created_at);
+				$output .= '<time datetime="' . $comment->created_at . '"></time>';
 				$output .= '&nbsp;';
 				$output .= '&middot;';
 				$output .= '&nbsp;';
-                $output .= '<span id="voteCountComment-' . $comment->id . '">' . $comment->totalVotes() . '</span> point' . ($comment->totalVotes() == 1 ? '' : 's');
+                $output .= '<span id="voteCountComment-' . hashId($comment->id) . '">' . $comment->totalVotes() . '</span> point' . ($comment->totalVotes() == 1 ? '' : 's');
 				$output .= '</p>';
 				$output .= '</div>';
 				$output .= '</header>';
@@ -207,15 +209,14 @@ class CommentsRenderer {
 				$output .= ($comment->deleted == true ? '<i>[ this comment was deleted ]</i>' : $comment->self_text);
 				$output .= '</section>';
 				$output .= '<footer>';
-				$output .= '<a id="replyToComment" data-id="' . $comment->id . '">reply</a>';
+				$output .= '<a id="replyToComment" data-id="' . hashId($comment->id) . '">reply</a>';
 				$output .= '<a>&middot;</a>';
-                $output .= '<a>' . $comment->childCount() . ' comment' . ($comment->childCount() == 1 ? '' : 's') . '</a>';
+                $output .= '<a href="' . $comment->getPermalink() . '">permalink</a>';
 				$output .= '</footer>';
-				$output .= '<div class="comment-box" id="commentBox-' . $comment->id . '">';
-				$output .= '<form method="POST" action="' . url('/invite/' . Hashids::encode($comment->invite->id) . '/' . $comment->invite->slug) . '" accept-charset="UTF-8">';
+				$output .= '<div class="comment-box" id="commentBox-' . hashId($comment->id) . '">';
+				$output .= '<form method="POST" action="' . $comment->invite()->getPermalink() . '" accept-charset="UTF-8">';
 				$output .= '<input type="hidden" name="_token" value="' . csrf_token() . '">';
-				$output .= '<input type="hidden" name="parent_id" value="' . $comment->id . '">';
-				$output .= '<input type="hidden" name="invite_id" value="' . $comment->invite->id . '">';
+				$output .= '<input type="hidden" name="parent_id" value="' . hashId($comment->id) . '">';
 				$output .= '<label for="self_text">You can use Markdown to write comments.</label>';
 				$output .= '<textarea name="self_text" class="form-control" placeholder="Write a comment"></textarea>';
 				$output .= '<button type="submit" class="btn primary medium">Reply</button>';

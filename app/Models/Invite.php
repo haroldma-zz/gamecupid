@@ -4,7 +4,6 @@ use Auth;
 use Carbon\Carbon;
 use Illuminate\Database\Eloquent\Model;
 use App\Enums\VoteStates;
-use Vinkla\Hashids\Facades\Hashids;
 
 class Invite extends Model {
 
@@ -34,6 +33,11 @@ class Invite extends Model {
     * Custom functions
     *
     **/
+    public function getPermalink()
+    {
+        return '/invite/' . hashId($this->id) . '/' . $this->slug . '/';
+    }
+
     public function castVote($state)
     {
         $vote            = new InviteVote;
@@ -56,7 +60,7 @@ class Invite extends Model {
         $key   = generateCacheKeyWithId("invite", "commentCount", $this->id);
         if (hasCache($key, $cache)) {
             $this->_commentCount = $cache;
-            return $cache;
+            return $this->_commentCount;
         }
 
         $this->_commentCount = $this->comments()->count();
@@ -76,7 +80,7 @@ class Invite extends Model {
         $key   = generateCacheKeyWithId("invite", "upvoteCount", $this->id);
         if (hasCache($key, $cache)) {
             $this->_upvoteCount = $cache;
-            return $cache;
+            return $this->_upvoteCount;
         }
 
         $this->_upvoteCount = $this->votes()->where('state', VoteStates::UP)->count();
@@ -96,7 +100,7 @@ class Invite extends Model {
         $key   = generateCacheKeyWithId("invite", "downvoteCount", $this->id);
         if (hasCache($key, $cache)) {
             $this->_downvoteCount = $cache;
-            return $cache;
+            return $this->_downvoteCount;
         }
 
         $this->_downvoteCount = $this->votes()->where('state', VoteStates::DOWN)->count();
@@ -112,7 +116,6 @@ class Invite extends Model {
             return $this->_isUpvoted;
 
         $key   = generateAuthCacheKeyWithId("invite", "isUpvoted", $this->id);
-        $cache = getCache($key);
         if (hasCache($key, $cache)) {
             $this->_isUpvoted = $cache;
             return $cache;
@@ -120,7 +123,8 @@ class Invite extends Model {
 
         $this->_isUpvoted = Auth::user()->inviteVotes()->where('invite_id', $this->id)->where('state', VoteStates::UP)
                             ->first() != null;
-        return setCache($key, $this->_isUpvoted);
+
+        return setCache($key, $this->_isUpvoted, Carbon::now()->addDay());
     }
 
     public function isDownvoted()
@@ -128,11 +132,7 @@ class Invite extends Model {
         if (!Auth::check())
             return false;
 
-        if ($this->_isDownvoted != null)
-            return $this->_isDownvoted;
-
         $key   = generateAuthCacheKeyWithId("invite", "isDownvoted", $this->id);
-        $cache = getCache($key);
         if (hasCache($key, $cache)) {
             $this->_isDownvoted = $cache;
             return $cache;
@@ -140,39 +140,29 @@ class Invite extends Model {
 
         $this->_isDownvoted = Auth::user()->inviteVotes()->where('invite_id', $this->id)->where('state', VoteStates::DOWN)
                               ->first() != null;
-        return setCache($key, $this->_isDownvoted);
-    }
-
-    public function hashid()
-    {
-    	return Hashids::encode($this->id);
+        return setCache($key, $this->_isDownvoted, Carbon::now()->addDay());
     }
 
     public function renderComments($sort)
     {
-        $commentlist = new CommentsRenderer($this->sortParentComments($sort, 1), $sort);
+        if (empty($sort))
+            $sort = "best";
 
+        $count = $this->commentCount();
+        $expire = 20;
+
+        if ($count < 10)
+            $expire = 0;
+        else if ($count < 50)
+            $expire = 5;
+        else if ($count < 100)
+            $expire = 10;
+        else if ($count < 500)
+            $expire = 15;
+
+        $commentlist = new CommentsRenderer($this, $sort, $expire);
         return $commentlist->print_comments();
     }
-
-    public function cacheGame()
-    {
-        if ($this->_cacheGame != null)
-            return $this->_cacheGame;
-
-        $key   = generateCacheKeyWithId("model", "game", $this->game_id);
-        if (hasCache($key, $cache)) {
-            $this->_cacheGame = json_decode($cache);
-            return $this->_cacheGame;
-        }
-
-        $game = $this->game()->first();
-
-        setCache($key, json_encode($game), Carbon::now()->addDay());
-        $this->_cacheGame = $game;
-        return $game;
-    }
-
 
 	/**
 	*
@@ -186,7 +176,20 @@ class Invite extends Model {
 
 	public function game()
 	{
-		return $this->belongsTo('App\Models\Game', 'game_id', 'id');
+        if ($this->_cacheGame != null)
+            return $this->_cacheGame;
+
+        $key   = generateCacheKeyWithId("model", "game", $this->game_id);
+        if (hasCache($key, $cache)) {
+            $this->_cacheGame = $cache;
+            return $this->_cacheGame;
+        }
+
+        $game = $this->belongsTo('App\Models\Game', 'game_id', 'id')->first();
+
+        setCache($key, $game, Carbon::now()->addDay());
+        $this->_cacheGame = $game;
+        return $game;
 	}
 
 	public function console()
@@ -214,45 +217,52 @@ class Invite extends Model {
         return $this->hasMany('App\Models\Comment', 'invite_id', 'id');
     }
 
-    public function sortParentComments($sort, $page)
+    public function sortParentComments($sort, $page, $limit, $cacheExpire)
     {
-        $pageSize = 10;
-
         if (!is_int($page))
             $page = 1;
 
-        $page    = ($page - 1) * $pageSize;
-        $pageEnd = $pageSize;
+        $key = generateCacheKeyWithId("invite", "comment-parents-$sort-p-$page-l-$limit", $this->id);
+        if ($cacheExpire != 0) {
+            if (hasCache($key, $cache))
+                return $cache;
+        }
 
-        $time = array(
-            Carbon::now()->subDay(),
-            Carbon::now()
-        );
+        $page    = ($page - 1) * $limit;
+        $pageEnd = $limit;
 
-        $sqlFunction = "calculateHotness(getCommentUpvotes(id), getCommentDownvotes(id), created_at)";
+        $sqlFunction = "calculateBest(ups, downs)";
 
         if ($sort == "controversial")
-            $sqlFunction = "calculateControversy(getCommentUpvotes(id), getCommentDownvotes(id))";
-        else if ($sort == "best")
-            $sqlFunction = "calculateBest(getCommentUpvotes(id), getCommentDownvotes(id))";
+            $sqlFunction = "calculateControversy(ups, downs)";
+        else if ($sort == "hot")
+            $sqlFunction = "calculateHotness(ups, downs, created_at)";
 
-        $query = "SELECT *, $sqlFunction as sort FROM comments
-                  WHERE created_at BETWEEN '$time[0]' and '$time[1]'
-                  AND invite_id = $this->id AND parent_id = 0
-                  ORDER BY sort DESC LIMIT $page, $pageEnd;";
+        $voteQuery = "SELECT cm.*, v.ups, v.downs FROM comments AS cm
+                INNER JOIN (SELECT comment_id,
+                SUM(IF(state = 1, 1, 0)) as ups,
+				SUM(IF(state = 0, 1, 0)) as downs
+                FROM comment_votes
+                GROUP BY comment_id) AS v
+                ON v.comment_id=cm.id
+                WHERE cm.parent_id = 0
+                AND cm.invite_id = $this->id";
+
+        $query = "SELECT *, $sqlFunction as sort FROM ($voteQuery) e ORDER by sort desc LIMIT $page, $pageEnd;";
 
         if ($sort == "new")
             $query = "SELECT * FROM comments
-                  WHERE created_at BETWEEN '$time[0]' and '$time[1]'
-                  AND invite_id = $this->id AND parent_id = 0
+                  WHERE invite_id = $this->id
+                  AND parent_id = 0
                   ORDER BY created_at DESC LIMIT $page, $pageEnd;";
         else if ($sort == "top")
-            $query = "SELECT *, getCommentUpvotes(id) as upvotes, getCommentDownvotes(id) as downvotes FROM comments
-                  WHERE created_at BETWEEN '$time[0]' and '$time[1]'
-                  AND invite_id = $this->id AND parent_id = 0
-                  ORDER BY upvotes - downvotes DESC LIMIT $page, $pageEnd;";
+            $query = "SELECT * FROM ($voteQuery) e
+                  ORDER BY ups - downs DESC LIMIT $page, $pageEnd;";
 
-         return Comment::hydrateRaw($query);
+        $hydrated = Comment::hydrateRaw($query);
+        if ($cacheExpire == 0)
+            return $hydrated;
+        return setCacheWithSeconds($key, $hydrated, $cacheExpire);
     }
 
 }

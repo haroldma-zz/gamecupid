@@ -1,5 +1,6 @@
 <?php namespace App\Http\Controllers;
 
+use Cache;
 use App\Models\CommentsRenderer;
 use Auth;
 use Response;
@@ -26,14 +27,16 @@ class CommentController extends Controller {
 		if (!Auth::check())
 			return AjaxVoteResults::UNAUTHORIZED;
 
-		$id = $request->get('id');
-
+        $id = decodeHashId($request->get('id'));
 		$comment = Comment::find($id);
 
 		if (!$comment)
 			return AjaxVoteResults::ERROR;
 
 		$check = Auth::user()->commentVotes()->where('comment_id', $id)->first();
+
+        invalidateCache(generateAuthCacheKeyWithId("comment", "isUpvoted", $id));
+        invalidateCache(generateAuthCacheKeyWithId("comment", "isDownvoted", $id));
 
 		if ($check)
 		{
@@ -74,45 +77,43 @@ class CommentController extends Controller {
 			return redirect('/');
 
 		if (!Auth::check())
-			return 4;
+			return AjaxVoteResults::UNAUTHORIZED;
 
-		$id = $request->get('id');
+		$id = decodeHashId($request->get('id'));
+		$comment = Comment::find($id);
 
-        $comment = Comment::find($id);
-
-        if (!$comment)
-            return AjaxVoteResults::ERROR;
+		if (!$comment)
+			return AjaxVoteResults::ERROR;
 
 		$check = Auth::user()->commentVotes()->where('comment_id', $id)->first();
+
+        invalidateCache(generateAuthCacheKeyWithId("comment", "isUpvoted", $id));
+        invalidateCache(generateAuthCacheKeyWithId("comment", "isDownvoted", $id));
 
 		if ($check)
 		{
 			$vote = $check;
 
-			if ($vote->state == VoteStates::DOWN)		// UNVOTED
+			if ($vote->state == VoteStates::DOWN)			// UNVOTED
 			{
-                $vote->delete();
+				$vote->delete();
 				return AjaxVoteResults::UNVOTED;
 			}
 			else if ($vote->state == VoteStates::UP)	// DOWNVOTED FROM UPVOTE
 			{
-                $vote->state = VoteStates::DOWN;
-                $vote->save();
+				$vote->state = VoteStates::DOWN;
+				$vote->save();
 				return AjaxVoteResults::VOTE_SWITCH;
 			}
 			else
-                return AjaxVoteResults::ERROR;
+				return AjaxVoteResults::ERROR;
 		}
 		else
 		{
 			if ($comment->castVote(VoteStates::DOWN))
-			{
 				return AjaxVoteResults::NORMAL;
-			}
 			else
-			{
 				return AjaxVoteResults::ERROR;
-			}
 		}
 	}
 

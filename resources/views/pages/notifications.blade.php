@@ -11,16 +11,28 @@
 						<hr>
 						@foreach(Auth::user()->rNotifications()->orderBy('id', 'DESC')->get() as $n)
 							<div class="notification-entry">
-								<h5 class="text-primary {{ ($n->read == false ? 'bold' : '') }}">
-									<a href="">{{ $n->title }}</a>
+								<h5 class="{{ ($n->read == false ? 'bold' : '') }}">
+									<span>{{ $n->title() }}</span>
 								</h5>
+                                @if ($n->type == \App\Enums\NotificationTypes::COMMENT_REPLY)
+                                    <a class="text-primary" href="{{ $n->comment()->invite()->getPermalink() }}">{{ $n->comment()->invite()->title }}</a>
+                                @endif
 								<p>
-									{{ $n->description }}
+                                    @if ($n->type == \App\Enums\NotificationTypes::REP)
+									    <span class="bold">+{{ $n->repEvent()->amount }} rep:</span> {{ $n->repEvent()->event }}
+                                    @elseif ($n->type == \App\Enums\NotificationTypes::COMMENT_REPLY)
+                                        {!! $n->comment()->self_text !!}
+                                    @endif
 								</p>
 								<ul class="inline-list">
 									<li>
 										<a id="markNotificationAsReadBtn" data-nid="{{ $n->id }}">mark as {{ ($n->read == true ? 'un' : '') }}read</a>
 									</li>
+                                    @if ($n->type == \App\Enums\NotificationTypes::COMMENT_REPLY)
+                                    <li>
+                                        <a href="{{ $n->comment()->getPermalink() }}">context</a>
+                                    </li>
+                                    @endif
 								</ul>
 							</div>
 						@endforeach

@@ -1,10 +1,12 @@
 <?php namespace App\Models;
 
+use Carbon\Carbon;
 use Illuminate\Auth\Authenticatable;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Auth\Passwords\CanResetPassword;
 use Illuminate\Contracts\Auth\Authenticatable as AuthenticatableContract;
 use Illuminate\Contracts\Auth\CanResetPassword as CanResetPasswordContract;
+use DB;
 
 // Entrust
 use Zizaco\Entrust\Traits\EntrustUserTrait;
@@ -85,16 +87,23 @@ class User extends Model implements AuthenticatableContract, CanResetPasswordCon
 	}
 
 	// Function to return total rep amount (lazy loaded)
+    private $_rep = null;
 	public function rep()
 	{
-        $repAmount = 0;
+        if ($this->_rep != null)
+            return $this->_rep;
 
-		foreach ($this->reps as $rep)
-		{
-            $repAmount += $rep->event->amount;
-		}
+        $key = generateCacheKeyWithId("user", "rep", $this->id);
+        if (hasCache($key, $cache)) {
+            $this->_rep = $cache;
+            return $cache;
+        }
 
-		return $repAmount;
+		$this->_rep = DB::SELECT(DB::RAW("SELECT SUM(x.total) as total FROM
+                    (SELECT
+                      (SELECT sum(amount) FROM rep_events WHERE id=rep_event_id) as total
+                      FROM reps WHERE user_id=?) x"), [$this->id])[0]->total;
+        return setCache($key, $this->_rep, Carbon::now()->addDay());
 	}
 
     private $factor = 3.0;

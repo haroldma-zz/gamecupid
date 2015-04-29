@@ -2,20 +2,15 @@
 
 use Auth;
 use Response;
-use App\Models\Rep;
 use App\Models\Invite;
-use App\Models\InviteVote;
 use App\Models\Comment;
-use App\Models\RepEvent;
 use App\Models\Parsedown;
 use App\Enums\RepEvents;
 use App\Enums\VoteStates;
-use App\Models\Notification;
 use Illuminate\Http\Request;
 use App\Http\Requests\InviteFormRequest;
 use Cocur\Slugify\Slugify;
 use App\Enums\AjaxVoteResults;
-use Vinkla\Hashids\Facades\Hashids;
 
 class InviteController extends Controller {
 
@@ -45,20 +40,7 @@ class InviteController extends Controller {
 		if ($invite->save())
 		{
             $invite->castVote(VoteStates::UP);
-            
-			$repEvent = RepEvent::find(RepEvents::CREATED_INVITE);
-
-			$rep               = new Rep;
-			$rep->rep_event_id = $repEvent->id;
-			$rep->user_id      = Auth::user()->id;
-			$rep->save();
-
-			$not              = new Notification;
-			$not->title       = "+{$repEvent->amount} rep";
-			$not->description = $repEvent->event;
-			$not->to_id       = Auth::user()->id;
-			$not->save();
-
+            giveRepAndNotified(RepEvents::CREATED_INVITE);
 			return redirect('/');
 		}
 		else
@@ -81,13 +63,16 @@ class InviteController extends Controller {
 		if (!Auth::check())
 			return AjaxVoteResults::UNAUTHORIZED;
 
-		$id = $request->get('id');
+		$id = decodeHashId($request->get('id'));
         $invite = Invite::find($id);
 
         if (!$invite)
             return AjaxVoteResults::ERROR;
 
 		$check = Auth::user()->inviteVotes()->where('invite_id', $id)->first();
+
+        invalidateCache(generateAuthCacheKeyWithId("invite", "isUpvoted", $id));
+        invalidateCache(generateAuthCacheKeyWithId("invite", "isDownvoted", $id));
 
 		if ($check)
 		{
@@ -136,7 +121,7 @@ class InviteController extends Controller {
 		if (!Auth::check())
 			return AjaxVoteResults::UNAUTHORIZED;
 
-		$id = $request->get('id');
+		$id = decodeHashId($request->get('id'));
         $invite = Invite::find($id);
 
         if (!$invite)
@@ -144,23 +129,20 @@ class InviteController extends Controller {
 
 		$check = Auth::user()->inviteVotes()->where('invite_id', $id)->first();
 
+        invalidateCache(generateAuthCacheKeyWithId("invite", "isUpvoted", $id));
+        invalidateCache(generateAuthCacheKeyWithId("invite", "isDownvoted", $id));
+
 		if ($check)
 		{
 			$vote = $check;
 
 			if ($vote->state == VoteStates::DOWN)		// UNVOTED
 			{
-                // invalidate cache
-                invalidateCache(generateAuthCacheKeyWithId("invite", "isDownvoted", $id));
-
 				$vote->delete();
 				return AjaxVoteResults::UNVOTED;
 			}
 			else if ($vote->state == VoteStates::UP)	// DOWNVOTED FROM UPVOTE
 			{
-                // invalidate cache
-                invalidateCache(generateAuthCacheKeyWithId("invite", "isUpvoted", $id));
-
 				$vote->state = VoteStates::DOWN;
 				$vote->save();
 				return AjaxVoteResults::VOTE_SWITCH;
@@ -186,29 +168,39 @@ class InviteController extends Controller {
 	**/
 	public function comment($hashid, $slug, Request $request)
 	{
-        $id = Hashids::decode($hashid)[0];
-		$invite = Invite::find($id);
+        $id = decodeHashId($hashid);
+        $parentId = decodeHashId($request->get('parent_id'));
 
-		if (!$invite)
+        if ($parentId == 0)
+		    $invite = Invite::find($id);
+        else {
+            $parent = Comment::find($parentId);
+
+            if ($parent->invite_id != $id)
+                return redirect()->back()->withInput()->with('notice', ['error', 'Invalid invite id.']);
+        }
+
+		if (($parentId != 0 && !$parent) || ($parentId == 0 && !$invite))
 			return redirect()->back()->withInput()->with('notice', ['error', 'Invite not found.']);
 
 		if ($request->get('self_text') == '')
 			return redirect()->back()->withInput()->with('notice', ['error', 'You forgot to write a comment.']);
-
-		if ($invite->id != $request->get('invite_id'))
-			return redirect()->back()->withInput()->with('notice', ['error', 'Invalid action.']);
 
 		$parsedown              = new Parsedown();
 		$comment                = new Comment;
 		$comment->self_text     = $parsedown->text($request->get('self_text'));
 		$comment->markdown_text = $request->get('self_text');
 		$comment->deleted       = false;
-		$comment->parent_id     = $request->get('parent_id');
-		$comment->invite_id     = $invite->id;
+		$comment->parent_id     = $parentId;
+		$comment->invite_id     = $id;
 		$comment->user_id       = Auth::user()->id;
 
 		if ($comment->save()) {
             $comment->castVote(VoteStates::UP);
+
+            if ($parentId != 0 && $parent->user_id != $comment->user_id)
+                notifiedAboutComment($comment->id, $parent->user_id);
+
             return redirect()->back();
         }
 
