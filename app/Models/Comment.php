@@ -218,33 +218,18 @@ class Comment extends Model {
                 return $cache;
         }
 
-        $sqlFunction = "calculateBest(ups, downs)";
+        $query = "GetBestComments(0, $this->id, 0, 10)";
 
         if ($sort == "controversial")
-            $sqlFunction = "calculateControversy(ups, downs)";
+            $query = "GetControversialComments(0, $this->id, 0, 10)";
         else if ($sort == "hot")
-            $sqlFunction = "calculateHotness(ups, downs, created_at)";
-
-        $voteQuery = "SELECT cm.*, v.ups, v.downs FROM comments AS cm
-                INNER JOIN (SELECT comment_id,
-                SUM(IF(state = 1, 1, 0)) as ups,
-				SUM(IF(state = 0, 1, 0)) as downs
-                FROM comment_votes
-                GROUP BY comment_id) AS v
-                ON v.comment_id=cm.id
-                WHERE cm.parent_id = $this->id";
-
-        $query = "SELECT *, $sqlFunction as sort FROM ($voteQuery) e ORDER by sort desc LIMIT 0, 10;";
-
-        if ($sort == "new")
-            $query = "SELECT * FROM comments
-                  WHERE parent_id = $this->id
-                  ORDER BY created_at DESC LIMIT 0, 10;";
+            $query = "GetHotComments(0, $this->id, 0, 10)";
+        else if ($sort == "new")
+            $query = "GetNewComments(0, $this->id, 0, 10)";
         else if ($sort == "top")
-            $query = "SELECT * FROM ($voteQuery) e
-                  ORDER BY ups - downs DESC LIMIT 0, 10;";
+            $query = "GetTopComments(0, $this->id, 0, 10)";
 
-        $hydrated = Comment::hydrateRaw($query);
+        $hydrated = Comment::hydrateRaw('CALL ' . $query);
         if ($cacheExpire == 0)
             return $hydrated;
         return setCacheWithSeconds($key, $hydrated, $cacheExpire);
