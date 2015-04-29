@@ -52,16 +52,17 @@
 
 				for (var i = 0; i < res.length; i++)
 				{
+					console.log(res[i]);
 					var output = '';
 						output += '<article class="invite">';
 						output += '<header>';
 						output += '<div class="img"></div>';
 						output += '<div class="user-meta">';
 						output += '<h6>';
-						output += '<a href="{!! url("/") !!}">{{ $invite->user->username }}</a>';
+						output += '<a href="{!! url("/") !!}">' + res[i].user.username + '</a>';
 						output += '</h6>';
 						output += '<p>';
-						output += '<time datetime="{{ $invite->created_at }}"></time>';
+						output += '<time datetime="' + res[i].createdAt + '"></time>';
 						output += '</p>';
 						output += '</div>';
 						output += '</header>';
@@ -69,26 +70,26 @@
 						output += '<h3>';
 						output += '<div class="voters">';
 						output += '<div class="arrows">';
-						output += '<div id="upvoter" data-invite-id="{{ hashId($invite->id) }}">';
-						output += '<i class="ion-arrow-up-a {{ ($invite->isUpvoted() ? 'activated' : '') }}" id="upvoter-{{ hashId($invite->id) }}"></i>';
+						output += '<div id="upvoter" data-invite-id="' + res[i].id + '">';
+						output += '<i class="ion-arrow-up-a ' + (res[i].isUpvoted == true ? "activated" : "") + '" id="upvoter-' + res[i].id + '"></i>';
 						output += '</div>';
-						output += '<div id="downvoter" data-invite-id="{{ hashId($invite->id) }}">';
-						output += '<i class="ion-arrow-down-a {{ ($invite->isDownvoted() ? 'activated' : '') }}" id="downvoter-{{ hashId($invite->id) }}"></i>';
-						output += '</div>';
-						output += '</div>';
-						output += '<div class="count" id="voteCount-{{ hashId($invite->id) }}">';
-						output += '{{ $invite->totalVotes() }}';
+						output += '<div id="downvoter" data-invite-id="' + res[i].id + '">';
+						output += '<i class="ion-arrow-down-a ' + (res[i].isDownvoted == true ? "activated" : "") + '" id="downvoter-' + res[i].id + '"></i>';
 						output += '</div>';
 						output += '</div>';
-						output += '{{ $invite->title }}';
+						output += '<div class="count" id="voteCount-' + res[i].id + '">';
+						output += res[i].totalVotes;
+						output += '</div>';
+						output += '</div>';
+						output += res[i].title;
 						output += '</h3>';
 						output += '</section>';
 						output += '<footer>';
-						output += '<a>{{ $invite->player_count }} player{{ ($invite->player_count > 1 ? "s" : "") }}</a>';
+						output += '<a>' + res[i].maxPlayer + ' player' + (res[i].maxPlayer > 1 ? "s" : "") + '</a>';
 						output += '<a>&middot;</a>';
-						output += '<a href="{!! $invite->getPermalink() !!}"><b>Let\'s play!</b></a>';
+						output += '<a href="' + res[i].permalink + '"><b>Let\'s play!</b></a>';
 						output += '<a>&middot;</a>';
-						output += '<a href="{!! $invite->getPermalink() !!}">{{ $invite->commentCount() }} comment{{ $invite->commentCount() == 1 ? "" : "s" }}</a>';
+						output += '<a href="' + res[i].permalink + '">' + res[i].commentCount + ' comment' + (res[i].commentCount > 1 || res[i].commentCount == 0 ? "s" : "") + '</a>';
 						output += '</footer>';
 						output += '<hr>';
 						output += '</article>';

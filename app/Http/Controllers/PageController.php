@@ -32,7 +32,16 @@ class PageController extends Controller {
         if (!is_int($page))
             $page = 1;
 
-		$page    = ($page - 1) * $pageSize;
+
+        if ($request->ajax())
+        {
+        	$page = $page * $pageSize;
+        }
+        else
+        {
+        	$page = ($page - 1) * $pageSize;
+        }
+
 		$pageEnd = $pageSize;
 
         $time = array(

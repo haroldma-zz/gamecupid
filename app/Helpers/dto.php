@@ -47,6 +47,7 @@ function inviteToDto($invite)
         'isUpvoted' => $invite->isUpvoted(),
         'isDownvoted' => $invite->isDownvoted(),
         'commentCount' => $invite->commentCount(),
+        'totalVotes' => $invite->totalVotes(),
         'ups' => $invite->upvoteCount(),
         'downs' => $invite->downvoteCount(),
         'permalink' => $invite->getPermalink(),
