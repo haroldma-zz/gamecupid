@@ -28,7 +28,7 @@
 
 		if (canLoadMore == null || canLoadMore === true)
 		{
-			var limit = parseInt(getUrlParameter('limit')) || parseInt($('#limit').val()) || 10;
+			var limit = parseInt(getUrlParameter('limit') || $('#limit').val() || 10);
 			var sort = getUrlParameter('sort') || $('#sortType').val() || 'hot';
 			var after = $($("article.invite").slice(-1)[0]).attr("data-id");
 
