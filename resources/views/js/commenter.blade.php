@@ -1,4 +1,60 @@
 <script>
+	var isHoldingShift = false;
+	var emojisShowing  = false;
+
+	$('.comment-box').on('keydown', 'textarea:first', function(e)
+	{
+		if (e.keyCode === 16)
+		{
+			isHoldingShift = true;
+		}
+	});
+
+	$('.comment-box').on('keyup', 'textarea:first', function(e)
+	{
+		var input = $(this).val();
+
+		if (input == '')
+		{
+			$('#emojis').removeClass('open');
+			emojisShowing  = false;
+			isHoldingShift = false;
+		}
+
+		if (emojisShowing === true)
+		{
+			if (e.keyCode === 32)
+			{
+				$('#emojis').removeClass('open');
+				emojisShowing  = false;
+				isHoldingShift = false;
+			}
+			else
+			{
+				$.getJSON('/emojis.json', function(emojis)
+				{
+					$.each(emojis, function(key, val)
+					{
+						if (key.match("^" + input))
+						{
+							$('#emojis').html('<div class="emoji"><img src="' + val + '" width="20px" height="20px"/> ' + key + '</div>');
+							return false;
+						}
+					});
+				});
+			}
+		}
+
+		if (e.keyCode === 16)
+			isHoldingShift = false;
+
+		if (e.keyCode === 186 && emojisShowing === false && isHoldingShift === true)
+		{
+			$(this).parent().find('#emojis').addClass('open');
+			emojisShowing = true;
+		}
+	});
+
 	$('body').on('click', '[id="commentSubmitter"]', function(e)
 	{
 		var parent 		 = $(this).parent();

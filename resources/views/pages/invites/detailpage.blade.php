@@ -50,7 +50,12 @@
 				<div class="comments">
 					<div class="comment-box">
 						<p>You can use Markdown to write comments.</p>
-						<textarea class="form-control" placeholder="Write a comment" data-parenthash="{!! hashId(0) !!}" data-url="{!! url($invite->getPermalink()) !!}" data-hierarchy="parent" data-level="no-parent"></textarea>
+						<div class="relative">
+							<section id="emojis" class="emoji-intellisense">
+								<div class="emoji"></div>
+							</section>
+							<textarea class="form-control" placeholder="Write a comment" data-parenthash="{!! hashId(0) !!}" data-url="{!! url($invite->getPermalink()) !!}" data-hierarchy="parent" data-level="no-parent"></textarea>
+						</div>
 						<button type="submit" class="btn primary medium" id="commentSubmitter">Comment</button>
 						<img src="{!! url('/img/loaders/dots.svg') !!}" width="40px">
 						<div></div>
@@ -106,6 +111,8 @@
 @stop
 
 @section('scripts')
+	@if(Auth::check())
 	@include('js.commenter')
+	@endif
 	{!! HTML::script('js/comment-collapser.js') !!}
 @stop

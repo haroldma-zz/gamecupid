@@ -704,3 +704,59 @@ article.invite {
 		padding-bottom: 5px;
 	}
 }
+
+
+/**
+*
+* Emoji intellisense
+*
+**/
+.relative {
+	position: relative;
+}
+
+.emoji-intellisense {
+	position: absolute;
+	top: -80px;
+	left: 0;
+	background: white;
+	border: 1px solid $silver;
+	width: 100%;
+	height: 0px;
+	margin-top: 0px;
+	margin-bottom: 10px;
+	opacity: 0;
+	overflow: hidden;
+	padding: 10px;
+	text-align: center;
+	line-height: 37.5px;
+	font-size: 0.9em;
+	@include transition(all .2s ease);
+	@include border-radius($global-radius);
+
+	&.open {
+		top: -65px;
+		opacity: 1;
+		height: 60px;
+	}
+
+	.emoji {
+		width: auto;
+		position: absolute;
+		top: 27.5%;
+		left: 50%;
+		z-index: 3;
+		background: $primary-color;
+		border: 1px solid darken($primary-color, 10);
+		padding: 3px 5px;
+		color: white;
+		font-weight: 500;
+		font-size: 0.85em;
+		line-height: 0;
+		@include border-radius(5px);
+		@include transform(translate(-50%));
+		img {
+			display: inline;
+		}
+	}
+}
