@@ -1,7 +1,18 @@
 $('body').on('click', '[id="upvoter"]', function()
 {
 	var token = $('#csrfToken').val(),
-		id    = $(this).data("invite-id");
+		id    = $(this).data("invite-id"),
+		ua    = $('#upvoter-' + id),
+		da    = $('#downvoter-' + id);
+
+	if (ua.hasClass('activated'))
+		ua.removeClass('activated')
+	else
+		ua.addClass('activated');
+
+	if (da.hasClass('activated'))
+		da.removeClass('activated');
+
 
 	$.post('/invite/upvote', {_token:token, id:id}, function(res)
 	{
@@ -36,7 +47,17 @@ $('body').on('click', '[id="upvoter"]', function()
 $('body').on('click', '[id="downvoter"]', function()
 {
 	var token = $('#csrfToken').val(),
-		id    = $(this).data("invite-id");
+		id    = $(this).data("invite-id"),
+		ua    = $('#upvoter-' + id),
+		da    = $('#downvoter-' + id);
+
+	if (da.hasClass('activated'))
+		da.removeClass('activated')
+	else
+		da.addClass('activated');
+
+	if (ua.hasClass('activated'))
+		ua.removeClass('activated');
 
 	$.post('/invite/downvote', {_token:token, id:id}, function(res)
 	{
@@ -71,7 +92,17 @@ $('body').on('click', '[id="downvoter"]', function()
 $('body').on('click', '[id="comment-upvoter"]', function()
 {
 	var token = $('#csrfToken').val(),
-		id    = $(this).data("comment-id");
+		id    = $(this).data("comment-id"),
+		ua    = $('#comment-upvoter-' + id),
+		da    = $('#comment-downvoter-' + id);
+
+	if (ua.hasClass('activated'))
+		ua.removeClass('activated')
+	else
+		ua.addClass('activated');
+
+	if (da.hasClass('activated'))
+		da.removeClass('activated');
 
 	$.post('/comment/upvote', {_token:token, id:id}, function(res)
 	{
@@ -106,7 +137,17 @@ $('body').on('click', '[id="comment-upvoter"]', function()
 $('body').on('click', '[id="comment-downvoter"]', function()
 {
 	var token = $('#csrfToken').val(),
-		id    = $(this).data("comment-id");
+		id    = $(this).data("comment-id"),
+		ua    = $('#comment-upvoter-' + id),
+		da    = $('#comment-downvoter-' + id);
+
+	if (da.hasClass('activated'))
+		da.removeClass('activated')
+	else
+		da.addClass('activated');
+
+	if (ua.hasClass('activated'))
+		ua.removeClass('activated');
 
 	$.post('/comment/downvote', {_token:token, id:id}, function(res)
 	{

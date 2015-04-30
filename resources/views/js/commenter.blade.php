@@ -69,7 +69,7 @@
 		var parent 		 = $(this).parent();
 		var textarea     = parent.find('textarea:first');
 		var button       = $(this);
-		var loader       = parent.find('img:first');
+		var loader       = parent.find('img:last');
 		var errors       = parent.find('div:last');
 		var data     	 = textarea.data();
 			data.comment = textarea.val();
@@ -86,6 +86,16 @@
 		loader.toggle();
 		// Disable the button
 		button.attr('disabled', true);
+
+		// Stop if no input
+		if (data.comment == '')
+		{
+			button.attr('disabled', false);
+			loader.toggle();
+			errors.append('<p class="text-alert">You forgot to write you comment.</p>');
+			return false;
+		}
+
 		// Post the comment
 		$.post(data.url, {_token: data.csrf, parent_id: data.parenthash, self_text: data.comment}, function(res)
 		{
@@ -155,8 +165,6 @@
 					output += '<a href="' + res[1].permalink + res[1].hashId + '">permalink</a>';
 	                output += '<a>&middot;</a>';
 	                output += '<a id="replyToComment" data-id="' + res[1].hashId + '">reply</a>';
-	                output += '<a>&middot;</a>';
-	                output += '<a id="editComment" data-id="' + res[1].hashId + '"><b>edit</b></a>';
 					output += '</footer>';
 					output += '<div class="comment-box" id="commentBox-' + res[1].hashId + '" style="margin-top:10px;">';
 					output += '<p>You can use Markdown to write comments.</p>';

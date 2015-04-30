@@ -71,7 +71,25 @@
 		</div>
 		<div class="medium-3 medium-offset-1 columns">
 			<div class="panel">
-				<h5 class="super-header">sidebar</h5>
+				<h5 class="super-header">TODO list</h5>
+				<ul class="no-bullet text-justify">
+					<li><b>To do</b></li>
+					<li>Figure out what this area is for</li>
+					<li>Accepting invites</li>
+					<li>Private messaging</li>
+					<li>Crew creation page</li>
+					<li>User profile page</li>
+					<li>User settings page</li>
+					<li>Implement Gravatar for profile pics</li>
+					<li>API design</li>
+					<li>Show the game title on invites instead of only the title of the invite (maybe with a small label or something) (make it like flair on reddit maybe?)</li>
+					<li>Show the level/rep label of users next to their name</li>
+					<hr>
+					<li><b>Ideas under discussion</b></li>
+					<li><i>Make betting (for money, or something else) possible.</i></li>
+					<li><i>Make it possible to submit tournaments and challenges.</i></li>
+					<li><i></i></li>
+				</ul>
 			</div>
 		</div>
 	</div>
