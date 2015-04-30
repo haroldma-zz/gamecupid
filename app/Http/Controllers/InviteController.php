@@ -179,7 +179,7 @@ class InviteController extends Controller {
             if (!$parent || $parent->invite_id != $id)
             {
 	            if ($request->ajax())
-	            	return 0; 			# Invalid invite id
+	            	return ['0']; 			# Invalid invite id
 
                 return redirect()->back()->withInput()->with('notice', ['error', 'Invalid invite id.']);
             }
@@ -188,7 +188,7 @@ class InviteController extends Controller {
 		if (($parentId != 0 && !$parent) || ($parentId == 0 && !$invite))
 		{
             if ($request->ajax())
-            	return 1; 			# Invite not found
+            	return ['1']; 			# Invite not found
 
 			return redirect()->back()->withInput()->with('notice', ['error', 'Invite not found.']);
 		}
@@ -196,7 +196,7 @@ class InviteController extends Controller {
 		if ($request->get('self_text') == '')
 		{
             if ($request->ajax())
-            	return 2; 			# No self_text
+            	return ['2']; 			# No self_text
 
 			return redirect()->back()->withInput()->with('notice', ['error', 'You forgot to write a comment.']);
 		}
@@ -217,7 +217,7 @@ class InviteController extends Controller {
                 notifiedAboutComment($comment->id, $parent->user_id);
 
             if ($request->ajax())
-            	return 3; 			# comment success
+            	return ['3', ['created_at' => $comment->created_at, 'hashId' => hashId($comment->id), 'self_text' => $comment->self_text, 'permalink' => $comment->invite()->getPermalink()]]; 			# comment success
 
             return redirect()->back();
         }
