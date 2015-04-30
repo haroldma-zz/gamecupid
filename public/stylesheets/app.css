@@ -9972,6 +9972,10 @@ article.invite hr {
 .markdown-text p, .markdown-text ul {
   font-size: 0.9em !important;
 }
+/* line 703, ../scss/_misc.scss */
+.markdown-text img {
+  padding-bottom: 7.5px;
+}
 
 /*!
   Ionicons, v2.0.1
