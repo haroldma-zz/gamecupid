@@ -71,6 +71,7 @@ select.form-control {
 	border-width: 1px !important;
 	border-style: solid !important;
 	text-decoration: none;
+	outline: none !important;
 	@include transition(all .1s ease);
 	@include button($button-tny, #aaa, $global-radius, false, false, false);
 	&.primary {
@@ -459,9 +460,22 @@ article.invite {
 		max-width: 350px;
 		margin-top: -15px;
 
+		p {
+			margin: 0;
+			font-size: 0.9em;
+		}
+
 		textarea {
 			height: 75px;
 			font-size: 0.85em;
+		}
+
+		.btn {
+			margin-right: 10px;
+		}
+
+		img {
+			display: none;
 		}
 	}
 

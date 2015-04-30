@@ -30,7 +30,7 @@
 									</li>
                                     @if ($n->type == \App\Enums\NotificationTypes::COMMENT_REPLY)
                                     <li>
-                                        <a href="{{ $n->comment()->getPermalink() }}">context</a>
+                                        <a href="{{ $n->comment()->getPermalink() }}?context=3">context</a>
                                     </li>
                                     @endif
 								</ul>

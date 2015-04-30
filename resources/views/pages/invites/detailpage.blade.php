@@ -49,12 +49,11 @@
 				</article>
 				<div class="comments">
 					<div class="comment-box">
-						{!! Form::open(['url' => $invite->getPermalink()]) !!}
-						{!! Form::hidden('parent_id', 0) !!}
-						{!! Form::label('self_text', 'You can use Markdown to write comments.') !!}
-						{!! Form::textarea('self_text', '', ['class' => 'form-control', 'placeholder' => 'Write a comment']) !!}
-						<button type="submit" class="btn primary medium">Comment</button>
-						{!! Form::close() !!}
+						<p>You can use Markdown to write comments.</p>
+						<textarea class="form-control" placeholder="Write a comment" data-parenthash="{!! hashId(0) !!}" data-url="{!! url($invite->getPermalink()) !!}"></textarea>
+						<button type="submit" class="btn primary medium" id="commentSubmitter">Comment</button>
+						<img src="{!! url('/img/loaders/dots.svg') !!}" width="40px">
+						<div></div>
 						@if(Session::has('notice'))
 							@if (Session::get('notice')[0] == 'error')
 							<p class="text-alert smaller-fs">{{ Session::get('notice')[1] }}</p>
@@ -85,9 +84,13 @@
                                 <a href="{!! $invite->getPermalink() !!}">view the rest of the comments</a>&nbsp;→
                             </p>
                         </div>
-						{!! $context->renderComments(Request::get("sort")) !!}
+						<div id="commentsList">
+							{!! $context->renderComments(Request::get("sort")) !!}
+						</div>
 					@else
-						{!! $invite->renderComments(Request::get("sort")) !!}
+						<div id="commentsList">
+							{!! $invite->renderComments(Request::get("sort")) !!}
+						</div>
 					@endif
 				</div>
 			</div>
@@ -108,5 +111,6 @@
 @stop
 
 @section('scripts')
+	@include('js.commenter')
 	{!! HTML::script('js/comment-collapser.js') !!}
 @stop

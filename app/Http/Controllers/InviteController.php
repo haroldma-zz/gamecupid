@@ -168,23 +168,38 @@ class InviteController extends Controller {
 	**/
 	public function comment($hashid, $slug, Request $request)
 	{
-        $id = decodeHashId($hashid);
-        $parentId = decodeHashId($request->get('parent_id'));
+		$id       = decodeHashId($hashid);
+		$parentId = decodeHashId($request->get('parent_id'));
 
         if ($parentId == 0)
 		    $invite = Invite::find($id);
         else {
             $parent = Comment::find($parentId);
 
-            if ($parent->invite_id != $id)
+            if (!$parent || $parent->invite_id != $id)
+            {
+	            if ($request->ajax())
+	            	return 0; 			# Invalid invite id
+
                 return redirect()->back()->withInput()->with('notice', ['error', 'Invalid invite id.']);
+            }
         }
 
 		if (($parentId != 0 && !$parent) || ($parentId == 0 && !$invite))
+		{
+            if ($request->ajax())
+            	return 1; 			# Invite not found
+
 			return redirect()->back()->withInput()->with('notice', ['error', 'Invite not found.']);
+		}
 
 		if ($request->get('self_text') == '')
+		{
+            if ($request->ajax())
+            	return 2; 			# No self_text
+
 			return redirect()->back()->withInput()->with('notice', ['error', 'You forgot to write a comment.']);
+		}
 
 		$parsedown              = new Parsedown();
 		$comment                = new Comment;
@@ -200,6 +215,9 @@ class InviteController extends Controller {
 
             if ($parentId != 0 && $parent->user_id != $comment->user_id)
                 notifiedAboutComment($comment->id, $parent->user_id);
+
+            if ($request->ajax())
+            	return 3; 			# comment success
 
             return redirect()->back();
         }
