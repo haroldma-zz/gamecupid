@@ -13,7 +13,7 @@
 								<a href="{!! url('/') !!}">{{ $invite->user->username }}</a>
 							</h6>
 							<p>
-								<time datetime="{{ $invite->created_at }}"></time>
+								<time data-livestamp="{{ $invite->created_at->getTimestamp() }}"></time>
 							</p>
 						</div>
 					</header>

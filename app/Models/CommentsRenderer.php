@@ -172,7 +172,7 @@ class CommentsRenderer {
 				$output .= '<a href="' . url('/') . '">' . $comment->user->username . '</a>';
 				$output .= '</h6>';
 				$output .= '<p>';
-				$output .= '<time datetime="' . $comment->created_at . '"></time>';
+				$output .= '<time data-livestamp="' . $comment->created_at->getTimestamp() . '"></time>';
 				$output .= '&nbsp;';
 				$output .= '&middot;';
 				$output .= '&nbsp;';
@@ -194,7 +194,7 @@ class CommentsRenderer {
 				$output .= '</footer>';
                 $output .= '<div class="comment-box" id="commentBox-' . hashId($comment->id) . '" style="margin-top:10px;">';
                 $output .= '<p>You can use Markdown to write comments.</p>';
-                $output .= '<textarea class="form-control" placeholder="Write a comment" data-parenthash="' . hashId($comment->id) . '" data-url="' . $comment->invite()->getPermalink() . '" data-hierarchy="parent" data-level="has-parent"></textarea>';
+                $output .= '<textarea class="form-control" placeholder="Write a comment" data-parenthash="' . hashId($comment->id) . '" data-url="' . $comment->invite()->getPermalink() . '" data-hierarchy="' . $hierachy . '" data-level="has-parent"></textarea>';
                 $output .= '<button type="submit" class="btn primary medium" id="commentSubmitter">Comment</button>';
                 $output .= '<img src="/img/loaders/dots.svg" width="40px">';
                 $output .= '<div></div>';
@@ -253,7 +253,7 @@ class CommentsRenderer {
 				$output .= '<a href="' . url('/') . '">' . $comment->user->username . '</a>';
 				$output .= '</h6>';
 				$output .= '<p>';
-				$output .= '<time datetime="' . $comment->created_at . '"></time>';
+				$output .= '<time data-livestamp="' . $comment->created_at->getTimestamp() . '"></time>';
 				$output .= '&nbsp;';
 				$output .= '&middot;';
 				$output .= '&nbsp;';
@@ -275,7 +275,7 @@ class CommentsRenderer {
 				$output .= '</footer>';
                 $output .= '<div class="comment-box" id="commentBox-' . hashId($comment->id) . '" style="margin-top:10px;">';
                 $output .= '<p>You can use Markdown to write comments.</p>';
-                $output .= '<textarea class="form-control" placeholder="Write a comment" data-parenthash="' . hashId($comment->id) . '" data-url="' . $comment->invite()->getPermalink() . '" data-hierarchy="child" data-level="no-parent"></textarea>';
+                $output .= '<textarea class="form-control" placeholder="Write a comment" data-parenthash="' . hashId($comment->id) . '" data-url="' . $comment->invite()->getPermalink() . '" data-hierarchy="child" data-level="has-parent"></textarea>';
                 $output .= '<button type="submit" class="btn primary medium" id="commentSubmitter">Comment</button>';
                 $output .= '<img src="/img/loaders/dots.svg" width="40px">';
                 $output .= '<div></div>';

@@ -71,7 +71,7 @@
 					output += '<a href="/">{{ Auth::user()->username }}</a>';
 					output += '</h6>';
 					output += '<p>';
-					output += '<time datetime="' + res[1].created_at + '"></time>';
+					output += '<time data-livestamp="' + $.now() / 1000 + '"></time>';
 					output += '&nbsp;';
 					output += '&middot;';
 					output += '&nbsp;';

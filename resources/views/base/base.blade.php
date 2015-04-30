@@ -49,7 +49,8 @@
 	</footer>
 
 	{!! HTML::script('bower_components/jquery/dist/jquery.min.js') !!}
-	{!! HTML::script('js/timeago.js') !!}
+	{!! HTML::script('js/moment.js') !!}
+	{!! HTML::script('js/livestamp.js') !!}
 	{!! HTML::script('js/app.js') !!}
 	{!! HTML::script('js/voter.js') !!}
 	@if(Auth::check())
