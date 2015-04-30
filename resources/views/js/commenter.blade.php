@@ -61,7 +61,7 @@
 		var textarea     = parent.find('textarea:first');
 		var button       = $(this);
 		var loader       = parent.find('img:first');
-		var errors       = parent.find('div:first');
+		var errors       = parent.find('div:last');
 		var data     	 = textarea.data();
 			data.comment = textarea.val();
 			data.csrf    = $('#csrfToken').val();

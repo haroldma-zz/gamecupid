@@ -24,7 +24,7 @@ class Parsedown
     function text($text)
     {
         # load emojis
-        $emojis = json_decode(file_get_contents(base_path() . '/emojis.json'));
+        $emojis = json_decode(file_get_contents(public_path() . '/emojis.json'));
 
         # make sure no definitions are set
         $this->DefinitionData = array();
