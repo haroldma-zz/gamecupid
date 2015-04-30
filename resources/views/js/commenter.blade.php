@@ -4,6 +4,14 @@
 
 	$('.comment-box').on('keydown', 'textarea:first', function(e)
 	{
+		var keyCode = e.keyCode || e.which;
+
+		if (keyCode === 9)
+			e.preventDefault();
+	});
+
+	$('.comment-box').on('keyup', 'textarea:first', function(e)
+	{
 		var keyCode  = e.keyCode || e.which;
 		var allInput = $(this).val();
 		var input    = ':' + allInput.substring(allInput.lastIndexOf(':') + 1);
@@ -15,20 +23,15 @@
 		}
 		else if (emojisShowing === true)
 		{
-			if (keyCode === 32)
+			if (keyCode === 13 || keyCode == 9 || keyCode === 32)
 			{
-				$('#emojis').removeClass('open');
-				emojisShowing  = false;
-			}
-			else if (keyCode === 13 || keyCode == 9)
-			{
-				e.preventDefault();
-
 				$('#emojis').removeClass('open');
 				emojisShowing  = false;
 
 				var newInput = allInput.slice(0, -input.length);
-				$(this).val(newInput + foundEmojis[0] + ' ');
+
+				if (foundEmojis[0] != undefined)
+					$(this).val(newInput + foundEmojis[0] + ' ');
 			}
 			else if (keyCode === 186 && e.shiftKey)
 			{
