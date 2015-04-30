@@ -23,6 +23,9 @@ class Parsedown
 
     function text($text)
     {
+        # load emojis
+        $emojis = json_decode(file_get_contents(base_path() . '/emojis.json'));
+
         # make sure no definitions are set
         $this->DefinitionData = array();
 
@@ -34,6 +37,31 @@ class Parsedown
 
         # split text into lines
         $lines = explode("\n", $text);
+
+        # split lines into words, and replace emoji syntax with img tags
+        foreach ($lines as $line)
+        {
+            $words = explode(' ', $line);
+            $i     = 0;
+            $ii    = 0;
+
+            foreach($words as $word)
+            {
+                if (preg_match('/^([:\']).*\1$/m', $word) && isset($emojis->$word)) # if matches :syntax:
+                    $words[$i] = '<img src="' . $emojis->$word . '" title="' . $word . '" name="' . $word . '" width="20px" height="20px" />';
+                else
+                    $words[$i] = $word;
+
+                # increment $i
+                $i++;
+            }
+
+            # rebuild $line array
+            $lines[$ii] = implode(' ', $words);
+
+            #increment $ii
+            $ii++;
+        }
 
         # iterate through lines to identify blocks
         $markup = $this->lines($lines);
