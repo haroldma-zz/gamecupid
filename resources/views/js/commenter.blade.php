@@ -89,7 +89,7 @@
 					output += '</footer>';
 					output += '<div class="comment-box" id="commentBox-' + res[1].hashId + '" style="margin-top:10px;">';
 					output += '<p>You can use Markdown to write comments.</p>';
-					output += '<textarea class="form-control" placeholder="Write a comment" data-parenthash="' + res[1].hashId + '" data-url="' + res[1].permalink + '" data-hierarchy="' + (data.hierarchy == 'parent' ? 'child' : 'parent') + '"></textarea>';
+					output += '<textarea class="form-control" placeholder="Write a comment" data-parenthash="' + res[1].hashId + '" data-url="' + res[1].permalink + '" data-hierarchy="' + (data.hierarchy == 'parent' ? 'child' : 'parent') + '" data-level="has-parent"></textarea>';
 					output += '<button type="submit" class="btn primary medium" id="commentSubmitter">Comment</button>';
 					output += '<img src="/img/loaders/dots.svg" width="40px">'
 					output += '<div></div>';
