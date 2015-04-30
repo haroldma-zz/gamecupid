@@ -9975,6 +9975,7 @@ article.invite hr {
 /* line 703, ../scss/_misc.scss */
 .markdown-text img {
   padding-bottom: 5px;
+<<<<<<< Updated upstream
 }
 
 /**
@@ -10043,6 +10044,8 @@ article.invite hr {
 /* line 758, ../scss/_misc.scss */
 .emoji-intellisense .emoji img {
   display: inline;
+=======
+>>>>>>> Stashed changes
 }
 
 /*!

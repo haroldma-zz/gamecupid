@@ -21,10 +21,12 @@ class Parsedown
 
     # ~
 
+    private $emojis;
+
     function text($text)
     {
         # load emojis
-        $emojis = json_decode(file_get_contents(base_path() . '/emojis.json'));
+        $this->emojis = json_decode(file_get_contents(public_path() . '/emojis.json'));
 
         # make sure no definitions are set
         $this->DefinitionData = array();
@@ -38,29 +40,25 @@ class Parsedown
         # split text into lines
         $lines = explode("\n", $text);
 
+
+        $i    = 0;
         # split lines into words, and replace emoji syntax with img tags
         foreach ($lines as $line)
         {
-            $words = explode(' ', $line);
-            $i     = 0;
-            $ii    = 0;
+            $output = preg_replace_callback('/:(\w+):/', function($m) use ($line){
+                $word = $m[0];
+                if(isset($this->emojis->$word)){ // If it exists in our array
+                    return '<img src="' . $this->emojis->$word . '" title="' . $word . '" name="' . $word . '" width="20px" height="20px" />';
+                }else{
+                    return $word; // Otherwise return the whole match (basically we won't change it)
+                }
+            }, $text);
 
-            foreach($words as $word)
-            {
-                if (preg_match('/^([:\']).*\1$/m', $word) && isset($emojis->$word)) # if matches :syntax:
-                    $words[$i] = '<img src="' . $emojis->$word . '" title="' . $word . '" name="' . $word . '" width="20px" height="20px" />';
-                else
-                    $words[$i] = $word;
-
-                # increment $i
-                $i++;
-            }
-
-            # rebuild $line array
-            $lines[$ii] = implode(' ', $words);
+            $lines[$i] = $output;
 
             #increment $ii
-            $ii++;
+            $i++;
+
         }
 
         # iterate through lines to identify blocks
