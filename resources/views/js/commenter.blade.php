@@ -1,57 +1,63 @@
 <script>
-	var isHoldingShift = false;
-	var emojisShowing  = false;
+	var emojisShowing = false;
+	var foundEmojis   = [];
 
 	$('.comment-box').on('keydown', 'textarea:first', function(e)
 	{
-		if (e.keyCode === 16)
+		var keyCode  = e.keyCode || e.which;
+		var allInput = $(this).val();
+		var input    = ':' + allInput.substring(allInput.lastIndexOf(':') + 1);
+
+		if (emojisShowing === false && keyCode === 186 && e.shiftKey)
 		{
-			isHoldingShift = true;
+			$('#emojis').addClass('open');
+			emojisShowing = true;
 		}
-	});
-
-	$('.comment-box').on('keyup', 'textarea:first', function(e)
-	{
-		var input = $(this).val();
-
-		if (input == '')
+		else if (emojisShowing === true)
 		{
-			$('#emojis').removeClass('open');
-			emojisShowing  = false;
-			isHoldingShift = false;
-		}
-
-		if (emojisShowing === true)
-		{
-			if (e.keyCode === 32)
+			if (keyCode === 32)
 			{
 				$('#emojis').removeClass('open');
 				emojisShowing  = false;
-				isHoldingShift = false;
+			}
+			else if (keyCode === 13 || keyCode == 9)
+			{
+				e.preventDefault();
+
+				$('#emojis').removeClass('open');
+				emojisShowing  = false;
+
+				var newInput = allInput.slice(0, -input.length);
+				$(this).val(newInput + foundEmojis[0] + ' ');
+			}
+			else if (keyCode === 186 && e.shiftKey)
+			{
+				$('#emojis').removeClass('open');
+				emojisShowing  = false;
 			}
 			else
 			{
 				$.getJSON('/emojis.json', function(emojis)
 				{
+					var i = 0;
+					$('#emojis').html('');
+					foundEmojis = [];
 					$.each(emojis, function(key, val)
 					{
 						if (key.match("^" + input))
 						{
-							$('#emojis').html('<div class="emoji"><img src="' + val + '" width="20px" height="20px"/> ' + key + '</div>');
-							return false;
+							$('#emojis').append('<div class="emoji"><img src="' + val + '" width="20px" height="20px"/> ' + key + '</div>');
+
+							foundEmojis.push(key);
+
+							i++;
+
+							if (i === 3)
+								return false;
 						}
 					});
 				});
 			}
-		}
-
-		if (e.keyCode === 16)
-			isHoldingShift = false;
-
-		if (e.keyCode === 186 && emojisShowing === false && isHoldingShift === true)
-		{
-			$(this).parent().find('#emojis').addClass('open');
-			emojisShowing = true;
 		}
 	});
 
@@ -66,6 +72,10 @@
 			data.comment = textarea.val();
 			data.csrf    = $('#csrfToken').val();
 		var commentCount = $('#inviteCommentCount');
+
+		// Hide emoji previewer
+		if (emojisShowing === true)
+			$('#emojis').removeClass('open');
 
 		// Empty errors box
 		errors.html('');
@@ -142,6 +152,8 @@
 					output += '<a href="' + res[1].permalink + res[1].hashId + '">permalink</a>';
 	                output += '<a>&middot;</a>';
 	                output += '<a id="replyToComment" data-id="' + res[1].hashId + '">reply</a>';
+	                output += '<a>&middot;</a>';
+	                output += '<a id="editComment" data-id="' + res[1].hashId + '"><b>edit</b></a>';
 					output += '</footer>';
 					output += '<div class="comment-box" id="commentBox-' + res[1].hashId + '" style="margin-top:10px;">';
 					output += '<p>You can use Markdown to write comments.</p>';

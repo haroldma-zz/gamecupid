@@ -717,8 +717,8 @@ article.invite {
 
 .emoji-intellisense {
 	position: absolute;
-	top: -80px;
 	left: 0;
+	bottom: 0;
 	background: white;
 	border: 1px solid $silver;
 	width: 100%;
@@ -728,6 +728,7 @@ article.invite {
 	opacity: 0;
 	overflow: hidden;
 	padding: 10px;
+	padding-bottom: 5px;
 	text-align: center;
 	line-height: 37.5px;
 	font-size: 0.9em;
@@ -735,17 +736,15 @@ article.invite {
 	@include border-radius($global-radius);
 
 	&.open {
-		top: -65px;
 		opacity: 1;
-		height: 60px;
+		bottom: 70px;
+		height: auto;
 	}
 
 	.emoji {
 		width: auto;
-		position: absolute;
-		top: 27.5%;
-		left: 50%;
-		z-index: 3;
+		max-width: 60%;
+		position: relative;
 		background: $primary-color;
 		border: 1px solid darken($primary-color, 10);
 		padding: 3px 5px;
@@ -753,10 +752,15 @@ article.invite {
 		font-weight: 500;
 		font-size: 0.85em;
 		line-height: 0;
+		float: left;
+		margin-right: 5px;
+		margin-bottom: 5px;
 		@include border-radius(5px);
-		@include transform(translate(-50%));
 		img {
 			display: inline;
+		}
+		&:first-of-type {
+			border: 2px solid lighten($secondary-color, 10);
 		}
 	}
 }
