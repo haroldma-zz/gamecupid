@@ -9,6 +9,7 @@
 		var data     	 = textarea.data();
 			data.comment = textarea.val();
 			data.csrf    = $('#csrfToken').val();
+		var commentCount = $('#inviteCommentCount');
 
 		// Empty errors box
 		errors.html('');
@@ -40,6 +41,11 @@
 					textarea.val('');
 					loader.toggle();
 					button.attr('disabled', false);
+
+					if (parseInt(commentCount.text()) === 0)
+					{
+						$('#commentsList').html('');
+					}
 
 					var output = '';
 
@@ -101,6 +107,8 @@
 						parent.hide();
 						parent.parent().find('.children:first').prepend(output);
 					}
+
+					commentCount.text(parseInt(commentCount.text()) + 1);
 					break;
 				default:
 					alert('Err.. Something is going wrong.');

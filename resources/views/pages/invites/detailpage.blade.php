@@ -65,7 +65,7 @@
 					<br>
 					<h6 class="comments-header">
 						<div class="left">
-							Comments ({{ $invite->commentCount() }})
+							Comments (<span id="inviteCommentCount">{{ $invite->commentCount() }}</span>)
 						</div>
 						<div class="right">
 							<small>
