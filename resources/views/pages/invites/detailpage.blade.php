@@ -79,7 +79,9 @@
 						<div class="clearfix"></div>
 					</h6>
 					@if (isset($comment))
-						{!! $comment->renderComments(Request::get("sort"), $context) !!}
+						<div id="commentsList">
+							{!! $comment->renderComments(Request::get("sort"), $context) !!}
+						</div>
 					@else
 						<div id="commentsList">
 							{!! $invite->renderComments(Request::get("sort")) !!}
