@@ -90,10 +90,21 @@ $('[id="markNotificationAsReadBtn"').click(function()
 
 
 // game search input
-$('#gameSearchInput').on('keyup', function()
+$('#gameSearchInput').on('keyup', function(e)
 {
 	var token = $('#csrfToken').val();
 	var input = $(this).val();
+
+	if (input == '')
+	{
+		e.stopPropagation();
+		$('#gameSearchResults').html('');
+		return false;
+	}
+
+	$('#moreDetails').addClass('disabled');
+	$('#console').attr('disabled', true).addClass('disabled');
+	$('#console').html('<option value="0">select a game first</option>');
 
 	$.post('/game/search', {_token:token, title:input}, function(res)
 	{
