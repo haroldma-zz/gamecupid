@@ -68,6 +68,29 @@ ul {
 	font-size: 0.95em !important;
 }
 
+.tagLabel {
+  margin-left: 8px;
+  padding: 1px 6px;
+  height: 18px;
+  border-radius: 1px;
+  border: 0 solid;
+  color: #fff;
+  font-weight: 700;
+  font-style: normal;
+  font-variant: normal;
+  font-size: 13px;
+  font-family: Arial,sans-serif;
+  cursor: default;
+  vertical-align: middle;
+  position: relative;
+  top: -2px;
+  background-color: $primary-color;
+}
+
+.tagLabel.verified {
+  background-color: #08AE56;
+}
+
 .infobar {
   background-color: #f6e69f;
   padding: 5px 10px;

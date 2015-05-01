@@ -33,6 +33,10 @@
 								</div>
 							</div>
 							{{ $invite->title }}
+                            <span class="tagLabel" title="{{ $invite->console()->name  }}">{{ strtoupper($invite->console()->name)  }}</span>
+                            @if (true)
+                                <span class="tagLabel verified" title="Verified Only">VERIFIED ONLY</span>
+                            @endif
 						</h3>
 						<div class="panel markdown-text">
 							{!! $invite->self_text !!}
