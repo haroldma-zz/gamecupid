@@ -172,7 +172,7 @@ class PageController extends Controller {
         if (!$comment)
             return redirect('/page-not-found');
 
-        $context = max((int)$request->input("context", 0), 0);
+        $context = max((int)$request->input("context", 1), 0);
 
         return view('pages.invites.detailpage', ['invite' => $invite, 'context' => $context, 'comment' => $comment]);
     }

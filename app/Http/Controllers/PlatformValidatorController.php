@@ -72,7 +72,7 @@ class PlatformValidatorController extends Controller
 
                 $profile = new Profile;
 
-                $profile->user_id         = Auth::user()->id;
+                $profile->user_id         = Auth::id();
                 $profile->online_id       = $pid;
                 $profile->online_username = $json['onlineId'];
                 $profile->platform_id     = 2;
@@ -180,7 +180,7 @@ class PlatformValidatorController extends Controller
 
                     $profile = new Profile;
 
-                    $profile->user_id         = Auth::user()->id;
+                    $profile->user_id         = Auth::id();
                     $profile->online_id       = $xid;
                     $profile->online_username = $json['gtg'];
                     $profile->platform_id     = 1;

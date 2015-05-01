@@ -18,7 +18,7 @@ function generateCacheKey($model, $action)
 
 function generateAuthCacheKey($model, $action)
 {
-    return generateCacheKey($model, $action) . '_au_' . Auth::user()->id;
+    return generateCacheKey($model, $action) . '_au_' . Auth::id();
 }
 
 function generateCacheKeyWithId($model, $action, $id)

@@ -213,7 +213,7 @@ class InviteController extends Controller {
 		$comment->deleted       = false;
 		$comment->parent_id     = $parentId;
 		$comment->invite_id     = $id;
-		$comment->user_id       = Auth::user()->id;
+		$comment->user_id       = Auth::id();
 
 		if ($comment->save()) {
             $comment->castVote(VoteStates::UP);
