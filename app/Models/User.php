@@ -118,7 +118,7 @@ class User extends Model implements AuthenticatableContract, CanResetPasswordCon
     public function level()
     {
         $rep = $this->rep();
-        return floor(pow($rep, 1/$this->factor));
+        return max(floor(pow($rep, 1/$this->factor)), 1);
     }
 
     public function repToNextLevel()
