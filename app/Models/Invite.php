@@ -42,7 +42,7 @@ class Invite extends Model {
     {
         $vote            = new InviteVote;
         $vote->invite_id = $this->id;
-        $vote->user_id   = Auth::user()->id;
+        $vote->user_id   = Auth::id();
         $vote->state     = $state;
         return $vote->save();
     }

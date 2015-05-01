@@ -37,7 +37,7 @@ class RepEventsTableSeeder extends Seeder {
 
 		$e         = new RepEvent;
 		$e->event  = "Submitted a invite.";
-		$e->amount = 1;
+		$e->amount = -1;
 		$e->save();
 
 		$e         = new RepEvent;

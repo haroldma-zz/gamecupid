@@ -88,13 +88,13 @@ class User extends Model implements AuthenticatableContract, CanResetPasswordCon
 
 	// Function to return total rep amount (lazy loaded)
     private $_rep = null;
-	public function rep()
+	public function rep($useCache = true)
 	{
         if ($this->_rep != null)
             return $this->_rep;
 
         $key = generateCacheKeyWithId("user", "rep", $this->id);
-        if (hasCache($key, $cache)) {
+        if ($useCache && hasCache($key, $cache)) {
             $this->_rep = $cache;
             return $cache;
         }
@@ -106,7 +106,10 @@ class User extends Model implements AuthenticatableContract, CanResetPasswordCon
                     (SELECT
                       (SELECT sum(amount) FROM rep_events WHERE id=rep_event_id) as total
                       FROM reps WHERE user_id=?) x"), [$this->id])[0]->total;
-        return setCache($key, $this->_rep, Carbon::now()->addDay());
+
+		if ($useCache)
+        	return setCache($key, $this->_rep, Carbon::now()->addDay());
+		return $this->_rep;
 	}
 
     private $factor = 3.0;

@@ -27,7 +27,7 @@ class Notification extends Model {
     {
         $type = $this->type;
         if ($type == NotificationTypes::REP)
-            $description = "+".$this->repEvent()->amount." rep";
+            $description = sprintf("%+d",$this->repEvent()->amount)." rep: ". $this->repEvent()->event;
         else if ($type == NotificationTypes::COMMENT_REPLY)
             $description = $this->comment()->invite()->title;
 

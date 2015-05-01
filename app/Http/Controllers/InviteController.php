@@ -25,6 +25,11 @@ class InviteController extends Controller {
 		$slugify   = new Slugify();
         $slugify->addRule('+', 'plus');
 
+        $user = Auth::user();
+
+        if ($user->rep(false) <= 0)
+            return redirect()->back()->with('notice', ['error', 'Not enough rep.']);
+
 		$invite                    = new Invite;
 		$invite->title             = $request->get('title');
 		$invite->slug              = $slugify->slugify($request->get('title'), "-");
@@ -34,7 +39,7 @@ class InviteController extends Controller {
 		$invite->player_count      = $request->get('player_count');
 		$invite->console_id        = $request->get('console_id');
 		$invite->game_id           = $request->get('game_id');
-		$invite->user_id           = Auth::user()->id;
+		$invite->user_id           = $user->id;
 
 		if ($invite->save())
 		{
@@ -207,7 +212,7 @@ class InviteController extends Controller {
 		$comment->deleted       = false;
 		$comment->parent_id     = $parentId;
 		$comment->invite_id     = $id;
-		$comment->user_id       = Auth::user()->id;
+		$comment->user_id       = Auth::id();
 
 		if ($comment->save()) {
             $comment->castVote(VoteStates::UP);

@@ -7,7 +7,7 @@ function giveRepAndNotified($repEvent, $userId = null)
 {
     $rep               = new Rep;
     $rep->rep_event_id = $repEvent;
-    $rep->user_id      = ($userId != null ? $userId : Auth::user()->id);
+    $rep->user_id      = ($userId != null ? $userId : Auth::id());
 
     if ($rep->save()) {
         notifiedAboutRepEvent($repEvent, $userId);

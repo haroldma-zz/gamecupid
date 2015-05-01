@@ -19,7 +19,7 @@
                                 @endif
 								<p>
                                     @if ($n->type == \App\Enums\NotificationTypes::REP)
-									    <span class="bold">+{{ $n->repEvent()->amount }} rep:</span> {{ $n->repEvent()->event }}
+									    <span class="bold">{{ sprintf("%+d",$n->repEvent()->amount) }} rep:</span> {{ $n->repEvent()->event }}
                                     @elseif ($n->type == \App\Enums\NotificationTypes::COMMENT_REPLY)
                                         {!! $n->comment()->self_text !!}
                                     @endif

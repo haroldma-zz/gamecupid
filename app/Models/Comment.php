@@ -37,7 +37,7 @@ class Comment extends Model {
     {
         $vote             = new CommentVote;
         $vote->comment_id = $this->id;
-        $vote->user_id    = Auth::user()->id;
+        $vote->user_id    = Auth::id();
         $vote->state      = $state;
         return $vote->save();
     }

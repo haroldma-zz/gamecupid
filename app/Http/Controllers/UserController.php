@@ -147,7 +147,7 @@ class UserController extends Controller {
 
 		if ($n)
 		{
-			if ($n->to->id === Auth::user()->id)
+			if ($n->to->id === Auth::id())
 			{
 				$c = $n->read == true;
 
