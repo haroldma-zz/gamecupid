@@ -58,7 +58,7 @@ class InviteController extends Controller {
 		$invite->self_text         = $parsedown->text($request->get('self_text'));
 		$invite->markdown_text     = $request->get('self_text');
 		//$invite->tag_text          = '-'; TODO
-		$invite->player_count      = max($request->get('player_count'), 1);
+		$invite->player_count      = max((int)$request->get('player_count'), 1);
 		$invite->verified_only     = ($request->get('verified') == 'yes' ? true : false);
 		$invite->console_id        = $console->id;
 		$invite->game_id           = $game->id;
