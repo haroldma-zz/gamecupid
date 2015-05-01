@@ -25,6 +25,11 @@ class InviteController extends Controller {
 		$slugify   = new Slugify();
         $slugify->addRule('+', 'plus');
 
+        $user = Auth::user();
+
+        if ($user->rep(false) <= 0)
+            return redirect()->back()->with('notice', ['error', 'Not enough rep.']);
+
 		$invite                    = new Invite;
 		$invite->title             = $request->get('title');
 		$invite->slug              = $slugify->slugify($request->get('title'), "-");
@@ -35,7 +40,7 @@ class InviteController extends Controller {
 		$invite->requires_approval = ($request->get('requires_approval') == '' ? false : true);
 		$invite->console_id        = $request->get('console_id');
 		$invite->game_id           = $request->get('game_id');
-		$invite->user_id           = Auth::user()->id;
+		$invite->user_id           = $user->id;
 
 		if ($invite->save())
 		{
