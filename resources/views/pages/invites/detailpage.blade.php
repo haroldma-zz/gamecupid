@@ -35,7 +35,7 @@
 							{{ $invite->title }}
 							<div class="tagLabels">
 	                            <span class="tagLabel" title="{{ $invite->console()->name  }}">{{ strtoupper($invite->console()->name)  }}</span>
-	                            @if ((bool)$invite->verified_only)
+	                            @if ($invite->verified_only)
 	                                <span class="tagLabel verified" title="Verified Only">VERIFIED ONLY</span>
 	                            @endif
 							</div>
