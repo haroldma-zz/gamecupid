@@ -32,7 +32,6 @@ class InviteController extends Controller {
 		$invite->markdown_text     = $request->get('self_text');
 		$invite->tag_text          = '-';
 		$invite->player_count      = $request->get('player_count');
-		$invite->requires_approval = ($request->get('requires_approval') == '' ? false : true);
 		$invite->console_id        = $request->get('console_id');
 		$invite->game_id           = $request->get('game_id');
 		$invite->user_id           = Auth::user()->id;

@@ -9711,32 +9711,33 @@ article.invite hr {
 }
 
 /* line 455, ../scss/_misc.scss */
+#progresser {
+  display: none;
+}
+
+/* line 459, ../scss/_misc.scss */
 .comments {
   width: 100%;
 }
-/* line 458, ../scss/_misc.scss */
+/* line 462, ../scss/_misc.scss */
 .comments .comment-box {
   width: 100%;
   max-width: 350px;
   margin-top: -15px;
 }
-/* line 463, ../scss/_misc.scss */
+/* line 467, ../scss/_misc.scss */
 .comments .comment-box p {
   margin: 0;
   font-size: 0.9em;
 }
-/* line 468, ../scss/_misc.scss */
+/* line 472, ../scss/_misc.scss */
 .comments .comment-box textarea {
   height: 75px;
   font-size: 0.85em;
 }
-/* line 473, ../scss/_misc.scss */
+/* line 477, ../scss/_misc.scss */
 .comments .comment-box .btn {
   margin-right: 10px;
-}
-/* line 477, ../scss/_misc.scss */
-.comments .comment-box img {
-  display: none;
 }
 /* line 482, ../scss/_misc.scss */
 .comments article.comment {

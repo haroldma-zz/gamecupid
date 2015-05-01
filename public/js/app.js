@@ -168,7 +168,7 @@ $('body').on('click', '[id="selectGame"]', function()
 	});
 });
 
-// hide game select box if user in- or outside of it
+// hide game select box if user clicks in- or outside of it
 $('html, body').click(function(e)
 {
 	var gsr = $('#gameSearchResults');
@@ -177,6 +177,14 @@ $('html, body').click(function(e)
 	{
 		$('#gameSearchResults').hide();
 	}
+});
+
+
+// Submit invite form
+$('#inviteSubmitter').click(function()
+{
+	$(this).attr('disabled', true);
+	$('#progresser').toggle();
 });
 
 

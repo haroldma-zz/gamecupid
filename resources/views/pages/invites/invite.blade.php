@@ -59,9 +59,12 @@
 								<textarea id="inviteText" class="disabled" placeholder="More info about this invite"></textarea>
 							</div>
                             <br><br><br>
-						    {{-- {!! Recaptcha::render() !!} --}}
+                            <label><input type="checkbox"> Only verified users can respond on this invite.</label>
+						    {!! Recaptcha::render() !!}
 						    <br>
-						    <button type="submit" class="btn big primary">Submit invite</button>
+						    <button type="submit" class="btn big primary" id="inviteSubmitter">Submit invite</button>
+						    &nbsp;
+						    <img id="progresser" src="{!! url('/img/loaders/dots.svg') !!}" width="40px">
 					    </div>
 					</div>
 				</div>

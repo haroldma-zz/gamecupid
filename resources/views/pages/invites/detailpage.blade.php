@@ -57,7 +57,7 @@
 							<textarea class="form-control" placeholder="Write a comment" data-parenthash="{!! hashId(0) !!}" data-url="{!! url($invite->getPermalink()) !!}" data-hierarchy="parent" data-level="no-parent"></textarea>
 						</div>
 						<button type="submit" class="btn primary medium" id="commentSubmitter">Comment</button>
-						<img src="{!! url('/img/loaders/dots.svg') !!}" width="40px">
+						<img id="progresser" src="{!! url('/img/loaders/dots.svg') !!}" width="40px">
 						<div></div>
 						@if(Session::has('notice'))
 							@if (Session::get('notice')[0] == 'error')

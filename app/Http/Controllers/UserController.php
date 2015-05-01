@@ -41,13 +41,8 @@ class UserController extends Controller {
 			// Give the user rep
             giveRepAndNotified(RepEvents::REGISTERED, $user->id); # User not logged in yet, need to pass $user->id
 
-			// Confirm e-mail notification
-			/*$notification              = new Notification;
-            $not->type    = NotificationTypes::TEXT;
-			$notification->title       = "Confirm your e-mail address.";
-			$notification->description = "By confirming your e-mail address, you become a verified user. You will also earn some more Rep which brings you closer to being a GameCupid legend.";
-			$notification->to_id       = $user->id;
-			$notification->save();*/
+			// Send confirmation email
+			#todo
 
 			// Log the user in
 			if (Auth::attempt(['username' => $request->get('username'), 'password' => $request->get('password')]))
