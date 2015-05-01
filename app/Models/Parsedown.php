@@ -26,7 +26,7 @@ class Parsedown
     function text($text)
     {
         # load emojis
-        $this->emojis = json_decode(file_get_contents(public_path() . '/emojis.json'));
+        $this->emojis = emojiList();
 
         # make sure no definitions are set
         $this->DefinitionData = array();
@@ -47,8 +47,8 @@ class Parsedown
         {
             $output = preg_replace_callback('/:(\w+):/', function($m) use ($line){
                 $word = $m[0];
-                if(isset($this->emojis->$word)){ // If it exists in our array
-                    return '<img src="' . $this->emojis->$word . '" title="' . $word . '" name="' . $word . '" width="20px" height="20px" />';
+                if(isset($this->emojis[$word])){ // If it exists in our array
+                    return '<img src="' . $this->emojis[$word] . '" title="' . $word . '" name="' . $word . '" width="20px" height="20px" />';
                 }else{
                     return $word; // Otherwise return the whole match (basically we won't change it)
                 }
