@@ -55,7 +55,7 @@ class InviteController extends Controller {
 		$invite->slug              = $slugify->slugify($request->get('title'), "-");
 		$invite->self_text         = $parsedown->text($request->get('self_text'));
 		$invite->markdown_text     = $request->get('self_text');
-		$invite->tag_text          = '-';
+		//$invite->tag_text          = '-'; TODO
 		$invite->player_count      = max($request->get('player_count'), 1);
 		$invite->console_id        = $console->id;
 		$invite->game_id           = $game->id;
