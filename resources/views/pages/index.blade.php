@@ -55,9 +55,9 @@
 							</footer>
 							<div class="tagLabels">
                                 <span class="tagLabel" title="{{ $invite->console()->name  }}">{{ strtoupper($invite->console()->name)  }}</span>
-								@if (true)
-									<span class="tagLabel verified" title="Verified Only">VERIFIED ONLY</span>
-								@endif
+                                @if ((bool)$invite->verified_only)
+                                    <span class="tagLabel verified" title="Verified Only">VERIFIED ONLY</span>
+                                @endif
 							</div>
 							<hr>
 						</article>

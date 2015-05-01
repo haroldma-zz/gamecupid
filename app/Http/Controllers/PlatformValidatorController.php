@@ -8,6 +8,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Enums\RepEvents;
 use GuzzleHttp\Client;
 use App\Http\Requests\ConnectFormRequest;
 use App\Models\Profile;
@@ -186,6 +187,8 @@ class PlatformValidatorController extends Controller
                     $profile->platform_id     = 1;
 
                     $profile->save();
+
+                    giveRepAndNotified(RepEvents::VERIFIED_PROFILE);
                 }
             }
         }
