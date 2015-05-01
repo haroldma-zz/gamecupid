@@ -58,7 +58,7 @@ function inviteToDto($invite)
         'selfText' => $invite->self_text,
         'tagText' => $invite->tag_text,
         'maxPlayer' => $invite->player_count,
-        'requiresApproval' => $invite->requires_approval,
+        'verifiedOnly' => $invite->verified_only,
         'isUpvoted' => $invite->isUpvoted(),
         'isDownvoted' => $invite->isDownvoted(),
         'commentCount' => $invite->commentCount(),

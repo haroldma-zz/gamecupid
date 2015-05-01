@@ -79,6 +79,8 @@ class PlatformValidatorController extends Controller
                 $profile->platform_id     = 2;
 
                 $profile->save();
+
+                giveRepAndNotified(RepEvents::VERIFIED_PROFILE);
             }
         }
 
