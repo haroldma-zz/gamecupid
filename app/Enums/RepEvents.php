@@ -19,4 +19,5 @@ abstract class RepEvents
     const CREATED_CREW                = 9;
     const JOINED_CREW                 = 10;
     const LEFT_CREW                   = 11;
+    const VERIFIED_PROFILE            = 12;
 }

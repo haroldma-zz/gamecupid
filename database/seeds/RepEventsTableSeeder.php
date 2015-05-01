@@ -10,7 +10,7 @@ class RepEventsTableSeeder extends Seeder {
     {
 		$e         = new RepEvent;
 		$e->event  = "Registered as a user of GameCupid.";
-		$e->amount = 2;
+		$e->amount = 1;
 		$e->save();
 
 		$e         = new RepEvent;
@@ -63,6 +63,10 @@ class RepEventsTableSeeder extends Seeder {
 		$e->amount = -5;
 		$e->save();
 
+		$e         = new RepEvent;
+		$e->event  = "Verified profile.";
+		$e->amount = 2;
+		$e->save();
     }
 
 }
