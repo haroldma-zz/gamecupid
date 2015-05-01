@@ -28,6 +28,8 @@ Route::get('/login', 'PageController@login');
 Route::get('/invite/{hashid}/{slug}', 'PageController@invite');
 Route::get('/invite/{hashid}/{slug}/{context}', 'PageController@inviteWithContext');
 
+Route::get('/game/consoles', 'GameController@formConsoles');
+
 
 // POST routes
 Route::post('/login', ['as' => 'user.login', 'uses' => 'UserController@login']);

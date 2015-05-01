@@ -10047,6 +10047,75 @@ article.invite hr {
   border: 2px solid #faa937;
 }
 
+/**
+*
+* INVITE FORM
+*
+**/
+/* line 777, ../scss/_misc.scss */
+.invite-form input.big-inline-input {
+  display: inline;
+  border: none;
+  font-size: inherit;
+  width: 100%;
+  height: auto;
+  border-bottom: 1px dotted #5379be;
+}
+/* line 784, ../scss/_misc.scss */
+.invite-form input.big-inline-input:nth-child(1) {
+  width: 45px;
+}
+/* line 787, ../scss/_misc.scss */
+.invite-form input.big-inline-input:nth-child(2) {
+  width: auto;
+}
+/* line 791, ../scss/_misc.scss */
+.invite-form select {
+  display: inline;
+  border: none;
+  font-size: inherit;
+  width: auto;
+  height: auto;
+  border-bottom: 1px dotted #5379be;
+  padding-right: 25px;
+  outline: none !important;
+}
+/* line 800, ../scss/_misc.scss */
+.invite-form select.disabled {
+  background: white;
+  color: #c5c5c5;
+}
+/* line 806, ../scss/_misc.scss */
+.invite-form .more-details.disabled {
+  cursor: not-allowed;
+}
+/* line 808, ../scss/_misc.scss */
+.invite-form .more-details.disabled input, .invite-form .more-details.disabled textarea {
+  pointer-events: none;
+}
+/* line 813, ../scss/_misc.scss */
+.invite-form #inviteTitle {
+  border: none;
+  font-size: inherit;
+  height: auto;
+  padding: 0;
+  -moz-box-shadow: none;
+  -webkit-box-shadow: none;
+  box-shadow: none;
+}
+/* line 820, ../scss/_misc.scss */
+.invite-form textarea {
+  width: 100%;
+  height: 200px;
+  border: none;
+  font-size: 1.35em;
+  padding: 0;
+  margin-top: 5px;
+  -moz-box-shadow: none;
+  -webkit-box-shadow: none;
+  box-shadow: none;
+}
+
 /*!
   Ionicons, v2.0.1
   Created by Ben Sperry for the Ionic Framework, http://ionicons.com/
@@ -13956,8 +14025,9 @@ ul {
   width: 100%;
   position: absolute;
   top: -15px;
+  z-index: 9;
 }
-/* line 160, ../scss/app.scss */
+/* line 161, ../scss/app.scss */
 .game-search-results-container .game-search-results .game-search-result {
   background: white;
   padding: 5px;
@@ -13966,15 +14036,15 @@ ul {
   cursor: pointer;
   font-size: 1em;
 }
-/* line 168, ../scss/app.scss */
+/* line 169, ../scss/app.scss */
 .game-search-results-container .game-search-results .game-search-result:hover {
   background: #446CB3;
 }
-/* line 170, ../scss/app.scss */
+/* line 171, ../scss/app.scss */
 .game-search-results-container .game-search-results .game-search-result:hover a {
   color: white;
 }
-/* line 175, ../scss/app.scss */
+/* line 176, ../scss/app.scss */
 .game-search-results-container .game-search-results .game-search-result:last-of-type {
   border-bottom: 1px solid #e9e9e9;
 }
@@ -13984,33 +14054,33 @@ ul {
 * Account page
 *
 **/
-/* line 188, ../scss/app.scss */
+/* line 189, ../scss/app.scss */
 .profile {
   width: 100%;
   border-bottom: 1px solid #e9e9e9;
   padding: 1em 0;
 }
-/* line 193, ../scss/app.scss */
+/* line 194, ../scss/app.scss */
 .profile:last-of-type {
   border: none;
   padding-bottom: 0;
 }
-/* line 198, ../scss/app.scss */
+/* line 199, ../scss/app.scss */
 .profile img {
   height: 75px;
   margin-bottom: 1.5em;
 }
-/* line 204, ../scss/app.scss */
+/* line 205, ../scss/app.scss */
 .profile .profiles-mini-list li:first-of-type {
   font-weight: 700;
   color: #446CB3;
 }
-/* line 209, ../scss/app.scss */
+/* line 210, ../scss/app.scss */
 .profile .profiles-mini-list li > a {
   color: #555;
   font-weight: 500;
 }
-/* line 212, ../scss/app.scss */
+/* line 213, ../scss/app.scss */
 .profile .profiles-mini-list li > a:hover {
   text-decoration: underline;
 }
@@ -14020,22 +14090,22 @@ ul {
 * Feeds
 *
 **/
-/* line 225, ../scss/app.scss */
+/* line 226, ../scss/app.scss */
 .feed {
   width: 100%;
 }
-/* line 229, ../scss/app.scss */
+/* line 230, ../scss/app.scss */
 .feed .sort-by a {
   color: #999;
   font-weight: 500;
   font-size: 0.8em;
   margin-right: 15px;
 }
-/* line 235, ../scss/app.scss */
+/* line 236, ../scss/app.scss */
 .feed .sort-by a:hover {
   color: #555;
 }
-/* line 239, ../scss/app.scss */
+/* line 240, ../scss/app.scss */
 .feed .sort-by a.active {
   color: #446CB3;
   font-weight: 700;
@@ -14046,7 +14116,7 @@ ul {
 * Footer
 *
 **/
-/* line 253, ../scss/app.scss */
+/* line 254, ../scss/app.scss */
 .footer {
   margin-top: 25px;
   width: 100%;
@@ -14054,16 +14124,16 @@ ul {
   padding: 3em 0;
   text-align: center;
 }
-/* line 260, ../scss/app.scss */
+/* line 261, ../scss/app.scss */
 .footer .row {
   max-width: 100%;
 }
-/* line 264, ../scss/app.scss */
+/* line 265, ../scss/app.scss */
 .footer .super-header {
   color: #ccc;
   margin-bottom: 20px;
 }
-/* line 269, ../scss/app.scss */
+/* line 270, ../scss/app.scss */
 .footer a {
   color: #ccc;
   margin: 0 10px;

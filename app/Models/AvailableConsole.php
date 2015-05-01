@@ -10,4 +10,15 @@ class AvailableConsole extends Model {
 	 * @var string
 	 */
 	protected $table = 'available_console';
+
+
+	/**
+	*
+	* Relations
+	*
+	**/
+	public function console()
+	{
+		return $this->hasOne('App\Models\Console', 'id', 'console_id');
+	}
 }

@@ -764,3 +764,66 @@ article.invite {
 		}
 	}
 }
+
+
+
+
+/**
+*
+* INVITE FORM
+*
+**/
+.invite-form {
+	input.big-inline-input {
+		display: inline;
+		border: none;
+		font-size: inherit;
+		width: 100%;
+		height: auto;
+		border-bottom: 1px dotted lighten($primary-color, 5);
+		&:nth-child(1) {
+			width: 45px;
+		}
+		&:nth-child(2) {
+			width: auto;
+		}
+	}
+	select {
+		display: inline;
+		border: none;
+		font-size: inherit;
+		width: auto;
+		height: auto;
+		border-bottom: 1px dotted lighten($primary-color, 5);
+		padding-right: 25px;
+		outline: none !important;
+		&.disabled {
+			background: white;
+			color: #c5c5c5;
+		}
+	}
+	.more-details {
+		&.disabled {
+			cursor: not-allowed;
+			input, textarea {
+				pointer-events: none;
+			}
+		}
+	}
+	#inviteTitle {
+		border: none;
+		font-size: inherit;
+		height: auto;
+		padding: 0;
+		@include box-shadow(none);
+	}
+	textarea {
+		width: 100%;
+		height: 200px;
+		border: none;
+		font-size: 1.35em;
+		padding: 0;
+		margin-top: 5px;
+		@include box-shadow(none);
+	}
+}

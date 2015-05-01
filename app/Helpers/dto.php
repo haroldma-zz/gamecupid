@@ -24,6 +24,21 @@ function gameToDto($game)
     ]);
 }
 
+function gameSearchResultsToDto($games)
+{
+    $dto = [];
+
+    foreach ($games as $game)
+    {
+        $dto[] = [
+            'id'    => hashId($game->id),
+            'title' => $game->title
+        ];
+    }
+
+    return new Laravel5DTO($dto);
+}
+
 function consoleToDto($console)
 {
     return new Laravel5DTO([

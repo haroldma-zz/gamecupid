@@ -134,6 +134,27 @@ $('body').on('click', '[id="selectGame"]', function()
 
 	$('#gameSearchInput').val(title);
 	$('#selectedGameId').val(id);
+
+	$.get('/game/consoles/?id=' + id, function(res)
+	{
+		if (res.length > 0)
+		{
+			var list = $('#console');
+
+			$('#moreDetails').removeClass('disabled');
+			list.attr('disabled', false).removeClass('disabled');
+			list.html('<option value="0">Select a console</option>');
+
+			$.each(res, function(key, val)
+			{
+				list.append('<option value="' + val.id + '">' + val.name + '</option>');
+			});
+		}
+		else
+		{
+			console.log('Game is not available on any of our supported consoles.');
+		}
+	});
 });
 
 // hide game select box if user in- or outside of it
