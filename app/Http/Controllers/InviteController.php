@@ -1,5 +1,7 @@
 <?php namespace App\Http\Controllers;
 
+use App\Models\Console;
+use App\Models\Game;
 use Auth;
 use Response;
 use App\Models\Invite;
@@ -30,15 +32,33 @@ class InviteController extends Controller {
         if ($user->rep(false) <= 0)
             return redirect()->back()->with('notice', ['error', 'Not enough rep.']);
 
+        $console = Console::find($request->get('console_id'));
+        if (!$console)
+            return redirect()->back()->with('notice', ['error', 'Console doesn\'t exists']);
+
+        // Check if the player has a verified profile for the platform
+        if ($user->profiles->where('platform_id', $console->platform_id)->first() == null)
+            return redirect()->back()
+                ->with('notice', ['error', "You need a verified {$console->platform->name} profile to post invites for $console->name."]);
+
+        // Make sure the game id is for an existing game and the console id matches
+        $game = Game::find($request->get('game_id'));
+        if (!$game)
+            return redirect()->back()->with('notice', ['error', 'Game doesn\'t exists']);
+
+        // Verified the game is supported on the selected console
+        if ($game->consoles->where('console_id', $console->id)->first() == null)
+            return redirect()->back()->with('notice', ['error', 'This game is not supported for the selected console.']);
+
 		$invite                    = new Invite;
 		$invite->title             = $request->get('title');
 		$invite->slug              = $slugify->slugify($request->get('title'), "-");
 		$invite->self_text         = $parsedown->text($request->get('self_text'));
 		$invite->markdown_text     = $request->get('self_text');
 		$invite->tag_text          = '-';
-		$invite->player_count      = $request->get('player_count');
-		$invite->console_id        = $request->get('console_id');
-		$invite->game_id           = $request->get('game_id');
+		$invite->player_count      = max($request->get('player_count'), 1);
+		$invite->console_id        = $console->id;
+		$invite->game_id           = $game->id;
 		$invite->user_id           = $user->id;
 
 		if ($invite->save())
