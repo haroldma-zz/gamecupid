@@ -205,7 +205,7 @@ $('#inviteSubmitter').click(function()
 	    type: "POST",
 	    data: {
 	    	_token: token,
-	    	player_count: maxPlayers,
+	    	max_players: maxPlayers,
 	    	game_id: gameId,
 	    	console_id: consoleId,
 	    	title: title,

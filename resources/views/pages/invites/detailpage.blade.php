@@ -45,7 +45,7 @@
 						</div>
 					</section>
 					<footer>
-						<a><span class="bold">{{ $invite->accepts->where('state', 2)->count() }}</span>{{ '/'.$invite->player_count }} player{{ ($invite->player_count > 1 ? 's' : '') }}</a>
+						<a><span class="bold">{{ $invite->accepts->where('state', 2)->count() }}</span>{{ '/'.$invite->max_players }} player{{ ($invite->max_players > 1 ? 's' : '') }}</a>
 						<a>&middot;</a>
 						<a href="{!! $invite->getPermalink() !!}"><b>Let's play!</b></a>
 						<a>&middot;</a>

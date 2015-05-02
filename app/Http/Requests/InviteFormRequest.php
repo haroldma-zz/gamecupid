@@ -10,7 +10,7 @@ class InviteFormRequest extends FormRequest {
 	public function rules()
 	{
 		return [
-			'player_count' => 'required|numeric',
+			'max_players' => 'required|numeric',
 			'game_id'      => 'required',
 			'console_id'   => 'required',
 			'title'        => 'required',
@@ -21,8 +21,8 @@ class InviteFormRequest extends FormRequest {
 	public function messages()
 	{
 		return [
-			'player_count.required' => 'The player count field can\'t be empty.',
-			'player_count.numeric'  => 'Only numeric values are allowed in the player count field.',
+			'max_players.required' => 'The player count field can\'t be empty.',
+			'max_players.numeric'  => 'Only numeric values are allowed in the player count field.',
 			'game_id.required'      => 'You forgot to choose a game.',
 			'console_id.required'   => 'Choose a console.',
 			'title.required'        => 'Come up with a title for your invite.',

@@ -47,18 +47,18 @@
 								</h3>
 							</section>
 							<footer>
-                                <a><span class="bold">{{ $invite->accepts->where('state', 2)->count() }}</span>{{ '/'.$invite->player_count }} player{{ ($invite->player_count > 1 ? 's' : '') }}</a>
-								<a>&middot;</a>
-								<a href="{!! $invite->getPermalink() !!}"><b>Let's play!</b></a>
-								<a>&middot;</a>
-								<a href="{!! $invite->getPermalink() !!}">{{ $invite->commentCount() }} comment{{ $invite->commentCount() == 1 ? "" : "s" }}</a>
-							</footer>
 							<div class="tagLabels">
                                 <span class="tagLabel" title="{{ $invite->console()->name  }}">{{ strtoupper($invite->console()->name)  }}</span>
                                 @if ($invite->verified_only)
                                     <span class="tagLabel verified" title="Verified Only">VERIFIED ONLY</span>
                                 @endif
 							</div>
+                                <a><span class="bold">{{ $invite->accepts->where('state', 2)->count() }}</span>{{ '/'.$invite->max_players }} player{{ ($invite->max_players > 1 ? 's' : '') }}</a>
+								<a>&middot;</a>
+								<a href="{!! $invite->getPermalink() !!}"><b>Let's play!</b></a>
+								<a>&middot;</a>
+								<a href="{!! $invite->getPermalink() !!}">{{ $invite->commentCount() }} comment{{ $invite->commentCount() == 1 ? "" : "s" }}</a>
+							</footer>
 							<hr>
 						</article>
 						@endforeach
