@@ -8,8 +8,6 @@ class RepEventsTableSeeder extends Seeder {
 
     public function run()
     {
-		$now  = date('Y-m-d h:i:s');
-
 		$e         = new RepEvent;
 		$e->event  = "Registered as a user of GameCupid.";
 		$e->amount = 1;
@@ -65,6 +63,10 @@ class RepEventsTableSeeder extends Seeder {
 		$e->amount = -5;
 		$e->save();
 
+		$e         = new RepEvent;
+		$e->event  = "Verified profile.";
+		$e->amount = 2;
+		$e->save();
     }
 
 }

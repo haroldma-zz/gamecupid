@@ -30,6 +30,17 @@ Route::get('/invite/{hashid}/{slug}/{context}', 'PageController@inviteWithContex
 
 Route::get('/game/consoles', 'GameController@formConsoles');
 
+Route::get('/g/{username}', function($username) {
+    return redirect("/gamer/$username", 301);
+});
+Route::get('/gamer/{username}', 'PageController@userProfile');
+
+Route::get('/c/{hashid}/{crewname}', function($hashid, $crewname) {
+    return redirect("/crew/$hashid/$crewname", 301);
+});
+Route::get('/crew/{hashid}/{crewname}', 'PageController@crewPage');
+
+
 
 // POST routes
 Route::post('/login', ['as' => 'user.login', 'uses' => 'UserController@login']);
@@ -59,7 +70,7 @@ Route::group(['middleware' => 'auth'], function()
 	// GET routes
 	Route::get('/logout', 'UserController@logout');
 
-	Route::get('/account', 'PageController@account');
+	Route::get('/settings', 'PageController@settings');
 	Route::get('/account/connect/psn', 'PageController@connectPsn');
 	Route::get('/account/connect/xbl', 'PageController@connectXbl');
 	Route::get('/account/connect/steam', 'PageController@connectSteam');
@@ -69,6 +80,8 @@ Route::group(['middleware' => 'auth'], function()
 	Route::get('/notifications', 'PageController@notifications');
 
 	Route::get('/invite', 'PageController@inviteForm');
+
+	Route::get('/crew/create', 'PageController@crewForm');
 
 
 	// POST routes

@@ -90,10 +90,21 @@ $('[id="markNotificationAsReadBtn"').click(function()
 
 
 // game search input
-$('#gameSearchInput').on('keyup', function()
+$('#gameSearchInput').on('keyup', function(e)
 {
 	var token = $('#csrfToken').val();
 	var input = $(this).val();
+
+	if (input == '')
+	{
+		e.stopPropagation();
+		$('#gameSearchResults').html('');
+		return false;
+	}
+
+	$('#moreDetails').addClass('disabled');
+	$('#console').attr('disabled', true).addClass('disabled');
+	$('#console').html('<option value="0">select a game first</option>');
 
 	$.post('/game/search', {_token:token, title:input}, function(res)
 	{
@@ -157,7 +168,7 @@ $('body').on('click', '[id="selectGame"]', function()
 	});
 });
 
-// hide game select box if user in- or outside of it
+// hide game select box if user clicks in- or outside of it
 $('html, body').click(function(e)
 {
 	var gsr = $('#gameSearchResults');
@@ -166,6 +177,65 @@ $('html, body').click(function(e)
 	{
 		$('#gameSearchResults').hide();
 	}
+});
+
+
+// Submit invite form
+$('#inviteSubmitter').click(function()
+{
+	$(this).attr('disabled', true);
+	$('#progresser').toggle();
+	$('#submitError').html('');
+
+	var	maxPlayers = $('#maxPlayers').val(),
+		gameId     = $('#selectedGameId').val(),
+		consoleId  = $('#console').val(),
+		title      = $('#inviteTitle').val(),
+		text       = $('#inviteText').val(),
+		verified   = $('#verifiedInput').prop('checked'),
+		vchecked   = 'no',
+		token      = $('#csrfToken').val(),
+		button     = $(this);
+
+	if (verified == true)
+		vchecked = 'yes';
+
+	$.ajax({
+	    url: "/invite",
+	    type: "POST",
+	    data: {
+	    	_token: token,
+	    	max_players: maxPlayers,
+	    	game_id: gameId,
+	    	console_id: consoleId,
+	    	title: title,
+	    	self_text: text,
+	    	verified: vchecked
+	    },
+	    success: function(res)
+	    {
+	    	window.location.href = '/';
+	    },
+	    error: function(res)
+	    {
+			button.attr('disabled', false);
+			$('#progresser').toggle();
+
+			console.log(res);
+
+			if (res.responseJSON != null)
+			{
+				$.each(res.responseJSON, function(key, error)
+				{
+					$('#submitError').append('<li>' + error[0] + '</li>');
+				});
+			}
+			else
+			{
+				$('#submitError').append('<li>' + res.responseText + '</li>');
+			}
+	    }
+	});
 });
 
 

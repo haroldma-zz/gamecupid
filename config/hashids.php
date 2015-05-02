@@ -30,7 +30,7 @@ return [
 
 		'main' => [
 			'salt' => 'noodles-zumicts-ftw',
-			'length' => '4',
+			'length' => '2',
 			'alphabet' => 'abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789'
 		],
 

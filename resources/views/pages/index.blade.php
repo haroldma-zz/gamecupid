@@ -3,7 +3,7 @@
 @section('page')
 <section class="page">
 	<div class="row">
-		<div class="medium-8 columns">
+		<div class="medium-9 columns">
 			<div class="panel">
 				<div class="feed" id="feedContainer" data-page="1" data-sort="hot">
 					<div class="sort-by">
@@ -43,11 +43,17 @@
 											{{ $invite->totalVotes() }}
 										</div>
 									</div>
-									{{ $invite->title }}
+									{{ $invite->game()->title . ': ' . $invite->title }}
 								</h3>
 							</section>
-							<footer>
-								<a>{{ $invite->player_count }} player{{ ($invite->player_count > 1 ? 's' : '') }}</a>
+							<footer style="margin-top:-5px;">
+								<div class="tagLabels">
+	                                <span class="tagLabel" title="{{ $invite->console()->name  }}">{{ strtoupper($invite->console()->name)  }}</span>
+	                                @if ($invite->verified_only)
+	                                    <span class="tagLabel verified" title="Verified Only">VERIFIED ONLY</span>
+	                                @endif
+								</div>
+                                <a><span class="bold">{{ $invite->accepts->where('state', 2)->count() }}</span>{{ '/'.$invite->max_players }} player{{ ($invite->max_players > 1 ? 's' : '') }}</a>
 								<a>&middot;</a>
 								<a href="{!! $invite->getPermalink() !!}"><b>Let's play!</b></a>
 								<a>&middot;</a>
@@ -69,26 +75,54 @@
 				</div>
 			</div>
 		</div>
-		<div class="medium-3 medium-offset-1 columns">
+		<div class="medium-3 columns">
 			<div class="panel">
-				<h5 class="super-header">TODO list</h5>
+				<h5 class="super-header" style="letter-spacing: 5px;">Top crews</h5>
+				<ol class="no-bullet text-justify">
+					<li>
+						<b>noodlesFTW</b>
+					</li>
+					<li>
+						<b>xBoners</b>
+					</li>
+					<li>
+						<b>AyyLMAO</b>
+					</li>
+					<li>
+						<b>LameAssCrewname</b>
+					</li>
+					<li>
+						<b>OfficialYoutubers</b>
+					</li>
+					<li>
+						<b>GanjaArmy</b>
+					</li>
+					<li>
+						<b>BeerAndWeed</b>
+					</li>
+					<li>
+						<b>Amsterdamned</b>
+					</li>
+				</ol>
+			</div>
+			<div class="panel">
+				<h5 class="super-header" style="letter-spacing: 3px;">1-on-1 quick invites</h5>
 				<ul class="no-bullet text-justify">
-					<li><b>To do</b></li>
-					<li>Figure out what this area is for</li>
-					<li>Accepting invites</li>
-					<li>Private messaging</li>
-					<li>Crew creation page</li>
-					<li>User profile page</li>
-					<li>User settings page</li>
-					<li>Implement Gravatar for profile pics</li>
-					<li>API design</li>
-					<li>Show the game title on invites instead of only the title of the invite (maybe with a small label or something) (make it like flair on reddit maybe?)</li>
-					<li>Show the level/rep label of users next to their name</li>
-					<hr>
-					<li><b>Ideas under discussion</b></li>
-					<li><i>Make betting (for money, or something else) possible.</i></li>
-					<li><i>Make it possible to submit tournaments and challenges.</i></li>
-					<li><i></i></li>
+					<li>
+						<a href="">FIFA15 - Real Madrid vs ?</a>
+					</li>
+					<li>
+						<a href="">COD - Quickscope match</a>
+					</li>
+					<li>
+						<a href="">GTAV - Online missions</a>
+					</li>
+					<li>
+						<a href="">Age of Empires II - Online match</a>
+					</li>
+					<li>
+						<a href="">The Last of Us - Co-op</a>
+					</li>
 				</ul>
 			</div>
 		</div>

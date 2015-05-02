@@ -196,7 +196,7 @@ class CommentsRenderer {
                 $output .= '<p>You can use Markdown to write comments.</p>';
                 $output .= '<textarea class="form-control" placeholder="Write a comment" data-parenthash="' . hashId($comment->id) . '" data-url="' . $comment->invite()->getPermalink() . '" data-hierarchy="' . $hierachy . '" data-level="has-parent"></textarea>';
                 $output .= '<button type="submit" class="btn primary medium" id="commentSubmitter">Comment</button>';
-                $output .= '<img src="/img/loaders/dots.svg" width="40px">';
+                $output .= '<img id="progresser" src="/img/loaders/dots.svg" width="40px">';
                 $output .= '<div></div>';
                 $output .= '</div>';
 				$output .= '<div class="children">';
@@ -277,7 +277,7 @@ class CommentsRenderer {
                 $output .= '<p>You can use Markdown to write comments.</p>';
                 $output .= '<textarea class="form-control" placeholder="Write a comment" data-parenthash="' . hashId($comment->id) . '" data-url="' . $comment->invite()->getPermalink() . '" data-hierarchy="child" data-level="has-parent"></textarea>';
                 $output .= '<button type="submit" class="btn primary medium" id="commentSubmitter">Comment</button>';
-                $output .= '<img src="/img/loaders/dots.svg" width="40px">';
+                $output .= '<img id="progresser" src="/img/loaders/dots.svg" width="40px">';
                 $output .= '<div></div>';
                 $output .= '</div>';
 				$output .= '<div class="children">';

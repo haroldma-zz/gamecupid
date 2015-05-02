@@ -284,7 +284,7 @@ hr {
 	font-size: 0.75em;
 	text-align: center;
 	padding: 1px 3px;
-	@include border-radius(2px);
+	@include border-radius(5px);
 }
 
 .orange-text {
@@ -452,6 +452,10 @@ article.invite {
 	}
 }
 
+#progresser {
+	display: none;
+}
+
 .comments {
 	width: 100%;
 
@@ -472,10 +476,6 @@ article.invite {
 
 		.btn {
 			margin-right: 10px;
-		}
-
-		img {
-			display: none;
 		}
 	}
 

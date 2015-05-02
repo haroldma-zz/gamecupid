@@ -39,7 +39,13 @@
 						</div>
 					</section>
 					<footer>
-						<a>{{ $invite->player_count }} player{{ ($invite->player_count > 1 ? 's' : '') }}</a>
+						<div class="tagLabels">
+                            <span class="tagLabel" title="{{ $invite->console()->name  }}">{{ strtoupper($invite->console()->name)  }}</span>
+                            @if ($invite->verified_only)
+                                <span class="tagLabel verified" title="Verified Only">VERIFIED ONLY</span>
+                            @endif
+						</div>
+						<a><span class="bold">{{ $invite->accepts->where('state', 2)->count() }}</span>{{ '/'.$invite->max_players }} player{{ ($invite->max_players > 1 ? 's' : '') }}</a>
 						<a>&middot;</a>
 						<a href="{!! $invite->getPermalink() !!}"><b>Let's play!</b></a>
 						<a>&middot;</a>
@@ -57,7 +63,7 @@
 							<textarea class="form-control" placeholder="Write a comment" data-parenthash="{!! hashId(0) !!}" data-url="{!! url($invite->getPermalink()) !!}" data-hierarchy="parent" data-level="no-parent"></textarea>
 						</div>
 						<button type="submit" class="btn primary medium" id="commentSubmitter">Comment</button>
-						<img src="{!! url('/img/loaders/dots.svg') !!}" width="40px">
+						<img id="progresser" src="{!! url('/img/loaders/dots.svg') !!}" width="40px">
 						<div></div>
 						@if(Session::has('notice'))
 							@if (Session::get('notice')[0] == 'error')

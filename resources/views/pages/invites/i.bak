@@ -30,8 +30,8 @@
 						{!! Form::open(['url' => '/invite', 'class' => 'form']) !!}
 							<div class="row">
 								<div class="medium-3 columns">
-									{!! Form::label('player_count', 'I\'m looking for...') !!}
-									<input type="number" class="form-control inline" name="player_count" id="inviteFormPlayerCount" value="1" min="0">
+									{!! Form::label('max_players', 'I\'m looking for...') !!}
+									<input type="number" class="form-control inline" name="max_players" id="inviteFormPlayerCount" value="1" min="0">
 									player(s)
 								</div>
 								<div class="medium-9 columns">

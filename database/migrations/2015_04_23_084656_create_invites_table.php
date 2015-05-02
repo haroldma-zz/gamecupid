@@ -19,9 +19,9 @@ class CreateInvitesTable extends Migration {
             $table->mediumText('markdown_text');
             $table->string('tag_text');
             $table->string('slug');
-            $table->integer('player_count');
-            $table->tinyInteger('requires_approval');
+            $table->integer('max_players');
             $table->tinyInteger('featured');
+            $table->tinyInteger('verified_only');
             $table->integer('user_id');
             $table->integer('game_id');
             $table->integer('console_id');
