@@ -30,10 +30,14 @@ Route::get('/invite/{hashid}/{slug}/{context}', 'PageController@inviteWithContex
 
 Route::get('/game/consoles', 'GameController@formConsoles');
 
-Route::get('/g/{username}', 'PageController@userProfile');
+Route::get('/g/{username}', function($username) {
+    return redirect("/gamer/$username", 301);
+});
 Route::get('/gamer/{username}', 'PageController@userProfile');
 
-Route::get('/c/{hashid}/{crewname}', 'PageController@crewPage');
+Route::get('/c/{hashid}/{crewname}', function($hashid, $crewname) {
+    return redirect("/crew/$hashid/$crewname", 301);
+});
 Route::get('/crew/{hashid}/{crewname}', 'PageController@crewPage');
 
 
