@@ -21,6 +21,7 @@ class CreateUsersTable extends Migration {
             $table->string('password');
             $table->tinyInteger('banned');
             $table->tinyInteger('is_private');
+            $table->smallInteger('timezone');
             $table->date('dob');
 			$table->rememberToken();
             $table->timestamps();

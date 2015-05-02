@@ -27,6 +27,19 @@ class PageController extends Controller {
 	public function index(Request $request)
     {
 		$limit    = (int)$request->input('limit', 10);
+		$fromTimezone  = $request->input('ftz');
+        $toTimezone    = $request->input('ttz');
+        $useTimezone   = $fromTimezone != null;
+
+        if ($useTimezone)
+        {
+            // the smallest timezone -12 and biggest +14
+            $fromTimezone = max((int)$fromTimezone, hourToMinute(-12));
+            $fromTimezone = min($fromTimezone, hourToMinute(14));
+            $toTimezone = max((int)$toTimezone, $fromTimezone);
+            $toTimezone = min($toTimezone, hourToMinute(14));
+        }
+
 		$after    = decodeHashId($request->input('after', 0));
         $sort     = $request->input('sort', 'hot');
         $t     = $request->input('t', 'day');
@@ -37,14 +50,18 @@ class PageController extends Controller {
         $to   = Carbon::now();
         $from = stringToFromDate($t);
 
-        $query = "GetHotInvites($after, $guardedLimit)";
+        $query = $useTimezone ? "GetHotInvitesByTimezone($after, $guardedLimit, $fromTimezone, $toTimezone)"
+            : "GetHotInvites($after, $guardedLimit)";
 
         if ($sort == "controversial")
-            $query = "GetControversialInvites($after, $guardedLimit, '$from', '$to')";
+            $query = $useTimezone ? "GetControversialInvitesByTimezone($after, $guardedLimit, '$from', '$to', $fromTimezone, $toTimezone)"
+                : "GetControversialInvites($after, $guardedLimit, '$from', '$to')";
         else if ($sort == "top")
-            $query = "GetTopInvites($after, $guardedLimit, '$from', '$to')";
+            $query = $useTimezone ? "GetTopInvitesByTimezone($after, $guardedLimit, '$from', '$to', $fromTimezone, $toTimezone)"
+            : "GetTopInvites($after, $guardedLimit, '$from', '$to')";
         else if ($sort == "new")
-            $query = "GetNewInvites($after, $guardedLimit)";
+            $query = $useTimezone ? "GetNewInvitesByTimezone($after, $guardedLimit, $fromTimezone, $toTimezone)"
+            : "GetNewInvites($after, $guardedLimit)";
 
 
         $invites = Invite::hydrateRaw('CALL ' . $query);
