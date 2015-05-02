@@ -33,18 +33,18 @@
 								</div>
 							</div>
 							{{ $invite->title }}
-							<div class="tagLabels">
-	                            <span class="tagLabel" title="{{ $invite->console()->name  }}">{{ strtoupper($invite->console()->name)  }}</span>
-	                            @if ($invite->verified_only)
-	                                <span class="tagLabel verified" title="Verified Only">VERIFIED ONLY</span>
-	                            @endif
-							</div>
 						</h3>
 						<div class="panel markdown-text">
 							{!! $invite->self_text !!}
 						</div>
 					</section>
 					<footer>
+						<div class="tagLabels">
+                            <span class="tagLabel" title="{{ $invite->console()->name  }}">{{ strtoupper($invite->console()->name)  }}</span>
+                            @if ($invite->verified_only)
+                                <span class="tagLabel verified" title="Verified Only">VERIFIED ONLY</span>
+                            @endif
+						</div>
 						<a><span class="bold">{{ $invite->accepts->where('state', 2)->count() }}</span>{{ '/'.$invite->max_players }} player{{ ($invite->max_players > 1 ? 's' : '') }}</a>
 						<a>&middot;</a>
 						<a href="{!! $invite->getPermalink() !!}"><b>Let's play!</b></a>

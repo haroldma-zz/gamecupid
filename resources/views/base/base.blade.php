@@ -16,6 +16,7 @@
 				</div>
 				<div class="right">
 					@if(Auth::check())
+					<a href="{!! url('/crew/create') !!}"><i class="ion-ios-people"></i></a>
 					<a href="{!! url('/invite') !!}"><i class="ion-plus"></i></a>
 					<a href="{!! url('/notifications') !!}" id="notificationsLink">
 						@if(Auth::user()->rNotifications()->where('read', false)->count() > 0)
@@ -26,7 +27,8 @@
 						<span class="orange-text" id="u-not-read-count"></span>
 						@endif
 					</a>
-					<a href="{!! url('/account') !!}"><span class="hide-for-small">{{ Auth::user()->username }}</span><span class="show-for-small"><i class="ion-person"></i></span> <span class="header-rep-count"><b>{{ Auth::user()->level() }}</b>:{{ Auth::user()->rep() }}</span></a>
+					<a href="{!! url('/gamer/' . Auth::user()->username) !!}"><span class="hide-for-small">{{ Auth::user()->username }}</span><span class="show-for-small"><i class="ion-person"></i></span> <span class="header-rep-count"><b>{{ Auth::user()->level() }}</b>:{{ Auth::user()->rep() }}</span></a>
+					<a href="{!! url('/settings') !!}">Settings</a>
 					<a href="{!! url('/logout') !!}"><i class="ion-power"></i></a>
 					@else
 					<a href="{!! url('/login') !!}">Login / Register</a>

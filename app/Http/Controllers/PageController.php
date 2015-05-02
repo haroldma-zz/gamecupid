@@ -1,5 +1,6 @@
 <?php namespace App\Http\Controllers;
 
+use App\Models\User;
 use App\Models\Console;
 use App\Models\Invite;
 use Illuminate\Http\Request;
@@ -68,12 +69,12 @@ class PageController extends Controller {
 
 	/**
 	*
-	* User account page
+	* User settings page
 	*
 	**/
-	public function account()
+	public function settings()
 	{
-		return view('pages.account');
+		return view('pages.users.settings');
 	}
 
 
@@ -175,6 +176,33 @@ class PageController extends Controller {
         $context = max((int)$request->input("context", 0), 0);
 
         return view('pages.invites.detailpage', ['invite' => $invite, 'context' => $context, 'comment' => $comment]);
+    }
+
+
+    /**
+    *
+    * User profile page
+    *
+    **/
+    public function userProfile($username)
+    {
+    	$user = User::where('username', $username)->first();
+
+    	if (!$user)
+    		return redirect('/gamer-not-found');
+
+    	return view('pages.users.profile', ['user' => $user]);
+    }
+
+
+    /**
+    *
+    * Crew page
+    *
+    **/
+    public function crewPage($crewname)
+    {
+    	return view('pages.crews.crew');
     }
 
 
