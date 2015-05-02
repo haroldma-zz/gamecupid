@@ -185,6 +185,57 @@ $('#inviteSubmitter').click(function()
 {
 	$(this).attr('disabled', true);
 	$('#progresser').toggle();
+	$('#submitError').html('');
+
+	var	maxPlayers = $('#maxPlayers').val(),
+		gameId     = $('#selectedGameId').val(),
+		consoleId  = $('#console').val(),
+		title      = $('#inviteTitle').val(),
+		text       = $('#inviteText').val(),
+		verified   = $('#verifiedInput').prop('checked'),
+		vchecked   = 'no',
+		token      = $('#csrfToken').val(),
+		button     = $(this);
+
+	if (verified == true)
+		vchecked = 'yes';
+
+	$.ajax({
+	    url: "/invite",
+	    type: "POST",
+	    data: {
+	    	_token: token,
+	    	player_count: maxPlayers,
+	    	game_id: gameId,
+	    	console_id: consoleId,
+	    	title: title,
+	    	self_text: text,
+	    	verified: vchecked
+	    },
+	    success: function(res)
+	    {
+	    	window.location.href = '/';
+	    },
+	    error: function(res)
+	    {
+			button.attr('disabled', false);
+			$('#progresser').toggle();
+
+			console.log(res);
+
+			if (res.responseJSON != null)
+			{
+				$.each(res.responseJSON, function(key, error)
+				{
+					$('#submitError').append('<li>' + error[0] + '</li>');
+				});
+			}
+			else
+			{
+				$('#submitError').append('<li>' + res.responseText + '</li>');
+			}
+	    }
+	});
 });
 
 

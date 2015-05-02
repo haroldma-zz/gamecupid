@@ -23,6 +23,9 @@ class InviteController extends Controller {
 	**/
 	public function invite(InviteFormRequest $request)
 	{
+		if (!$request->ajax())
+			return redirect('/');
+
 		$parsedown = new Parsedown();
 		$slugify   = new Slugify();
         $slugify->addRule('+', 'plus');
@@ -30,25 +33,24 @@ class InviteController extends Controller {
         $user = Auth::user();
 
         if ($user->rep(false) <= 0)
-            return redirect()->back()->with('notice', ['error', 'Not enough rep.']);
+            return Response::make('Not enough rep.', 500);
 
-        $console = Console::find($request->get('console_id'));
+        $console = Console::find(decodeHashId($request->get('console_id')));
         if (!$console)
-            return redirect()->back()->with('notice', ['error', 'Console doesn\'t exists']);
+            return Response::make('Console doesn\'t exists', 500);
 
         // Check if the player has a verified profile for the platform
         if ($user->profiles->where('platform_id', $console->platform_id)->first() == null)
-            return redirect()->back()
-                ->with('notice', ['error', "You need a verified {$console->platform->name} profile to post invites for $console->name."]);
+            return Response::make("You need a verified {$console->platform->name} profile to post invites for $console->name.", 500);
 
         // Make sure the game id is for an existing game and the console id matches
-        $game = Game::find($request->get('game_id'));
+        $game = Game::find(decodeHashId($request->get('game_id')));
         if (!$game)
-            return redirect()->back()->with('notice', ['error', 'Game doesn\'t exists']);
+            return Response::make('Game doesn\'t exists', 500);
 
         // Verified the game is supported on the selected console
         if ($game->consoles->where('console_id', $console->id)->first() == null)
-            return redirect()->back()->with('notice', ['error', 'This game is not supported for the selected console.']);
+            return Response::make('This game is not supported for the selected console.', 500);
 
 		$invite                    = new Invite;
 		$invite->title             = $request->get('title');
@@ -57,6 +59,7 @@ class InviteController extends Controller {
 		$invite->markdown_text     = $request->get('self_text');
 		//$invite->tag_text          = '-'; TODO
 		$invite->player_count      = max($request->get('player_count'), 1);
+		$invite->verified_only     = ($request->get('verified') == 'yes' ? true : false);
 		$invite->console_id        = $console->id;
 		$invite->game_id           = $game->id;
 		$invite->user_id           = $user->id;
@@ -65,11 +68,12 @@ class InviteController extends Controller {
 		{
             $invite->castVote(VoteStates::UP);
             giveRepAndNotified(RepEvents::CREATED_INVITE);
-			return redirect('/');
+
+			return Response::make('success', 200);
 		}
 		else
 		{
-			return redirect()->back()->with('notice', ['error', 'Something went wrong... Try again.']);
+			return Response::make('failed', 500);
 		}
 	}
 

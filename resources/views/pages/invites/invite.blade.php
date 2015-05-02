@@ -47,9 +47,9 @@
 								<div class="game-search-results-container">
 	                            	<div class="game-search-results" id="gameSearchResults"></div>
 	                            </div>
-								on the <select id="console" disabled="true" class="disabled">
-									<option value="0">select a game first</option>
-								</select>.
+								on the  <select id="console" disabled="true" class="disabled" name="console_id">
+											<option value="0">select a game first</option>
+										</select>.
 							</h3>
 							<br><br><br>
 							<div class="more-details disabled" id="moreDetails">
@@ -59,12 +59,14 @@
 								<textarea id="inviteText" class="disabled" placeholder="More info about this invite"></textarea>
 							</div>
                             <br><br><br>
-                            <label><input type="checkbox"> Only verified users can respond on this invite.</label>
-						    {!! Recaptcha::render() !!}
-						    <br>
+                            <h3>Other options</h3>
+                            <label><input type="checkbox" id="verifiedInput"> I only want to play with verified users.</label>
+                            <br><br>
 						    <button type="submit" class="btn big primary" id="inviteSubmitter">Submit invite</button>
 						    &nbsp;
 						    <img id="progresser" src="{!! url('/img/loaders/dots.svg') !!}" width="40px">
+						    <br><br>
+						    <ul class="text-alert" id="submitError"></ul>
 					    </div>
 					</div>
 				</div>

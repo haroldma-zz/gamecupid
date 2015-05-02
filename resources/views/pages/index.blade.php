@@ -44,10 +44,6 @@
 										</div>
 									</div>
 									{{ $invite->title }}
-                                    <span class="tagLabel" title="{{ $invite->console()->name  }}">{{ strtoupper($invite->console()->name)  }}</span>
-									@if (true)
-										<span class="tagLabel verified" title="Verified Only">VERIFIED ONLY</span>
-									@endif
 								</h3>
 							</section>
 							<footer>
@@ -57,6 +53,12 @@
 								<a>&middot;</a>
 								<a href="{!! $invite->getPermalink() !!}">{{ $invite->commentCount() }} comment{{ $invite->commentCount() == 1 ? "" : "s" }}</a>
 							</footer>
+							<div class="tagLabels">
+                                <span class="tagLabel" title="{{ $invite->console()->name  }}">{{ strtoupper($invite->console()->name)  }}</span>
+								@if (true)
+									<span class="tagLabel verified" title="Verified Only">VERIFIED ONLY</span>
+								@endif
+							</div>
 							<hr>
 						</article>
 						@endforeach
