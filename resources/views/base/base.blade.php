@@ -2,38 +2,46 @@
 <html lang="en">
 <head>
 	<meta charset="UTF-8">
-	<meta http-equiv="X-UA-Compatible" content="IE=edge">
-	<meta name="viewport" content="width=device-width, initial-scale=1">
-	<title>GameCupid</title>
+	<title>playddit</title>
 	{!! HTML::style('stylesheets/app.css') !!}
 </head>
 <body>
 	<nav class="topnav">
 		<div class="row">
-			<div class="medium-12 columns">
-				<div class="left">
-					<a class="brand" href="{!! url('/') !!}">gamecupid</a>
+			<div class="medium-6 columns">
+				<a class="brand" href="{!! url('/') !!}">playddit</a>
+				<div class="platforms-container">
+					<a id="feedSelector">Platforms <i class="ion-arrow-down-b"></i></a>
+					<div class="platforms-list">
+						<div>
+							<ul class="no-bullet">
+								<li><a href="{!! url('/platform/psn') !!}">Playstation Network</a></li>
+								<li><a href="{!! url('/platform/xbl') !!}">Steam</a></li>
+								<li><a href="{!! url('/platform/steam') !!}">Xbox Live</a></li>
+							</ul>
+						</div>
+					</div>
 				</div>
-				<div class="right">
-					@if(Auth::check())
-					<a href="{!! url('/crew/create') !!}"><i class="ion-ios-people"></i></a>
-					<a href="{!! url('/invite') !!}"><i class="ion-plus"></i></a>
-					<a href="{!! url('/notifications') !!}" id="notificationsLink">
-						@if(Auth::user()->rNotifications()->where('read', false)->count() > 0)
-						<i class="ion-android-notifications orange-text" id="not-icon"></i>
-						<span class="orange-text" id="u-not-read-count">{{ Auth::user()->rNotifications()->where('read', false)->count() }}</span>
-						@else
-						<i class="ion-android-notifications-none" id="not-icon"></i>
-						<span class="orange-text" id="u-not-read-count"></span>
-						@endif
-					</a>
-					<a href="{!! url('/gamer/' . Auth::user()->username) !!}"><span class="hide-for-small">{{ Auth::user()->username }}</span><span class="show-for-small"><i class="ion-person"></i></span> <span class="header-rep-count"><b>{{ Auth::user()->level() }}</b>:{{ Auth::user()->rep() }}</span></a>
-					<a href="{!! url('/settings') !!}">Settings</a>
-					<a href="{!! url('/logout') !!}"><i class="ion-power"></i></a>
+			</div>
+			<div class="medium-6 columns text-right">
+				@if(Auth::check())
+				<a href="{!! url('/crew/create') !!}"><i class="ion-ios-people"></i></a>
+				<a href="{!! url('/invite') !!}"><i class="ion-plus"></i></a>
+				<a href="{!! url('/notifications') !!}" id="notificationsLink">
+					@if(Auth::user()->rNotifications()->where('read', false)->count() > 0)
+					<i class="ion-android-notifications orange-text" id="not-icon"></i>
+					<span class="orange-text" id="u-not-read-count">{{ Auth::user()->rNotifications()->where('read', false)->count() }}</span>
 					@else
-					<a href="{!! url('/login') !!}">Login / Register</a>
+					<i class="ion-android-notifications-none" id="not-icon"></i>
+					<span class="orange-text" id="u-not-read-count"></span>
 					@endif
-				</div>
+				</a>
+				<a href="{!! url('/gamer/' . Auth::user()->username) !!}"><span class="hide-for-small">{{ Auth::user()->username }}</span><span class="show-for-small"><i class="ion-person"></i></span> <span class="header-rep-count"><b>{{ Auth::user()->level() }}</b>:{{ Auth::user()->rep() }}</span></a>
+				<a href="{!! url('/settings') !!}">Settings</a>
+				<a href="{!! url('/logout') !!}"><i class="ion-power"></i></a>
+				@else
+				<a href="{!! url('/login') !!}">Login / Register</a>
+				@endif
 			</div>
 		</div>
 	</nav>
