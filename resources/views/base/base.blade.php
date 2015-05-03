@@ -48,7 +48,7 @@
 
 	@yield('page')
 
-	<footer class="footer">
+	<footer class="footer" id="footer">
 		<div class="row">
 			<div class="medium-12 columns">
 				<h5 class="super-header">GameCupid</h5>

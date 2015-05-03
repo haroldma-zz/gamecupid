@@ -2,8 +2,8 @@
 
 @section('page')
 <section class="page">
-	<div class="row">
-		<div class="medium-5 columns" style="position: fixed;">
+	<div class="row detailpage">
+		<div class="left-side">
 			<div class="panel">
 				<article class="invite">
 					<section>
@@ -63,40 +63,38 @@
 				</div>
 			</div>
 		</div>
-		<div class="medium-7 columns">
+		<div class="right-side">
 			<div class="panel">
 				<h6>About this invite</h6>
-				<br>
 				<div class="markdown-text">
 					{!! $invite->self_text !!}
 				</div>
-				<br>
-				<div class="comments">
-					<h6 class="comments-header">
-						<div class="left">
-							Comments (<span id="inviteCommentCount">{{ $invite->commentCount() }}</span>)
-						</div>
-						<div class="right">
-							<small>
-								<a href="?sort=best" class="{{ (Request::get('sort') == 'best' || Request::get('sort') == '' ? 'active' : '') }}">best</a>
-								<a href="?sort=hot" class="{{ (Request::get('sort') == 'hot' ? 'active' : '') }}">hot</a>
-								<a href="?sort=new" class="{{ (Request::get('sort') == 'new' ? 'active' : '') }}">new</a>
-								<a href="?sort=top" class="{{ (Request::get('sort') == 'top' ? 'active' : '') }}">top</a>
-								<a href="?sort=controversial" class="{{ (Request::get('sort') == 'controversial' ? 'active' : '') }}">controversial</a>
-							</small>
-						</div>
-						<div class="clearfix"></div>
-					</h6>
-					@if (isset($comment))
-						<div id="commentsList">
-							{!! $comment->renderComments(Request::get("sort"), $context) !!}
-						</div>
-					@else
-						<div id="commentsList">
-							{!! $invite->renderComments(Request::get("sort")) !!}
-						</div>
-					@endif
-				</div>
+			</div>
+			<div class="comments">
+				<h6 class="comments-header">
+					<div class="left">
+						Comments (<span id="inviteCommentCount">{{ $invite->commentCount() }}</span>)
+					</div>
+					<div class="right">
+						<small>
+							<a href="?sort=best" class="{{ (Request::get('sort') == 'best' || Request::get('sort') == '' ? 'active' : '') }}">best</a>
+							<a href="?sort=hot" class="{{ (Request::get('sort') == 'hot' ? 'active' : '') }}">hot</a>
+							<a href="?sort=new" class="{{ (Request::get('sort') == 'new' ? 'active' : '') }}">new</a>
+							<a href="?sort=top" class="{{ (Request::get('sort') == 'top' ? 'active' : '') }}">top</a>
+							<a href="?sort=controversial" class="{{ (Request::get('sort') == 'controversial' ? 'active' : '') }}">controversial</a>
+						</small>
+					</div>
+					<div class="clearfix"></div>
+				</h6>
+				@if (isset($comment))
+					<div id="commentsList">
+						{!! $comment->renderComments(Request::get("sort"), $context) !!}
+					</div>
+				@else
+					<div id="commentsList">
+						{!! $invite->renderComments(Request::get("sort")) !!}
+					</div>
+				@endif
 			</div>
 		</div>
 	</div>
@@ -109,4 +107,10 @@
 	@include('js.commenter')
 	@endif
 	{!! HTML::script('js/comment-collapser.js') !!}
+	<script>
+		if ($(window).width() > 41 * 16)
+		{
+			$('#footer').css('padding-top', $('.right-side').css('height'));
+		}
+	</script>
 @stop

@@ -287,6 +287,8 @@ ul {
 	min-height: 200px;
 	padding: 3em 0;
 	text-align: center;
+	position: relative;
+	z-index: 2;
 
 	.row {
 		max-width: 100%;

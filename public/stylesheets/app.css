@@ -10121,6 +10121,49 @@ article.invite hr {
   max-width: 225px;
 }
 
+/**
+*
+* Detailpage
+*
+**/
+/* line 845, ../scss/_misc.scss */
+.detailpage {
+  position: relative;
+}
+/* line 847, ../scss/_misc.scss */
+.detailpage .left-side {
+  width: 40%;
+  float: left;
+  padding: 0 10px;
+  position: fixed;
+  z-index: 3;
+}
+@media only screen and (max-width: 40em) {
+  /* line 847, ../scss/_misc.scss */
+  .detailpage .left-side {
+    position: relative;
+    width: 100%;
+    left: 0;
+    float: none;
+  }
+}
+/* line 860, ../scss/_misc.scss */
+.detailpage .right-side {
+  width: 60%;
+  padding: 0 10px;
+  position: absolute;
+  z-index: 3;
+  left: 40%;
+}
+@media only screen and (max-width: 40em) {
+  /* line 860, ../scss/_misc.scss */
+  .detailpage .right-side {
+    position: relative;
+    width: 100%;
+    left: 0;
+  }
+}
+
 /*!
   Ionicons, v2.0.1
   Created by Ben Sperry for the Ionic Framework, http://ionicons.com/
@@ -14215,17 +14258,19 @@ ul {
   min-height: 200px;
   padding: 3em 0;
   text-align: center;
+  position: relative;
+  z-index: 2;
 }
-/* line 291, ../scss/app.scss */
+/* line 293, ../scss/app.scss */
 .footer .row {
   max-width: 100%;
 }
-/* line 295, ../scss/app.scss */
+/* line 297, ../scss/app.scss */
 .footer .super-header {
   color: #ccc;
   margin-bottom: 20px;
 }
-/* line 300, ../scss/app.scss */
+/* line 302, ../scss/app.scss */
 .footer a {
   color: #ccc;
   margin: 0 10px;
