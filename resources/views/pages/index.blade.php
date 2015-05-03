@@ -17,48 +17,29 @@
 					@if (count($invites) > 0)
 						@foreach($invites as $invite)
 						<article data-id="{{  hashId($invite->id) }}" class="invite">
-							<header>
-								<div class="img"></div>
-								<div class="user-meta">
-									<h6>
-										<a href="{!! url('/') !!}">{{ $invite->user->username }}</a>
-									</h6>
-									<p>
-										<time data-livestamp="{{ $invite->created_at->getTimestamp() }}"></time>
-									</p>
-								</div>
-							</header>
 							<section>
-								<h3>
-									<div class="voters">
-										<div class="arrows">
-											<div id="upvoter" data-invite-id="{{ hashId($invite->id) }}">
-												<i class="ion-arrow-up-a {{ ($invite->isUpvoted() ? 'activated' : '') }}" id="upvoter-{{ hashId($invite->id) }}"></i>
-											</div>
-											<div id="downvoter" data-invite-id="{{ hashId($invite->id) }}">
-												<i class="ion-arrow-down-a {{ ($invite->isDownvoted() ? 'activated' : '') }}" id="downvoter-{{ hashId($invite->id) }}"></i>
-											</div>
-										</div>
-										<div class="count" id="voteCount-{{ hashId($invite->id) }}">
-											{{ $invite->totalVotes() }}
-										</div>
-									</div>
-									{{ $invite->game()->title . ': ' . $invite->title }}
-								</h3>
-							</section>
-							<footer style="margin-top:-5px;">
+								<h4 class="meta-details">
+									<a href="{!! $invite->getPermalink() !!}">{{ $invite->title }}</a>
+									<br>
+									<small>
+										<b>{{ $invite->game()->title }}</b>
+										<br>
+										<time data-livestamp="{{ $invite->created_at->getTimestamp() }}"></time>
+										by
+										<b>
+											<a href="{!! url('/gamer/' . $invite->user->username) !!}">{{ $invite->user->username }}</a>
+										</b>
+										&nbsp;&middot;&nbsp;
+										<b>{{ $invite->accepts->where('state', 2)->count() }}</b>{{ '/'.$invite->max_players }} player{{ ($invite->max_players > 1 ? 's' : '') }}
+									</small>
+								</h4>
 								<div class="tagLabels">
 	                                <span class="tagLabel" title="{{ $invite->console()->name  }}">{{ strtoupper($invite->console()->name)  }}</span>
 	                                @if ($invite->verified_only)
 	                                    <span class="tagLabel verified" title="Verified Only">VERIFIED ONLY</span>
 	                                @endif
 								</div>
-                                <a><span class="bold">{{ $invite->accepts->where('state', 2)->count() }}</span>{{ '/'.$invite->max_players }} player{{ ($invite->max_players > 1 ? 's' : '') }}</a>
-								<a>&middot;</a>
-								<a href="{!! $invite->getPermalink() !!}"><b>Let's play!</b></a>
-								<a>&middot;</a>
-								<a href="{!! $invite->getPermalink() !!}">{{ $invite->commentCount() }} comment{{ $invite->commentCount() == 1 ? "" : "s" }}</a>
-							</footer>
+							</section>
 							<hr>
 						</article>
 						@endforeach

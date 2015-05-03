@@ -27,13 +27,12 @@ class UserController extends Controller {
 		**/
 		$user = new User;
 
-		$user->first_name = $request->get('first_name');
-		$user->last_name  = $request->get('last_name');
 		$user->username   = $request->get('username');
 		$user->email      = $request->get('email');
 		$user->password   = Hash::make($request->get('password'));
 		$user->banned     = false;
 		$user->is_private = false;
+		$user->timezone   = $request->get('timezone');
 		$user->dob        = date('Y-m-d', strtotime("now"));
 
 		if ($user->save())
@@ -70,7 +69,7 @@ class UserController extends Controller {
 		* If form validation is a succes, attempt to login the user.
 		*
 		**/
-		if (Auth::attempt(['username' => $request->get('username'), 'password' => $request->get('password')]))
+		if (Auth::attempt(['username' => $request->get('login_username'), 'password' => $request->get('login_password')]))
 		{
 			return redirect('/');
 		}

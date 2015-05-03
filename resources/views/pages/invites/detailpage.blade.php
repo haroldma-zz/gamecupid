@@ -3,59 +3,46 @@
 @section('page')
 <section class="page">
 	<div class="row">
-		<div class="medium-9 columns">
+		<div class="medium-5 columns" style="position: fixed;">
 			<div class="panel">
 				<article class="invite">
-					<header>
-						<div class="img"></div>
-						<div class="user-meta">
-							<h6>
-								<a href="{!! url('/') !!}">{{ $invite->user->username }}</a>
-							</h6>
-							<p>
-								<time data-livestamp="{{ $invite->created_at->getTimestamp() }}"></time>
-							</p>
-						</div>
-					</header>
 					<section>
-						<h3>
-							<div class="voters">
-								<div class="arrows">
-									<div id="upvoter" data-invite-id="{{ hashId($invite->id) }}">
-										<i class="ion-arrow-up-a {{ ($invite->isUpvoted() ? 'activated' : '') }}" id="upvoter-{{ hashId($invite->id) }}"></i>
-									</div>
-									<div id="downvoter" data-invite-id="{{ hashId($invite->id) }}">
-										<i class="ion-arrow-down-a {{ ($invite->isDownvoted() ? 'activated' : '') }}" id="downvoter-{{ hashId($invite->id) }}"></i>
-									</div>
-								</div>
-								<div class="count" id="voteCount-{{ hashId($invite->id) }}">
-									{{ $invite->totalVotes() }}
-								</div>
-							</div>
-							{{ $invite->title }}
-						</h3>
-						<div class="panel markdown-text">
-							{!! $invite->self_text !!}
-						</div>
-					</section>
-					<footer>
+						<h4 class="meta-details">
+							<a href="{!! $invite->getPermalink() !!}">{{ $invite->title }}</a>
+							<br>
+							<small>
+								<b>{{ $invite->game()->title }}</b>
+								<br>
+								<time data-livestamp="{{ $invite->created_at->getTimestamp() }}"></time>
+								by
+								<b>
+									<a href="{!! url('/gamer/' . $invite->user->username) !!}">{{ $invite->user->username }}</a>
+								</b>
+								&nbsp;&middot;&nbsp;
+								<b>{{ $invite->accepts->where('state', 2)->count() }}</b>{{ '/'.$invite->max_players }} player{{ ($invite->max_players > 1 ? 's' : '') }}
+							</small>
+						</h4>
 						<div class="tagLabels">
                             <span class="tagLabel" title="{{ $invite->console()->name  }}">{{ strtoupper($invite->console()->name)  }}</span>
                             @if ($invite->verified_only)
                                 <span class="tagLabel verified" title="Verified Only">VERIFIED ONLY</span>
                             @endif
 						</div>
-						<a><span class="bold">{{ $invite->accepts->where('state', 2)->count() }}</span>{{ '/'.$invite->max_players }} player{{ ($invite->max_players > 1 ? 's' : '') }}</a>
-						<a>&middot;</a>
-						<a href="{!! $invite->getPermalink() !!}"><b>Let's play!</b></a>
-						<a>&middot;</a>
-						<a href="{!! $invite->getPermalink() !!}">{{ $invite->commentCount() }} comment{{ $invite->commentCount() == 1 ? '' : 's' }}</a>
-					</footer>
-					<hr>
+					</section>
+					<br>
+					<a href="" class="btn success">
+						Request an invite
+					</a>
 				</article>
+				<hr>
 				<div class="comments">
 					<div class="comment-box">
-						<p>You can use Markdown to write comments.</p>
+						<h6>
+							Leave a comment
+						</h6>
+						<p>
+							<i>You can use Markdown to write comments.</i>
+						</p>
 						<div class="relative">
 							<section id="emojis" class="emoji-intellisense">
 								<div class="emoji"></div>
@@ -73,7 +60,18 @@
 							@endif
 						@endif
 					</div>
-					<br>
+				</div>
+			</div>
+		</div>
+		<div class="medium-7 columns">
+			<div class="panel">
+				<h6>About this invite</h6>
+				<br>
+				<div class="markdown-text">
+					{!! $invite->self_text !!}
+				</div>
+				<br>
+				<div class="comments">
 					<h6 class="comments-header">
 						<div class="left">
 							Comments (<span id="inviteCommentCount">{{ $invite->commentCount() }}</span>)
@@ -99,16 +97,6 @@
 						</div>
 					@endif
 				</div>
-			</div>
-		</div>
-		<div class="medium-3 columns">
-			<div class="panel">
-				<h6>
-					<b>{{ $invite->game()->title }}</b>
-				</h6>
-				<p>
-					{{ $invite->game()->description }}
-				</p>
 			</div>
 		</div>
 	</div>

@@ -8,17 +8,17 @@ class LoginFormRequest extends FormRequest {
 	public function rules()
 	{
 		return [
-			'username'      => 'required',
-			'password'   => 'required|min:4'
+			'login_username' => 'required',
+			'login_password' => 'required|min:4'
 		];
 	}
 
 	public function messages()
 	{
 		return [
-			'username.required'      => 'You need an e-mail address to login.',
-			'password.required'   => 'You forgot to fill in a password.',
-			'password.min'        => 'Your password must be at least 4 characters long.'
+			'login_username.required' => 'You need an e-mail address to login.',
+			'login_password.required' => 'You forgot to fill in a password.',
+			'login_password.min'      => 'Your password must be at least 4 characters long.'
 		];
 	}
 

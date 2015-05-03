@@ -25,10 +25,10 @@
 				</ul>
 				@endif
 				{!! Form::open(['route' => 'user.login', 'class' => 'form']) !!}
-				{!! Form::label('username', 'Username') !!}
-				{!! Form::text('username', '', ['class' => 'form-control']) !!}
-				{!! Form::label('password', 'Password') !!}
-				{!! Form::password('password', ['class' => 'form-control']) !!}
+				{!! Form::label('login_username', 'Username') !!}
+				{!! Form::text('login_username', '', ['class' => 'form-control']) !!}
+				{!! Form::label('login_password', 'Password') !!}
+				{!! Form::password('login_password', ['class' => 'form-control']) !!}
 				<br>
 				<button type="submit" class="btn primary big">Login</button>
 				{!! Form::close() !!}
@@ -52,16 +52,14 @@
 					{!! Form::open(['route' => 'user.register', 'class' => 'form']) !!}
 					<div class="row">
 						<div class="medium-6 columns">
-							{!! Form::label('first_name', 'First name') !!}
-							{!! Form::text('first_name', '', ['class' => 'form-control']) !!}
+							{!! Form::label('username', 'Choose a username. You use this to login.') !!}
+							{!! Form::text('username', '', ['class' => 'form-control']) !!}
 						</div>
 						<div class="medium-6 columns">
-							{!! Form::label('last_name', 'Last name') !!}
-							{!! Form::text('last_name', '', ['class' => 'form-control']) !!}
+							{!! Form::label('timezone', 'Your timezone') !!}
+							<select name="timezone" id="timezone"></select>
 						</div>
 					</div>
-					{!! Form::label('username', 'Choose a username. You use this to login.') !!}
-					{!! Form::text('username', '', ['class' => 'form-control']) !!}
 					{!! Form::label('email', 'Your e-mail address') !!}
 					{!! Form::email('email', '', ['class' => 'form-control', 'placeholder' => 'noodles@example.com']) !!}
 					{!! Form::label('password', 'Choose a password') !!}
@@ -74,4 +72,11 @@
 		</div>
 	</div>
 </section>
+@stop
+
+@section('scripts')
+	{!! HTML::script('/js/timezones.full.min.js') !!}
+	<script>
+		$('#timezone').timezones();
+	</script>
 @stop

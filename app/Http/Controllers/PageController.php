@@ -223,4 +223,15 @@ class PageController extends Controller {
     }
 
 
+    /**
+    *
+    * Crew form
+    *
+    **/
+    public function crewForm()
+    {
+    	return view('pages.crews.create');
+    }
+
+
 }

@@ -6,45 +6,6 @@
 @import "ionicons";
 @import "loaders";
 
-// Or selectively include components
-// @import
-//   "foundation/components/accordion",
-//   "foundation/components/alert-boxes",
-//   "foundation/components/block-grid",
-//   "foundation/components/breadcrumbs",
-//   "foundation/components/button-groups",
-//   "foundation/components/buttons",
-//   "foundation/components/clearing",
-//   "foundation/components/dropdown",
-//   "foundation/components/dropdown-buttons",
-//   "foundation/components/flex-video",
-//   "foundation/components/forms",
-//   "foundation/components/grid",
-//   "foundation/components/inline-lists",
-//   "foundation/components/joyride",
-//   "foundation/components/keystrokes",
-//   "foundation/components/labels",
-//   "foundation/components/magellan",
-//   "foundation/components/orbit",
-//   "foundation/components/pagination",
-//   "foundation/components/panels",
-//   "foundation/components/pricing-tables",
-//   "foundation/components/progress-bars",
-//   "foundation/components/reveal",
-//   "foundation/components/side-nav",
-//   "foundation/components/split-buttons",
-//   "foundation/components/sub-nav",
-//   "foundation/components/switches",
-//   "foundation/components/tables",
-//   "foundation/components/tabs",
-//   "foundation/components/thumbs",
-//   "foundation/components/tooltips",
-//   "foundation/components/top-bar",
-//   "foundation/components/type",
-//   "foundation/components/offcanvas",
-//   "foundation/components/visibility";
-
-
 /**
 *
 * html, body, section
@@ -70,7 +31,7 @@ ul {
 
 .tagLabels {
 	width: 100%;
-	margin-top: 5px;
+	margin-top: 0;
 	font-size: 16px;
 }
 
@@ -133,23 +94,66 @@ ul {
 
 	a {
 		color: white;
-	}
-
-	.left {
-		a {
+		font-weight: 500;
+		margin-left: 15px;
+		&.brand {
+			font-weight: 700;
+			text-transform: uppercase;
+			letter-spacing: 2px;
+			font-size: 150%;
 			margin-right: 15px;
-			&.brand {
-				font-weight: 700;
-				text-transform: uppercase;
-				letter-spacing: 2px;
-				font-size: 150%;
+			margin-left: 0;
+		}
+		&#feedSelector {
+			font-weight: 500;
+			padding: 20px;
+			padding-bottom: 17px;
+			position: relative;
+			top: -3px;
+			background: $primary-color;
+			border-left: 1px solid darken($primary-color, 5);
+			border-right: 1px solid darken($primary-color, 5);
+			margin-left: 0;
+			&:hover {
+				background: lighten($primary-color, 2.5);
 			}
 		}
 	}
-	.right {
-		a {
-			margin-left: 15px;
-			font-weight: 500;
+
+	.platforms-container {
+		display: inline;
+		position: relative;
+		height: 50px;
+		.platforms-list {
+			position: absolute;
+			top: 31px;
+			left: 0;
+			background: $primary-color;
+			border: 0px solid darken($primary-color, 5);
+			border-top: none;
+			min-width: 150px;
+			max-height: 0px;
+			overflow: hidden;
+			@include transition(all .2s ease);
+			div {
+				width: 100%;
+				padding: 5px 10px;
+				ul {
+					margin: 0 !important;
+					padding: 0 !important;
+					li > a {
+						margin: 0 !important;
+						padding: 0 !important;
+						margin-bottom: 5px;
+						color: white;
+						font-weight: 700;
+					}
+				}
+			}
+			&.open {
+				border-width: 1px;
+				max-height: 1000px;
+			}
 		}
 	}
 }
