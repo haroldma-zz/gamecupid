@@ -64,8 +64,8 @@
 			</div>
 		</div>
 		<div class="right-side">
+			<h6>About this invite</h6>
 			<div class="panel">
-				<h6>About this invite</h6>
 				<div class="markdown-text">
 					{!! $invite->self_text !!}
 				</div>

@@ -244,3 +244,23 @@ $('body').on('click', '[id="replyToComment"]', function()
 {
 	$('#commentBox-' + $(this).data('id')).toggle();
 });
+
+// platform selector
+$('#feedSelector').click(function(e)
+{
+	e.stopPropagation();
+	$('#platformList').toggleClass('open');
+});
+
+$('#platformList').click(function(e)
+{
+	e.stopPropagation();
+});
+
+$('body').click(function(e)
+{
+	if ($('#platformList').hasClass('open'))
+	{
+		$('#platformList').removeClass('open');
+	}
+});

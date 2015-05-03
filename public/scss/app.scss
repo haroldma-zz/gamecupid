@@ -107,7 +107,7 @@ ul {
 		&#feedSelector {
 			font-weight: 500;
 			padding: 20px;
-			padding-bottom: 17px;
+			padding-bottom: 16px;
 			position: relative;
 			top: -3px;
 			background: $primary-color;
@@ -126,10 +126,10 @@ ul {
 		height: 50px;
 		.platforms-list {
 			position: absolute;
-			top: 31px;
+			top: 30px;
 			left: 0;
-			background: $primary-color;
-			border: 0px solid darken($primary-color, 5);
+			background: transparent;
+			border: 1px solid rgba(0, 0, 0, 0);
 			border-top: none;
 			min-width: 150px;
 			max-height: 0px;
@@ -137,21 +137,27 @@ ul {
 			@include transition(all .2s ease);
 			div {
 				width: 100%;
-				padding: 5px 10px;
 				ul {
 					margin: 0 !important;
 					padding: 0 !important;
-					li > a {
+					a, li {
 						margin: 0 !important;
-						padding: 0 !important;
-						margin-bottom: 5px;
 						color: white;
 						font-weight: 700;
+						width: 100%;
+						padding: 10px 0px;
+						&:hover {
+							background: lighten($primary-color, 5);
+						}
+					}
+					li {
+						padding-left: 5px;
 					}
 				}
 			}
 			&.open {
-				border-width: 1px;
+				background: $primary-color;
+				border-color: darken($primary-color, 5);
 				max-height: 1000px;
 			}
 		}
