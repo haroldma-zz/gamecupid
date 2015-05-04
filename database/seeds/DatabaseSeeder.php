@@ -16,7 +16,6 @@ class DatabaseSeeder extends Seeder {
 
 		$this->call("PlatformsTableSeeder");
 		$this->call("ConsolesTableSeeder");
-		$this->call("UsersTableSeeder");
 		$this->call("RepEventsTableSeeder");
 		$this->call("GamesTableSeeder");
 		$this->call("AvailableConsoleTableSeeder");
