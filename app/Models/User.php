@@ -128,7 +128,7 @@ class User extends Model implements AuthenticatableContract, CanResetPasswordCon
 		if (count($this->_topPlayers) == 0)
             $this->_topPlayers = [];
 
-		$this->_topPlayers = DB::SELECT(DB::RAW("call GetBestGamers(10)"));
+		$this->_topPlayers =  User::hydrateRaw("call GetBestGamers(10)");
 
 		if ($useCache)
         	return setCache($key, $this->_topPlayers, Carbon::now()->addDay());
