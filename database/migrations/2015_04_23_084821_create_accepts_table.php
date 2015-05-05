@@ -17,7 +17,7 @@ class CreateAcceptsTable extends Migration {
             $table->tinyInteger('state');
             $table->mediumText('message');
             $table->integer('user_id');
-            $table->integer('invite_id');
+            $table->integer('post_id');
             $table->timestamps();
         });
 	}

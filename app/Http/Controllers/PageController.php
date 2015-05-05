@@ -2,7 +2,7 @@
 
 use App\Models\User;
 use App\Models\Console;
-use App\Models\Invite;
+use App\Models\Post;
 use Illuminate\Http\Request;
 use Carbon\Carbon;
 use App\Models\Comment;
@@ -50,26 +50,26 @@ class PageController extends Controller {
         $to   = Carbon::now();
         $from = stringToFromDate($t);
 
-        $query = $useTimezone ? "GetHotInvitesByTimezone($after, $guardedLimit, $fromTimezone, $toTimezone)"
-            : "GetHotInvites($after, $guardedLimit)";
+        $query = $useTimezone ? "GetHotPostsByTimezone($after, $guardedLimit, $fromTimezone, $toTimezone)"
+            : "GetHotPosts($after, $guardedLimit)";
 
         if ($sort == "controversial")
-            $query = $useTimezone ? "GetControversialInvitesByTimezone($after, $guardedLimit, '$from', '$to', $fromTimezone, $toTimezone)"
-                : "GetControversialInvites($after, $guardedLimit, '$from', '$to')";
+            $query = $useTimezone ? "GetControversialPostsByTimezone($after, $guardedLimit, '$from', '$to', $fromTimezone, $toTimezone)"
+                : "GetControversialPosts($after, $guardedLimit, '$from', '$to')";
         else if ($sort == "top")
-            $query = $useTimezone ? "GetTopInvitesByTimezone($after, $guardedLimit, '$from', '$to', $fromTimezone, $toTimezone)"
-            : "GetTopInvites($after, $guardedLimit, '$from', '$to')";
+            $query = $useTimezone ? "GetTopPostsByTimezone($after, $guardedLimit, '$from', '$to', $fromTimezone, $toTimezone)"
+            : "GetTopPosts($after, $guardedLimit, '$from', '$to')";
         else if ($sort == "new")
-            $query = $useTimezone ? "GetNewInvitesByTimezone($after, $guardedLimit, $fromTimezone, $toTimezone)"
-            : "GetNewInvites($after, $guardedLimit)";
+            $query = $useTimezone ? "GetNewPostsByTimezone($after, $guardedLimit, $fromTimezone, $toTimezone)"
+            : "GetNewPosts($after, $guardedLimit)";
 
 
-        $invites = Invite::hydrateRaw('CALL ' . $query);
+        $posts = Post::hydrateRaw('CALL ' . $query);
 
         if ($request->ajax())
-            return invitesToDtos($invites);
+            return invitesToDtos($posts);
 
-		return view('pages.index', ['invites' => $invites]);
+		return view('pages.index', ['posts' => $posts]);
 	}
 
 
@@ -141,10 +141,10 @@ class PageController extends Controller {
 
 	/**
 	*
-	* Invite Form page
+	* Post Form page
 	*
 	**/
-	public function inviteForm()
+	public function postForm()
 	{
 		$consoles = Console::all();
 
@@ -154,35 +154,35 @@ class PageController extends Controller {
             $consoleSelections[] = $console->name;
         }
 
-		return view('pages.invites.invite', [ 'consoleSelections' => $consoleSelections]);
+		return view('pages.posts.form', [ 'consoleSelections' => $consoleSelections]);
 	}
 
 
 	/**
 	*
-	* Invite details page
+	* Post details page
 	*
 	**/
-	public function invite($hashid, $slug)
+	public function post($hashid, $slug)
 	{
-		$invite = Invite::find(decodeHashId($hashid));
+		$post = Post::find(decodeHashId($hashid));
 
-		if (!$invite)
+		if (!$post)
 			return redirect('/page-not-found');
 
-		return view('pages.invites.detailpage', ['invite' => $invite]);
+		return view('pages.posts.detailpage', ['post' => $post]);
 	}
 
     /**
      *
-     * Invite details page
+     * Post details page
      *
      **/
-    public function inviteWithContext(Request $request, $hashid, $slug, $context)
+    public function postWithContext(Request $request, $hashid, $slug, $context)
     {
-        $invite = Invite::find(decodeHashId($hashid));
+        $post = Post::find(decodeHashId($hashid));
 
-        if (!$invite)
+        if (!$post)
             return redirect('/page-not-found');
 
         $comment = Comment::find(decodeHashId($context));
@@ -192,7 +192,7 @@ class PageController extends Controller {
 
         $context = max((int)$request->input("context", 0), 0);
 
-        return view('pages.invites.detailpage', ['invite' => $invite, 'context' => $context, 'comment' => $comment]);
+        return view('pages.posts.detailpage', ['post' => $post, 'context' => $context, 'comment' => $comment]);
     }
 
 
@@ -210,28 +210,5 @@ class PageController extends Controller {
 
     	return view('pages.users.profile', ['user' => $user]);
     }
-
-
-    /**
-    *
-    * Crew page
-    *
-    **/
-    public function crewPage($crewname)
-    {
-    	return view('pages.crews.crew');
-    }
-
-
-    /**
-    *
-    * Crew form
-    *
-    **/
-    public function crewForm()
-    {
-    	return view('pages.crews.create');
-    }
-
 
 }

@@ -8,11 +8,11 @@
 				<div class="row">
 					<div class="medium-10 medium-offset-1 columns">
 						<h2 class="light-header">
-							Submitting an invite
+							Submitting an post
 						</h2>
 						<br>
 						<p>
-							General rules when submitting an invite:
+							General rules when submitting an post:
 						</p>
 						<ul>
 							<li>Rule #1: </li>
@@ -38,7 +38,7 @@
 								<li>{{ Session::get('notice')[1] }}</li>
 							</ul>
 						@endif
-						<div class="invite-form">
+						<div class="post-form">
 							<input type="hidden" value="{{ csrf_token() }}" id="csrfToken">
 							<input type="hidden" value="0" id="selectedGameId">
 							<h3>
@@ -54,15 +54,15 @@
 							<br><br><br>
 							<div class="more-details disabled" id="moreDetails">
 								<h2>
-									<input type="text" class="disabled" id="inviteTitle" placeholder="Title of this invite">
+									<input type="text" class="disabled" id="postTitle" placeholder="Title of this post">
 								</h2>
-								<textarea id="inviteText" class="disabled" placeholder="More info about this invite"></textarea>
+								<textarea id="postText" class="disabled" placeholder="More info about this post"></textarea>
 							</div>
                             <br><br><br>
                             <h3>Other options</h3>
                             <label><input type="checkbox" id="verifiedInput"> I only want to play with verified users.</label>
                             <br><br>
-						    <button type="submit" class="btn big primary" id="inviteSubmitter">Submit invite</button>
+						    <button type="submit" class="btn big primary" id="postSubmitter">Submit post</button>
 						    &nbsp;
 						    <img id="progresser" src="{!! url('/img/loaders/dots.svg') !!}" width="40px">
 						    <br><br>

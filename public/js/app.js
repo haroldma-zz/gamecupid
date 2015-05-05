@@ -180,8 +180,8 @@ $('html, body').click(function(e)
 });
 
 
-// Submit invite form
-$('#inviteSubmitter').click(function()
+// Submit post form
+$('#postSubmitter').click(function()
 {
 	$(this).attr('disabled', true);
 	$('#progresser').toggle();
@@ -190,8 +190,8 @@ $('#inviteSubmitter').click(function()
 	var	maxPlayers = $('#maxPlayers').val(),
 		gameId     = $('#selectedGameId').val(),
 		consoleId  = $('#console').val(),
-		title      = $('#inviteTitle').val(),
-		text       = $('#inviteText').val(),
+		title      = $('#postTitle').val(),
+		text       = $('#postText').val(),
 		verified   = $('#verifiedInput').prop('checked'),
 		vchecked   = 'no',
 		token      = $('#csrfToken').val(),
@@ -201,7 +201,7 @@ $('#inviteSubmitter').click(function()
 		vchecked = 'yes';
 
 	$.ajax({
-	    url: "/invite",
+	    url: "/post",
 	    type: "POST",
 	    data: {
 	    	_token: token,
@@ -243,4 +243,24 @@ $('#inviteSubmitter').click(function()
 $('body').on('click', '[id="replyToComment"]', function()
 {
 	$('#commentBox-' + $(this).data('id')).toggle();
+});
+
+// platform selector
+$('#feedSelector').click(function(e)
+{
+	e.stopPropagation();
+	$('#platformList').toggleClass('open');
+});
+
+$('#platformList').click(function(e)
+{
+	e.stopPropagation();
+});
+
+$('body').click(function(e)
+{
+	if ($('#platformList').hasClass('open'))
+	{
+		$('#platformList').removeClass('open');
+	}
 });

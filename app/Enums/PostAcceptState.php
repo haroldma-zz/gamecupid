@@ -1,6 +1,6 @@
 <?php namespace App\Enums;
 
-abstract class InviteAcceptStates
+abstract class PostAcceptStates
 {
     const REQUESTED = 0;
     const DECLINED   = 1;

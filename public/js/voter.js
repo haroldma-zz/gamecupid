@@ -1,7 +1,7 @@
 $('body').on('click', '[id="upvoter"]', function()
 {
 	var token = $('#csrfToken').val(),
-		id    = $(this).data("invite-id"),
+		id    = $(this).data("post-id"),
 		ua    = $('#upvoter-' + id),
 		da    = $('#downvoter-' + id);
 
@@ -14,7 +14,7 @@ $('body').on('click', '[id="upvoter"]', function()
 		da.removeClass('activated');
 
 
-	$.post('/invite/upvote', {_token:token, id:id}, function(res)
+	$.post('/post/upvote', {_token:token, id:id}, function(res)
 	{
 		if (res == 1)			// NORMAL UPVOTE
 		{
@@ -47,7 +47,7 @@ $('body').on('click', '[id="upvoter"]', function()
 $('body').on('click', '[id="downvoter"]', function()
 {
 	var token = $('#csrfToken').val(),
-		id    = $(this).data("invite-id"),
+		id    = $(this).data("post-id"),
 		ua    = $('#upvoter-' + id),
 		da    = $('#downvoter-' + id);
 
@@ -59,7 +59,7 @@ $('body').on('click', '[id="downvoter"]', function()
 	if (ua.hasClass('activated'))
 		ua.removeClass('activated');
 
-	$.post('/invite/downvote', {_token:token, id:id}, function(res)
+	$.post('/post/downvote', {_token:token, id:id}, function(res)
 	{
 		if (res == 1)			// NORMAL DOWNVOTE
 		{

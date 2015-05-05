@@ -4,24 +4,24 @@ use App\Models\Console;
 use App\Models\Game;
 use Auth;
 use Response;
-use App\Models\Invite;
+use App\Models\Post;
 use App\Models\Comment;
 use App\Models\Parsedown;
 use App\Enums\RepEvents;
 use App\Enums\VoteStates;
 use Illuminate\Http\Request;
-use App\Http\Requests\InviteFormRequest;
+use App\Http\Requests\PostFormRequest;
 use Cocur\Slugify\Slugify;
 use App\Enums\AjaxVoteResults;
 
-class InviteController extends Controller {
+class PostController extends Controller {
 
 	/**
 	*
-	* New an invite
+	* New an post
 	*
 	**/
-	public function invite(InviteFormRequest $request)
+	public function post(PostFormRequest $request)
 	{
 		if (!$request->ajax())
 			return redirect('/');
@@ -41,7 +41,7 @@ class InviteController extends Controller {
 
         // Check if the player has a verified profile for the platform
         if ($user->profiles->where('platform_id', $console->platform_id)->first() == null)
-            return Response::make("You need a verified {$console->platform->name} profile to post invites for $console->name.", 500);
+            return Response::make("You need a verified {$console->platform->name} profile to post posts for $console->name.", 500);
 
         // Make sure the game id is for an existing game and the console id matches
         $game = Game::find(decodeHashId($request->get('game_id')));
@@ -52,22 +52,22 @@ class InviteController extends Controller {
         if ($game->consoles->where('console_id', $console->id)->first() == null)
             return Response::make('This game is not supported for the selected console.', 500);
 
-		$invite                    = new Invite;
-		$invite->title             = $request->get('title');
-		$invite->slug              = $slugify->slugify($request->get('title'), "-");
-		$invite->self_text         = $parsedown->text($request->get('self_text'));
-		$invite->markdown_text     = $request->get('self_text');
-		//$invite->tag_text          = '-'; TODO
-		$invite->max_players      = max((int)$request->get('max_players'), 1);
-		$invite->verified_only     = ($request->get('verified') == 'yes' ? true : false);
-		$invite->console_id        = $console->id;
-		$invite->game_id           = $game->id;
-		$invite->user_id           = $user->id;
+		$post                    = new Post;
+		$post->title             = $request->get('title');
+		$post->slug              = $slugify->slugify($request->get('title'), "-");
+		$post->self_text         = $parsedown->text($request->get('self_text'));
+		$post->markdown_text     = $request->get('self_text');
+		//$post->tag_text          = '-'; TODO
+		$post->max_players       = max((int)$request->get('max_players'), 1);
+		$post->verified_only     = ($request->get('verified') == 'yes' ? true : false);
+		$post->console_id        = $console->id;
+		$post->game_id           = $game->id;
+		$post->user_id           = $user->id;
 
-		if ($invite->save())
+		if ($post->save())
 		{
-            $invite->castVote(VoteStates::UP);
-            giveRepAndNotified(RepEvents::CREATED_INVITE);
+            $post->castVote(VoteStates::UP);
+            giveRepAndNotified(RepEvents::CREATED_POST);
 
 			return Response::make('success', 200);
 		}
@@ -80,7 +80,7 @@ class InviteController extends Controller {
 
 	/**
 	*
-	* Upvote an invite
+	* Upvote an post
 	*
 	**/
 	public function upvote(Request $request)
@@ -92,15 +92,15 @@ class InviteController extends Controller {
 			return AjaxVoteResults::UNAUTHORIZED;
 
 		$id = decodeHashId($request->get('id'));
-        $invite = Invite::find($id);
+        $post = Post::find($id);
 
-        if (!$invite)
+        if (!$post)
             return AjaxVoteResults::ERROR;
 
-		$check = Auth::user()->inviteVotes()->where('invite_id', $id)->first();
+		$check = Auth::user()->postVotes()->where('post_id', $id)->first();
 
-        invalidateCache(generateAuthCacheKeyWithId("invite", "isUpvoted", $id));
-        invalidateCache(generateAuthCacheKeyWithId("invite", "isDownvoted", $id));
+        invalidateCache(generateAuthCacheKeyWithId("post", "isUpvoted", $id));
+        invalidateCache(generateAuthCacheKeyWithId("post", "isDownvoted", $id));
 
 		if ($check)
 		{
@@ -109,7 +109,7 @@ class InviteController extends Controller {
 			if ($vote->state == VoteStates::UP)			// UNVOTED
 			{
                 // invalidate cache
-                invalidateCache(generateAuthCacheKeyWithId("invite", "isUpvoted", $id));
+                invalidateCache(generateAuthCacheKeyWithId("post", "isUpvoted", $id));
 
 				$vote->delete();
 				return AjaxVoteResults::UNVOTED;
@@ -117,7 +117,7 @@ class InviteController extends Controller {
 			else if ($vote->state == VoteStates::DOWN)	// UPVOTED FROM DOWNVOTE
 			{
                 // invalidate cache
-                invalidateCache(generateAuthCacheKeyWithId("invite", "isDownvoted", $id));
+                invalidateCache(generateAuthCacheKeyWithId("post", "isDownvoted", $id));
 
 				$vote->state = VoteStates::UP;
 				$vote->save();
@@ -128,7 +128,7 @@ class InviteController extends Controller {
 		}
 		else
 		{
-			if ($invite->castVote(VoteStates::UP))
+			if ($post->castVote(VoteStates::UP))
 				return AjaxVoteResults::NORMAL;
 			else
 				return AjaxVoteResults::ERROR;
@@ -138,7 +138,7 @@ class InviteController extends Controller {
 
 	/**
 	*
-	* Downvote an invite
+	* Downvote an post
 	*
 	**/
 	public function downvote(Request $request)
@@ -150,15 +150,15 @@ class InviteController extends Controller {
 			return AjaxVoteResults::UNAUTHORIZED;
 
 		$id = decodeHashId($request->get('id'));
-        $invite = Invite::find($id);
+        $post = Post::find($id);
 
-        if (!$invite)
+        if (!$post)
             return AjaxVoteResults::ERROR;
 
-		$check = Auth::user()->inviteVotes()->where('invite_id', $id)->first();
+		$check = Auth::user()->postVotes()->where('post_id', $id)->first();
 
-        invalidateCache(generateAuthCacheKeyWithId("invite", "isUpvoted", $id));
-        invalidateCache(generateAuthCacheKeyWithId("invite", "isDownvoted", $id));
+        invalidateCache(generateAuthCacheKeyWithId("post", "isUpvoted", $id));
+        invalidateCache(generateAuthCacheKeyWithId("post", "isDownvoted", $id));
 
 		if ($check)
 		{
@@ -180,7 +180,7 @@ class InviteController extends Controller {
 		}
 		else
 		{
-            if ($invite->castVote(VoteStates::DOWN))
+            if ($post->castVote(VoteStates::DOWN))
                 return AjaxVoteResults::NORMAL;
             else
                 return AjaxVoteResults::ERROR;
@@ -191,7 +191,7 @@ class InviteController extends Controller {
 
 	/**
 	*
-	* Comment on invite
+	* Comment on post
 	*
 	**/
 	public function comment($hashid, $slug, Request $request)
@@ -200,25 +200,25 @@ class InviteController extends Controller {
 		$parentId = decodeHashId($request->get('parent_id'));
 
         if ($parentId == 0)
-		    $invite = Invite::find($id);
+		    $post = Post::find($id);
         else {
             $parent = Comment::find($parentId);
 
-            if (!$parent || $parent->invite_id != $id)
+            if (!$parent || $parent->post_id != $id)
             {
 	            if ($request->ajax())
-	            	return ['0']; 			# Invalid invite id
+	            	return ['0']; 			# Invalid post id
 
-                return redirect()->back()->withInput()->with('notice', ['error', 'Invalid invite id.']);
+                return redirect()->back()->withInput()->with('notice', ['error', 'Invalid post id.']);
             }
         }
 
-		if (($parentId != 0 && !$parent) || ($parentId == 0 && !$invite))
+		if (($parentId != 0 && !$parent) || ($parentId == 0 && !$post))
 		{
             if ($request->ajax())
-            	return ['1']; 			# Invite not found
+            	return ['1']; 			# post not found
 
-			return redirect()->back()->withInput()->with('notice', ['error', 'Invite not found.']);
+			return redirect()->back()->withInput()->with('notice', ['error', 'post not found.']);
 		}
 
 		if ($request->get('self_text') == '')
@@ -235,7 +235,7 @@ class InviteController extends Controller {
 		$comment->markdown_text = $request->get('self_text');
 		$comment->deleted       = false;
 		$comment->parent_id     = $parentId;
-		$comment->invite_id     = $id;
+		$comment->post_id     = $id;
 		$comment->user_id       = Auth::id();
 
 		if ($comment->save()) {
@@ -245,7 +245,7 @@ class InviteController extends Controller {
                 notifiedAboutComment($comment->id, $parent->user_id);
 
             if ($request->ajax())
-            	return ['3', ['created_at' => $comment->created_at, 'hashId' => hashId($comment->id), 'self_text' => $comment->self_text, 'permalink' => $comment->invite()->getPermalink()]]; 			# comment success
+            	return ['3', ['created_at' => $comment->created_at, 'hashId' => hashId($comment->id), 'self_text' => $comment->self_text, 'permalink' => $comment->post()->getPermalink()]]; 			# comment success
 
             return redirect()->back();
         }

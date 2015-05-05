@@ -22,8 +22,8 @@ class Accept extends Model {
 		return $this->belongsTo('App\Models\User', 'user_id', 'id');
 	}
 
-	public function invite()
+	public function post()
 	{
-		return $this->belongsTo('App\Models\Invite', 'invite_id', 'id');
+		return $this->belongsTo('App\Models\Post', 'post_id', 'id');
 	}
 }

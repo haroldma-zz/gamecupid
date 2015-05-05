@@ -14,12 +14,12 @@ function userToDto($user)
 function gameToDto($game)
 {
     return new Laravel5DTO([
-        'id' => hashId($game->id),
-        'title' => $game->title,
-        'description' => $game->description,
-        'poster' => $game->poster,
-        'series' => $game->series,
-        'trailer' => $game->trailer,
+        'id'           => hashId($game->id),
+        'title'        => $game->title,
+        'description'  => $game->description,
+        'poster'       => $game->poster,
+        'series'       => $game->series,
+        'trailer'      => $game->trailer,
         'release_date' => $game->release_date,
     ]);
 }
@@ -42,43 +42,43 @@ function gameSearchResultsToDto($games)
 function consoleToDto($console)
 {
     return new Laravel5DTO([
-        'id' => hashId($console->id),
-        'name' => $console->name,
-        'description' => $console->description,
-        'logo_url' => $console->logo_url,
+        'id'           => hashId($console->id),
+        'name'         => $console->name,
+        'description'  => $console->description,
+        'logo_url'     => $console->logo_url,
         'release_date' => $console->release_date
     ]);
 }
 
-function inviteToDto($invite)
+function postToDto($post)
 {
     return new Laravel5DTO([
-        'id' => hashId($invite->id),
-        'title' => $invite->title,
-        'selfText' => $invite->self_text,
-        'tagText' => $invite->tag_text,
-        'maxPlayer' => $invite->max_players,
-        'verifiedOnly' => $invite->verified_only,
-        'isUpvoted' => $invite->isUpvoted(),
-        'isDownvoted' => $invite->isDownvoted(),
-        'commentCount' => $invite->commentCount(),
-        'totalVotes' => $invite->totalVotes(),
-        'ups' => $invite->upvoteCount(),
-        'downs' => $invite->downvoteCount(),
-        'permalink' => $invite->getPermalink(),
-        'featured' => $invite->featured,
-        'user' => userToDto($invite->user),
-        'game' => gameToDto($invite->game()),
-        'console' => consoleToDto($invite->console()),
-        'createdAt' => $invite->created_at->format('Y-m-d H:i:s')
+        'id'           => hashId($post->id),
+        'title'        => $post->title,
+        'selfText'     => $post->self_text,
+        'tagText'      => $post->tag_text,
+        'maxPlayer'    => $post->max_players,
+        'verifiedOnly' => $post->verified_only,
+        'isUpvoted'    => $post->isUpvoted(),
+        'isDownvoted'  => $post->isDownvoted(),
+        'commentCount' => $post->commentCount(),
+        'totalVotes'   => $post->totalVotes(),
+        'ups'          => $post->upvoteCount(),
+        'downs'        => $post->downvoteCount(),
+        'permalink'    => $post->getPermalink(),
+        'featured'     => $post->featured,
+        'user'         => userToDto($post->user),
+        'game'         => gameToDto($post->game()),
+        'console'      => consoleToDto($post->console()),
+        'createdAt'    => $post->created_at->format('Y-m-d H:i:s')
     ]);
 }
 
-function invitesToDtos($invites) {
+function postsToDtos($posts) {
     $dtos = [];
 
-    foreach ($invites as $invite) {
-        $dtos[] = inviteToDto($invite);
+    foreach ($posts as $post) {
+        $dtos[] = postToDto($post);
     }
 
     return new Collection($dtos);

@@ -27,9 +27,9 @@ class Game extends Model {
 		return $this->hasMany('App\Models\GamePublisher', 'game_id', 'id');
 	}
 
-	public function invites()
+	public function posts()
 	{
-		return $this->hasMany('App\Models\Invite', 'game_id', 'id');
+		return $this->hasMany('App\Models\Post', 'game_id', 'id');
 	}
 
 	public function consoles()

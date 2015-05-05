@@ -74,7 +74,7 @@
 		var data     	 = textarea.data();
 			data.comment = textarea.val();
 			data.csrf    = $('#csrfToken').val();
-		var commentCount = $('#inviteCommentCount');
+		var commentCount = $('#postCommentCount');
 
 		// Hide emoji previewer
 		if (emojisShowing === true)
@@ -104,12 +104,12 @@
 				case '0':
 					loader.toggle();
 					button.attr('disabled', false);
-					errors.append('<p class="alert-text">Invalid invite id.</p>');
+					errors.append('<p class="alert-text">Invalid post id.</p>');
 					break;
 				case '1':
 					loader.toggle();
 					button.attr('disabled', false);
-					errors.append('<p class="alert-text">Invite not found.</p>');
+					errors.append('<p class="alert-text">post not found.</p>');
 					break;
 				case '2':
 					loader.toggle();

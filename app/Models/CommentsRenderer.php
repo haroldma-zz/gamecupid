@@ -31,12 +31,12 @@ class CommentsRenderer {
 	*
 	* The function fetches all the comments and their child comments
 	* of a given array of id's
-	* See App\Models\Invite @ renderComments()
+	* See App\Models\Post @ renderComments()
 	*
 	**/
-    function prepareForInvite($invite, $sort, $cacheExpire)
+    function prepareForPost($post, $sort, $cacheExpire)
     {
-        $comments = $invite->sortParentComments($sort, 1, CommentsRenderer::PARENT_SUB_LIMIT, $cacheExpire);
+        $comments = $post->sortParentComments($sort, 1, CommentsRenderer::PARENT_SUB_LIMIT, $cacheExpire);
         foreach ($comments as $comment)
         {
             $child   = $comment->sortChildComments($sort, CommentsRenderer::CHILD_SUB_LIMIT, $cacheExpire);
@@ -187,14 +187,14 @@ class CommentsRenderer {
 				$output .= '<a href="' . $comment->getPermalink() . '">permalink</a>';
                 if ($comment->parent_id != 0) {
                     $output .= '<a>&middot;</a>';
-                    $output .= '<a href="' . $comment->invite()->getPermalink() . hashId($comment->parent_id) . '">parent</a>';
+                    $output .= '<a href="' . $comment->post()->getPermalink() . hashId($comment->parent_id) . '">parent</a>';
                 }
                 $output .= '<a>&middot;</a>';
                 $output .= '<a id="replyToComment" data-id="' . hashId($comment->id) . '">reply</a>';
 				$output .= '</footer>';
                 $output .= '<div class="comment-box" id="commentBox-' . hashId($comment->id) . '" style="margin-top:10px;">';
                 $output .= '<p>You can use Markdown to write comments.</p>';
-                $output .= '<textarea class="form-control" placeholder="Write a comment" data-parenthash="' . hashId($comment->id) . '" data-url="' . $comment->invite()->getPermalink() . '" data-hierarchy="' . $hierachy . '" data-level="has-parent"></textarea>';
+                $output .= '<textarea class="form-control" placeholder="Write a comment" data-parenthash="' . hashId($comment->id) . '" data-url="' . $comment->post()->getPermalink() . '" data-hierarchy="' . $hierachy . '" data-level="has-parent"></textarea>';
                 $output .= '<button type="submit" class="btn primary medium" id="commentSubmitter">Comment</button>';
                 $output .= '<img id="progresser" src="/img/loaders/dots.svg" width="40px">';
                 $output .= '<div></div>';
@@ -220,7 +220,7 @@ class CommentsRenderer {
 
         if ($this->commentContext != null) {
             $output .= '<div class="infobar">you are viewing a single comment\'s thread.<p>';
-            $output .= '<a href="'. $this->commentContext->invite()->getPermalink() .'">view the rest of the comments</a>&nbsp;→';
+            $output .= '<a href="'. $this->commentContext->post()->getPermalink() .'">view the rest of the comments</a>&nbsp;→';
             if ($this->contextParent != null && $this->contextParent->parent_id != 0)
                 $output .= '&nbsp;<a href="?context=10000">view the full context</a>&nbsp;→';
             $output .= '</p></div>';
@@ -268,14 +268,14 @@ class CommentsRenderer {
                 $output .= '<a href="' . $comment->getPermalink() . '">permalink</a>';
                 if ($comment->parent_id != 0) {
                     $output .= '<a>&middot;</a>';
-                    $output .= '<a href="' . $comment->invite()->getPermalink() . hashId($comment->parent_id) . '">parent</a>';
+                    $output .= '<a href="' . $comment->post()->getPermalink() . hashId($comment->parent_id) . '">parent</a>';
                 }
                 $output .= '<a>&middot;</a>';
                 $output .= '<a id="replyToComment" data-id="' . hashId($comment->id) . '">reply</a>';
 				$output .= '</footer>';
                 $output .= '<div class="comment-box" id="commentBox-' . hashId($comment->id) . '" style="margin-top:10px;">';
                 $output .= '<p>You can use Markdown to write comments.</p>';
-                $output .= '<textarea class="form-control" placeholder="Write a comment" data-parenthash="' . hashId($comment->id) . '" data-url="' . $comment->invite()->getPermalink() . '" data-hierarchy="child" data-level="has-parent"></textarea>';
+                $output .= '<textarea class="form-control" placeholder="Write a comment" data-parenthash="' . hashId($comment->id) . '" data-url="' . $comment->post()->getPermalink() . '" data-hierarchy="child" data-level="has-parent"></textarea>';
                 $output .= '<button type="submit" class="btn primary medium" id="commentSubmitter">Comment</button>';
                 $output .= '<img id="progresser" src="/img/loaders/dots.svg" width="40px">';
                 $output .= '<div></div>';
@@ -288,7 +288,7 @@ class CommentsRenderer {
     	}
     	else
     	{
-    		$output = '<p>There are no comments on this invite yet.</p>';
+    		$output = '<p>There are no comments on this post yet.</p>';
     	}
 
     	echo $output;

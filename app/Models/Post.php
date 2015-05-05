@@ -5,14 +5,14 @@ use Carbon\Carbon;
 use Illuminate\Database\Eloquent\Model;
 use App\Enums\VoteStates;
 
-class Invite extends Model {
+class Post extends Model {
 
 	/**
 	 * The database table used by the model.
 	 *
 	 * @var string
 	 */
-	protected $table = 'invites';
+	protected $table = 'posts';
 
 
     /**
@@ -35,13 +35,13 @@ class Invite extends Model {
     **/
     public function getPermalink()
     {
-        return '/invite/' . hashId($this->id) . '/' . $this->slug . '/';
+        return '/post/' . hashId($this->id) . '/' . $this->slug . '/';
     }
 
     public function castVote($state)
     {
-        $vote            = new InviteVote;
-        $vote->invite_id = $this->id;
+        $vote            = new PostVote;
+        $vote->post_id = $this->id;
         $vote->user_id   = Auth::id();
         $vote->state     = $state;
         return $vote->save();
@@ -57,7 +57,7 @@ class Invite extends Model {
         if ($this->_commentCount != -1)
             return $this->_commentCount;
 
-        $key   = generateCacheKeyWithId("invite", "commentCount", $this->id);
+        $key   = generateCacheKeyWithId("post", "commentCount", $this->id);
         if (hasCache($key, $cache)) {
             $this->_commentCount = $cache;
             return $this->_commentCount;
@@ -77,7 +77,7 @@ class Invite extends Model {
         if ($this->_upvoteCount != -1)
             return $this->_upvoteCount;
 
-        $key   = generateCacheKeyWithId("invite", "upvoteCount", $this->id);
+        $key   = generateCacheKeyWithId("post", "upvoteCount", $this->id);
         if (hasCache($key, $cache)) {
             $this->_upvoteCount = $cache;
             return $this->_upvoteCount;
@@ -97,7 +97,7 @@ class Invite extends Model {
         if ($this->_downvoteCount != -1)
             return $this->_downvoteCount;
 
-        $key   = generateCacheKeyWithId("invite", "downvoteCount", $this->id);
+        $key   = generateCacheKeyWithId("post", "downvoteCount", $this->id);
         if (hasCache($key, $cache)) {
             $this->_downvoteCount = $cache;
             return $this->_downvoteCount;
@@ -115,13 +115,13 @@ class Invite extends Model {
         if ($this->_isUpvoted != null)
             return $this->_isUpvoted;
 
-        $key   = generateAuthCacheKeyWithId("invite", "isUpvoted", $this->id);
+        $key   = generateAuthCacheKeyWithId("post", "isUpvoted", $this->id);
         if (hasCache($key, $cache)) {
             $this->_isUpvoted = $cache;
             return $cache;
         }
 
-        $this->_isUpvoted = Auth::user()->inviteVotes()->where('invite_id', $this->id)->where('state', VoteStates::UP)
+        $this->_isUpvoted = Auth::user()->postVotes()->where('post_id', $this->id)->where('state', VoteStates::UP)
                             ->first() != null;
 
         return setCache($key, $this->_isUpvoted, Carbon::now()->addDay());
@@ -132,13 +132,13 @@ class Invite extends Model {
         if (!Auth::check())
             return false;
 
-        $key   = generateAuthCacheKeyWithId("invite", "isDownvoted", $this->id);
+        $key   = generateAuthCacheKeyWithId("post", "isDownvoted", $this->id);
         if (hasCache($key, $cache)) {
             $this->_isDownvoted = $cache;
             return $cache;
         }
 
-        $this->_isDownvoted = Auth::user()->inviteVotes()->where('invite_id', $this->id)->where('state', VoteStates::DOWN)
+        $this->_isDownvoted = Auth::user()->postVotes()->where('post_id', $this->id)->where('state', VoteStates::DOWN)
                               ->first() != null;
         return setCache($key, $this->_isDownvoted, Carbon::now()->addDay());
     }
@@ -161,7 +161,7 @@ class Invite extends Model {
             $expire = 15;
 
         $commentlist = new CommentsRenderer;
-        $commentlist->prepareForInvite($this, $sort, $expire);
+        $commentlist->prepareForpost($this, $sort, $expire);
         return $commentlist->print_comments();
     }
 
@@ -213,22 +213,22 @@ class Invite extends Model {
 
 	public function accepts()
 	{
-		return $this->hasMany('App\Models\Accept', 'invite_id', 'id');
+		return $this->hasMany('App\Models\Accept', 'post_id', 'id');
 	}
 
     public function votes()
     {
-        return $this->hasMany('App\Models\InviteVote', 'invite_id', 'id');
+        return $this->hasMany('App\Models\PostVote', 'post_id', 'id');
     }
 
     public function comments()
     {
-        return $this->hasMany('App\Models\Comment', 'invite_id', 'id');
+        return $this->hasMany('App\Models\Comment', 'post_id', 'id');
     }
 
     public function sortParentComments($sort, $page, $limit, $cacheExpire)
     {
-        $key = generateCacheKeyWithId("invite", "comment-parents-$sort-p-$page-l-$limit", $this->id);
+        $key = generateCacheKeyWithId("post", "comment-parents-$sort-p-$page-l-$limit", $this->id);
         if ($cacheExpire != 0) {
             if (hasCache($key, $cache))
                 return $cache;

@@ -34,12 +34,12 @@ class RepEventsTableSeeder extends Seeder {
 		$e->save();
 
 		$e         = new RepEvent;
-		$e->event  = "Submitted a invite.";
+		$e->event  = "Submitted a post.";
 		$e->amount = -1;
 		$e->save();
 
 		$e         = new RepEvent;
-		$e->event  = "You got approved to an invite.";
+		$e->event  = "You got approved to an post.";
 		$e->amount = 2;
 		$e->save();
 

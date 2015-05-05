@@ -13,7 +13,7 @@ abstract class RepEvents
     const ADD_PROFILE_PICTURE         = 3;
     const ADD_BIO                     = 4;
     const COMPLETE_PROFILE            = 5;
-    const CREATED_INVITE              = 6;
+    const CREATED_POST                = 6;
     const APPROVED_FOR_INVITE         = 7;
     const DID_NOT_PARTICIPATE_ON_GAME = 8;
     const CREATED_CREW                = 9;

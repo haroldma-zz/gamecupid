@@ -13,7 +13,7 @@
 							<span>{{ $n->title() }}</span>
 						</h5>
                         @if ($n->type == \App\Enums\NotificationTypes::COMMENT_REPLY)
-                            <a class="text-primary" href="{{ $n->comment()->invite()->getPermalink() }}">{{ $n->comment()->invite()->title }}</a>
+                            <a class="text-primary" href="{{ $n->comment()->post()->getPermalink() }}">{{ $n->comment()->post()->title }}</a>
                         @endif
 						<p>
                             @if ($n->type == \App\Enums\NotificationTypes::REP)

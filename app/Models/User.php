@@ -51,9 +51,9 @@ class User extends Model implements AuthenticatableContract, CanResetPasswordCon
 		return $this->hasMany('App\Models\Profile', 'user_id', 'id');
 	}
 
-	public function invites()
+	public function posts()
 	{
-		return $this->hasMany('App\Models\Invite', 'user_id', 'id');
+		return $this->hasMany('App\Models\Post', 'user_id', 'id');
 	}
 
 	public function accepts()

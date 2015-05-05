@@ -13,7 +13,7 @@
 			$this.data('loading', true);
 			$('#feedLoader').removeClass('hide');
 
-			loadMoreInvites();
+			loadMorePosts();
 		}
 		else if ($this.data('loading') === true & distance < border - threshold)
 		{
@@ -22,7 +22,7 @@
 		}
 	});
 
-	function loadMoreInvites(sort, page)
+	function loadMorePosts(sort, page)
 	{
 		var canLoadMore = $(window).data('canLoadMore');
 
@@ -30,7 +30,7 @@
 		{
 			var limit = parseInt(getUrlParameter('limit') || $('#limit').val() || 10);
 			var sort = getUrlParameter('sort') || $('#sortType').val() || 'hot';
-			var after = $($("article.invite").slice(-1)[0]).attr("data-id");
+			var after = $($("article.post").slice(-1)[0]).attr("data-id");
 
 			$('#sortType').val(sort);
 
@@ -40,20 +40,20 @@
 
 				switch(res.length) {
 					case 0:
-						$(window).data('canLoadMore', false);		// No more invites to load
+						$(window).data('canLoadMore', false);		// No more posts to load
 						break;
 					case limit:
-						$(window).data('canLoadMore', true);		// Probably more invites to load
+						$(window).data('canLoadMore', true);		// Probably more posts to load
 						break;
 					default:
-						$(window).data('canLoadMore', false);		// Returned less then 10 invites, no more invites to load
+						$(window).data('canLoadMore', false);		// Returned less then 10 posts, no more posts to load
 						break;
 				}
 
 				for (var i = 0; i < res.length; i++)
 				{
 					var output = '';
-						output += '<article data-id="' + res[i].id +'" class="invite">';
+						output += '<article data-id="' + res[i].id +'" class="post">';
 						output += '<header>';
 						output += '<div class="img"></div>';
 						output += '<div class="user-meta">';
@@ -69,10 +69,10 @@
 						output += '<h3>';
 						output += '<div class="voters">';
 						output += '<div class="arrows">';
-						output += '<div id="upvoter" data-invite-id="' + res[i].id + '">';
+						output += '<div id="upvoter" data-post-id="' + res[i].id + '">';
 						output += '<i class="ion-arrow-up-a ' + (res[i].isUpvoted == true ? "activated" : "") + '" id="upvoter-' + res[i].id + '"></i>';
 						output += '</div>';
-						output += '<div id="downvoter" data-invite-id="' + res[i].id + '">';
+						output += '<div id="downvoter" data-post-id="' + res[i].id + '">';
 						output += '<i class="ion-arrow-down-a ' + (res[i].isDownvoted == true ? "activated" : "") + '" id="downvoter-' + res[i].id + '"></i>';
 						output += '</div>';
 						output += '</div>';
