@@ -2,8 +2,8 @@
 
 @section('page')
 <section class="page">
-	<div class="row">
-		<div class="medium-5 columns" style="position: fixed;">
+	<div class="row detailpage">
+		<div class="left-side">
 			<div class="panel">
 				<article class="post">
 					<section>
@@ -63,10 +63,9 @@
 				</div>
 			</div>
 		</div>
-		<div class="medium-7 columns">
+		<div class="right-side">
+			<h6>About this post</h6>
 			<div class="panel">
-				<h6>About this post</h6>
-				<br>
 				<div class="markdown-text">
 					{!! $post->self_text !!}
 				</div>
@@ -109,4 +108,10 @@
 	@include('js.commenter')
 	@endif
 	{!! HTML::script('js/comment-collapser.js') !!}
+	<script>
+		if ($(window).width() > 41 * 16)
+		{
+			$('#footer').css('padding-top', $('.right-side').css('height'));
+		}
+	</script>
 @stop

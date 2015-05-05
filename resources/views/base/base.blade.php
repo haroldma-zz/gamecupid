@@ -12,12 +12,12 @@
 				<a class="brand" href="{!! url('/') !!}">playddit</a>
 				<div class="platforms-container">
 					<a id="feedSelector">Platforms <i class="ion-arrow-down-b"></i></a>
-					<div class="platforms-list">
+					<div class="platforms-list" id="platformList">
 						<div>
 							<ul class="no-bullet">
-								<li><a href="{!! url('/platform/psn') !!}">Playstation Network</a></li>
-								<li><a href="{!! url('/platform/xbl') !!}">Steam</a></li>
-								<li><a href="{!! url('/platform/steam') !!}">Xbox Live</a></li>
+								<a href="{!! url('/platform/psn') !!}"><li>Playstation Network</li></a>
+								<a href="{!! url('/platform/xbl') !!}"><li>Xbox Live</li></a>
+								<a href="{!! url('/platform/steam') !!}"><li>Steam</li></a>
 							</ul>
 						</div>
 					</div>
@@ -47,7 +47,7 @@
 
 	@yield('page')
 
-	<footer class="footer">
+	<footer class="footer" id="footer">
 		<div class="row">
 			<div class="medium-12 columns">
 				<h5 class="super-header">GameCupid</h5>

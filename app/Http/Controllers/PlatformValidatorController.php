@@ -85,7 +85,7 @@ class PlatformValidatorController extends Controller
         }
 
         if ($valid)
-            return redirect('/account')->with('notice', ['success', 'Your PSN account has been connected.']);
+            return redirect('/settings')->with('notice', ['success', 'Your PSN account has been connected.']);
         return view('pages.connect.psn', ['error' => 'Couldn\'t verify PSN account.']);
     }
 
@@ -196,7 +196,7 @@ class PlatformValidatorController extends Controller
         }
 
         if ($valid)
-            return redirect('/account')->with('notice', ['success', 'Your Xbox Live account has been connected.']);
+            return redirect('/settings')->with('notice', ['success', 'Your Xbox Live account has been connected.']);
         return view('pages.connect.xbl', ['error' => 'Couldn\'t verify Xbox Live account.']);
     }
 

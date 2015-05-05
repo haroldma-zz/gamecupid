@@ -834,3 +834,39 @@ article.post {
 		}
 	}
 }
+
+
+
+/**
+*
+* Detailpage
+*
+**/
+.detailpage {
+	position: relative;
+	.left-side {
+		width: 40%;
+		float: left;
+		padding: 0 10px;
+		position: fixed;
+		z-index: 3;
+		@include breakpoint(sm) {
+			position: relative;
+			width: 100%;
+			left: 0;
+			float: none;
+		}
+	}
+	.right-side {
+		width: 60%;
+		padding: 0 10px;
+		position: absolute;
+		z-index: 3;
+		left: 40%;
+		@include breakpoint(sm) {
+			position: relative;
+			width: 100%;
+			left: 0;
+		}
+	}
+}
