@@ -2,8 +2,8 @@
 
 @section('page')
 <section class="page">
-	<div class="row detailpage">
-		<div class="left-side">
+	<div class="row medium-collapse detailpage">
+		<div class="medium-5 columns fixed-column">
 			<div class="panel">
 				<article class="post">
 					<section>
@@ -29,12 +29,12 @@
                             @endif
 						</div>
 					</section>
-					<br>
+					<br><br>
 					<a href="" class="btn success">
 						Request an invite
 					</a>
+					<hr>
 				</article>
-				<hr>
 				<div class="comments">
 					<div class="comment-box">
 						<h6>
@@ -63,14 +63,19 @@
 				</div>
 			</div>
 		</div>
-		<div class="right-side">
+		<div class="medium-7 columns">
 			<div class="panel">
-				<h6>About this post</h6>
+				<h5>
+					<b>{{ $post->game()->title }}</b>
+				</h5>
+				<p>
+					{{ $post->game()->description }}
+				</p>
 				<br>
 				<div class="markdown-text">
 					{!! $post->self_text !!}
 				</div>
-				<br><br>
+				<br><br><br>
 				<div class="comments">
 					<h6 class="comments-header">
 						<div class="left">
@@ -109,10 +114,4 @@
 	@include('js.commenter')
 	@endif
 	{!! HTML::script('js/comment-collapser.js') !!}
-	<script>
-		if ($(window).width() > 41 * 16)
-		{
-			$('#footer').css('padding-top', $('.right-side').css('height'));
-		}
-	</script>
 @stop

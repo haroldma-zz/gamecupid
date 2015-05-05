@@ -843,30 +843,20 @@ article.post {
 *
 **/
 .detailpage {
-	position: relative;
-	.left-side {
-		width: 40%;
-		float: left;
-		padding: 0 10px;
-		position: fixed;
-		z-index: 3;
+	.panel:first-of-type {
+		border-right: none;
 		@include breakpoint(sm) {
-			position: relative;
-			width: 100%;
-			left: 0;
-			float: none;
+			border-right: 1px solid $silver;
 		}
 	}
-	.right-side {
-		width: 60%;
-		padding: 0 10px;
-		position: absolute;
-		z-index: 3;
-		left: 40%;
-		@include breakpoint(sm) {
-			position: relative;
-			width: 100%;
-			left: 0;
-		}
+	.panel {
+		min-height: 550px !important;
+	}
+}
+
+.fixed-column {
+	position: fixed;
+	@include breakpoint(sm) {
+		position: relative;
 	}
 }

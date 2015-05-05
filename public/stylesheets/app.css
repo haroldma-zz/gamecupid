@@ -10126,41 +10126,29 @@ article.post hr {
 * Detailpage
 *
 **/
-/* line 845, ../scss/_misc.scss */
-.detailpage {
-  position: relative;
-}
-/* line 847, ../scss/_misc.scss */
-.detailpage .left-side {
-  width: 40%;
-  float: left;
-  padding: 0 10px;
-  position: fixed;
-  z-index: 3;
+/* line 846, ../scss/_misc.scss */
+.detailpage .panel:first-of-type {
+  border-right: none;
 }
 @media only screen and (max-width: 40em) {
-  /* line 847, ../scss/_misc.scss */
-  .detailpage .left-side {
-    position: relative;
-    width: 100%;
-    left: 0;
-    float: none;
+  /* line 846, ../scss/_misc.scss */
+  .detailpage .panel:first-of-type {
+    border-right: 1px solid #e9e9e9;
   }
 }
-/* line 860, ../scss/_misc.scss */
-.detailpage .right-side {
-  width: 60%;
-  padding: 0 10px;
-  position: absolute;
-  z-index: 3;
-  left: 40%;
+/* line 852, ../scss/_misc.scss */
+.detailpage .panel {
+  min-height: 550px !important;
+}
+
+/* line 857, ../scss/_misc.scss */
+.fixed-column {
+  position: fixed;
 }
 @media only screen and (max-width: 40em) {
-  /* line 860, ../scss/_misc.scss */
-  .detailpage .right-side {
+  /* line 857, ../scss/_misc.scss */
+  .fixed-column {
     position: relative;
-    width: 100%;
-    left: 0;
   }
 }
 
