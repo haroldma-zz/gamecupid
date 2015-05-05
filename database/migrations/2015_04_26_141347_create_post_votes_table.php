@@ -3,7 +3,7 @@
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Database\Migrations\Migration;
 
-class CreateCrewRequestsTable extends Migration {
+class CreatePostVotesTable extends Migration {
 
 	/**
 	 * Run the migrations.
@@ -12,11 +12,11 @@ class CreateCrewRequestsTable extends Migration {
 	 */
 	public function up()
 	{
-		Schema::create('crew_requests', function(Blueprint $table) {
+		Schema::create('post_votes', function(Blueprint $table) {
             $table->increments('id');
+            $table->integer('post_id');
             $table->integer('user_id');
-            $table->integer('crew_id');
-            $table->tinyInteger('denied');
+            $table->tinyInteger('state');
             $table->timestamps();
         });
 	}
@@ -28,7 +28,7 @@ class CreateCrewRequestsTable extends Migration {
 	 */
 	public function down()
 	{
-		Schema::drop('crew_requests');
+		Schema::drop('post_votes');
 	}
 
 }

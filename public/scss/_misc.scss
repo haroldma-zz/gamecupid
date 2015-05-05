@@ -297,10 +297,10 @@ hr {
 
 /**
 *
-* Article / Invite
+* Article / post
 *
 **/
-article.invite {
+article.post {
 	width: 100%;
 	padding-bottom: 15px;
 
@@ -768,10 +768,10 @@ article.invite {
 
 /**
 *
-* INVITE FORM
+* post FORM
 *
 **/
-.invite-form {
+.post-form {
 	input.big-inline-input {
 		display: inline;
 		border: none;
@@ -808,7 +808,7 @@ article.invite {
 			}
 		}
 	}
-	#inviteTitle {
+	#postTitle {
 		border: none;
 		font-size: inherit;
 		height: auto;

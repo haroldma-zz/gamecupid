@@ -168,7 +168,7 @@ class PlatformValidatorController extends Controller
             if ($valid)
             {
                 $json = $this->authorizeXbox($client, $users_token);
-                
+
                 $valid = $json != null;
                 if ($valid)
                 {

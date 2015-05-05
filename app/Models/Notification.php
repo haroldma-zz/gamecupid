@@ -29,7 +29,7 @@ class Notification extends Model {
         if ($type == NotificationTypes::REP)
             $description = sprintf("%+d",$this->repEvent()->amount)." rep: ". $this->repEvent()->event;
         else if ($type == NotificationTypes::COMMENT_REPLY)
-            $description = $this->comment()->invite()->title;
+            $description = $this->comment()->post()->title;
 
         return new Laravel5DTO([
             'title' => $this->title(),

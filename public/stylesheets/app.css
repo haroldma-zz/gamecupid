@@ -9553,22 +9553,22 @@ hr {
 
 /**
 *
-* Article / Invite
+* Article / post
 *
 **/
 /* line 303, ../scss/_misc.scss */
-article.invite {
+article.post {
   width: 100%;
   padding-bottom: 15px;
 }
 /* line 307, ../scss/_misc.scss */
-article.invite header {
+article.post header {
   width: 100%;
   height: 50px;
   display: block;
 }
 /* line 311, ../scss/_misc.scss */
-article.invite header .img {
+article.post header .img {
   width: 40px;
   height: 40px;
   background: #ccc;
@@ -9579,29 +9579,29 @@ article.invite header .img {
   border-radius: 2px;
 }
 /* line 320, ../scss/_misc.scss */
-article.invite header .user-meta h6 {
+article.post header .user-meta h6 {
   font-weight: 500;
   margin-bottom: 0;
   font-size: 0.85em;
 }
 /* line 325, ../scss/_misc.scss */
-article.invite header .user-meta p {
+article.post header .user-meta p {
   font-size: 0.8em;
   color: #555;
 }
 /* line 332, ../scss/_misc.scss */
-article.invite section {
+article.post section {
   margin: 0;
   padding: 0;
 }
 /* line 336, ../scss/_misc.scss */
-article.invite section .meta-details {
+article.post section .meta-details {
   font-weight: 400;
   position: relative;
   padding-bottom: 5px;
 }
 /* line 341, ../scss/_misc.scss */
-article.invite section .meta-details .voters {
+article.post section .meta-details .voters {
   position: absolute;
   top: -5px;
   left: 0;
@@ -9611,72 +9611,72 @@ article.invite section .meta-details .voters {
   font-size: 0.85em;
 }
 /* line 349, ../scss/_misc.scss */
-article.invite section .meta-details .voters .arrows {
+article.post section .meta-details .voters .arrows {
   float: left;
   width: 15px;
   overflow: hidden;
   margin-right: 5px;
 }
 /* line 355, ../scss/_misc.scss */
-article.invite section .meta-details .voters .arrows i {
+article.post section .meta-details .voters .arrows i {
   cursor: pointer;
 }
 /* line 360, ../scss/_misc.scss */
-article.invite section .meta-details .voters .arrows #upvoter:hover {
+article.post section .meta-details .voters .arrows #upvoter:hover {
   color: #fbb450;
 }
 /* line 364, ../scss/_misc.scss */
-article.invite section .meta-details .voters .arrows #upvoter i.activated {
+article.post section .meta-details .voters .arrows #upvoter i.activated {
   color: #fbb450 !important;
 }
 /* line 370, ../scss/_misc.scss */
-article.invite section .meta-details .voters .arrows #downvoter:hover {
+article.post section .meta-details .voters .arrows #downvoter:hover {
   color: #7896cc;
 }
 /* line 374, ../scss/_misc.scss */
-article.invite section .meta-details .voters .arrows #downvoter i.activated {
+article.post section .meta-details .voters .arrows #downvoter i.activated {
   color: #7896cc !important;
 }
 /* line 379, ../scss/_misc.scss */
-article.invite section .meta-details .voters .count {
+article.post section .meta-details .voters .count {
   font-size: 0.55em;
   line-height: 45px;
 }
 /* line 386, ../scss/_misc.scss */
-article.invite section .panel {
+article.post section .panel {
   padding: 10px;
   background: #f7f7f7;
 }
 /* line 391, ../scss/_misc.scss */
-article.invite section p {
+article.post section p {
   font-size: 1.15em;
   font-weight: 400;
 }
 /* line 397, ../scss/_misc.scss */
-article.invite footer {
+article.post footer {
   width: 100%;
   margin-top: 25px;
 }
 /* line 401, ../scss/_misc.scss */
-article.invite footer a {
+article.post footer a {
   font-size: 0.85em;
   color: #777;
   margin-right: 15px;
 }
 /* line 406, ../scss/_misc.scss */
-article.invite footer a:hover {
+article.post footer a:hover {
   text-decoration: underline;
 }
 /* line 410, ../scss/_misc.scss */
-article.invite footer a:nth-child(1), article.invite footer a:nth-child(2) {
+article.post footer a:nth-child(1), article.post footer a:nth-child(2) {
   cursor: default;
 }
 /* line 412, ../scss/_misc.scss */
-article.invite footer a:nth-child(1):hover, article.invite footer a:nth-child(2):hover {
+article.post footer a:nth-child(1):hover, article.post footer a:nth-child(2):hover {
   text-decoration: none;
 }
 /* line 419, ../scss/_misc.scss */
-article.invite hr {
+article.post hr {
   width: 35px;
   margin: 25px 0;
   margin-bottom: 15px;
@@ -10048,11 +10048,11 @@ article.invite hr {
 
 /**
 *
-* INVITE FORM
+* post FORM
 *
 **/
 /* line 775, ../scss/_misc.scss */
-.invite-form input.big-inline-input {
+.post-form input.big-inline-input {
   display: inline;
   border: none;
   font-size: inherit;
@@ -10061,15 +10061,15 @@ article.invite hr {
   border-bottom: 1px dotted #5379be;
 }
 /* line 782, ../scss/_misc.scss */
-.invite-form input.big-inline-input:nth-child(1) {
+.post-form input.big-inline-input:nth-child(1) {
   width: 45px;
 }
 /* line 785, ../scss/_misc.scss */
-.invite-form input.big-inline-input:nth-child(2) {
+.post-form input.big-inline-input:nth-child(2) {
   width: auto;
 }
 /* line 789, ../scss/_misc.scss */
-.invite-form select {
+.post-form select {
   display: inline;
   border: none;
   font-size: inherit;
@@ -10080,20 +10080,20 @@ article.invite hr {
   outline: none !important;
 }
 /* line 798, ../scss/_misc.scss */
-.invite-form select.disabled {
+.post-form select.disabled {
   background: white;
   color: #c5c5c5;
 }
 /* line 804, ../scss/_misc.scss */
-.invite-form .more-details.disabled {
+.post-form .more-details.disabled {
   cursor: not-allowed;
 }
 /* line 806, ../scss/_misc.scss */
-.invite-form .more-details.disabled input, .invite-form .more-details.disabled textarea {
+.post-form .more-details.disabled input, .post-form .more-details.disabled textarea {
   pointer-events: none;
 }
 /* line 811, ../scss/_misc.scss */
-.invite-form #inviteTitle {
+.post-form #postTitle {
   border: none;
   font-size: inherit;
   height: auto;
@@ -10103,7 +10103,7 @@ article.invite hr {
   box-shadow: none;
 }
 /* line 818, ../scss/_misc.scss */
-.invite-form textarea {
+.post-form textarea {
   width: 100%;
   height: 200px;
   border: none;
@@ -14104,7 +14104,7 @@ ul {
 
 /**
 *
-* Invite form
+* post form
 *
 **/
 /* line 183, ../scss/app.scss */

@@ -25,12 +25,12 @@ class Comment extends Model {
     private $_downvoteCount = -1;
     private $_isUpvoted     = null;
     private $_isDownvoted   = null;
-    private $_invite   = null;
+    private $_post          = null;
 
 
     public function getPermalink()
     {
-        return $this->invite()->getPermalink() . hashId($this->id);
+        return $this->post()->getPermalink() . hashId($this->id);
     }
 
     public function castVote($state)
@@ -157,20 +157,20 @@ class Comment extends Model {
 		return $this->hasOne('App\Models\User', 'id', 'user_id');
 	}
 
-	public function invite()
+	public function post()
 	{
-        if ($this->_invite != null)
-            return $this->_invite;
+        if ($this->_post != null)
+            return $this->_post;
 
-        $key = generateCacheKeyWithId("model", "invite", $this->invite_id);
+        $key = generateCacheKeyWithId("model", "post", $this->post_id);
         if (hasCache($key, $cache)) {
-            $this->_invite = $cache;
+            $this->_post = $cache;
             return $cache;
         }
 
-        $this->_invite = $this->hasOne('App\Models\Invite', 'id', 'invite_id')->first();
+        $this->_post = $this->hasOne('App\Models\Post', 'id', 'post_id')->first();
 
-        return setCache($key, $this->_invite, Carbon::now()->addDay());
+        return setCache($key, $this->_post, Carbon::now()->addDay());
 	}
 
 	public function children()
@@ -212,7 +212,7 @@ class Comment extends Model {
 
     public function sortChildComments($sort, $limit, $cacheExpire)
     {
-        $key = generateCacheKeyWithId("invite", "comment-parents-$sort-l-$limit", $this->id);
+        $key = generateCacheKeyWithId("post", "comment-parents-$sort-l-$limit", $this->id);
         if ($cacheExpire != 0) {
             if (hasCache($key, $cache))
                 return $cache;

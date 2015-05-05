@@ -25,8 +25,7 @@
 			</div>
 			<div class="medium-6 columns text-right">
 				@if(Auth::check())
-				<a href="{!! url('/crew/create') !!}"><i class="ion-ios-people"></i></a>
-				<a href="{!! url('/invite') !!}"><i class="ion-plus"></i></a>
+				<a href="{!! url('/post') !!}"><i class="ion-plus"></i></a>
 				<a href="{!! url('/notifications') !!}" id="notificationsLink">
 					@if(Auth::user()->rNotifications()->where('read', false)->count() > 0)
 					<i class="ion-android-notifications orange-text" id="not-icon"></i>

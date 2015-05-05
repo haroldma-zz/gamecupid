@@ -5,26 +5,26 @@
 	<div class="row">
 		<div class="medium-5 columns" style="position: fixed;">
 			<div class="panel">
-				<article class="invite">
+				<article class="post">
 					<section>
 						<h4 class="meta-details">
-							<a href="{!! $invite->getPermalink() !!}">{{ $invite->title }}</a>
+							<a href="{!! $post->getPermalink() !!}">{{ $post->title }}</a>
 							<br>
 							<small>
-								<b>{{ $invite->game()->title }}</b>
+								<b>{{ $post->game()->title }}</b>
 								<br>
-								<time data-livestamp="{{ $invite->created_at->getTimestamp() }}"></time>
+								<time data-livestamp="{{ $post->created_at->getTimestamp() }}"></time>
 								by
 								<b>
-									<a href="{!! url('/gamer/' . $invite->user->username) !!}">{{ $invite->user->username }}</a>
+									<a href="{!! url('/gamer/' . $post->user->username) !!}">{{ $post->user->username }}</a>
 								</b>
 								&nbsp;&middot;&nbsp;
-								<b>{{ $invite->accepts->where('state', 2)->count() }}</b>{{ '/'.$invite->max_players }} player{{ ($invite->max_players > 1 ? 's' : '') }}
+								<b>{{ $post->accepts->where('state', 2)->count() }}</b>{{ '/'.$post->max_players }} player{{ ($post->max_players > 1 ? 's' : '') }}
 							</small>
 						</h4>
 						<div class="tagLabels">
-                            <span class="tagLabel" title="{{ $invite->console()->name  }}">{{ strtoupper($invite->console()->name)  }}</span>
-                            @if ($invite->verified_only)
+                            <span class="tagLabel" title="{{ $post->console()->name  }}">{{ strtoupper($post->console()->name)  }}</span>
+                            @if ($post->verified_only)
                                 <span class="tagLabel verified" title="Verified Only">VERIFIED ONLY</span>
                             @endif
 						</div>
@@ -47,7 +47,7 @@
 							<section id="emojis" class="emoji-intellisense">
 								<div class="emoji"></div>
 							</section>
-							<textarea class="form-control" placeholder="Write a comment" data-parenthash="{!! hashId(0) !!}" data-url="{!! url($invite->getPermalink()) !!}" data-hierarchy="parent" data-level="no-parent"></textarea>
+							<textarea class="form-control" placeholder="Write a comment" data-parenthash="{!! hashId(0) !!}" data-url="{!! url($post->getPermalink()) !!}" data-hierarchy="parent" data-level="no-parent"></textarea>
 						</div>
 						<button type="submit" class="btn primary medium" id="commentSubmitter">Comment</button>
 						<img id="progresser" src="{!! url('/img/loaders/dots.svg') !!}" width="40px">
@@ -65,16 +65,16 @@
 		</div>
 		<div class="medium-7 columns">
 			<div class="panel">
-				<h6>About this invite</h6>
+				<h6>About this post</h6>
 				<br>
 				<div class="markdown-text">
-					{!! $invite->self_text !!}
+					{!! $post->self_text !!}
 				</div>
 				<br>
 				<div class="comments">
 					<h6 class="comments-header">
 						<div class="left">
-							Comments (<span id="inviteCommentCount">{{ $invite->commentCount() }}</span>)
+							Comments (<span id="postCommentCount">{{ $post->commentCount() }}</span>)
 						</div>
 						<div class="right">
 							<small>
@@ -93,7 +93,7 @@
 						</div>
 					@else
 						<div id="commentsList">
-							{!! $invite->renderComments(Request::get("sort")) !!}
+							{!! $post->renderComments(Request::get("sort")) !!}
 						</div>
 					@endif
 				</div>

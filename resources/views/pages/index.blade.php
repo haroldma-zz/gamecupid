@@ -14,28 +14,28 @@
 						<a href="{!! url('/?sort=top') !!}" class="{{ (Request::get('sort') == 'top' ? 'active' : '') }}">Top</a>
 					</div>
 					<hr>
-					@if (count($invites) > 0)
-						@foreach($invites as $invite)
-						<article data-id="{{  hashId($invite->id) }}" class="invite">
+					@if (count($posts) > 0)
+						@foreach($posts as $post)
+						<article data-id="{{  hashId($post->id) }}" class="post">
 							<section>
 								<h4 class="meta-details">
-									<a href="{!! $invite->getPermalink() !!}">{{ $invite->title }}</a>
+									<a href="{!! $post->getPermalink() !!}">{{ $post->title }}</a>
 									<br>
 									<small>
-										<b>{{ $invite->game()->title }}</b>
+										<b>{{ $post->game()->title }}</b>
 										<br>
-										<time data-livestamp="{{ $invite->created_at->getTimestamp() }}"></time>
+										<time data-livestamp="{{ $post->created_at->getTimestamp() }}"></time>
 										by
 										<b>
-											<a href="{!! url('/gamer/' . $invite->user->username) !!}">{{ $invite->user->username }}</a>
+											<a href="{!! url('/gamer/' . $post->user->username) !!}">{{ $post->user->username }}</a>
 										</b>
 										&nbsp;&middot;&nbsp;
-										<b>{{ $invite->accepts->where('state', 2)->count() }}</b>{{ '/'.$invite->max_players }} player{{ ($invite->max_players > 1 ? 's' : '') }}
+										<b>{{ $post->accepts->where('state', 2)->count() }}</b>{{ '/'.$post->max_players }} player{{ ($post->max_players > 1 ? 's' : '') }}
 									</small>
 								</h4>
 								<div class="tagLabels">
-	                                <span class="tagLabel" title="{{ $invite->console()->name  }}">{{ strtoupper($invite->console()->name)  }}</span>
-	                                @if ($invite->verified_only)
+	                                <span class="tagLabel" title="{{ $post->console()->name  }}">{{ strtoupper($post->console()->name)  }}</span>
+	                                @if ($post->verified_only)
 	                                    <span class="tagLabel verified" title="Verified Only">VERIFIED ONLY</span>
 	                                @endif
 								</div>
@@ -45,7 +45,7 @@
 						@endforeach
 					@else
 						<h5>
-							There are no invites yet...
+							There are no posts yet...
 						</h5>
 					@endif
 				</div>
@@ -87,7 +87,7 @@
 				</ol>
 			</div>
 			<div class="panel">
-				<h5 class="super-header" style="letter-spacing: 3px;">1-on-1 quick invites</h5>
+				<h5 class="super-header" style="letter-spacing: 3px;">1-on-1 quick posts</h5>
 				<ul class="no-bullet text-justify">
 					<li>
 						<a href="">FIFA15 - Real Madrid vs ?</a>

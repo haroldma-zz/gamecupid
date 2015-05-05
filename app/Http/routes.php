@@ -2,18 +2,6 @@
 
 /*
 |--------------------------------------------------------------------------
-| Schema builder route
-|--------------------------------------------------------------------------
-|
-*/
-// Visit this route once to generate the tables in our db.
-// See App/Http/Controllers/TempController@makedb
-
-Route::get('/makedb', 'TempController@makedb');
-
-
-/*
-|--------------------------------------------------------------------------
 | Application Routes
 |--------------------------------------------------------------------------
 *
@@ -25,20 +13,20 @@ Route::get('/makedb', 'TempController@makedb');
 Route::get('/', 'PageController@index');
 Route::get('/login', 'PageController@login');
 
-Route::get('/invite/{hashid}/{slug}', 'PageController@invite');
-Route::get('/invite/{hashid}/{slug}/{context}', 'PageController@inviteWithContext');
+
+# Posts
+Route::get('/post/{hashid}/{slug}', 'PageController@post');
+Route::get('/post/{hashid}/{slug}/{context}', 'PageController@postWithContext');
+
 
 Route::get('/game/consoles', 'GameController@formConsoles');
 
+
+# Gamer profiles
 Route::get('/g/{username}', function($username) {
     return redirect("/gamer/$username", 301);
 });
 Route::get('/gamer/{username}', 'PageController@userProfile');
-
-Route::get('/c/{hashid}/{crewname}', function($hashid, $crewname) {
-    return redirect("/crew/$hashid/$crewname", 301);
-});
-Route::get('/crew/{hashid}/{crewname}', 'PageController@crewPage');
 
 
 
@@ -47,9 +35,9 @@ Route::post('/login', ['as' => 'user.login', 'uses' => 'UserController@login']);
 Route::post('/register', ['as' => 'user.register', 'uses' => 'UserController@register']);
 Route::post('/game/search', 'GameController@search');
 
-Route::post('/invite/upvote', 'InviteController@upvote');
-Route::post('/invite/downvote', 'InviteController@downvote');
-Route::post('/invite/{hashid}/{slug}', 'InviteController@comment');
+Route::post('/post/upvote', 'PostController@upvote');
+Route::post('/post/downvote', 'PostController@downvote');
+Route::post('/post/{hashid}/{slug}', 'PostController@comment');
 
 Route::post('/comment/upvote', 'CommentController@upvote');
 Route::post('/comment/downvote', 'CommentController@downvote');
@@ -79,9 +67,7 @@ Route::group(['middleware' => 'auth'], function()
 	Route::get('/notification', 'UserController@checkNotification');
 	Route::get('/notifications', 'PageController@notifications');
 
-	Route::get('/invite', 'PageController@inviteForm');
-
-	Route::get('/crew/create', 'PageController@crewForm');
+	Route::get('/post', 'PageController@postForm');
 
 
 	// POST routes
@@ -91,7 +77,7 @@ Route::group(['middleware' => 'auth'], function()
 
     Route::post('/markasread', 'UserController@markNotificationAsRead');
 
-    Route::post('/invite', 'InviteController@invite');
+    Route::post('/post', 'PostController@post');
 
 });
 

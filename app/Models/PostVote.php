@@ -2,23 +2,23 @@
 
 use Illuminate\Database\Eloquent\Model;
 
-class InviteVote extends Model {
+class PostVote extends Model {
 
     /**
      * The database table used by the model.
      *
      * @var string
      */
-    protected $table = 'invite_votes';
+    protected $table = 'post_votes';
 
     /**
      *
      * Relations
      *
      **/
-    public function invite()
+    public function post()
     {
-        return $this->belongsTo('App\Models\Invite', 'id', 'invite_id');
+        return $this->belongsTo('App\Models\Post', 'id', 'post_id');
     }
 
     public function user()
