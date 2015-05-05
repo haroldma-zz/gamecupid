@@ -64,12 +64,13 @@
 			</div>
 		</div>
 		<div class="right-side">
-			<h6>About this post</h6>
 			<div class="panel">
+				<h6>About this post</h6>
+				<br>
 				<div class="markdown-text">
 					{!! $post->self_text !!}
 				</div>
-				<br>
+				<br><br>
 				<div class="comments">
 					<h6 class="comments-header">
 						<div class="left">
