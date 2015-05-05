@@ -33,8 +33,8 @@
 					<a href="" class="btn success">
 						Request an invite
 					</a>
-					<hr>
 				</article>
+				<hr>
 				<div class="comments">
 					<div class="comment-box">
 						<h6>
@@ -71,11 +71,11 @@
 				<p>
 					{{ $post->game()->description }}
 				</p>
-				<br>
+				<hr>
 				<div class="markdown-text">
 					{!! $post->self_text !!}
 				</div>
-				<br><br><br>
+				<hr>
 				<div class="comments">
 					<h6 class="comments-header">
 						<div class="left">

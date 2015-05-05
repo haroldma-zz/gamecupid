@@ -39,6 +39,8 @@ BEGIN
 END$$
 DELIMITER ;
 
+DROP FUNCTION IF EXISTS calculateBest;
+
 DELIMITER $$
 CREATE FUNCTION calculateBest(ups INTEGER, downs INTEGER)
 RETURNS FLOAT
@@ -60,6 +62,8 @@ BEGIN
 
     return (leftSide - rightSide) / under;
 END$$
+
+DROP FUNCTION IF EXISTS calculateControversy;
 
 DELIMITER $$
 CREATE FUNCTION calculateControversy(ups INTEGER, downs INTEGER)
@@ -113,7 +117,7 @@ DELIMITER ;
 DROP procedure if exists GetHotPosts;
 
 DELIMITER //
-  CREATE PROCEDURE GetHotposts(afterId INTEGER, count INTEGER)
+  CREATE PROCEDURE GetHotPosts(afterId INTEGER, count INTEGER)
   BEGIN
     SELECT * FROM 
 		(SELECT *, if (id=afterId, @pos:=iterator, 0) as pos 
