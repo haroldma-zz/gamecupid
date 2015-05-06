@@ -8,10 +8,10 @@
 				<div class="feed" id="feedContainer" data-page="1" data-category="anytime">
 					<div class="sort-by">
 						<a href="{!! url('/?category=featured') !!}">Featured</a>
-						<a href="{!! url('/?category=today') !!}" class="{{ (Request::get('category') == 'today' || Request::get('category') == '' ? 'active' : '') }}">Today</a>
-						<a href="{!! url('/?category=asap') !!}" class="{{ (Request::get('category') == 'asap' ? 'active' : '') }}">ASAP</a>
-						<a href="{!! url('/?category=upcoming') !!}" class="{{ (Request::get('category') == 'upcoming' ? 'active' : '') }}">Upcoming</a>
+						<a href="{!! url('/') !!}" class="{{ (Request::get('category') == '' ? 'active' : '') }}">Front</a>
 						<a href="{!! url('/?category=anytime') !!}" class="{{ (Request::get('category') == 'anytime' ? 'active' : '') }}">Anytime</a>
+						<a href="{!! url('/?category=planned') !!}" class="{{ (Request::get('category') == 'planned' ? 'active' : '') }}">Planned</a>
+						<a href="{!! url('/?category=asap') !!}" class="{{ (Request::get('category') == 'asap' ? 'active' : '') }}">As Soon As Possible</a>
 					</div>
 					<hr>
 					@if (count($posts) > 0)

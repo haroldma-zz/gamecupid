@@ -4,6 +4,7 @@ use Auth;
 use App\Models\User;
 use App\Models\Console;
 use App\Models\Post;
+use App\Enums\Categories;
 use Illuminate\Http\Request;
 use Carbon\Carbon;
 use App\Models\Comment;
@@ -27,50 +28,51 @@ class PageController extends Controller {
 	**/
 	public function index(Request $request)
     {
+		$category     = $request->input('category', false);
+		$platform     = $request->input('platform', false);
+		$sort         = $request->input('sort', 'new');
 		$limit        = (int)$request->input('limit', 10);
+		$after        = decodeHashId($request->input('after', 0));
 		$fromTimezone = $request->input('ftz');
 		$toTimezone   = $request->input('ttz');
 		$useTimezone  = $fromTimezone != null;
-
-        if ($useTimezone)
-        {
-            // the smallest timezone -12 and biggest +14
-            $fromTimezone = max((int)$fromTimezone, hourToMinute(-12));
-            $fromTimezone = min($fromTimezone, hourToMinute(14));
-            $toTimezone = max((int)$toTimezone, $fromTimezone);
-            $toTimezone = min($toTimezone, hourToMinute(14));
-        }
-
-		$after    = decodeHashId($request->input('after', 0));
-        $sort     = $request->input('sort', 'hot');
-        $t     = $request->input('t', 'day');
-
-        $guardedLimit = min($limit, 100);
-        $guardedLimit = max($guardedLimit, 1);
-
-        $to   = Carbon::now();
-        $from = stringToFromDate($t);
-
-        $query = $useTimezone ? "GetHotPostsByTimezone($after, $guardedLimit, $fromTimezone, $toTimezone)"
-            : "GetHotPosts($after, $guardedLimit)";
-
-        if ($sort == "controversial")
-            $query = $useTimezone ? "GetControversialPostsByTimezone($after, $guardedLimit, '$from', '$to', $fromTimezone, $toTimezone)"
-                : "GetControversialPosts($after, $guardedLimit, '$from', '$to')";
-        else if ($sort == "top")
-            $query = $useTimezone ? "GetTopPostsByTimezone($after, $guardedLimit, '$from', '$to', $fromTimezone, $toTimezone)"
-            : "GetTopPosts($after, $guardedLimit, '$from', '$to')";
-        else if ($sort == "new")
-            $query = $useTimezone ? "GetNewPostsByTimezone($after, $guardedLimit, $fromTimezone, $toTimezone)"
-            : "GetNewPosts($after, $guardedLimit)";
+		$t            = $request->input('t', 'day');
+		$guardedLimit = min($limit, 100);
+		$guardedLimit = max($guardedLimit, 1);
+		$to           = Carbon::now();
+		$from         = stringToFromDate($t);
 
 
-        $posts = Post::hydrateRaw('CALL ' . $query);
+    	if ($category != false)
+    	{
+			switch($category)
+			{
+				case "anytime":
+					$category = Categories::ANYTIME;
+					break;
+				case "planned":
+					$category = Categories::PLANNED;
+					break;
+				case "asap":
+					$category = Categories::ASAP;
+					break;
+			}
 
-        $topPlayers = User::topPlayers();
+			$posts = Post::where('category', $category)->orderBy('created_at', ($sort == 'new' ? 'DESC' : 'ASC'))->take($limit)->get();
+    	}
+    	else
+    	{
+    		$posts = Post::orderBy('created_at', ($sort == 'new' ? 'DESC' : 'ASC'))->take($limit)->get();
+    	}
+
 
         if ($request->ajax())
             return invitesToDtos($posts);
+
+
+        # Only fetch topPlayers if $request is not ajax
+        $topPlayers = User::topPlayers();
+
 
 		return view('pages.index', ['posts' => $posts, 'topPlayers' => $topPlayers]);
 	}
