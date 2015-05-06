@@ -66,8 +66,7 @@ class PageController extends Controller {
 
         $posts = Post::hydrateRaw('CALL ' . $query);
 
-        $topPlayers = new User;
-        $topPlayers = $topPlayers->topPlayers();
+        $topPlayers = User::topPlayers();
 
         if ($request->ajax())
             return invitesToDtos($posts);

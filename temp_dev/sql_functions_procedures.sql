@@ -46,9 +46,9 @@ CREATE FUNCTION calculateBest(ups INTEGER, downs INTEGER)
 RETURNS FLOAT
 BEGIN
     DECLARE n, z, p, leftSide, rightSide, under FLOAT;
-    
+
     SET n = ups + downs;
-    
+
     IF (n = 0) THEN
         return 0;
     END IF;
@@ -70,15 +70,15 @@ CREATE FUNCTION calculateControversy(ups INTEGER, downs INTEGER)
 RETURNS FLOAT
 BEGIN
     DECLARE magnitude, balance FLOAT;
-    
+
     IF (downs <= 0 or ups <= 0) then
        return 0;
     END IF;
 
     SET magnitude = ups + downs;
     if (ups > downs) then
-	    SET balance = downs / ups;  
-	 ELSE 
+	    SET balance = downs / ups;
+	 ELSE
 	 	 SET balance = ups / downs;
 	 END IF;
 
@@ -92,10 +92,10 @@ DROP PROCEDURE if exists GetNewPosts;
 DELIMITER //
   CREATE PROCEDURE GetNewPosts(afterId INTEGER, count INTEGER)
   BEGIN
-	   SELECT * 
+	   SELECT *
 	   FROM posts as cm
-	   WHERE id < IF(0 = 0, (SELECT COUNT(*) + 1 FROM posts), 0) 
-	   ORDER BY id DESC LIMIT 10;   
+	   WHERE id < IF(0 = 0, (SELECT COUNT(*) + 1 FROM posts), 0)
+	   ORDER BY id DESC LIMIT 10;
 	END //
 DELIMITER ;
 
@@ -104,12 +104,12 @@ DROP PROCEDURE if exists GetNewPostsByTimezone;
 DELIMITER //
   CREATE PROCEDURE GetNewPostsByTimezone(afterId INTEGER, count INTEGER, fromTimezone SMALLINT, toTimezone SMALLINT)
   BEGIN
-	   SELECT * 
+	   SELECT *
 	   FROM posts as cm
 	   INNER JOIN (SELECT id as u_id, timezone FROM users) AS v ON u_id=user_id
-	   WHERE id < IF(0 = 0, (SELECT COUNT(*) + 1 FROM posts), 0) 
+	   WHERE id < IF(0 = 0, (SELECT COUNT(*) + 1 FROM posts), 0)
 	   AND calculateTimezoneOffset(timezone) between fromTimezone and toTimezone
-	   ORDER BY id DESC LIMIT 10;   
+	   ORDER BY id DESC LIMIT 10;
 	END //
 DELIMITER ;
 
@@ -119,15 +119,15 @@ DROP procedure if exists GetHotPosts;
 DELIMITER //
   CREATE PROCEDURE GetHotPosts(afterId INTEGER, count INTEGER)
   BEGIN
-    SELECT * FROM 
-		(SELECT *, if (id=afterId, @pos:=iterator, 0) as pos 
+    SELECT * FROM
+		(SELECT *, if (id=afterId, @pos:=iterator, 0) as pos
 			FROM (SELECT @i:=@i+1 AS iterator, t.*
 	    		FROM (SELECT *, calculateHotness(ups, downs, created_at) as sort FROM (SELECT * FROM posts AS cm
-	    		INNER JOIN (SELECT post_id, 
+	    		INNER JOIN (SELECT post_id,
 			      SUM(IF(state = 1, 1, 0)) as ups,
 			      SUM(IF(state = 0, 1, 0)) as downs
-			    	FROM post_votes GROUP BY post_id) 
-			    	AS v ON v.post_id=cm.id) e ORDER by sort desc) AS t, (SELECT @i:=0, @pos:=0) i) x) l 
+			    	FROM post_votes GROUP BY post_id)
+			    	AS v ON v.post_id=cm.id) e ORDER by sort desc) AS t, (SELECT @i:=0, @pos:=0) i) x) l
 		WHERE iterator > if (@pos = null, 0, @pos) LIMIT count;
    END //
 DELIMITER ;
@@ -137,17 +137,17 @@ DROP procedure if exists GetHotPostsByTimezone;
 DELIMITER //
   CREATE PROCEDURE GetHotPostsByTimezone(afterId INTEGER, count INTEGER, fromTimezone SMALLINT, toTimezone SMALLINT)
   BEGIN
-    SELECT * FROM 
-		(SELECT *, if (id=afterId, @pos:=iterator, 0) as pos 
+    SELECT * FROM
+		(SELECT *, if (id=afterId, @pos:=iterator, 0) as pos
 			FROM (SELECT @i:=@i+1 AS iterator, t.*
 	    		FROM (SELECT *, calculateHotness(ups, downs, created_at) as sort FROM (SELECT * FROM posts AS cm
 	    		INNER JOIN (SELECT id as u_id, timezone FROM users) AS vv ON u_id=user_id
-	    		INNER JOIN (SELECT post_id, 
+	    		INNER JOIN (SELECT post_id,
 			      SUM(IF(state = 1, 1, 0)) as ups,
 			      SUM(IF(state = 0, 1, 0)) as downs
-			    	FROM post_votes GROUP BY post_id) 
+			    	FROM post_votes GROUP BY post_id)
 			    	AS v ON v.post_id=cm.id) e ORDER by sort desc) AS t, (SELECT @i:=0, @pos:=0) i) x
-			    	WHERE calculateTimezoneOffset(timezone) between fromTimezone and toTimezone) l 
+			    	WHERE calculateTimezoneOffset(timezone) between fromTimezone and toTimezone) l
 		WHERE iterator > if (@pos = null, 0, @pos) LIMIT count;
    END //
 DELIMITER ;
@@ -159,17 +159,17 @@ DROP procedure if exists GetControversialPosts;
 DELIMITER //
   CREATE PROCEDURE GetControversialPosts(afterId INTEGER, count INTEGER, fromDate DATETIME, toDate DATETIME)
   BEGIN
-    SELECT * FROM 
-		(SELECT *, if (id=afterId, @pos:=iterator, 0) as pos 
+    SELECT * FROM
+		(SELECT *, if (id=afterId, @pos:=iterator, 0) as pos
 			FROM (SELECT @i:=@i+1 AS iterator, t.*
 	    		FROM (SELECT *, calculateControversy(ups, downs) as sort FROM (SELECT * FROM posts AS cm
-	    		INNER JOIN (SELECT post_id, 
+	    		INNER JOIN (SELECT post_id,
 			      SUM(IF(state = 1, 1, 0)) as ups,
 			      SUM(IF(state = 0, 1, 0)) as downs
 			    	FROM post_votes
 			    	GROUP BY post_id) AS v
-			      	ON v.post_id=cm.id) e ORDER by sort desc) AS t, (SELECT @i:=0, @pos:=0) i) x 
-			WHERE sort > 0 and created_at BETWEEN fromDate and toDate) l 
+			      	ON v.post_id=cm.id) e ORDER by sort desc) AS t, (SELECT @i:=0, @pos:=0) i) x
+			WHERE sort > 0 and created_at BETWEEN fromDate and toDate) l
 		WHERE iterator > if (@pos = null, 0, @pos) LIMIT count;
    END //
 DELIMITER ;
@@ -180,18 +180,18 @@ DROP procedure if exists GetControversialPostsByTimezone;
 DELIMITER //
   CREATE PROCEDURE GetControversialPostsByTimezone(afterId INTEGER, count INTEGER, fromDate DATETIME, toDate DATETIME, fromTimezone SMALLINT, toTimezone SMALLINT)
   BEGIN
-    SELECT * FROM 
-		(SELECT *, if (id=afterId, @pos:=iterator, 0) as pos 
+    SELECT * FROM
+		(SELECT *, if (id=afterId, @pos:=iterator, 0) as pos
 			FROM (SELECT @i:=@i+1 AS iterator, t.*
 	    		FROM (SELECT *, calculateControversy(ups, downs) as sort FROM (SELECT * FROM posts AS cm
 	    		INNER JOIN (SELECT id as u_id, timezone FROM users) AS vv ON u_id=user_id
-	    		INNER JOIN (SELECT post_id, 
+	    		INNER JOIN (SELECT post_id,
 			      SUM(IF(state = 1, 1, 0)) as ups,
 			      SUM(IF(state = 0, 1, 0)) as downs
 			    	FROM post_votes
 			    	GROUP BY post_id) AS v
-			      	ON v.post_id=cm.id) e ORDER by sort desc) AS t, (SELECT @i:=0, @pos:=0) i) x 
-			WHERE sort > 0 and created_at BETWEEN fromDate and toDate and calculateTimezoneOffset(timezone) between fromTimezone and toTimezone) l 
+			      	ON v.post_id=cm.id) e ORDER by sort desc) AS t, (SELECT @i:=0, @pos:=0) i) x
+			WHERE sort > 0 and created_at BETWEEN fromDate and toDate and calculateTimezoneOffset(timezone) between fromTimezone and toTimezone) l
 		WHERE iterator > if (@pos = null, 0, @pos) LIMIT count;
    END //
 DELIMITER ;
@@ -202,17 +202,17 @@ DROP procedure if exists GetTopPosts;
 DELIMITER //
   CREATE PROCEDURE GetTopPosts(afterId INTEGER, count INTEGER, fromDate DATETIME, toDate DATETIME)
   BEGIN
-    SELECT * FROM 
-		(SELECT *, if (id=afterId, @pos:=iterator, 0) as pos 
+    SELECT * FROM
+		(SELECT *, if (id=afterId, @pos:=iterator, 0) as pos
 			FROM (SELECT @i:=@i+1 AS iterator, t.*
 	    		FROM (SELECT *, ups - downs as sort FROM (SELECT * FROM posts AS cm
-	    		INNER JOIN (SELECT post_id, 
+	    		INNER JOIN (SELECT post_id,
 			      SUM(IF(state = 1, 1, 0)) as ups,
 			      SUM(IF(state = 0, 1, 0)) as downs
 			    	FROM post_votes
 			    	GROUP BY post_id) AS v
-			      	ON v.post_id=cm.id) e ORDER by sort desc) AS t, (SELECT @i:=0, @pos:=0) i) x 
-			WHERE sort > 0 and created_at BETWEEN fromDate and toDate) l 
+			      	ON v.post_id=cm.id) e ORDER by sort desc) AS t, (SELECT @i:=0, @pos:=0) i) x
+			WHERE sort > 0 and created_at BETWEEN fromDate and toDate) l
 		WHERE iterator > if (@pos = null, 0, @pos) LIMIT count;
    END //
 DELIMITER ;
@@ -222,18 +222,18 @@ DROP procedure if exists GetTopPostsByTimezone;
 DELIMITER //
   CREATE PROCEDURE GetTopPostsByTimezone(afterId INTEGER, count INTEGER, fromDate DATETIME, toDate DATETIME, fromTimezone SMALLINT, toTimezone SMALLINT)
   BEGIN
-    SELECT * FROM 
-		(SELECT *, if (id=afterId, @pos:=iterator, 0) as pos 
+    SELECT * FROM
+		(SELECT *, if (id=afterId, @pos:=iterator, 0) as pos
 			FROM (SELECT @i:=@i+1 AS iterator, t.*
 	    		FROM (SELECT *, ups - downs as sort FROM (SELECT * FROM posts AS cm
 	    		INNER JOIN (SELECT id as u_id, timezone FROM users) AS vv ON u_id=user_id
-	    		INNER JOIN (SELECT post_id, 
+	    		INNER JOIN (SELECT post_id,
 			      SUM(IF(state = 1, 1, 0)) as ups,
 			      SUM(IF(state = 0, 1, 0)) as downs
 			    	FROM post_votes
 			    	GROUP BY post_id) AS v
-			      	ON v.post_id=cm.id) e ORDER by sort desc) AS t, (SELECT @i:=0, @pos:=0) i) x 
-			WHERE sort > 0 and created_at BETWEEN fromDate and toDate and calculateTimezoneOffset(timezone) between fromTimezone and toTimezone) l 
+			      	ON v.post_id=cm.id) e ORDER by sort desc) AS t, (SELECT @i:=0, @pos:=0) i) x
+			WHERE sort > 0 and created_at BETWEEN fromDate and toDate and calculateTimezoneOffset(timezone) between fromTimezone and toTimezone) l
 		WHERE iterator > if (@pos = null, 0, @pos) LIMIT count;
    END //
 DELIMITER ;
@@ -254,17 +254,17 @@ DROP procedure if exists GetHotComments;
 DELIMITER //
   CREATE PROCEDURE GetHotComments(postId INTEGER, parentId INTEGER, afterId INTEGER, count INTEGER)
   BEGIN
-    SELECT * FROM 
-		(SELECT *, if (id=afterId, @pos:=iterator, 0) as pos 
+    SELECT * FROM
+		(SELECT *, if (id=afterId, @pos:=iterator, 0) as pos
 			FROM (SELECT @i:=@i+1 AS iterator, t.*
 	    		FROM (SELECT *, calculateHotness(ups, downs, created_at) as sort FROM (SELECT * FROM comments AS cm
-	    		INNER JOIN (SELECT comment_id, 
+	    		INNER JOIN (SELECT comment_id,
 			      SUM(IF(state = 1, 1, 0)) as ups,
 			      SUM(IF(state = 0, 1, 0)) as downs
 			    	FROM comment_votes
 			    	GROUP BY comment_id) AS v
-			      	ON v.comment_id=cm.id) e ORDER by sort desc) AS t, (SELECT @i:=0, @pos:=0) i) x 
-			WHERE IF(parent_id = 0, post_id = postId and parent_id = 0, parent_id = parentId)) l 
+			      	ON v.comment_id=cm.id) e ORDER by sort desc) AS t, (SELECT @i:=0, @pos:=0) i) x
+			WHERE IF(parent_id = 0, post_id = postId and parent_id = 0, parent_id = parentId)) l
 		WHERE iterator > if (@pos = null, 0, @pos) LIMIT count;
    END //
 DELIMITER ;
@@ -275,17 +275,17 @@ DROP procedure if exists GetBestComments;
 DELIMITER //
   CREATE PROCEDURE GetBestComments(postId INTEGER, parentId INTEGER, afterId INTEGER, count INTEGER)
   BEGIN
-    SELECT * FROM 
-		(SELECT *, if (id=afterId, @pos:=iterator, 0) as pos 
+    SELECT * FROM
+		(SELECT *, if (id=afterId, @pos:=iterator, 0) as pos
 			FROM (SELECT @i:=@i+1 AS iterator, t.*
 	    		FROM (SELECT *, calculateBest(ups, downs) as sort FROM (SELECT * FROM comments AS cm
-	    		INNER JOIN (SELECT comment_id, 
+	    		INNER JOIN (SELECT comment_id,
 			      SUM(IF(state = 1, 1, 0)) as ups,
 			      SUM(IF(state = 0, 1, 0)) as downs
 			    	FROM comment_votes
 			    	GROUP BY comment_id) AS v
-			      	ON v.comment_id=cm.id) e ORDER by sort desc) AS t, (SELECT @i:=0, @pos:=0) i) x 
-			WHERE IF(parent_id = 0, post_id = postId and parent_id = 0, parent_id = parentId)) l 
+			      	ON v.comment_id=cm.id) e ORDER by sort desc) AS t, (SELECT @i:=0, @pos:=0) i) x
+			WHERE IF(parent_id = 0, post_id = postId and parent_id = 0, parent_id = parentId)) l
 		WHERE iterator > if (@pos = null, 0, @pos) LIMIT count;
    END //
 DELIMITER ;
@@ -296,17 +296,17 @@ DROP procedure if exists GetControversialComments;
 DELIMITER //
   CREATE PROCEDURE GetControversialComments(postId INTEGER, parentId INTEGER, afterId INTEGER, count INTEGER)
   BEGIN
-    SELECT * FROM 
-		(SELECT *, if (id=afterId, @pos:=iterator, 0) as pos 
+    SELECT * FROM
+		(SELECT *, if (id=afterId, @pos:=iterator, 0) as pos
 			FROM (SELECT @i:=@i+1 AS iterator, t.*
 	    		FROM (SELECT *, calculateControversy(ups, downs) as sort FROM (SELECT * FROM comments AS cm
-	    		INNER JOIN (SELECT comment_id, 
+	    		INNER JOIN (SELECT comment_id,
 			      SUM(IF(state = 1, 1, 0)) as ups,
 			      SUM(IF(state = 0, 1, 0)) as downs
 			    	FROM comment_votes
 			    	GROUP BY comment_id) AS v
-			      	ON v.comment_id=cm.id) e ORDER by sort desc) AS t, (SELECT @i:=0, @pos:=0) i) x 
-			WHERE IF(parent_id = 0, post_id = postId and parent_id = 0, parent_id = parentId)) l 
+			      	ON v.comment_id=cm.id) e ORDER by sort desc) AS t, (SELECT @i:=0, @pos:=0) i) x
+			WHERE IF(parent_id = 0, post_id = postId and parent_id = 0, parent_id = parentId)) l
 		WHERE iterator > if (@pos = null, 0, @pos) LIMIT count;
    END //
 DELIMITER ;
@@ -318,17 +318,47 @@ DROP procedure if exists GetTopComments;
 DELIMITER //
   CREATE PROCEDURE GetTopComments(postId INTEGER, parentId INTEGER, afterId INTEGER, count INTEGER)
   BEGIN
-    SELECT * FROM 
-		(SELECT *, if (id=afterId, @pos:=iterator, 0) as pos 
+    SELECT * FROM
+		(SELECT *, if (id=afterId, @pos:=iterator, 0) as pos
 			FROM (SELECT @i:=@i+1 AS iterator, t.*
 	    		FROM (SELECT *, ups - downs as sort FROM (SELECT * FROM comments AS cm
-	    		INNER JOIN (SELECT comment_id, 
+	    		INNER JOIN (SELECT comment_id,
 			      SUM(IF(state = 1, 1, 0)) as ups,
 			      SUM(IF(state = 0, 1, 0)) as downs
 			    	FROM comment_votes
 			    	GROUP BY comment_id) AS v
-			      	ON v.comment_id=cm.id) e ORDER by sort desc) AS t, (SELECT @i:=0, @pos:=0) i) x 
-			WHERE IF(parent_id = 0, post_id = postId and parent_id = 0, parent_id = parentId)) l 
+			      	ON v.comment_id=cm.id) e ORDER by sort desc) AS t, (SELECT @i:=0, @pos:=0) i) x
+			WHERE IF(parent_id = 0, post_id = postId and parent_id = 0, parent_id = parentId)) l
 		WHERE iterator > if (@pos = null, 0, @pos) LIMIT count;
    END //
 DELIMITER ;
+
+
+
+DROP procedure if exists GetBestGamers;
+
+DELIMITER //
+	CREATE PROCEDURE GetBestGamers(count INTEGER)
+	BEGIN
+		SELECT * FROM (SELECT y.*, x.total - (SELECT COUNT(*) FROM reps WHERE user_id = id) + (UNIX_TIMESTAMP(created_at) / 45000) as total
+		FROM users AS y
+		INNER JOIN (SELECT user_id, SUM(y.total) as total
+		FROM (SELECT user_id, (SELECT sum(amount) FROM rep_events WHERE id=rep_event_id) as total
+		     FROM reps) y GROUP BY user_id) x ON user_id=y.id) l ORDER BY total desc LIMIT count;
+	END //
+DELIMITER ;
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
