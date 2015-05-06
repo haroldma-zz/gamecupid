@@ -1,8 +1,20 @@
+// Init sounds
+ion.sound({
+    sounds: [
+        {name: "notification"}
+    ],
+
+    // main config
+    path: "/sounds/",
+    preload: true,
+    multiplay: true,
+    volume: 0.9
+});
+
 function checkForNotification() {
 	$.getJSON('/notification', function(res)
 	{
-        console.log(res);
-		if (res)
+		if (res.length > 0)
 		{
             if ($('#notification').length) {
                 $('#notification').remove();
@@ -21,13 +33,32 @@ function checkForNotification() {
                 notification += '</h6>';
                 notification += '</div>';
 
+                var nicon = $('#not-icon');
+                var counter = $('#u-not-read-count');
+
+                if (!nicon.hasClass('orange-text'))
+                    nicon.addClass('orange-text').removeClass('ion-android-notifications-none').addClass('ion-android-notifications');
+
+                if (counter.text() == '')
+                    var count = 0;
+                else
+                    var count = parseInt(counter.text());
+
+                counter.html(count + 1);
+
                 $('body').append(notification);
+                ion.sound.play("notification");
+
+                checkForNotification();
             }
 		}
-		setTimeout(function()
-		{
-			checkForNotification();
-		}, 10000);
+        else
+        {
+            setTimeout(function()
+            {
+                checkForNotification();
+            }, 10000);
+        }
 	});
 }
 

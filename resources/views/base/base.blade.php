@@ -63,6 +63,7 @@
 	{!! HTML::script('js/app.js') !!}
 	{!! HTML::script('js/voter.js') !!}
 	@if(Auth::check())
+	{!! HTML::script('js/ion.sound.min.js') !!}
 	{!! HTML::script('js/notifier.js') !!}
 	@endif
 	@yield('scripts')
