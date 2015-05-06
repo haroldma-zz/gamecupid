@@ -12,26 +12,9 @@ class CreatePostsTable extends Migration {
 	 */
 	public function up()
 	{
-		Schema::dropIfExists('posts');
-
-		Schema::create('posts', function(Blueprint $table) {
-            $table->increments('id');
-            $table->tinyInteger('type');
-            $table->tinyInteger('is_self_text');
-            $table->tinyInteger('category');
-            $table->string('title');
-            $table->string('slug');
-            $table->mediumText('markdown_text');
-            $table->mediumText('self_text');
-            $table->string('flair_text');
-            $table->integer('max_players');
-            $table->tinyInteger('featured');
-            $table->tinyInteger('verified_only');
-            $table->string('dates')->nullable();
-            $table->integer('user_id');
-            $table->integer('game_id');
-            $table->integer('console_id');
-            $table->timestamps();
+		Schema::table('posts', function(Blueprint $table) {
+            $table->tinyInteger('category')->after('type');
+            $table->string('dates')->nullable()->after('verified_only');
         });
 	}
 
