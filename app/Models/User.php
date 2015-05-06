@@ -113,26 +113,27 @@ class User extends Model implements AuthenticatableContract, CanResetPasswordCon
 	}
 
 	// Function to return top 10 players
-    private static $_topPlayers = [];
-	public static function topPlayers($useCache = true)
+    private static $_bestGamers = [];
+	public static function bestGamers($useCache = true)
 	{
-        if (Self::$_topPlayers != null)
-            return Self::$_topPlayers;
+        if (Self::$_bestGamers != null)
+            return Self::$_bestGamers;
 
         $key = generateCacheKey("user", "topgamers");
         if ($useCache && hasCache($key, $cache)) {
-            Self::$_topPlayers = $cache;
+            Self::$_bestGamers = $cache;
             return $cache;
         }
 
-		if (count(Self::$_topPlayers) == 0)
-            Self::$_topPlayers = [];
+		if (count(Self::$_bestGamers) == 0)
+            Self::$_bestGamers = [];
 
-		Self::$_topPlayers =  User::hydrateRaw("call GetBestGamers(10)");
+		Self::$_bestGamers = User::hydrateRaw("call GetBestGamers(10)");
+		Self::$_bestGamers = bestGamersToDto(Self::$_bestGamers);
 
 		if ($useCache)
-        	return setCache($key, Self::$_topPlayers, Carbon::now()->addDay());
-		return Self::$_topPlayers;
+        	return setCache($key, Self::$_bestGamers, Carbon::now()->addDay());
+		return Self::$_bestGamers;
 	}
 
     private $factor = 3.0;

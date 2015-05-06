@@ -70,11 +70,11 @@ class PageController extends Controller {
             return invitesToDtos($posts);
 
 
-        # Only fetch topPlayers if $request is not ajax
-        $topPlayers = User::topPlayers();
+        # Only fetch bestGamers if $request is not ajax
+        $bestGamers = User::bestGamers();
 
 
-		return view('pages.index', ['posts' => $posts, 'topPlayers' => $topPlayers]);
+		return view('pages.index', ['posts' => $posts, 'bestGamers' => $bestGamers]);
 	}
 
 

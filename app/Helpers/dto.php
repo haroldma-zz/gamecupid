@@ -83,3 +83,18 @@ function postsToDtos($posts) {
 
     return new Collection($dtos);
 }
+
+function bestGamersToDto($gamers)
+{
+    $players = [];
+
+    foreach ($gamers as $gamer) {
+        $players[] = new Laravel5DTO([
+            'username' => $gamer->username,
+            'level'    => $gamer->level(),
+            'rep'      => $gamer->rep()
+        ]);
+    }
+
+    return new Collection($players);
+}
