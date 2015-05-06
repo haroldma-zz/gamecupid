@@ -14,18 +14,23 @@ function createNotification($thingId, $userId = null)
     return $not;
 }
 
-function notifiedAboutComment($commentId, $userId = null)
+function notifiedAboutCommentReply($commentId, $userId = null)
 {
     $not           = createNotification($commentId, $userId);
     $not->type     = NotificationTypes::COMMENT_REPLY;
-    $not->notified = false;
-    $not->read     = false;
+    return $not->save();
+}
+
+function notifiedAboutComment($commentId, $userId = null)
+{
+    $not           = createNotification($commentId, $userId);
+    $not->type     = NotificationTypes::POST_COMMENT;
     return $not->save();
 }
 
 function notifiedAboutRepEvent($repEvent, $userId = null)
 {
-    $not              = createNotification($repEvent, $userId);
-    $not->type        = NotificationTypes::REP;
+    $not           = createNotification($repEvent, $userId);
+    $not->type     = NotificationTypes::REP;
     return $not->save();
 }

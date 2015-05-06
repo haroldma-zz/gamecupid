@@ -46,44 +46,58 @@ $('[id="markNotificationAsReadBtn"').click(function()
 	var unrc  = parseInt($('#u-not-read-count').text());
 	var icon  = $('#not-icon');
 
+	if (txt == 'mark as read')
+	{
+		el.parent().parent().parent().find('h5').removeClass('bold');
+		el.text('mark as unread');
+
+		unrc -= 1;
+
+		if (unrc > 0)
+		{
+			$('#u-not-read-count').text(unrc);
+		}
+		else
+		{
+			$('#not-icon').addClass('ion-android-notifications-none');
+			$('#not-icon').removeClass('orange-text');
+			$('#u-not-read-count').text('');
+		}
+	}
+	else
+	{
+		el.parent().parent().parent().find('h5').addClass('bold');
+		el.text('mark as read');
+
+		if (!unrc)
+		{
+			unrc = 0;
+		}
+
+		unrc += 1;
+
+		$('#u-not-read-count').text(unrc);
+		$('#not-icon').removeClass('ion-android-notifications-none');
+		$('#not-icon').addClass('ion-android-notifications orange-text');
+	}
+
 	$.post('/markasread', {_token:token, id:id}, function(res)
 	{
-		if (res == 'marked')
+		if (res != 'marked')
 		{
-			if (txt == 'mark as read')
+			el.parent().parent().parent().find('h5').addClass('bold');
+			el.text('mark as read');
+
+			if (!unrc)
 			{
-				el.parent().parent().parent().find('h5').removeClass('bold');
-				el.text('mark as unread');
-
-				unrc -= 1;
-
-				if (unrc > 0)
-				{
-					$('#u-not-read-count').text(unrc);
-				}
-				else
-				{
-					$('#not-icon').addClass('ion-android-notifications-none');
-					$('#not-icon').removeClass('orange-text');
-					$('#u-not-read-count').text('');
-				}
+				unrc = 0;
 			}
-			else
-			{
-				el.parent().parent().parent().find('h5').addClass('bold');
-				el.text('mark as read');
 
-				if (!unrc)
-				{
-					unrc = 0;
-				}
+			unrc += 1;
 
-				unrc += 1;
-
-				$('#u-not-read-count').text(unrc);
-				$('#not-icon').removeClass('ion-android-notifications-none');
-				$('#not-icon').addClass('ion-android-notifications orange-text');
-			}
+			$('#u-not-read-count').text(unrc);
+			$('#not-icon').removeClass('ion-android-notifications-none');
+			$('#not-icon').addClass('ion-android-notifications orange-text');
 		}
 	});
 });
