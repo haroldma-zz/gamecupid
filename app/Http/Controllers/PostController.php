@@ -246,10 +246,10 @@ class PostController extends Controller {
             $comment->castVote(VoteStates::UP);
 
             if ($parentId != 0 && $parent->user_id != $comment->user_id)
-                notifiedAboutComment($comment->id, $parent->user_id);
+                notifiedAboutCommentReply($comment->id, $parent->user_id);
 
-            if ($parentId == 0)
-            	notifiedAboutComment($comment->id, $post->user_id);
+            if ($parentId == 0 && $post->user_id != $comment->user_id)
+            	notifiedAboutComment($post->id, $post->user_id);
 
             if ($request->ajax())
             	return ['3', ['created_at' => $comment->created_at, 'hashId' => hashId($comment->id), 'self_text' => $comment->self_text, 'permalink' => $comment->post()->getPermalink()]]; 			# comment success

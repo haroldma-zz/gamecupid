@@ -14,11 +14,13 @@
 						</h5>
                         @if ($n->type == \App\Enums\NotificationTypes::COMMENT_REPLY)
                             <a class="text-primary" href="{{ $n->comment()->post()->getPermalink() }}">{{ $n->comment()->post()->title }}</a>
+                        @elseif ($n->type == \App\Enums\NotificationTypes::POST_COMMENT)
+                        	<a class="text-primary" href="{{ $n->post()->getPermalink() }}">{{ $n->post()->title }}</a>
                         @endif
 						<p>
                             @if ($n->type == \App\Enums\NotificationTypes::REP)
 							    <span class="bold">{{ sprintf("%+d",$n->repEvent()->amount) }} rep:</span> {{ $n->repEvent()->event }}
-                            @elseif ($n->type == \App\Enums\NotificationTypes::COMMENT_REPLY)
+                            @elseif ($n->type == \App\Enums\NotificationTypes::COMMENT_REPLY || $n->type == \App\Enums\NotificationTypes::POST_COMMENT)
                                 {!! $n->comment()->self_text !!}
                             @endif
 						</p>

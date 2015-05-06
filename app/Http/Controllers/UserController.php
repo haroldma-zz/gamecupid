@@ -75,7 +75,7 @@ class UserController extends Controller {
 		}
 		else
 		{
-			return redirect()->back()->withInput()->with('notice', ['error', 'Wrong e-mail/password combination.']);
+			return redirect()->back()->withInput()->with('notice', ['error', 'Wrong username/password combination.']);
 		}
 	}
 
@@ -114,7 +114,7 @@ class UserController extends Controller {
 		while ($check === false && $start < $end) {
 			sleep(5);
 
-            $notifications     = Auth::user()->rNotifications()->where('notified', false)->orderBy('id', 'DESC')->get();
+            $notifications = Auth::user()->rNotifications()->where('notified', false)->orderBy('id', 'DESC')->get();
             $check = count($notifications) > 0;
 			$start = time();
 		}
@@ -123,11 +123,11 @@ class UserController extends Controller {
 		{
             foreach ($notifications as $not)
             {
-                $not->notified = true;
-                $not->save();
-
                 // create the dto
                 $n[] = $not->createDto();
+                $not->notified = true;
+
+                $not->save();
             }
 		}
 
