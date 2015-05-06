@@ -3,13 +3,13 @@
 @section('page')
 <section class="page">
 	<div class="row">
-		<div class="medium-6 medium-offset-3 columns">
+		<div class="medium-8 medium-offset-2 columns">
 			<div class="row">
 				<div class="medium-6 columns">
 					<div class="panel">
-						<h4>
+						<h5>
 							Connect
-						</h4>
+						</h5>
 						<hr>
 						<p>
 							<ul class="no-bullet">
@@ -22,9 +22,9 @@
 				</div>
 				<div class="medium-6 columns">
 					<div class="panel">
-						<h4>
+						<h5>
 							Account
-						</h4>
+						</h5>
 						<hr>
 						<p>
 							<ul class="no-bullet">
@@ -37,9 +37,9 @@
 				</div>
 			</div>
 			<div class="panel">
-				<h4>
+				<h5>
 					Connected network profiles ({{ Auth::user()->profiles()->count() }})
-				</h4>
+				</h5>
 				<hr>
                 @if (Session::has('notice'))
                     @if (Session::get('notice')[0] == 'error')

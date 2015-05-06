@@ -3,13 +3,13 @@
 @section('page')
 <section class="page">
 	<div class="row medium-collapse detailpage">
-		<div class="medium-8 medium-offset-2 columns">
+		<div class="medium-10 medium-offset-1 columns">
 			<div class="panel extra text-center">
 				<h4>
 					{{ $user->username }}'s profile
 				</h4>
 				<header>
-					<div class="profile-picture"></div>
+					<div class="profile-picture" style="background-image:url({{ Gravatar::get($user->email) }});"></div>
 				</header>
 				<section>
 					<ul class="no-bullet">
@@ -27,13 +27,13 @@
 						@endforeach
 					@else
 					<p>
-						{{ $user->username }} has no badges yet.
+						{{ $user->username }} has no achievements yet.
 					</p>
 					@endif
 				</footer>
 			</div>
 			<div class="panel extra">
-				<h5 class="super-header">Activity</h5>
+
 			</div>
 		</div>
 	</div>
