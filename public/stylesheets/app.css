@@ -10121,51 +10121,100 @@ article.post hr {
 *
 **/
 /* line 837, ../scss/_misc.scss */
+.detailpage .panel {
+  border-right: 1px solid #e9e9e9;
+}
+/* line 840, ../scss/_misc.scss */
 .detailpage .panel:first-of-type {
   border-right: none;
 }
 @media only screen and (max-width: 40em) {
-  /* line 837, ../scss/_misc.scss */
+  /* line 840, ../scss/_misc.scss */
   .detailpage .panel:first-of-type {
     border-right: 1px solid #e9e9e9;
   }
 }
-/* line 843, ../scss/_misc.scss */
+/* line 846, ../scss/_misc.scss */
 .detailpage .panel {
   min-height: 550px !important;
 }
+/* line 850, ../scss/_misc.scss */
+.detailpage header {
+  width: 100%;
+  height: 110px;
+  position: relative;
+}
+/* line 854, ../scss/_misc.scss */
+.detailpage header .profile-picture {
+  width: 75px;
+  height: 75px;
+  background: #e5e5e5;
+  margin: 1em 0;
+  position: absolute;
+  letter-spacing: 0;
+  bottom: 0.35em;
+  left: 50%;
+  margin-left: -37.5px;
+  -moz-border-radius: 2px;
+  -webkit-border-radius: 2px;
+  border-radius: 2px;
+}
+/* line 867, ../scss/_misc.scss */
+.detailpage section {
+  margin: 0;
+  padding: 0;
+}
+/* line 872, ../scss/_misc.scss */
+.detailpage footer img {
+  width: 135px;
+}
+/* line 876, ../scss/_misc.scss */
+.detailpage hr {
+  width: 65px;
+  margin-left: auto;
+  margin-right: auto;
+}
 
-/* line 848, ../scss/_misc.scss */
+/* line 883, ../scss/_misc.scss */
 .fixed-column {
   position: fixed;
 }
 @media only screen and (max-width: 40em) {
-  /* line 848, ../scss/_misc.scss */
+  /* line 883, ../scss/_misc.scss */
   .fixed-column {
     position: relative;
   }
 }
 
-/* line 855, ../scss/_misc.scss */
+/* line 890, ../scss/_misc.scss */
 code {
   padding: 0.5rem 0.125rem 0.05rem;
 }
 
-/* line 860, ../scss/_misc.scss */
+/* line 895, ../scss/_misc.scss */
 .radio-label {
   margin: 0;
   float: left;
   margin-right: 15px;
 }
 
-/* line 866, ../scss/_misc.scss */
+/* line 901, ../scss/_misc.scss */
 #plannedSection {
   max-width: 500px;
 }
-/* line 868, ../scss/_misc.scss */
+/* line 903, ../scss/_misc.scss */
 #plannedSection .dateinput, #plannedSection .timeinput {
   float: left;
   margin-right: 15px;
+}
+
+/* line 909, ../scss/_misc.scss */
+.badge-text {
+  font-weight: 500;
+  text-transform: uppercase;
+  letter-spacing: 3px;
+  max-width: 350px;
+  color: #7896cc !important;
 }
 
 /*!
@@ -13965,7 +14014,7 @@ html, body {
 
 /* line 19, ../scss/app.scss */
 section {
-  margin-top: 40px;
+  margin-top: 50px;
   padding: 1.5em 0;
 }
 
