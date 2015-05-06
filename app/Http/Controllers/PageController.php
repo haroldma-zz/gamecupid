@@ -26,10 +26,10 @@ class PageController extends Controller {
 	**/
 	public function index(Request $request)
     {
-		$limit    = (int)$request->input('limit', 10);
-		$fromTimezone  = $request->input('ftz');
-        $toTimezone    = $request->input('ttz');
-        $useTimezone   = $fromTimezone != null;
+		$limit        = (int)$request->input('limit', 10);
+		$fromTimezone = $request->input('ftz');
+		$toTimezone   = $request->input('ttz');
+		$useTimezone  = $fromTimezone != null;
 
         if ($useTimezone)
         {
@@ -66,10 +66,13 @@ class PageController extends Controller {
 
         $posts = Post::hydrateRaw('CALL ' . $query);
 
+        $topPlayers = new User;
+        $topPlayers = $topPlayers->topPlayers();
+
         if ($request->ajax())
             return invitesToDtos($posts);
 
-		return view('pages.index', ['posts' => $posts]);
+		return view('pages.index', ['posts' => $posts, 'topPlayers' => $topPlayers]);
 	}
 
 

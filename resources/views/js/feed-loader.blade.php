@@ -22,19 +22,19 @@
 		}
 	});
 
-	function loadMorePosts(sort, page)
+	function loadMorePosts()
 	{
 		var canLoadMore = $(window).data('canLoadMore');
 
 		if (canLoadMore == null || canLoadMore === true)
 		{
 			var limit = parseInt(getUrlParameter('limit') || $('#limit').val() || 10);
-			var sort = getUrlParameter('sort') || $('#sortType').val() || 'hot';
+			var sort = getUrlParameter('category') || $('#feedCategory').val() || 'anytime';
 			var after = $($("article.post").slice(-1)[0]).attr("data-id");
 
-			$('#sortType').val(sort);
+			$('#feedCategory').val(sort);
 
-			$.get('/?sort=' + sort + '&after=' + after + '&limit=' + limit, function(res)
+			$.get('/?category=' + sort + '&after=' + after + '&limit=' + limit, function(res)
 			{
 				$('#feedLoader').addClass('hide');
 

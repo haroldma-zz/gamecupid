@@ -7741,11 +7741,11 @@ small {
 code {
   font-family: Consolas, "Liberation Mono", Courier, monospace;
   font-weight: normal;
-  color: #333333;
-  background-color: #fddfb4;
-  border-width: 1px;
+  color: #222;
+  background-color: #ECECEC;
+  border-width: 0px;
   border-style: solid;
-  border-color: #fccd8a;
+  border-color: #d4d4d4;
   padding: 0.125rem 0.3125rem 0.0625rem;
 }
 
@@ -10150,6 +10150,11 @@ article.post hr {
   .fixed-column {
     position: relative;
   }
+}
+
+/* line 864, ../scss/_misc.scss */
+code {
+  padding: 0.5rem 0.125rem 0.05rem;
 }
 
 /*!

@@ -16,8 +16,10 @@ function createNotification($thingId, $userId = null)
 
 function notifiedAboutComment($commentId, $userId = null)
 {
-    $not              = createNotification($commentId, $userId);
-    $not->type        = NotificationTypes::COMMENT_REPLY;
+    $not           = createNotification($commentId, $userId);
+    $not->type     = NotificationTypes::COMMENT_REPLY;
+    $not->notified = false;
+    $not->read     = false;
     return $not->save();
 }
 

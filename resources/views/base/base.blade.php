@@ -15,9 +15,9 @@
 					<div class="platforms-list" id="platformList">
 						<div>
 							<ul class="no-bullet">
-								<a href="{!! url('/platform/psn') !!}"><li>Playstation Network</li></a>
-								<a href="{!! url('/platform/xbl') !!}"><li>Xbox Live</li></a>
-								<a href="{!! url('/platform/steam') !!}"><li>Steam</li></a>
+								<a href="{!! url('/?platform=psn') !!}"><li>Playstation Network</li></a>
+								<a href="{!! url('/?platform=xbl') !!}"><li>Xbox Live</li></a>
+								<a href="{!! url('/?platform=steam') !!}"><li>Steam</li></a>
 							</ul>
 						</div>
 					</div>
@@ -63,6 +63,7 @@
 	{!! HTML::script('js/app.js') !!}
 	{!! HTML::script('js/voter.js') !!}
 	@if(Auth::check())
+	{!! HTML::script('js/ion.sound.min.js') !!}
 	{!! HTML::script('js/notifier.js') !!}
 	@endif
 	@yield('scripts')

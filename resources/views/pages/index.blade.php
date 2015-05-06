@@ -5,13 +5,13 @@
 	<div class="row">
 		<div class="medium-9 columns">
 			<div class="panel">
-				<div class="feed" id="feedContainer" data-page="1" data-sort="hot">
+				<div class="feed" id="feedContainer" data-page="1" data-category="anytime">
 					<div class="sort-by">
-						<a href="{!! url('/') !!}">Featured</a>
-						<a href="{!! url('/?sort=hot') !!}" class="{{ (Request::get('sort') == 'hot' || Request::get('sort') == '' ? 'active' : '') }}">Hot</a>
-						<a href="{!! url('/?sort=new') !!}" class="{{ (Request::get('sort') == 'new' ? 'active' : '') }}">New</a>
-						<a href="{!! url('/?sort=controversial') !!}" class="{{ (Request::get('sort') == 'controversial' ? 'active' : '') }}">Controversial</a>
-						<a href="{!! url('/?sort=top') !!}" class="{{ (Request::get('sort') == 'top' ? 'active' : '') }}">Top</a>
+						<a href="{!! url('/?category=featured') !!}">Featured</a>
+						<a href="{!! url('/?category=today') !!}" class="{{ (Request::get('category') == 'today' || Request::get('category') == '' ? 'active' : '') }}">Today</a>
+						<a href="{!! url('/?category=asap') !!}" class="{{ (Request::get('category') == 'asap' ? 'active' : '') }}">ASAP</a>
+						<a href="{!! url('/?category=upcoming') !!}" class="{{ (Request::get('category') == 'upcoming' ? 'active' : '') }}">Upcoming</a>
+						<a href="{!! url('/?category=anytime') !!}" class="{{ (Request::get('category') == 'anytime' ? 'active' : '') }}">Anytime</a>
 					</div>
 					<hr>
 					@if (count($posts) > 0)
@@ -58,59 +58,42 @@
 		</div>
 		<div class="medium-3 columns">
 			<div class="panel">
-				<h5 class="super-header" style="letter-spacing: 5px;">Top crews</h5>
-				<ol class="no-bullet text-justify">
+				<h5 class="super-header" style="letter-spacing: 3px;">Hot games</h5>
+				<ol class="text-justify">
 					<li>
-						<b>noodlesFTW</b>
+						<a href="">Grand Theft Auto V</a>
 					</li>
 					<li>
-						<b>xBoners</b>
+						<a href="">FIFA15</a>
 					</li>
 					<li>
-						<b>AyyLMAO</b>
+						<a href="">Call of Duty: Black Ops II</a>
 					</li>
 					<li>
-						<b>LameAssCrewname</b>
+						<a href="">Bloodborne</a>
 					</li>
 					<li>
-						<b>OfficialYoutubers</b>
+						<a href="">Battlefield 4</a>
 					</li>
 					<li>
-						<b>GanjaArmy</b>
-					</li>
-					<li>
-						<b>BeerAndWeed</b>
-					</li>
-					<li>
-						<b>Amsterdamned</b>
+						<a href="">The Last of Us</a>
 					</li>
 				</ol>
 			</div>
 			<div class="panel">
-				<h5 class="super-header" style="letter-spacing: 3px;">1-on-1 quick posts</h5>
-				<ul class="no-bullet text-justify">
-					<li>
-						<a href="">FIFA15 - Real Madrid vs ?</a>
-					</li>
-					<li>
-						<a href="">COD - Quickscope match</a>
-					</li>
-					<li>
-						<a href="">GTAV - Online missions</a>
-					</li>
-					<li>
-						<a href="">Age of Empires II - Online match</a>
-					</li>
-					<li>
-						<a href="">The Last of Us - Co-op</a>
-					</li>
-				</ul>
+				<h5 class="super-header" style="letter-spacing: 3px;">Top gamers</h5>
+				<ol class="text-justify">
+					@foreach($topPlayers as $gamer)
+					<li><a href="{!! url('/gamer/' . $gamer->username) !!}">{{ $gamer->username }}</a></li>
+					@endforeach
+					{!! var_dump($topPlayers) !!}
+				</ol>
 			</div>
 		</div>
 	</div>
 </section>
 <input type="hidden" id="csrfToken" value="{{ csrf_token() }}">
-<input id="sortType" type="hidden" value="{{ Request::get('sort', 'hot') }}">
+<input id="feedCategory" type="hidden" value="{{ Request::get('category', 'anytime') }}">
 <input id="limit" type="hidden" value="{{ Request::get('limit', 10) }}">
 @stop
 

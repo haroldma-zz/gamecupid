@@ -112,6 +112,34 @@ class User extends Model implements AuthenticatableContract, CanResetPasswordCon
 		return $this->_rep;
 	}
 
+	// Function to return top 10 players
+    private $_topPlayers = [];
+	public function topPlayers($useCache = true)
+	{
+        if ($this->_topPlayers != null)
+            return $this->_topPlayers;
+
+        $key = generateCacheKey("user", "topgamers");
+        if ($useCache && hasCache($key, $cache)) {
+            $this->_topPlayers = $cache;
+            return $cache;
+        }
+
+		if (count($this->_topPlayers) == 0)
+            $this->_topPlayers = [];
+
+		$this->_topPlayers = DB::SELECT(DB::RAW("SELECT users.username, SUM(rep_events.amount) as total
+													FROM users
+													INNER JOIN reps ON users.id = reps.user_id
+													INNER JOIN rep_events ON reps.rep_event_id = rep_events.id
+													ORDER BY total
+													LIMIT 10"));
+
+		if ($useCache)
+        	return setCache($key, $this->_topPlayers, Carbon::now()->addDay());
+		return $this->_topPlayers;
+	}
+
     private $factor = 3.0;
 
     // Function to calculate level

@@ -26,6 +26,10 @@ class PostController extends Controller {
 		if (!$request->ajax())
 			return redirect('/');
 
+		# title should have at least 1 alphabetic character
+		if (!preg_match('/[a-z]+/i', $request->get('title')))
+			return Response::make('The title should have at least 1 alphabetic character.', 500);
+
 		$parsedown = new Parsedown();
 		$slugify   = new Slugify();
         $slugify->addRule('+', 'plus');
@@ -235,7 +239,7 @@ class PostController extends Controller {
 		$comment->markdown_text = $request->get('self_text');
 		$comment->deleted       = false;
 		$comment->parent_id     = $parentId;
-		$comment->post_id     = $id;
+		$comment->post_id       = $id;
 		$comment->user_id       = Auth::id();
 
 		if ($comment->save()) {
@@ -243,6 +247,9 @@ class PostController extends Controller {
 
             if ($parentId != 0 && $parent->user_id != $comment->user_id)
                 notifiedAboutComment($comment->id, $parent->user_id);
+
+            if ($parentId == 0)
+            	notifiedAboutComment($comment->id, $post->user_id);
 
             if ($request->ajax())
             	return ['3', ['created_at' => $comment->created_at, 'hashId' => hashId($comment->id), 'self_text' => $comment->self_text, 'permalink' => $comment->post()->getPermalink()]]; 			# comment success
