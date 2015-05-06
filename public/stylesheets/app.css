@@ -10115,46 +10115,57 @@ article.post hr {
   box-shadow: none;
 }
 
-/* line 831, ../scss/_misc.scss */
-.crew-form input[type="text"]:nth-child(1) {
-  width: auto;
-  max-width: 225px;
-}
-
 /**
 *
 * Detailpage
 *
 **/
-/* line 846, ../scss/_misc.scss */
+/* line 837, ../scss/_misc.scss */
 .detailpage .panel:first-of-type {
   border-right: none;
 }
 @media only screen and (max-width: 40em) {
-  /* line 846, ../scss/_misc.scss */
+  /* line 837, ../scss/_misc.scss */
   .detailpage .panel:first-of-type {
     border-right: 1px solid #e9e9e9;
   }
 }
-/* line 852, ../scss/_misc.scss */
+/* line 843, ../scss/_misc.scss */
 .detailpage .panel {
   min-height: 550px !important;
 }
 
-/* line 857, ../scss/_misc.scss */
+/* line 848, ../scss/_misc.scss */
 .fixed-column {
   position: fixed;
 }
 @media only screen and (max-width: 40em) {
-  /* line 857, ../scss/_misc.scss */
+  /* line 848, ../scss/_misc.scss */
   .fixed-column {
     position: relative;
   }
 }
 
-/* line 864, ../scss/_misc.scss */
+/* line 855, ../scss/_misc.scss */
 code {
   padding: 0.5rem 0.125rem 0.05rem;
+}
+
+/* line 860, ../scss/_misc.scss */
+.radio-label {
+  margin: 0;
+  float: left;
+  margin-right: 15px;
+}
+
+/* line 866, ../scss/_misc.scss */
+#plannedSection {
+  max-width: 500px;
+}
+/* line 868, ../scss/_misc.scss */
+#plannedSection .dateinput, #plannedSection .timeinput {
+  float: left;
+  margin-right: 15px;
 }
 
 /*!

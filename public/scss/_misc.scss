@@ -826,15 +826,6 @@ article.post {
 	}
 }
 
-.crew-form {
-	input[type="text"] {
-		&:nth-child(1) {
-			width: auto;
-			max-width: 225px;
-		}
-	}
-}
-
 
 
 /**
@@ -863,4 +854,19 @@ article.post {
 
 code {
 	padding: 0.5rem 0.125rem 0.05rem;
+}
+
+
+.radio-label {
+	margin: 0;
+	float: left;
+	margin-right: 15px;
+}
+
+#plannedSection {
+	max-width: 500px;
+	.dateinput, .timeinput {
+		float: left;
+		margin-right: 15px;
+	}
 }

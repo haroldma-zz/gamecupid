@@ -8,7 +8,7 @@
 				<div class="row">
 					<div class="medium-10 medium-offset-1 columns">
 						<h2 class="light-header">
-							Submitting an post
+							Submitting a post
 						</h2>
 						<br>
 						<p>
@@ -59,9 +59,54 @@
 								<textarea id="postText" class="disabled" placeholder="More info about this post"></textarea>
 							</div>
                             <br><br><br>
-                            <h3>Other options</h3>
+                            <h3>More settings</h3>
+                            <label>
+                            	Choose a category that fits this submission:
+                            </label>
+							<div>
+	                            <label class="radio-label"><input type="radio" name="category" value="anytime" checked> Anytime</label>
+								<label class="radio-label"><input type="radio" name="category" value="asap"> As Soon As Possible</label>
+								<label class="radio-label"><input type="radio" name="category" value="planned"> Planned</label>
+								<div class="clearfix"></div>
+							</div>
+							<div id="plannedSection" class="hide">
+								<br>
+								<h5>
+									Specify a period in which you wish to play:
+								</h5>
+								<div class="row">
+									<div class="medium-2 columns">
+										<label>
+											Starting
+										</label>
+									</div>
+									<div class="medium-5 columns">
+										<label>Date</label>
+										<input type="text" id="startDate" placeholder="MM-DD-YYYY" class="form-class dateinput">
+									</div>
+									<div class="medium-5 columns">
+										<label>Time</label>
+										<input type="text" id="startTime" placeholder="22:15" class="form-class timeinput">
+									</div>
+								</div>
+								<div class="row">
+									<div class="medium-2 columns">
+										<label>
+											Ending
+										</label>
+									</div>
+									<div class="medium-5 columns">
+										<label>Date</label>
+										<input type="text" id="endDate" placeholder="MM-DD/-YYY" class="form-class dateinput">
+									</div>
+									<div class="medium-5 columns">
+										<label>Time</label>
+										<input type="text" id="endTime" placeholder="22:15" class="form-class timeinput">
+									</div>
+								</div>
+							</div>
+							<br><br>
                             <label><input type="checkbox" id="verifiedInput"> I only want to play with verified users.</label>
-                            <br><br>
 						    <button type="submit" class="btn big primary" id="postSubmitter">Submit post</button>
 						    &nbsp;
 						    <img id="progresser" src="{!! url('/img/loaders/dots.svg') !!}" width="40px">

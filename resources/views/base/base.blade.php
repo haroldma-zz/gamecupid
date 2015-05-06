@@ -4,6 +4,7 @@
 	<meta charset="UTF-8">
 	<title>playddit</title>
 	{!! HTML::style('stylesheets/app.css') !!}
+	@yield('head')
 </head>
 <body>
 	<nav class="topnav">
@@ -50,7 +51,7 @@
 	<footer class="footer" id="footer">
 		<div class="row">
 			<div class="medium-12 columns">
-				<h5 class="super-header">GameCupid</h5>
+				<h5 class="super-header">Playddit</h5>
 				<br><br>
 				<script type="text/javascript" src="//www.redditstatic.com/button/button1.js"></script>
 			</div>

@@ -9,6 +9,7 @@ use App\Models\Comment;
 use App\Models\Parsedown;
 use App\Enums\RepEvents;
 use App\Enums\VoteStates;
+use App\Enums\Categories;
 use Illuminate\Http\Request;
 use App\Http\Requests\PostFormRequest;
 use Cocur\Slugify\Slugify;
@@ -25,6 +26,57 @@ class PostController extends Controller {
 	{
 		if (!$request->ajax())
 			return redirect('/');
+
+		# check date and time formats first, if not empty
+		$dates   = [];
+		$dates[] = $request->get('start_date');
+		$dates[] = $request->get('end_date');
+
+		$times   = [];
+		$times[] = $request->get('start_time');
+		$times[] = $request->get('end_time');
+
+		foreach($dates as $date)
+		{
+			if ($date != '')
+			{
+				$regex = '/^(0[1-9]|1[0-2])-(0[1-9]|[1-2][0-9]|3[0-1])-[0-9]{4}$/';
+				if (!preg_match($regex, $date))
+					return Response::make('The date format should be MM-DD-YYYY', 500);
+			}
+		}
+
+		foreach($times as $time)
+		{
+			if ($time != '')
+			{
+				$regex = '/^(0[0-9]|1[0-9]|2[0-3]):[0-5][0-9]$/';
+				if (!preg_match($regex, $time))
+					return Response::make('The time format should be HH:MM (H= Hours, M= Minutes)', 500);
+			}
+		}
+
+
+		# check category input
+		$category = $request->get('category');
+		if (!in_array($category, ["anytime", "asap", "planned"]))
+			return Response::make('That category doesn\'t exist.', 500);
+		else
+		{
+			switch($category)
+			{
+				case "anytime":
+					$category = Categories::ANYTIME;
+				break;
+				case "asap":
+					$category = Categories::ASAP;
+				break;
+				case "planned":
+					$category = Categories::PLANNED;
+				break;
+			}
+		}
+
 
 		# title should have at least 1 alphabetic character
 		if (!preg_match('/[a-z]+/i', $request->get('title')))
@@ -67,6 +119,8 @@ class PostController extends Controller {
 		$post->console_id        = $console->id;
 		$post->game_id           = $game->id;
 		$post->user_id           = $user->id;
+		$post->category 		 = $category;
+		$post->dates             = ($dates[0] != '' ? json_encode(['dates' => $dates, 'times' => $times]) : null);
 
 		if ($post->save())
 		{
