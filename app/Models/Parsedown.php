@@ -52,7 +52,7 @@ class Parsedown
                 }else{
                     return $word; // Otherwise return the whole match (basically we won't change it)
                 }
-            }, $text);
+            }, $line);
 
             $lines[$i] = $output;
 

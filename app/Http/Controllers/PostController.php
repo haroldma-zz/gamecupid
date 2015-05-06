@@ -26,6 +26,10 @@ class PostController extends Controller {
 		if (!$request->ajax())
 			return redirect('/');
 
+		# title should have at least 1 alphabetic character
+		if (!preg_match('/[a-z]+/i', $request->get('title')))
+			return Response::make('The title should have at least 1 alphabetic character.', 500);
+
 		$parsedown = new Parsedown();
 		$slugify   = new Slugify();
         $slugify->addRule('+', 'plus');
