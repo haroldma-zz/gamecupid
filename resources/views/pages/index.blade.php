@@ -86,7 +86,6 @@
 					@foreach($topPlayers as $gamer)
 					<li><a href="{!! url('/gamer/' . $gamer->username) !!}">{{ $gamer->username }}</a></li>
 					@endforeach
-					{!! var_dump($topPlayers) !!}
 				</ol>
 			</div>
 		</div>
