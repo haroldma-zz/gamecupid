@@ -128,11 +128,7 @@ class User extends Model implements AuthenticatableContract, CanResetPasswordCon
 		if (count($this->_topPlayers) == 0)
             $this->_topPlayers = [];
 
-		$this->_topPlayers = DB::SELECT(DB::RAW("SELECT *
-													FROM users AS y
-													INNER JOIN (SELECT user_id, SUM(y.total) as total
-													FROM (SELECT user_id, (SELECT sum(amount) FROM rep_events WHERE id=rep_event_id) as total
-													     FROM reps) y GROUP BY user_id) x ON user_id=y.id ORDER BY total desc"));
+		$this->_topPlayers =  User::hydrateRaw("call GetBestGamers(10)");
 
 		if ($useCache)
         	return setCache($key, $this->_topPlayers, Carbon::now()->addDay());
