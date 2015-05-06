@@ -1,5 +1,6 @@
 <?php namespace App\Http\Controllers;
 
+use Auth;
 use App\Models\User;
 use App\Models\Console;
 use App\Models\Post;
@@ -104,7 +105,9 @@ class PageController extends Controller {
 	**/
 	public function notifications()
 	{
-		return view('pages.notifications');
+		$notifications = Auth::user()->rNotifications()->orderBy('id', 'DESC')->get();
+
+		return view('pages.notifications')->with(['notifications' => $notifications]);
 	}
 
 

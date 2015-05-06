@@ -7,15 +7,13 @@
 			<div class="panel extra">
 				<h2 class="light-header">Notifications</h2>
 				<hr>
-				@foreach(Auth::user()->rNotifications()->orderBy('id', 'DESC')->get() as $n)
+				@foreach($notifications as $n)
 					<div class="notification-entry">
 						<h5 class="{{ ($n->read == false ? 'bold' : '') }}">
 							<span>{{ $n->title() }}</span>
 						</h5>
-                        @if ($n->type == \App\Enums\NotificationTypes::COMMENT_REPLY)
+                        @if ($n->type == \App\Enums\NotificationTypes::COMMENT_REPLY || $n->type == \App\Enums\NotificationTypes::POST_COMMENT)
                             <a class="text-primary" href="{{ $n->comment()->post()->getPermalink() }}">{{ $n->comment()->post()->title }}</a>
-                        @elseif ($n->type == \App\Enums\NotificationTypes::POST_COMMENT)
-                        	<a class="text-primary" href="{{ $n->post()->getPermalink() }}">{{ $n->post()->title }}</a>
                         @endif
 						<p>
                             @if ($n->type == \App\Enums\NotificationTypes::REP)
@@ -28,7 +26,7 @@
 							<li>
 								<a id="markNotificationAsReadBtn" data-nid="{{ $n->id }}">mark as {{ ($n->read == true ? 'un' : '') }}read</a>
 							</li>
-                            @if ($n->type == \App\Enums\NotificationTypes::COMMENT_REPLY)
+                            @if ($n->type == \App\Enums\NotificationTypes::COMMENT_REPLY || $n->type == \App\Enums\NotificationTypes::POST_COMMENT)
                             <li>
                                 <a href="{{ $n->comment()->getPermalink() }}?context=3">context</a>
                             </li>

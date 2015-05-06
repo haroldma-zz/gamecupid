@@ -84,7 +84,7 @@
 				<h5 class="super-header" style="letter-spacing: 3px;">Top gamers</h5>
 				<ol class="text-justify">
 					@foreach($topPlayers as $gamer)
-					<li><a href="{!! url('/gamer/' . $gamer->username) !!}">{{ $gamer->username }}</a> (<b>{{ $gamer->level() }}</b>:{{ $gamer->rep() }})</li>
+					<li><a href="{!! url('/gamer/' . $gamer->username) !!}">{{ $gamer->username }}</a> <small>[<b>{{ $gamer->level() }}</b>:{{ $gamer->rep() }}]</small></li>
 					@endforeach
 				</ol>
 			</div>
