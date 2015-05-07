@@ -139,6 +139,7 @@ return [
 		'Zizaco\Entrust\EntrustServiceProvider',
 		'Greggilbert\Recaptcha\RecaptchaServiceProvider',
 		'Vinkla\Hashids\HashidsServiceProvider',
+		'Creativeorange\Gravatar\GravatarServiceProvider',
 
 		/*
 		 * Application Service Providers...
@@ -205,6 +206,7 @@ return [
 		'CommentsRenderer' => 'App\Models\CommentsRenderer',
 		'Hashids'          => 'Vinkla\Hashids\Facades\Hashids',
 		'Parsedown'        => 'App\Models\Parsedown',
+		'Gravatar'         => 'Creativeorange\Gravatar\Facades\Gravatar',
 
 
 	],

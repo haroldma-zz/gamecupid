@@ -13,7 +13,8 @@
 		"cocur/slugify": "~1.1",
 		"vinkla/hashids": "~1.0",
 		"predis/predis": "~1.0",
-		"kumuwai/data-transfer-object": "0.0.4.*"
+		"kumuwai/data-transfer-object": "0.0.4.*",
+		"creativeorange/gravatar": "~1.0"
 	},
 	"require-dev": {
 		"phpunit/phpunit": "~4.0",

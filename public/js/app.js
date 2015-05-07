@@ -193,6 +193,16 @@ $('html, body').click(function(e)
 	}
 });
 
+// category change
+$('input[name="category"]').on('change', function(e)
+{
+	var cat = $(this).val();
+
+	if (cat != 'planned')
+		$('#plannedSection').addClass('hide');
+	else
+		$('#plannedSection').removeClass('hide');
+});
 
 // Submit post form
 $('#postSubmitter').click(function()
@@ -201,15 +211,20 @@ $('#postSubmitter').click(function()
 	$('#progresser').toggle();
 	$('#submitError').html('');
 
-	var	maxPlayers = $('#maxPlayers').val(),
-		gameId     = $('#selectedGameId').val(),
-		consoleId  = $('#console').val(),
-		title      = $('#postTitle').val(),
-		text       = $('#postText').val(),
-		verified   = $('#verifiedInput').prop('checked'),
-		vchecked   = 'no',
-		token      = $('#csrfToken').val(),
-		button     = $(this);
+	var	maxPlayers     = $('#maxPlayers').val(),
+		gameId         = $('#selectedGameId').val(),
+		consoleId      = $('#console').val(),
+		title          = $('#postTitle').val(),
+		text           = $('#postText').val(),
+		verified       = $('#verifiedInput').prop('checked'),
+		vchecked       = 'no',
+		token          = $('#csrfToken').val(),
+		button         = $(this),
+		category       = $('input[name="category"]:checked').val(),
+		startDate      = $('#startDate').val(),
+		startTime      = $('#startTime').val(),
+		endDate        = $('#endDate').val(),
+		endTime        = $('#endTime').val();
 
 	if (verified == true)
 		vchecked = 'yes';
@@ -224,7 +239,12 @@ $('#postSubmitter').click(function()
 	    	console_id: consoleId,
 	    	title: title,
 	    	self_text: text,
-	    	verified: vchecked
+	    	verified: vchecked,
+	    	category: category,
+	    	start_date: startDate,
+	    	start_time: startTime,
+	    	end_date: endDate,
+	    	end_time: endTime
 	    },
 	    success: function(res)
 	    {
