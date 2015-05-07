@@ -33,6 +33,9 @@ class CommentController extends Controller {
 		if (!$comment)
 			return AjaxVoteResults::ERROR;
 
+		if ($comment->user->id === Auth::user()->id)
+			return 5;
+
 		$check = Auth::user()->commentVotes()->where('comment_id', $id)->first();
 
         invalidateCache(generateAuthCacheKeyWithId("comment", "isUpvoted", $id));
@@ -84,6 +87,9 @@ class CommentController extends Controller {
 
 		if (!$comment)
 			return AjaxVoteResults::ERROR;
+
+		if ($comment->user->id === Auth::user()->id)
+			return 5;
 
 		$check = Auth::user()->commentVotes()->where('comment_id', $id)->first();
 
