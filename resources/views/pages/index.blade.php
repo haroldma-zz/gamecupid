@@ -27,7 +27,7 @@
 										<time data-livestamp="{{ $post->created_at->getTimestamp() }}"></time>
 										by
 										<b>
-											<a href="{!! url('/gamer/' . $post->user->username) !!}">{{ $post->user->username }}</a>
+											<a href="{!! url('/gamer/' . $post->user->username) !!}">{{ $post->user->username }} <span class="header-rep-count"><b>{{ $post->user->level() }}</b>:{{ $post->user->rep() }}</span></a>
 										</b>
 										&nbsp;&middot;&nbsp;
 										<b>{{ $post->accepts->where('state', 2)->count() }}</b>{{ '/'.$post->max_players }} player{{ ($post->max_players > 1 ? 's' : '') }}
@@ -59,34 +59,38 @@
 		<div class="medium-3 columns">
 			<div class="panel">
 				<h5 class="super-header" style="letter-spacing: 3px;">Hot games</h5>
-				<ol class="text-justify">
-					<li>
-						<a href="">Grand Theft Auto V</a>
-					</li>
-					<li>
-						<a href="">FIFA15</a>
-					</li>
-					<li>
-						<a href="">Call of Duty: Black Ops II</a>
-					</li>
-					<li>
-						<a href="">Bloodborne</a>
-					</li>
-					<li>
-						<a href="">Battlefield 4</a>
-					</li>
-					<li>
-						<a href="">The Last of Us</a>
-					</li>
-				</ol>
+				<p>
+					<ol class="text-justify">
+						<li>
+							<a href="">Grand Theft Auto V</a>
+						</li>
+						<li>
+							<a href="">FIFA15</a>
+						</li>
+						<li>
+							<a href="">Call of Duty: Black Ops II</a>
+						</li>
+						<li>
+							<a href="">Bloodborne</a>
+						</li>
+						<li>
+							<a href="">Battlefield 4</a>
+						</li>
+						<li>
+							<a href="">The Last of Us</a>
+						</li>
+					</ol>
+				</p>
 			</div>
 			<div class="panel">
 				<h5 class="super-header" style="letter-spacing: 3px;">Best gamers</h5>
-				<ol class="text-justify">
-					@foreach($bestGamers as $gamer)
-					<li><a href="{!! url('/gamer/' . $gamer->username) !!}">{{ $gamer->username }}</a> <small>[<b>{{ $gamer->level }}</b>:{{ $gamer->rep }}]</small></li>
-					@endforeach
-				</ol>
+				<p>
+					<ol class="text-justify">
+						@foreach($bestGamers as $gamer)
+						<li><a href="{!! url('/gamer/' . $gamer->username) !!}">{{ $gamer->username }}</a> <span class="header-rep-count"><b>{{ $gamer->level }}</b>:{{ $gamer->rep }}</span></li>
+						@endforeach
+					</ol>
+				</p>
 			</div>
 		</div>
 	</div>

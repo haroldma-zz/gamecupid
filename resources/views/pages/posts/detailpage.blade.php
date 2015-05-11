@@ -18,7 +18,7 @@
 										<time data-livestamp="{{ $post->created_at->getTimestamp() }}"></time>
 										by
 										<b>
-											<a href="{!! url('/gamer/' . $post->user->username) !!}">{{ $post->user->username }}</a>
+											<a href="{!! url('/gamer/' . $post->user->username) !!}">{{ $post->user->username }} <span class="header-rep-count"><b>{{ $post->user->level() }}</b>:{{ $post->user->rep() }}</span></a>
 										</b>
 										&nbsp;&middot;&nbsp;
 										<b>{{ $post->accepts->where('state', 2)->count() }}</b>{{ '/'.$post->max_players }} player{{ ($post->max_players > 1 ? 's' : '') }}

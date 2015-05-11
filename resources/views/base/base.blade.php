@@ -28,9 +28,9 @@
 				@if(Auth::check())
 				<a href="{!! url('/post') !!}"><i class="ion-plus"></i></a>
 				<a href="{!! url('/notifications') !!}" id="notificationsLink">
-					@if(Auth::user()->rNotifications()->where('read', false)->count() > 0)
+					@if(Auth::user()->rNotifications()->where('read', false)->count() - Auth::user()->rNotifications()->where('notified', false)->count() > 0)
 					<i class="ion-android-notifications orange-text" id="not-icon"></i>
-					<span class="orange-text" id="u-not-read-count">{{ Auth::user()->rNotifications()->where('read', false)->count() }}</span>
+					<span class="orange-text" id="u-not-read-count">{{ Auth::user()->rNotifications()->where('read', false)->count() - Auth::user()->rNotifications()->where('notified', false)->count() }}</span>
 					@else
 					<i class="ion-android-notifications-none" id="not-icon"></i>
 					<span class="orange-text" id="u-not-read-count"></span>

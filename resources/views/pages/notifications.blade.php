@@ -3,10 +3,10 @@
 @section('page')
 <section class="page">
 	<div class="row">
-		<div class="medium-6 medium-offset-3 columns">
+		<div class="medium-8 medium-offset-2 columns">
 			<div class="panel extra">
 				<h2 class="light-header">Notifications</h2>
-				<hr>
+				<br>
 				@foreach($notifications as $n)
 					<div class="notification-entry">
 						<h5 class="{{ ($n->read == false ? 'bold' : '') }}">

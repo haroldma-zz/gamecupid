@@ -5,8 +5,8 @@
 	<div class="row medium-collapse detailpage">
 		<div class="medium-10 medium-offset-1 columns">
 			<div class="panel extra text-center">
-				<h4>
-					{{ $user->username }}'s profile
+				<h4 class="text-primary">
+					{{ $user->username }} <small><span class="header-rep-count"><b>{{ $user->level() }}</b>:{{ $user->rep() }}</span></small>
 				</h4>
 				<header>
 					<div class="profile-picture" style="background-image:url({{ Gravatar::get($user->email) }});"></div>

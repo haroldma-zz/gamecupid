@@ -128,7 +128,7 @@
 
 					var output = '';
 
-					output += '<article class="comment ' + data.hierarchy + ' ' + (data.hierarchy == 'child' ? '' : 'no-pad-bot') + '">';
+					output += '<article class="comment ' + (data.hierarchy == 'parent' ? 'child' : 'parent') + ' no-pad-bot">';
 					output += '<div class="collapser" id="collapseComment">';
 	                output += '<span>[–]</span>';
 					output += '</div>';
@@ -144,7 +144,7 @@
 					output += '</div>';
 					output += '</div>';
 					output += '</div>';
-					output += '<div class="img"></div>';
+					output += '<div class="img" style="background-image:url({{ Gravatar::get(Auth::user()->email) }});"></div>';
 					output += '<div class="user-meta">';
 					output += '<h6>';
 					output += '<a href="/">{{ Auth::user()->username }}</a>';
@@ -170,7 +170,7 @@
 					output += '<p>You can use Markdown to write comments.</p>';
 					output += '<textarea class="form-control" placeholder="Write a comment" data-parenthash="' + res[1].hashId + '" data-url="' + res[1].permalink + '" data-hierarchy="' + (data.hierarchy == 'parent' ? 'child' : 'parent') + '" data-level="has-parent"></textarea>';
 					output += '<button type="submit" class="btn primary medium" id="commentSubmitter">Comment</button>';
-					output += '<img src="/img/loaders/dots.svg" width="40px">'
+					output += '<img src="/img/loaders/dots.svg" width="40px" style="display:none;">'
 					output += '<div></div>';
 					output += '</div>';
 					output += '<div class="children">';
