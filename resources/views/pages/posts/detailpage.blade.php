@@ -7,7 +7,7 @@
 			<div class="panel">
 				<article class="post">
 					<div class="row medium-collapse">
-						<div class="medium-6 columns">
+						<div class="medium-5 columns">
 							<section>
 								<h4 class="meta-details">
 									<a href="{!! $post->getPermalink() !!}">{{ $post->title }}</a>
@@ -32,10 +32,15 @@
 								</div>
 							</section>
 							<br><br>
-							<a href="" class="btn success">
-								Request an invite
-							</a>
-							<br><br><br>
+							@if ($post->user->id === Auth::id())
+							<p>
+								You submitted this post on <b>{{ date('M j, Y', strtotime($post->created_at)) }}</b>.
+							</p>
+							@else
+							<button id="requestInviteBtn" class="btn success">Request an invite</button><img id="requestLoader" src="{!! url('/img/loaders/dots.svg') !!}" width="40px">
+							<br>
+							@endif
+							<br><br>
 							<div class="comments">
 								<div class="comment-box">
 									<h6>
@@ -63,7 +68,7 @@
 								</div>
 							</div>
 						</div>
-						<div class="medium-6 columns">
+						<div class="medium-7 columns">
 							<h5>
 								Description
 							</h5>
@@ -111,6 +116,14 @@
 @section('scripts')
 	@if(Auth::check())
 	@include('js.commenter')
+	@include('js.requester')
+	@else
+	<script>
+		$('[id="commentSubmitter"], #requestInviteBtn').click(function()
+		{
+			window.location.href = "/login";
+		});
+	</script>
 	@endif
 	{!! HTML::script('js/comment-collapser.js') !!}
 @stop
