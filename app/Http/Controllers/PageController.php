@@ -26,10 +26,9 @@ class PageController extends Controller {
 	* Show the application's index page
 	*
 	**/
-	public function index(Request $request)
+	public function index(Request $request, $platform = null)
     {
 		$category     = $request->input('category', false);
-		$platform     = $request->input('platform', false);
 		$sort         = $request->input('sort', 'new');
 		$limit        = (int)$request->input('limit', 10);
 		$after        = decodeHashId($request->input('after', 0));
@@ -58,11 +57,17 @@ class PageController extends Controller {
 					break;
 			}
 
-			$posts = Post::where('category', $category)->orderBy('created_at', ($sort == 'new' ? 'DESC' : 'ASC'))->take($limit)->get();
+			if (is_null($platform))
+				$posts = Post::where('category', $category)->orderBy('created_at', ($sort == 'new' ? 'DESC' : 'ASC'))->take($limit)->get();
+			else
+				$posts = Post::$platform()->where('category', $category)->orderBy('created_at', ($sort == 'new' ? 'DESC' : 'ASC'))->take($limit)->get();
     	}
     	else
     	{
-    		$posts = Post::orderBy('created_at', ($sort == 'new' ? 'DESC' : 'ASC'))->take($limit)->get();
+    		if (is_null($platform))
+    			$posts = Post::orderBy('created_at', ($sort == 'new' ? 'DESC' : 'ASC'))->take($limit)->get();
+    		else
+    			$posts = Post::$platform()->orderBy('created_at', ($sort == 'new' ? 'DESC' : 'ASC'))->take($limit)->get();
     	}
 
 

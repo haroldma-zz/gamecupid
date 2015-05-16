@@ -10,7 +10,7 @@
 **/
 
 // GET routes
-Route::get('/', 'PageController@index');
+Route::get('/{platform?}', 'PageController@index');
 Route::get('/login', 'PageController@login');
 
 

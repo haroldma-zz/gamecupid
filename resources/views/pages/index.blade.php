@@ -7,11 +7,11 @@
 			<div class="panel">
 				<div class="feed" id="feedContainer" data-page="1" data-category="anytime">
 					<div class="sort-by">
-						<a href="{!! url('/?category=featured') !!}">Featured</a>
-						<a href="{!! url('/') !!}" class="{{ (Request::get('category') == '' ? 'active' : '') }}">Front</a>
-						<a href="{!! url('/?category=anytime') !!}" class="{{ (Request::get('category') == 'anytime' ? 'active' : '') }}">Anytime</a>
-						<a href="{!! url('/?category=planned') !!}" class="{{ (Request::get('category') == 'planned' ? 'active' : '') }}">Planned</a>
-						<a href="{!! url('/?category=asap') !!}" class="{{ (Request::get('category') == 'asap' ? 'active' : '') }}">As Soon As Possible</a>
+						<a href="{!! url(Request::url() . '?category=featured') !!}" class="{{ (Request::get('category') == 'featured' ? 'active' : '') }}">Featured</a>
+						<a href="{!! url(Request::url()) !!}" class="{{ (Request::get('category') == '' ? 'active' : '') }}">Front</a>
+						<a href="{!! url(Request::url() . '?category=anytime') !!}" class="{{ (Request::get('category') == 'anytime' ? 'active' : '') }}">Anytime</a>
+						<a href="{!! url(Request::url() . '?category=planned') !!}" class="{{ (Request::get('category') == 'planned' ? 'active' : '') }}">Planned</a>
+						<a href="{!! url(Request::url() . '?category=asap') !!}" class="{{ (Request::get('category') == 'asap' ? 'active' : '') }}">As Soon As Possible</a>
 					</div>
 					<hr>
 					@if (count($posts) > 0)

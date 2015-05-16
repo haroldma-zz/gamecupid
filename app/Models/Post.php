@@ -30,6 +30,27 @@ class Post extends Model {
 
     /**
     *
+    * Scopes
+    *
+    **/
+    public function scopePsn($query)
+    {
+        return $query->where('console_id', '=', 3)->where('console_id', '=', 4, 'OR');
+    }
+
+    public function scopeXbl($query)
+    {
+        return $query->where('console_id', '=', 1)->where('console_id', '=', 2, 'OR');
+    }
+
+    public function scopeSteam($query)
+    {
+        return $query->where('console_id', '=', 5);
+    }
+
+
+    /**
+    *
     * Custom functions
     *
     **/
@@ -41,7 +62,7 @@ class Post extends Model {
     public function castVote($state)
     {
         $vote            = new PostVote;
-        $vote->post_id = $this->id;
+        $vote->post_id   = $this->id;
         $vote->user_id   = Auth::id();
         $vote->state     = $state;
         return $vote->save();
