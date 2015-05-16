@@ -14033,17 +14033,10 @@ ul {
 }
 
 /* line 32, ../scss/app.scss */
-.tagLabels {
-  width: 100%;
-  margin-top: 0;
-  font-size: 16px;
-}
-
-/* line 38, ../scss/app.scss */
 .tagLabel {
+  width: 100%;
   margin-right: 5px;
-  padding: 1px 6px;
-  padding-top: 2px;
+  padding: 2px 6px 1px;
   height: 18px;
   border: 1 solid #515151;
   color: #fff;
@@ -14053,29 +14046,26 @@ ul {
   position: relative;
   background-color: #777;
   font-family: "Arial", Helvetica, sans-serif;
-  -moz-border-radius: 5px;
-  -webkit-border-radius: 5px;
-  border-radius: 5px;
 }
-/* line 52, ../scss/app.scss */
+/* line 45, ../scss/app.scss */
 .tagLabel.verified {
   background-color: #08AE56;
-  border: 1 solid #056532;
+  border: 1px solid #056532;
 }
 
-/* line 58, ../scss/app.scss */
+/* line 51, ../scss/app.scss */
 .infobar {
   background-color: #f6e69f;
   padding: 5px 10px;
   margin: 5px 0px 5px 0px;
   border: 1px solid #ffa500;
 }
-/* line 63, ../scss/app.scss */
+/* line 56, ../scss/app.scss */
 .infobar p {
   margin-bottom: 0px;
 }
 
-/* line 68, ../scss/app.scss */
+/* line 61, ../scss/app.scss */
 .comment-context {
   background-color: #ffc !important;
   padding-left: 25px !important;
@@ -14086,7 +14076,7 @@ ul {
 * Top navigation bar
 *
 **/
-/* line 78, ../scss/app.scss */
+/* line 71, ../scss/app.scss */
 .topnav {
   width: 100%;
   height: 50px;
@@ -14102,17 +14092,17 @@ ul {
   -webkit-box-shadow: 0 0 2px rgba(0, 0, 0, 0.05);
   box-shadow: 0 0 2px rgba(0, 0, 0, 0.05);
 }
-/* line 91, ../scss/app.scss */
+/* line 84, ../scss/app.scss */
 .topnav .row {
   max-width: 100%;
 }
-/* line 95, ../scss/app.scss */
+/* line 88, ../scss/app.scss */
 .topnav a {
   color: white;
   font-weight: 500;
   margin-left: 15px;
 }
-/* line 99, ../scss/app.scss */
+/* line 92, ../scss/app.scss */
 .topnav a.brand {
   font-weight: 700;
   text-transform: uppercase;
@@ -14121,7 +14111,7 @@ ul {
   margin-right: 15px;
   margin-left: 0;
 }
-/* line 107, ../scss/app.scss */
+/* line 100, ../scss/app.scss */
 .topnav a#feedSelector {
   font-weight: 500;
   padding: 20px;
@@ -14133,17 +14123,17 @@ ul {
   border-right: 1px solid #3d61a1;
   margin-left: 0;
 }
-/* line 117, ../scss/app.scss */
+/* line 110, ../scss/app.scss */
 .topnav a#feedSelector:hover {
   background: #4a72ba;
 }
-/* line 123, ../scss/app.scss */
+/* line 116, ../scss/app.scss */
 .topnav .platforms-container {
   display: inline;
   position: relative;
   height: 50px;
 }
-/* line 127, ../scss/app.scss */
+/* line 120, ../scss/app.scss */
 .topnav .platforms-container .platforms-list {
   position: absolute;
   top: 30px;
@@ -14159,16 +14149,16 @@ ul {
   -webkit-transition: all 0.2s ease;
   transition: all 0.2s ease;
 }
-/* line 138, ../scss/app.scss */
+/* line 131, ../scss/app.scss */
 .topnav .platforms-container .platforms-list div {
   width: 100%;
 }
-/* line 140, ../scss/app.scss */
+/* line 133, ../scss/app.scss */
 .topnav .platforms-container .platforms-list div ul {
   margin: 0 !important;
   padding: 0 !important;
 }
-/* line 143, ../scss/app.scss */
+/* line 136, ../scss/app.scss */
 .topnav .platforms-container .platforms-list div ul a, .topnav .platforms-container .platforms-list div ul li {
   margin: 0 !important;
   color: white;
@@ -14176,15 +14166,15 @@ ul {
   width: 100%;
   padding: 10px 0px;
 }
-/* line 149, ../scss/app.scss */
+/* line 142, ../scss/app.scss */
 .topnav .platforms-container .platforms-list div ul a:hover, .topnav .platforms-container .platforms-list div ul li:hover {
   background: #5379be;
 }
-/* line 153, ../scss/app.scss */
+/* line 146, ../scss/app.scss */
 .topnav .platforms-container .platforms-list div ul li {
   padding-left: 5px;
 }
-/* line 158, ../scss/app.scss */
+/* line 151, ../scss/app.scss */
 .topnav .platforms-container .platforms-list.open {
   background: #446CB3;
   border-color: #3d61a1;
@@ -14196,7 +14186,7 @@ ul {
 * Register form
 *
 **/
-/* line 173, ../scss/app.scss */
+/* line 166, ../scss/app.scss */
 .register-form {
   max-height: 0px;
   overflow: hidden;
@@ -14205,7 +14195,7 @@ ul {
   -webkit-transition: all 0.3s ease;
   transition: all 0.3s ease;
 }
-/* line 178, ../scss/app.scss */
+/* line 171, ../scss/app.scss */
 .register-form.open {
   max-height: 1000px;
 }
@@ -14215,19 +14205,19 @@ ul {
 * post form
 *
 **/
-/* line 189, ../scss/app.scss */
+/* line 182, ../scss/app.scss */
 .game-search-results-container {
   width: 100%;
   position: relative;
 }
-/* line 192, ../scss/app.scss */
+/* line 185, ../scss/app.scss */
 .game-search-results-container .game-search-results {
   width: 100%;
   position: absolute;
   top: -15px;
   z-index: 9;
 }
-/* line 197, ../scss/app.scss */
+/* line 190, ../scss/app.scss */
 .game-search-results-container .game-search-results .game-search-result {
   background: white;
   padding: 5px;
@@ -14236,15 +14226,15 @@ ul {
   cursor: pointer;
   font-size: 1em;
 }
-/* line 205, ../scss/app.scss */
+/* line 198, ../scss/app.scss */
 .game-search-results-container .game-search-results .game-search-result:hover {
   background: #446CB3;
 }
-/* line 207, ../scss/app.scss */
+/* line 200, ../scss/app.scss */
 .game-search-results-container .game-search-results .game-search-result:hover a {
   color: white;
 }
-/* line 212, ../scss/app.scss */
+/* line 205, ../scss/app.scss */
 .game-search-results-container .game-search-results .game-search-result:last-of-type {
   border-bottom: 1px solid #e9e9e9;
 }
@@ -14254,33 +14244,33 @@ ul {
 * Account page
 *
 **/
-/* line 225, ../scss/app.scss */
+/* line 218, ../scss/app.scss */
 .profile {
   width: 100%;
   border-bottom: 1px solid #e9e9e9;
   padding: 1em 0;
 }
-/* line 230, ../scss/app.scss */
+/* line 223, ../scss/app.scss */
 .profile:last-of-type {
   border: none;
   padding-bottom: 0;
 }
-/* line 235, ../scss/app.scss */
+/* line 228, ../scss/app.scss */
 .profile img {
   height: 75px;
   margin-bottom: 1.5em;
 }
-/* line 241, ../scss/app.scss */
+/* line 234, ../scss/app.scss */
 .profile .profiles-mini-list li:first-of-type {
   font-weight: 700;
   color: #446CB3;
 }
-/* line 246, ../scss/app.scss */
+/* line 239, ../scss/app.scss */
 .profile .profiles-mini-list li > a {
   color: #555;
   font-weight: 500;
 }
-/* line 249, ../scss/app.scss */
+/* line 242, ../scss/app.scss */
 .profile .profiles-mini-list li > a:hover {
   text-decoration: underline;
 }
@@ -14290,22 +14280,22 @@ ul {
 * Feeds
 *
 **/
-/* line 262, ../scss/app.scss */
+/* line 255, ../scss/app.scss */
 .feed {
   width: 100%;
 }
-/* line 266, ../scss/app.scss */
+/* line 259, ../scss/app.scss */
 .feed .sort-by a {
   color: #999;
   font-weight: 500;
   font-size: 0.8em;
   margin-right: 15px;
 }
-/* line 272, ../scss/app.scss */
+/* line 265, ../scss/app.scss */
 .feed .sort-by a:hover {
   color: #555;
 }
-/* line 276, ../scss/app.scss */
+/* line 269, ../scss/app.scss */
 .feed .sort-by a.active {
   color: #446CB3;
   font-weight: 700;
@@ -14316,7 +14306,7 @@ ul {
 * Footer
 *
 **/
-/* line 290, ../scss/app.scss */
+/* line 283, ../scss/app.scss */
 .footer {
   margin-top: 25px;
   width: 100%;
@@ -14326,16 +14316,16 @@ ul {
   position: relative;
   z-index: 2;
 }
-/* line 299, ../scss/app.scss */
+/* line 292, ../scss/app.scss */
 .footer .row {
   max-width: 100%;
 }
-/* line 303, ../scss/app.scss */
+/* line 296, ../scss/app.scss */
 .footer .super-header {
   color: #ccc;
   margin-bottom: 20px;
 }
-/* line 308, ../scss/app.scss */
+/* line 301, ../scss/app.scss */
 .footer a {
   color: #ccc;
   margin: 0 10px;
