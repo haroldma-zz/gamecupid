@@ -21,7 +21,7 @@
 											<a href="{!! url('/gamer/' . $post->user->username) !!}">{{ $post->user->username }} <span class="header-rep-count"><b>{{ $post->user->level() }}</b>:{{ $post->user->rep() }}</span></a>
 										</b>
 										&nbsp;&middot;&nbsp;
-										<b>{{ $post->accepts->where('state', 2)->count() }}</b>{{ '/'.$post->max_players }} player{{ ($post->max_players > 1 ? 's' : '') }}
+										<b>{{ $post->requests->where('state', 2)->count() }}</b>{{ '/'.$post->max_players }} player{{ ($post->max_players > 1 ? 's' : '') }}
 									</small>
 								</h4>
 								<div class="tagLabels">
@@ -37,7 +37,13 @@
 								You submitted this post on <b>{{ date('M j, Y', strtotime($post->created_at)) }}</b>.
 							</p>
 							@else
-							<button id="requestInviteBtn" class="btn success">Request an invite</button><img id="requestLoader" src="{!! url('/img/loaders/dots.svg') !!}" width="40px">
+							<button id="requestInviteBtn" class="btn success" {{ (Auth::user()->requests->where('post_id', $post->id)->count() !== 0 ? 'disabled' : '') }}>
+								@if (Auth::user()->requests->where('post_id', $post->id)->count() !== 0)
+								You have requested an invite.
+								@else
+								Request an invite
+								@endif
+							</button><img id="requestLoader" src="{!! url('/img/loaders/dots.svg') !!}" width="40px">
 							<br>
 							@endif
 							<br><br>

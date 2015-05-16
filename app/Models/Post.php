@@ -232,9 +232,9 @@ class Post extends Model {
 		return $this->belongsTo('App\Models\Platform', 'platform_id', 'id');
 	}
 
-	public function accepts()
+	public function requests()
 	{
-		return $this->hasMany('App\Models\Accept', 'post_id', 'id');
+		return $this->hasMany('App\Models\Requestt', 'post_id', 'id');
 	}
 
     public function votes()

@@ -56,11 +56,6 @@ class User extends Model implements AuthenticatableContract, CanResetPasswordCon
 		return $this->hasMany('App\Models\Post', 'user_id', 'id');
 	}
 
-	public function accepts()
-	{
-		return $this->hasMany('App\Models\Accept', 'user_id', 'id');
-	}
-
 	public function reps()
 	{
 		return $this->hasMany('App\Models\Rep', 'user_id', 'id');
@@ -86,7 +81,17 @@ class User extends Model implements AuthenticatableContract, CanResetPasswordCon
 		return $this->hasMany('App\Models\CommentVote', 'user_id', 'id');
 	}
 
-	// Function to return total rep amount (lazy loaded)
+	public function requests()
+	{
+		return $this->hasMany('App\Models\Requestt', 'requester_id', 'id');
+	}
+
+	/**
+	*
+	* Functions
+	*
+	**/
+
     private $_rep = null;
 	public function rep($useCache = true)
 	{

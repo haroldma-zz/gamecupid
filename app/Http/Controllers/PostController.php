@@ -2,6 +2,7 @@
 
 use App\Models\Console;
 use App\Models\Game;
+use App\Models\Requestt;
 use Auth;
 use Response;
 use App\Models\Post;
@@ -14,6 +15,7 @@ use Illuminate\Http\Request;
 use App\Http\Requests\PostFormRequest;
 use Cocur\Slugify\Slugify;
 use App\Enums\AjaxVoteResults;
+use App\Enums\RequestStates;
 
 class PostController extends Controller {
 
@@ -312,6 +314,35 @@ class PostController extends Controller {
         }
 
 		return redirect()->back()->withInput()->with('notice', ['error', 'Something went wrong, try again.']);
+	}
+
+	public function requestInvite($hashid, $slug, Request $request)
+	{
+		# Check if request is AJAX
+		if (!$request->ajax())
+			return redirect('/');
+
+		# Check if user is logged in
+		if (!Auth::check())
+			return Response::make('UNAUTHORIZED', 500);
+
+		# Decode the hashid
+		$postId = decodeHashId($hashid);
+
+		# Check if already requested
+		if (Auth::user()->requests->where('post_id', $postId)->count() !== 0)
+			return Response::make('UNAUTHORIZED', 500);
+
+		# Create a new Requestt
+		$r               = new Requestt;
+		$r->post_id      = $postId;
+		$r->requester_id = Auth::user()->id;
+		$r->state        = RequestStates::PENDING;
+
+		if ($r->save())
+			return Response::make('REQUESTED', 200);
+		else
+			return Response::make('DB FAILED', 500);
 	}
 
 }

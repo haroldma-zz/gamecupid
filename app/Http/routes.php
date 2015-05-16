@@ -17,6 +17,7 @@ Route::get('/login', 'PageController@login');
 
 # Posts
 Route::get('/post/{hashid}/{slug}', 'PageController@post');
+Route::get('/post/{hashid}/{slug}/request-invite', 'PostController@requestInvite');
 Route::get('/post/{hashid}/{slug}/{context}', 'PageController@postWithContext');
 
 
