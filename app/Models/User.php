@@ -129,10 +129,13 @@ class User extends Model implements AuthenticatableContract, CanResetPasswordCon
             Self::$_bestGamers = [];
 
 		Self::$_bestGamers = User::hydrateRaw("call GetBestGamers(10)");
-		Self::$_bestGamers = bestGamersToDto(Self::$_bestGamers);
+
+		if (count(Self::$_bestGamers) > 0)
+			Self::$_bestGamers = bestGamersToDto(Self::$_bestGamers);
 
 		if ($useCache)
         	return setCache($key, Self::$_bestGamers, Carbon::now()->addDay());
+
 		return Self::$_bestGamers;
 	}
 

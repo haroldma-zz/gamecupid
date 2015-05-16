@@ -341,10 +341,10 @@ DELIMITER //
 	CREATE PROCEDURE GetBestGamers(count INTEGER)
 	BEGIN
 		SELECT * FROM (SELECT y.*, x.total - (SELECT COUNT(*) FROM reps WHERE user_id = id) + (UNIX_TIMESTAMP(created_at) / 45000) as total
-		FROM users AS y
-		INNER JOIN (SELECT user_id, SUM(y.total) as total
-		FROM (SELECT user_id, (SELECT sum(amount) FROM rep_events WHERE id=rep_event_id) as total
-		     FROM reps) y GROUP BY user_id) x ON user_id=y.id) l ORDER BY total desc LIMIT count;
+			FROM users AS y
+			INNER JOIN (SELECT user_id, SUM(y.total) as total 
+			FROM (SELECT user_id, (SELECT sum(amount) FROM rep_events WHERE id=rep_event_id) as total 
+	     FROM reps) y GROUP BY user_id) x ON user_id=y.id) l ORDER BY total desc LIMIT count;
 	END //
 DELIMITER ;
 

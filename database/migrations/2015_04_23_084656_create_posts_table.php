@@ -16,7 +16,6 @@ class CreatePostsTable extends Migration {
             $table->increments('id');
             $table->tinyInteger('type');
             $table->tinyInteger('is_self_text');
-            $table->tinyInteger('category');
             $table->string('title');
             $table->string('slug');
             $table->mediumText('markdown_text');
