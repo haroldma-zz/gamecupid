@@ -7,6 +7,7 @@ use App\Enums\NotificationTypes;
 function createNotification($thingId, $userId = null)
 {
     $not           = new Notification;
+    $not->from_id  = Auth::id();
     $not->to_id    = ($userId != null ? $userId : Auth::id());
     $not->thing_id = $thingId;
     $not->notified = false;
@@ -32,5 +33,19 @@ function notifiedAboutRepEvent($repEvent, $userId = null)
 {
     $not           = createNotification($repEvent, $userId);
     $not->type     = NotificationTypes::REP;
+    return $not->save();
+}
+
+function notifiedAboutInviteRequest($postId, $userId = null)
+{
+    $not           = createNotification($postId, $userId);
+    $not->type     = NotificationTypes::INVITE_REQUEST;
+    return $not->save();
+}
+
+function notifiedAboutDeclinedInviteRequest($postId, $userId = null)
+{
+    $not           = createNotification($postId, $userId);
+    $not->type     = NotificationTypes::DECLINED_INVITE;
     return $not->save();
 }

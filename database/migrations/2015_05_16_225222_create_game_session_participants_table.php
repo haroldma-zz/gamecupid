@@ -3,7 +3,7 @@
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Database\Migrations\Migration;
 
-class CreateCommentsTable extends Migration {
+class CreateGameSessionParticipantsTable extends Migration {
 
 	/**
 	 * Run the migrations.
@@ -12,13 +12,9 @@ class CreateCommentsTable extends Migration {
 	 */
 	public function up()
 	{
-		Schema::create('comments', function(Blueprint $table) {
+		Schema::create('game_session_participants', function(Blueprint $table) {
             $table->increments('id');
-            $table->mediumText('self_text');
-            $table->mediumText('markdown_text');
-            $table->tinyInteger('deleted');
-            $table->integer('parent_id');
-            $table->integer('post_id')->default(0);
+            $table->integer('game_session_id');
             $table->integer('user_id');
             $table->timestamps();
         });
@@ -31,7 +27,7 @@ class CreateCommentsTable extends Migration {
 	 */
 	public function down()
 	{
-		Schema::drop('comments');
+		Schema::drop('game_session_participants');
 	}
 
 }

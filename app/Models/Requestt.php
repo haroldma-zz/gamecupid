@@ -21,4 +21,9 @@ class Requestt extends Model {
 	{
 		return $this->hasOne('App\Models\User', 'id', 'requester_id');
 	}
+
+	public function post()
+	{
+		return $this->hasOne('App\Models\Post', 'id', 'post_id');
+	}
 }

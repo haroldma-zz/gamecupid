@@ -16,6 +16,7 @@
 					<div class="platforms-list" id="platformList">
 						<div>
 							<ul class="no-bullet">
+								<a href="{!! url('/') !!}"><li>All</li></a>
 								<a href="{!! url('/psn') !!}"><li>Playstation Network</li></a>
 								<a href="{!! url('/xbl') !!}"><li>Xbox Live</li></a>
 								<a href="{!! url('/steam') !!}"><li>Steam</li></a>

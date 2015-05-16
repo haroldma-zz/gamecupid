@@ -18,11 +18,17 @@ class Notification extends Model {
     {
         $type = $this->type;
         if ($type == NotificationTypes::REP)
-            return "rep";
+            return "Rep";
         if ($type == NotificationTypes::COMMENT_REPLY)
-            return "comment reply";
+            return "Comment reply";
         if ($type == NotificationTypes::POST_COMMENT)
-            return "comment on your post";
+            return "Comment on your post";
+        if ($type == NotificationTypes::INVITE_REQUEST)
+            return "You received an invite request";
+        if ($type == NotificationTypes::DECLINED_INVITE)
+            return "Your invite request was declined";
+        if ($type == NotificationTypes::ACCEPTED_INVITE)
+            return $this->from->username . " accepted your invite request";
     }
 
     public function createDto()
@@ -34,11 +40,13 @@ class Notification extends Model {
             $description = $this->comment()->post()->title;
         else if ($type == NotificationTypes::POST_COMMENT)
             $description = $this->post()->title;
+        else if ($type == NotificationTypes::INVITE_REQUEST)
+            $description = "from <a>" . $this->from->username . "</a>";
 
         return new Laravel5DTO([
-            'title' => $this->title(),
+            'title'       => $this->title(),
             'description' => $description,
-            'read' => $this->read
+            'read'        => $this->read
         ]);
     }
 
@@ -103,5 +111,15 @@ class Notification extends Model {
 	{
 		return $this->hasOne('App\Models\User', 'id', 'to_id');
 	}
+
+    public function request()
+    {
+        return $this->hasOne('App\Models\Requestt', 'id', 'thing_id');
+    }
+
+    public function gameSession()
+    {
+        return $this->hasOne('App\Models\GameSession', 'id', 'thing_id');
+    }
 
 }

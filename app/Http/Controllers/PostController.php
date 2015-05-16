@@ -336,13 +336,20 @@ class PostController extends Controller {
 		# Create a new Requestt
 		$r               = new Requestt;
 		$r->post_id      = $postId;
-		$r->requester_id = Auth::user()->id;
+		$r->requester_id = Auth::id();
 		$r->state        = RequestStates::PENDING;
 
 		if ($r->save())
+		{
+			$post = Post::find($postId);
+			notifiedAboutInviteRequest($postId, $post->user->id);
+
 			return Response::make('REQUESTED', 200);
+		}
 		else
+		{
 			return Response::make('DB FAILED', 500);
+		}
 	}
 
 }

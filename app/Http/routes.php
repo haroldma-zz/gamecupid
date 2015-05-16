@@ -71,6 +71,10 @@ Route::group(['middleware' => 'auth'], function()
 
 	Route::get('/post', 'PageController@postForm');
 
+	Route::get('/{username}/session/{request_id}/accept', 'SessionController@acceptInviteRequest');
+	Route::get('/{username}/session/{request_id}/decline', 'SessionController@declineInviteRequest');
+	Route::get('/{username}/session/{session_id}', 'PageController@gameSession');
+
 
 	// POST routes
     Route::post('account/connect/psn', 'PlatformValidatorController@validatePsn');
@@ -80,6 +84,8 @@ Route::group(['middleware' => 'auth'], function()
     Route::post('/markasread', 'UserController@markNotificationAsRead');
 
     Route::post('/post', 'PostController@post');
+
+    Route::get('/{username}/session/{session_id}', 'SessionController@comment');
 
 });
 

@@ -4,6 +4,7 @@ use Auth;
 use App\Models\User;
 use App\Models\Console;
 use App\Models\Post;
+use App\Models\GameSession;
 use App\Enums\Categories;
 use Illuminate\Http\Request;
 use Carbon\Carbon;
@@ -235,4 +236,56 @@ class PageController extends Controller {
     	return view('pages.users.profile', ['user' => $user]);
     }
 
+
+    /**
+    *
+    * Game session page
+    *
+    **/
+    public function gameSession($username, $sessionId)
+    {
+    	if ($username != Auth::user()->username)
+    		return redirect('/' . Auth::user()->username . '/session/' . $sessionId);
+
+		$id      = decodeHashId($sessionId);
+		$session = GameSession::find($id);
+
+    	if (!$session)
+    		return redirect()->back();
+
+		$participants   = [];
+		$participants[] = $session->post->user->username;
+
+    	foreach ($session->participants as $participant)
+    	{
+    		$participants[] = $participant->username;
+    	}
+
+    	if (!in_array($username, $participants))
+    		return redirect()->back();
+
+    	return view()->make('pages.gamesessions.session')->with(['post' => $session->post, 'session' => $session]);
+    }
+
 }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
