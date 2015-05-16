@@ -29,7 +29,6 @@ class PageController extends Controller {
 	public function index(Request $request, $platform = null)
     {
 		$category     = $request->input('category', false);
-		$sort         = $request->input('sort', 'new');
 		$limit        = (int)$request->input('limit', 10);
 		$after        = decodeHashId($request->input('after', 0));
 		$fromTimezone = $request->input('ftz');
@@ -42,34 +41,47 @@ class PageController extends Controller {
 		$from         = stringToFromDate($t);
 
 
-    	if ($category != false)
-    	{
-			switch($category)
-			{
-				case "anytime":
-					$category = Categories::ANYTIME;
-					break;
-				case "planned":
-					$category = Categories::PLANNED;
-					break;
-				case "asap":
-					$category = Categories::ASAP;
-					break;
-			}
+        switch($platform)
+        {
+            case "psn":
+                $platform = 2;
+                break;
+            case "xbl":
+                $platform = 1;
+                break;
+            default:
+                $platform = 0;
+        }
 
-			if (is_null($platform))
-				$posts = Post::where('category', $category)->orderBy('created_at', ($sort == 'new' ? 'DESC' : 'ASC'))->take($limit)->get();
-			else
-				$posts = Post::$platform()->where('category', $category)->orderBy('created_at', ($sort == 'new' ? 'DESC' : 'ASC'))->take($limit)->get();
-    	}
-    	else
-    	{
-    		if (is_null($platform))
-    			$posts = Post::orderBy('created_at', ($sort == 'new' ? 'DESC' : 'ASC'))->take($limit)->get();
-    		else
-    			$posts = Post::$platform()->orderBy('created_at', ($sort == 'new' ? 'DESC' : 'ASC'))->take($limit)->get();
-    	}
+        if ($category != false)
+        {
+            switch($category)
+            {
+                case "anytime":
+                    $category = Categories::ANYTIME;
+                    break;
+                case "planned":
+                    $category = Categories::PLANNED;
+                    break;
+                default:
+                    $category = Categories::ASAP;
+                    break;
+            }
+        }
 
+        $query = "GetNewInvites($after, $guardedLimit)";
+        if ($category != false){
+            if ($platform > 0){
+                $query = "GetNewInvitesByPlatformAndCategory($platform, $category, $after, $guardedLimit)";
+            }
+            else {
+                $query = "GetNewInvitesByCategory($category, $after, $guardedLimit)";
+            }
+        }
+        else if ($platform > 0) {
+            $query = "GetNewInvitesByPlatform($platform, $after, $guardedLimit)";
+        }
+        $posts = Post::hydrateRaw("CALL " . $query);
 
         if ($request->ajax())
             return invitesToDtos($posts);

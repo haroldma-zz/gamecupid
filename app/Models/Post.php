@@ -27,28 +27,6 @@ class Post extends Model {
     private $_isDownvoted   = null;
     private $_cacheGame     = null;
 
-
-    /**
-    *
-    * Scopes
-    *
-    **/
-    public function scopePsn($query)
-    {
-        return $query->where('console_id', '=', 3)->where('console_id', '=', 4, 'OR');
-    }
-
-    public function scopeXbl($query)
-    {
-        return $query->where('console_id', '=', 1)->where('console_id', '=', 2, 'OR');
-    }
-
-    public function scopeSteam($query)
-    {
-        return $query->where('console_id', '=', 5);
-    }
-
-
     /**
     *
     * Custom functions
