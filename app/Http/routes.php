@@ -10,8 +10,9 @@
 **/
 
 // GET routes
-Route::get('/{platform?}', 'PageController@index');
 Route::get('/login', 'PageController@login');
+
+# '/' route is at the bottom
 
 
 # Posts
@@ -81,7 +82,7 @@ Route::group(['middleware' => 'auth'], function()
 
 });
 
-
+Route::get('/{platform?}', 'PageController@index');
 
 /*
 |--------------------------------------------------------------------------
