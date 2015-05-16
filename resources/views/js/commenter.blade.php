@@ -10,59 +10,59 @@
 			e.preventDefault();
 	});
 
-	$('.comment-box').on('keyup', 'textarea:first', function(e)
-	{
-		var keyCode  = e.keyCode || e.which;
-		var allInput = $(this).val();
-		var input    = ':' + allInput.substring(allInput.lastIndexOf(':') + 1);
+	// $('.comment-box').on('keyup', 'textarea:first', function(e)
+	// {
+	// 	var keyCode  = e.keyCode || e.which;
+	// 	var allInput = $(this).val();
+	// 	var input    = ':' + allInput.substring(allInput.lastIndexOf(':') + 1);
 
-		if (emojisShowing === false && keyCode === 186 && e.shiftKey)
-		{
-			$('#emojis').addClass('open');
-			emojisShowing = true;
-		}
-		else if (emojisShowing === true)
-		{
-			if (keyCode === 13 || keyCode == 9 || keyCode === 32)
-			{
-				$('#emojis').removeClass('open');
-				emojisShowing  = false;
+	// 	if (emojisShowing === false && keyCode === 186 && e.shiftKey)
+	// 	{
+	// 		$('#emojis').addClass('open');
+	// 		emojisShowing = true;
+	// 	}
+	// 	else if (emojisShowing === true)
+	// 	{
+	// 		if (keyCode === 13 || keyCode == 9 || keyCode === 32)
+	// 		{
+	// 			$('#emojis').removeClass('open');
+	// 			emojisShowing  = false;
 
-				var newInput = allInput.slice(0, -input.length);
+	// 			var newInput = allInput.slice(0, -input.length);
 
-				if (foundEmojis[0] != undefined)
-					$(this).val(newInput + foundEmojis[0] + ' ');
-			}
-			else if (keyCode === 186 && e.shiftKey)
-			{
-				$('#emojis').removeClass('open');
-				emojisShowing  = false;
-			}
-			else
-			{
-				$.getJSON('/emojis.json', function(emojis)
-				{
-					var i = 0;
-					$('#emojis').html('');
-					foundEmojis = [];
-					$.each(emojis, function(key, val)
-					{
-						if (key.match("^" + input))
-						{
-							$('#emojis').append('<div class="emoji"><img src="' + val + '" width="20px" height="20px"/> ' + key + '</div>');
+	// 			if (foundEmojis[0] != undefined)
+	// 				$(this).val(newInput + foundEmojis[0] + ' ');
+	// 		}
+	// 		else if (keyCode === 186 && e.shiftKey)
+	// 		{
+	// 			$('#emojis').removeClass('open');
+	// 			emojisShowing  = false;
+	// 		}
+	// 		else
+	// 		{
+	// 			$.getJSON('/emojis.json', function(emojis)
+	// 			{
+	// 				var i = 0;
+	// 				$('#emojis').html('');
+	// 				foundEmojis = [];
+	// 				$.each(emojis, function(key, val)
+	// 				{
+	// 					if (key.match("^" + input))
+	// 					{
+	// 						$('#emojis').append('<div class="emoji"><img src="' + val + '" width="20px" height="20px"/> ' + key + '</div>');
 
-							foundEmojis.push(key);
+	// 						foundEmojis.push(key);
 
-							i++;
+	// 						i++;
 
-							if (i === 3)
-								return false;
-						}
-					});
-				});
-			}
-		}
-	});
+	// 						if (i === 3)
+	// 							return false;
+	// 					}
+	// 				});
+	// 			});
+	// 		}
+	// 	}
+	// });
 
 	$('body').on('click', '[id="commentSubmitter"]', function(e)
 	{

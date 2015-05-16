@@ -53,7 +53,7 @@
 										<section id="emojis" class="emoji-intellisense">
 											<div class="emoji"></div>
 										</section>
-										<textarea class="form-control" placeholder="Write a comment" data-parenthash="{!! hashId(0) !!}" data-url="{!! url($post->getPermalink()) !!}" data-hierarchy="parent" data-level="no-parent"></textarea>
+										<textarea class="form-control" placeholder="Write a comment" data-parenthash="{!! hashId(0) !!}" data-url="{!! url($post->getPermalink()) !!}" data-hierarchy="child" data-level="no-parent"></textarea>
 									</div>
 									<button type="submit" class="btn primary medium" id="commentSubmitter">Comment</button>
 									<img id="progresser" src="{!! url('/img/loaders/dots.svg') !!}" width="40px">
