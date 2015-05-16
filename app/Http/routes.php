@@ -84,9 +84,6 @@ Route::group(['middleware' => 'auth'], function()
     Route::post('/markasread', 'UserController@markNotificationAsRead');
 
     Route::post('/post', 'PostController@post');
-
-    Route::get('/{username}/session/{session_id}', 'SessionController@comment');
-
 });
 
 Route::get('/{platform?}', 'PageController@index');

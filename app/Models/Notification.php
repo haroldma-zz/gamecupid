@@ -117,9 +117,4 @@ class Notification extends Model {
         return $this->hasOne('App\Models\Requestt', 'id', 'thing_id');
     }
 
-    public function gameSession()
-    {
-        return $this->hasOne('App\Models\GameSession', 'id', 'thing_id');
-    }
-
 }

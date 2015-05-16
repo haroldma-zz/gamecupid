@@ -84,7 +84,7 @@
 				<div class="comments">
 					<h6 class="comments-header">
 						<div class="left">
-							Comments (<span id="postCommentCount">{{ $session->commentCount() }}</span>)
+							Comments (<span id="postCommentCount">{{ $post->commentCount() }}</span>)
 						</div>
 						<div class="right">
 							<small>
@@ -103,7 +103,7 @@
 						</div>
 					@else
 						<div id="commentsList">
-							{!! $session->renderComments(Request::get("sort")) !!}
+							{!! $post->renderComments(Request::get("sort")) !!}
 						</div>
 					@endif
 				</div>

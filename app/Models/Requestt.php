@@ -17,7 +17,7 @@ class Requestt extends Model {
 	* Relations
 	*
 	**/
-	public function requester()
+	public function user()
 	{
 		return $this->hasOne('App\Models\User', 'id', 'requester_id');
 	}

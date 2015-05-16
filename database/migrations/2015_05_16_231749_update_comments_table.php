@@ -13,7 +13,7 @@ class UpdateCommentsTable extends Migration {
 	public function up()
 	{
 		Schema::table('comments', function(Blueprint $table) {
-            $table->integer('game_session_id')->after('post_id')->default(0);
+            $table->tinyInteger('is_game_session')->after('post_id')->default(0);
         });
 	}
 
@@ -25,7 +25,7 @@ class UpdateCommentsTable extends Migration {
 	public function down()
 	{
 		Schema::table('comments', function(Blueprint $table) {
-            $table->dropColumn('game_session_id');
+            $table->dropColumn('is_game_session');
         });
 	}
 

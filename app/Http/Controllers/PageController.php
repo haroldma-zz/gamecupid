@@ -4,8 +4,8 @@ use Auth;
 use App\Models\User;
 use App\Models\Console;
 use App\Models\Post;
-use App\Models\GameSession;
 use App\Enums\Categories;
+use App\Enums\RequestStates;
 use Illuminate\Http\Request;
 use Carbon\Carbon;
 use App\Models\Comment;
@@ -242,29 +242,29 @@ class PageController extends Controller {
     * Game session page
     *
     **/
-    public function gameSession($username, $sessionId)
+    public function gameSession($username, $postId)
     {
     	if ($username != Auth::user()->username)
-    		return redirect('/' . Auth::user()->username . '/session/' . $sessionId);
+    		return redirect('/' . Auth::user()->username . '/session/' . $postId);
 
-		$id      = decodeHashId($sessionId);
-		$session = GameSession::find($id);
+		$id   = decodeHashId($postId);
+		$post = Post::find($id);
 
-    	if (!$session)
+    	if (!$post)
     		return redirect()->back();
 
 		$participants   = [];
-		$participants[] = $session->post->user->username;
+		$participants[] = $post->user->username;
 
-    	foreach ($session->participants as $participant)
+    	foreach ($post->requests()->where('state', RequestStates::ACCEPTED)->get() as $request)
     	{
-    		$participants[] = $participant->username;
+    		$participants[] = $request->user->username;
     	}
 
     	if (!in_array($username, $participants))
     		return redirect()->back();
 
-    	return view()->make('pages.gamesessions.session')->with(['post' => $session->post, 'session' => $session]);
+    	return view()->make('pages.gamesessions.session')->with(['post' => $post]);
     }
 
 }

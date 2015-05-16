@@ -22,21 +22,9 @@ class SessionController extends Controller {
 			return redirect()->back();
 
 		if ($request->save())
-		{
-			# Create gameSession
-			$session          = new GameSession;
-			$session->post_id = $request->post_id;
-			$session->state   = GameSessionStates::PLAYING;
-
-			if ($session->save())
-				return redirect('/' . $username . '/session/' . $requestId);
-			else
-				echo 'Something went wrong, try again.';
-		}
+			return redirect('/' . $username . '/session/' . $requestId);
 		else
-		{
 			echo 'Something went wrong, go back and try again.';
-		}
 	}
 
 	/**

@@ -45,7 +45,7 @@
 								</li>
 	                            @elseif ($n->request->state == \App\Enums\RequestStates::ACCEPTED)
 								<li>
-									<a href="{{ url('/' . Auth::user()->username . '/session/' . hashId($n->gameSession->id)) }}">Go to session</a>
+									<a href="{{ url('/' . Auth::user()->username . '/session/' . hashId($n->post()->id)) }}">Go to session</a>
 								</li>
 	                            @endif
                             @endif
