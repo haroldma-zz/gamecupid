@@ -10,7 +10,7 @@
 	<nav class="topnav">
 		<div class="row">
 			<div class="medium-6 columns">
-				<a class="brand" href="{!! url('/') !!}">playddit</a>
+				<a class="brand" href="{!! url('/') !!}">playddit <small>beta</small></a>
 				<div class="platforms-container">
 					<a id="feedSelector">Platforms <i class="ion-arrow-down-b"></i></a>
 					<div class="platforms-list" id="platformList">
