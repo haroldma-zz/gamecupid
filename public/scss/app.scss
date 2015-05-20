@@ -107,6 +107,21 @@ ul {
 			border-left: 1px solid darken($primary-color, 5);
 			border-right: 1px solid darken($primary-color, 5);
 			margin-left: 0;
+			z-index: 3;
+			&:hover {
+				background: lighten($primary-color, 2.5);
+			}
+		}
+		&.link {
+			font-weight: 500;
+			padding: 20px;
+			padding-bottom: 16px;
+			position: relative;
+			top: -3px;
+			background: $primary-color;
+			border-right: 1px solid darken($primary-color, 5);
+			margin-left: -5px;
+			z-index: 2;
 			&:hover {
 				background: lighten($primary-color, 2.5);
 			}

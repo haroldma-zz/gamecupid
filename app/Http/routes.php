@@ -14,6 +14,8 @@ Route::get('/login', 'PageController@login');
 
 # '/' route is at the bottom
 
+# Blog
+Route::get('/blog', 'PageController@blog');
 
 # Posts
 Route::get('/post/{hashid}/{slug}', 'PageController@post');

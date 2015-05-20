@@ -267,6 +267,17 @@ class PageController extends Controller {
     	return view()->make('pages.posts.detailpage')->with(['post' => $post]);
     }
 
+
+    /**
+    *
+    * Blog page
+    *
+    **/
+    public function blog()
+    {
+    	return view()->make('pages.blog.index');
+    }
+
 }
 
 

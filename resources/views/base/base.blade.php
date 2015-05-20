@@ -24,6 +24,7 @@
 						</div>
 					</div>
 				</div>
+				<a class="link" href="{{ url('/blog') }}">Blog</a>
 			</div>
 			<div class="medium-6 columns text-right">
 				@if(Auth::check())
