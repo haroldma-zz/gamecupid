@@ -20,12 +20,13 @@ class Post extends Model {
     * Vars
     *
     **/
-    private $_commentCount  = -1;
-    private $_upvoteCount   = -1;
-    private $_downvoteCount = -1;
-    private $_isUpvoted     = null;
-    private $_isDownvoted   = null;
-    private $_cacheGame     = null;
+    private $_commentCount            = -1;
+    private $_gameSessionCommentCount = -1;
+    private $_upvoteCount             = -1;
+    private $_downvoteCount           = -1;
+    private $_isUpvoted               = null;
+    private $_isDownvoted             = null;
+    private $_cacheGame               = null;
 
     /**
     *
@@ -64,6 +65,21 @@ class Post extends Model {
 
         $this->_commentCount = $this->comments()->count();
         return setCacheCount($key, $this->_commentCount);
+    }
+
+    public function gameSessionCommentCount()
+    {
+        if ($this->_gameSessionCommentCount != -1)
+            return $this->_gameSessionCommentCount;
+
+        $key   = generateCacheKeyWithId("post", "gameSessionCommentCount", $this->id);
+        if (hasCache($key, $cache)) {
+            $this->_gameSessionCommentCount = $cache;
+            return $this->_gameSessionCommentCount;
+        }
+
+        $this->_gameSessionCommentCount = $this->comments()->where('is_game_session', true)->count();
+        return setCacheCount($key, $this->_gameSessionCommentCount);
     }
 
 	public function upvotes()

@@ -242,16 +242,16 @@ class PageController extends Controller {
     * Game session page
     *
     **/
-    public function gameSession($username, $postId)
+    public function gameSession($hashId, $slug)
     {
-    	if ($username != Auth::user()->username)
-    		return redirect('/' . Auth::user()->username . '/session/' . $postId);
+    	if (!Auth::check())
+    		return redirect('/login');
 
-		$id   = decodeHashId($postId);
+		$id   = decodeHashId($hashId);
 		$post = Post::find($id);
 
     	if (!$post)
-    		return redirect()->back();
+    		return 'can\'t find that session';
 
 		$participants   = [];
 		$participants[] = $post->user->username;
@@ -261,10 +261,10 @@ class PageController extends Controller {
     		$participants[] = $request->user->username;
     	}
 
-    	if (!in_array($username, $participants))
-    		return redirect()->back();
+    	if (!in_array(Auth::user()->username, $participants))
+    		return 'you\'re not allowed to view this page.';
 
-    	return view()->make('pages.gamesessions.session')->with(['post' => $post]);
+    	return view()->make('pages.posts.detailpage')->with(['post' => $post]);
     }
 
 }

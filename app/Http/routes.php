@@ -18,6 +18,7 @@ Route::get('/login', 'PageController@login');
 # Posts
 Route::get('/post/{hashid}/{slug}', 'PageController@post');
 Route::get('/post/{hashid}/{slug}/request-invite', 'PostController@requestInvite');
+Route::get('/post/{hashid}/{slug}/session', 'PageController@gameSession');
 Route::get('/post/{hashid}/{slug}/{context}', 'PageController@postWithContext');
 
 
@@ -71,9 +72,8 @@ Route::group(['middleware' => 'auth'], function()
 
 	Route::get('/post', 'PageController@postForm');
 
-	Route::get('/{username}/session/{request_id}/accept', 'SessionController@acceptInviteRequest');
-	Route::get('/{username}/session/{request_id}/decline', 'SessionController@declineInviteRequest');
-	Route::get('/{username}/session/{session_id}', 'PageController@gameSession');
+	Route::get('/post/{hashid}/{slug}/request/{request_id}/accept', 'SessionController@acceptInviteRequest');
+	Route::get('/post/{hashid}/{slug}/request/{request_id}/decline', 'SessionController@declineInviteRequest');
 
 
 	// POST routes

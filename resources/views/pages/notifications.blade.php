@@ -34,18 +34,18 @@
                             @elseif ($n->type == \App\Enums\NotificationTypes::INVITE_REQUEST)
 								@if ($n->request->state == \App\Enums\RequestStates::PENDING)
 	                            <li>
-	                            	<a href="{{ url('/' . Auth::user()->username . '/session/' . hashId($n->request->id)) . '/accept' }}">Accept</a>
+	                            	<a href="{{ url('/post/' . hashId($n->post()->id)) . '/' . $n->post()->slug . '/request/' . hashId($n->request->id) . '/accept' }}">Accept</a>
 	                            </li>
 	                            <li>
-	                            	<a href="{{ url('/' . Auth::user()->username . '/session/' . hashId($n->request->id)) . '/decline' }}">Declined</a>
+	                            	<a href="{{ url('/post/' . hashId($n->post()->id)) . '/' . $n->post()->slug . '/request/' . hashId($n->request->id) . '/decline' }}">Decline</a>
 	                            </li>
 	                            @elseif ($n->request->state == \App\Enums\RequestStates::DECLINED)
 								<li>
-									this invite request was declined
+									You declined this invite request.
 								</li>
 	                            @elseif ($n->request->state == \App\Enums\RequestStates::ACCEPTED)
 								<li>
-									<a href="{{ url('/' . Auth::user()->username . '/session/' . hashId($n->post()->id)) }}">Go to session</a>
+									<a href="{{ url('/post/' . hashId($n->post()->id)) . '/' . $n->post()->slug . '/session' }}">Go to session</a>
 								</li>
 	                            @endif
                             @endif

@@ -4,6 +4,16 @@
 <section class="page">
 	<div class="row medium-collapse detailpage">
 		<div class="medium-10 medium-offset-1 columns">
+			@if(Request::segment(4) == 'session')
+			<h3 class="text-center">
+				Game Session
+				<br>
+				<small>
+					This page is only visible for participants of this session.
+				</small>
+			</h3>
+			<br>
+			@endif
 			<div class="panel">
 				<article class="post">
 					<div class="row medium-collapse">
@@ -30,49 +40,42 @@
 			                            <span class="tagLabel verified" title="Verified Only">VERIFIED ONLY</span>
 			                        @endif
 								</div>
-							</section>
-							<br><br>
-							@if ($post->user->id === Auth::id())
-							<p>
-								You submitted this post on <b>{{ date('M j, Y', strtotime($post->created_at)) }}</b>.
-							</p>
-							@else
-							<button id="requestInviteBtn" class="btn success" {{ (Auth::user()->requests->where('post_id', $post->id)->count() !== 0 ? 'disabled' : '') }}>
-								@if (Auth::user()->requests->where('post_id', $post->id)->count() !== 0)
-								You have requested an invite.
+								<br><br>
+								@if (Request::segment(4) == 'session')
+									@if (Auth::check() && $post->user->id === Auth::id())
+										You started this gamesession.
+									@else
+										You are participating in this game session.
+									@endif
 								@else
-								Request an invite
-								@endif
-							</button><img id="requestLoader" src="{!! url('/img/loaders/dots.svg') !!}" width="40px">
-							<br>
-							@endif
-							<br><br>
-							<div class="comments">
-								<div class="comment-box">
-									<h6>
-										Leave a comment
-									</h6>
-									<p>
-										<i>You can use Markdown to write comments.</i>
-									</p>
-									<div class="relative">
-										<section id="emojis" class="emoji-intellisense">
-											<div class="emoji"></div>
-										</section>
-										<textarea class="form-control" placeholder="Write a comment" data-parenthash="{!! hashId(0) !!}" data-url="{!! url($post->getPermalink()) !!}" data-hierarchy="child" data-level="no-parent"></textarea>
-									</div>
-									<button type="submit" class="btn primary medium" id="commentSubmitter">Comment</button>
-									<img id="progresser" src="{!! url('/img/loaders/dots.svg') !!}" width="40px">
-									<div></div>
-									@if(Session::has('notice'))
-										@if (Session::get('notice')[0] == 'error')
-										<p class="text-alert smaller-fs">{{ Session::get('notice')[1] }}</p>
+									@if (Auth::check() && $post->user->id === Auth::id())
+										You submitted this post on <b>{{ date('M j, Y', strtotime($post->created_at)) }}</b>.
+										<br>
+										<a style="font-weight:500;color:#777;" href="{{ url('/post/' . Request::segment(2) . '/' . Request::segment('3') . '/session') }}">Go to session</a>
+									@else
+										@if (Auth::check())
+											<?php $state = Auth::user()->requests->where('post_id', $post->id)->first() ?>
+										@endif
+										@if (Auth::check() && $state && $state->state == 2)
+											You are participating in this game session.
+											<br>
+											<a style="font-weight:500;color:#777;" href="{{ url('/post/' . Request::segment(2) . '/' . Request::segment('3') . '/session') }}">Go to session</a>
 										@else
-										<p class="text-success smaller-fs">{{ Session::get('notice')[1] }}</p>
+											<button id="requestInviteBtn" class="btn success" {{ (Auth::check() && $state ? 'disabled' : '') }}>
+												@if (Auth::check() && $state)
+													@if ($state->state == 0)
+													You have requested an invite.
+													@else
+													Your invite request was declined.
+													@endif
+												@else
+												Request an invite
+												@endif
+											</button><img id="requestLoader" src="{!! url('/img/loaders/dots.svg') !!}" width="40px">
 										@endif
 									@endif
-								</div>
-							</div>
+								@endif
+							</section>
 						</div>
 						<div class="medium-7 columns">
 							<h5>
@@ -85,8 +88,43 @@
 					</div>
 				</article>
 			</div>
+			@if (Request::segment(4) == 'session')
+			<div class="text-center">
+				<h4>
+					Gamers in this session
+				</h4>
+				&nbsp;<a href="{{ url('gamer/' . $post->user->username) }}">{{ $post->user->username }}</a>&nbsp;
+				@foreach($post->requests()->where('state', 2)->get() as $request)
+					&nbsp;<a href="{{ url('gamer/' . $request->user->username) }}">{{ $request->user->username }}</a>&nbsp;
+				@endforeach
+				<br><br>
+			</div>
+			@endif
 			<div class="panel">
 				<div class="comments">
+					<br>
+					<div class="comment-box">
+						<p>
+							<i>You can use Markdown to write comments.</i>
+						</p>
+						<div class="relative">
+							<section id="emojis" class="emoji-intellisense">
+								<div class="emoji"></div>
+							</section>
+							<textarea class="form-control" placeholder="Write a comment" data-parenthash="{!! hashId(0) !!}" data-url="{!! url($post->getPermalink()) !!}" data-hierarchy="child" data-level="no-parent"></textarea>
+						</div>
+						<button type="submit" class="btn primary medium" id="commentSubmitter">Comment</button>
+						<img id="progresser" src="{!! url('/img/loaders/dots.svg') !!}" width="40px">
+						<div></div>
+						@if(Session::has('notice'))
+							@if (Session::get('notice')[0] == 'error')
+							<p class="text-alert smaller-fs">{{ Session::get('notice')[1] }}</p>
+							@else
+							<p class="text-success smaller-fs">{{ Session::get('notice')[1] }}</p>
+							@endif
+						@endif
+					</div>
+					<br>
 					<h6 class="comments-header">
 						<div class="left">
 							Comments (<span id="postCommentCount">{{ $post->commentCount() }}</span>)
