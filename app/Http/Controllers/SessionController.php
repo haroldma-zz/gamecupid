@@ -49,9 +49,15 @@ class SessionController extends Controller
 			return redirect()->back();
 
 		if ($request->save())
+		{
+			# notify requester
+
 			return redirect('/post/' . $hashId . '/' . $slug . '/session');
+		}
 		else
+		{
 			echo 'Something went wrong, go back and try again.';
+		}
 	}
 
 
@@ -90,6 +96,8 @@ class SessionController extends Controller
 
 		if ($request->save())
 		{
+			# notify requester
+
 			return redirect()->back();
 		}
 		else
