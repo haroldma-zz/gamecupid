@@ -58,32 +58,17 @@
 		</div>
 		<div class="medium-3 columns">
 			<div class="panel">
-				<h5 class="super-header" style="letter-spacing: 3px;">Hot games</h5>
+				<h5 class="super-header" style="letter-spacing: 3px;"><small><b>Recently played with</b></small></h5>
 				<p>
-					<ol class="text-justify">
+					<ul class="no-bullet">
 						<li>
-							<a href="">Grand Theft Auto V</a>
+							<a href="">SomeGamer</a>
 						</li>
-						<li>
-							<a href="">FIFA15</a>
-						</li>
-						<li>
-							<a href="">Call of Duty: Black Ops II</a>
-						</li>
-						<li>
-							<a href="">Bloodborne</a>
-						</li>
-						<li>
-							<a href="">Battlefield 4</a>
-						</li>
-						<li>
-							<a href="">The Last of Us</a>
-						</li>
-					</ol>
+					</ul>
 				</p>
 			</div>
 			<div class="panel">
-				<h5 class="super-header" style="letter-spacing: 3px;">Best gamers</h5>
+				<h5 class="super-header" style="letter-spacing: 3px;"><small><b>Latest gamer updates</b></small></h5>
 				<p>
 					<ol class="text-justify">
 						@foreach($bestGamers as $gamer)
