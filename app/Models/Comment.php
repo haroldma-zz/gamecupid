@@ -145,7 +145,7 @@ class Comment extends Model
         if ($this->_upvoteCount != -1)
             return $this->_upvoteCount;
 
-        $key   = generateCacheKeyWithId("comment", "upvoteCount", $this->id)
+        $key   = generateCacheKeyWithId("comment", "upvoteCount", $this->id);
 
         if (hasCache($key, $cache))
         {
