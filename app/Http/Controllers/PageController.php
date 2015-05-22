@@ -85,7 +85,7 @@ class PageController extends Controller {
         $posts = Post::hydrateRaw("CALL " . $query);
 
         if ($request->ajax())
-            return invitesToDtos($posts);
+            return postsToDtos($posts);
 
 
         # Only fetch bestGamers if $request is not ajax
