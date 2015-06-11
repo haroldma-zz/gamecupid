@@ -3,7 +3,7 @@
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Database\Migrations\Migration;
 
-class CreateAcceptsTable extends Migration {
+class CreateRequestsTable extends Migration {
 
 	/**
 	 * Run the migrations.
@@ -12,12 +12,11 @@ class CreateAcceptsTable extends Migration {
 	 */
 	public function up()
 	{
-		Schema::create('accepts', function(Blueprint $table) {
+		Schema::create('requests', function(Blueprint $table) {
             $table->increments('id');
-            $table->tinyInteger('state');
-            $table->mediumText('message');
-            $table->integer('user_id');
             $table->integer('post_id');
+            $table->integer('requester_id');
+            $table->tinyInteger('state');
             $table->timestamps();
         });
 	}
@@ -29,7 +28,7 @@ class CreateAcceptsTable extends Migration {
 	 */
 	public function down()
 	{
-		Schema::drop('accepts');
+		Schema::drop('requests');
 	}
 
 }

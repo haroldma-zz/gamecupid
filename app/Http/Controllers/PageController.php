@@ -5,6 +5,7 @@ use App\Models\User;
 use App\Models\Console;
 use App\Models\Post;
 use App\Enums\Categories;
+use App\Enums\RequestStates;
 use Illuminate\Http\Request;
 use Carbon\Carbon;
 use App\Models\Comment;
@@ -26,11 +27,9 @@ class PageController extends Controller {
 	* Show the application's index page
 	*
 	**/
-	public function index(Request $request)
+	public function index(Request $request, $platform = null)
     {
 		$category     = $request->input('category', false);
-		$platform     = $request->input('platform', false);
-		$sort         = $request->input('sort', 'new');
 		$limit        = (int)$request->input('limit', 10);
 		$after        = decodeHashId($request->input('after', 0));
 		$fromTimezone = $request->input('ftz');
@@ -43,31 +42,50 @@ class PageController extends Controller {
 		$from         = stringToFromDate($t);
 
 
-    	if ($category != false)
-    	{
-			switch($category)
-			{
-				case "anytime":
-					$category = Categories::ANYTIME;
-					break;
-				case "planned":
-					$category = Categories::PLANNED;
-					break;
-				case "asap":
-					$category = Categories::ASAP;
-					break;
-			}
+        switch($platform)
+        {
+            case "psn":
+                $platform = 2;
+                break;
+            case "xbl":
+                $platform = 1;
+                break;
+            default:
+                $platform = 0;
+        }
 
-			$posts = Post::where('category', $category)->orderBy('created_at', ($sort == 'new' ? 'DESC' : 'ASC'))->take($limit)->get();
-    	}
-    	else
-    	{
-    		$posts = Post::orderBy('created_at', ($sort == 'new' ? 'DESC' : 'ASC'))->take($limit)->get();
-    	}
+        if ($category != false)
+        {
+            switch($category)
+            {
+                case "anytime":
+                    $category = Categories::ANYTIME;
+                    break;
+                case "planned":
+                    $category = Categories::PLANNED;
+                    break;
+                default:
+                    $category = Categories::ASAP;
+                    break;
+            }
+        }
 
+        $query = "GetNewInvites($after, $guardedLimit)";
+        if ($category != false){
+            if ($platform > 0){
+                $query = "GetNewInvitesByPlatformAndCategory($platform, $category, $after, $guardedLimit)";
+            }
+            else {
+                $query = "GetNewInvitesByCategory($category, $after, $guardedLimit)";
+            }
+        }
+        else if ($platform > 0) {
+            $query = "GetNewInvitesByPlatform($platform, $after, $guardedLimit)";
+        }
+        $posts = Post::hydrateRaw("CALL " . $query);
 
         if ($request->ajax())
-            return invitesToDtos($posts);
+            return postsToDtos($posts);
 
 
         # Only fetch bestGamers if $request is not ajax
@@ -218,4 +236,67 @@ class PageController extends Controller {
     	return view('pages.users.profile', ['user' => $user]);
     }
 
+
+    /**
+    *
+    * Game session page
+    *
+    **/
+    public function gameSession($hashId, $slug)
+    {
+    	if (!Auth::check())
+    		return redirect('/login');
+
+		$id   = decodeHashId($hashId);
+		$post = Post::find($id);
+
+    	if (!$post)
+    		return 'can\'t find that session';
+
+		$participants   = [];
+		$participants[] = $post->user->username;
+
+    	foreach ($post->requests()->where('state', RequestStates::ACCEPTED)->get() as $request)
+    	{
+    		$participants[] = $request->user->username;
+    	}
+
+    	if (!in_array(Auth::user()->username, $participants))
+    		return 'you\'re not allowed to view this page.';
+
+    	return view()->make('pages.posts.detailpage')->with(['post' => $post]);
+    }
+
+
+    /**
+    *
+    * Blog page
+    *
+    **/
+    public function blog()
+    {
+    	return view()->make('pages.blog.index');
+    }
+
 }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

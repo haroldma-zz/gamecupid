@@ -152,7 +152,7 @@ class UserController extends Controller {
 
 				if ($c)
 				{
-					$n->read = false;
+					return 'marked';
 				}
 				else
 				{

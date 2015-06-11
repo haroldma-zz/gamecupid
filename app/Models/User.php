@@ -56,11 +56,6 @@ class User extends Model implements AuthenticatableContract, CanResetPasswordCon
 		return $this->hasMany('App\Models\Post', 'user_id', 'id');
 	}
 
-	public function accepts()
-	{
-		return $this->hasMany('App\Models\Accept', 'user_id', 'id');
-	}
-
 	public function reps()
 	{
 		return $this->hasMany('App\Models\Rep', 'user_id', 'id');
@@ -86,7 +81,17 @@ class User extends Model implements AuthenticatableContract, CanResetPasswordCon
 		return $this->hasMany('App\Models\CommentVote', 'user_id', 'id');
 	}
 
-	// Function to return total rep amount (lazy loaded)
+	public function requests()
+	{
+		return $this->hasMany('App\Models\Requestt', 'requester_id', 'id');
+	}
+
+	/**
+	*
+	* Functions
+	*
+	**/
+
     private $_rep = null;
 	public function rep($useCache = true)
 	{
@@ -129,10 +134,13 @@ class User extends Model implements AuthenticatableContract, CanResetPasswordCon
             Self::$_bestGamers = [];
 
 		Self::$_bestGamers = User::hydrateRaw("call GetBestGamers(10)");
-		Self::$_bestGamers = bestGamersToDto(Self::$_bestGamers);
+
+		if (count(Self::$_bestGamers) > 0)
+			Self::$_bestGamers = bestGamersToDto(Self::$_bestGamers);
 
 		if ($useCache)
         	return setCache($key, Self::$_bestGamers, Carbon::now()->addDay());
+
 		return Self::$_bestGamers;
 	}
 

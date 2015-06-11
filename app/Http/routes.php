@@ -10,12 +10,17 @@
 **/
 
 // GET routes
-Route::get('/', 'PageController@index');
 Route::get('/login', 'PageController@login');
 
+# '/' route is at the bottom
+
+# Blog
+Route::get('/blog', 'PageController@blog');
 
 # Posts
 Route::get('/post/{hashid}/{slug}', 'PageController@post');
+Route::get('/post/{hashid}/{slug}/request-invite', 'PostController@requestInvite');
+Route::get('/post/{hashid}/{slug}/session', 'PageController@gameSession');
 Route::get('/post/{hashid}/{slug}/{context}', 'PageController@postWithContext');
 
 
@@ -69,6 +74,9 @@ Route::group(['middleware' => 'auth'], function()
 
 	Route::get('/post', 'PageController@postForm');
 
+	Route::get('/post/{hashid}/{slug}/request/{request_id}/accept', 'SessionController@acceptInviteRequest');
+	Route::get('/post/{hashid}/{slug}/request/{request_id}/decline', 'SessionController@declineInviteRequest');
+
 
 	// POST routes
     Route::post('account/connect/psn', 'PlatformValidatorController@validatePsn');
@@ -78,10 +86,9 @@ Route::group(['middleware' => 'auth'], function()
     Route::post('/markasread', 'UserController@markNotificationAsRead');
 
     Route::post('/post', 'PostController@post');
-
 });
 
-
+Route::get('/{platform?}', 'PageController@index');
 
 /*
 |--------------------------------------------------------------------------

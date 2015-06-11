@@ -10,19 +10,21 @@
 	<nav class="topnav">
 		<div class="row">
 			<div class="medium-6 columns">
-				<a class="brand" href="{!! url('/') !!}">playddit</a>
+				<a class="brand" href="{!! url('/') !!}">playddit <small>beta</small></a>
 				<div class="platforms-container">
 					<a id="feedSelector">Platforms <i class="ion-arrow-down-b"></i></a>
 					<div class="platforms-list" id="platformList">
 						<div>
 							<ul class="no-bullet">
-								<a href="{!! url('/?platform=psn') !!}"><li>Playstation Network</li></a>
-								<a href="{!! url('/?platform=xbl') !!}"><li>Xbox Live</li></a>
-								<a href="{!! url('/?platform=steam') !!}"><li>Steam</li></a>
+								<a href="{!! url('/') !!}"><li>All</li></a>
+								<a href="{!! url('/psn') !!}"><li>Playstation Network</li></a>
+								<a href="{!! url('/xbl') !!}"><li>Xbox Live</li></a>
+								<a href="{!! url('/steam') !!}"><li>Steam</li></a>
 							</ul>
 						</div>
 					</div>
 				</div>
+				<a class="link" href="{{ url('/blog') }}">Blog</a>
 			</div>
 			<div class="medium-6 columns text-right">
 				@if(Auth::check())

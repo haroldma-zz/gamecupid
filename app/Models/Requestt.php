@@ -2,14 +2,14 @@
 
 use Illuminate\Database\Eloquent\Model;
 
-class Accept extends Model {
+class Requestt extends Model {
 
 	/**
 	 * The database table used by the model.
 	 *
 	 * @var string
 	 */
-	protected $table = 'accepts';
+	protected $table = 'requests';
 
 
 	/**
@@ -19,11 +19,11 @@ class Accept extends Model {
 	**/
 	public function user()
 	{
-		return $this->belongsTo('App\Models\User', 'user_id', 'id');
+		return $this->hasOne('App\Models\User', 'id', 'requester_id');
 	}
 
 	public function post()
 	{
-		return $this->belongsTo('App\Models\Post', 'post_id', 'id');
+		return $this->hasOne('App\Models\Post', 'id', 'post_id');
 	}
 }

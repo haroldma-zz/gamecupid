@@ -18,7 +18,7 @@ class CreateCommentsTable extends Migration {
             $table->mediumText('markdown_text');
             $table->tinyInteger('deleted');
             $table->integer('parent_id');
-            $table->integer('post_id');
+            $table->integer('post_id')->default(0);
             $table->integer('user_id');
             $table->timestamps();
         });

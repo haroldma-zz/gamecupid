@@ -20,13 +20,13 @@ class Post extends Model {
     * Vars
     *
     **/
-    private $_commentCount  = -1;
-    private $_upvoteCount   = -1;
-    private $_downvoteCount = -1;
-    private $_isUpvoted     = null;
-    private $_isDownvoted   = null;
-    private $_cacheGame     = null;
-
+    private $_commentCount            = -1;
+    private $_gameSessionCommentCount = -1;
+    private $_upvoteCount             = -1;
+    private $_downvoteCount           = -1;
+    private $_isUpvoted               = null;
+    private $_isDownvoted             = null;
+    private $_cacheGame               = null;
 
     /**
     *
@@ -41,7 +41,7 @@ class Post extends Model {
     public function castVote($state)
     {
         $vote            = new PostVote;
-        $vote->post_id = $this->id;
+        $vote->post_id   = $this->id;
         $vote->user_id   = Auth::id();
         $vote->state     = $state;
         return $vote->save();
@@ -65,6 +65,21 @@ class Post extends Model {
 
         $this->_commentCount = $this->comments()->count();
         return setCacheCount($key, $this->_commentCount);
+    }
+
+    public function gameSessionCommentCount()
+    {
+        if ($this->_gameSessionCommentCount != -1)
+            return $this->_gameSessionCommentCount;
+
+        $key   = generateCacheKeyWithId("post", "gameSessionCommentCount", $this->id);
+        if (hasCache($key, $cache)) {
+            $this->_gameSessionCommentCount = $cache;
+            return $this->_gameSessionCommentCount;
+        }
+
+        $this->_gameSessionCommentCount = $this->comments()->where('is_game_session', true)->count();
+        return setCacheCount($key, $this->_gameSessionCommentCount);
     }
 
 	public function upvotes()
@@ -211,9 +226,9 @@ class Post extends Model {
 		return $this->belongsTo('App\Models\Platform', 'platform_id', 'id');
 	}
 
-	public function accepts()
+	public function requests()
 	{
-		return $this->hasMany('App\Models\Accept', 'post_id', 'id');
+		return $this->hasMany('App\Models\Requestt', 'post_id', 'id');
 	}
 
     public function votes()

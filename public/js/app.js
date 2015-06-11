@@ -37,57 +37,32 @@ function closeSuperParent(el)
 
 
 // unreadNotificationBtn
-$('[id="markNotificationAsReadBtn"').click(function()
+$('[id="notificationContainer"').click(function()
 {
-	var token = $('#csrftoken').val();
-	var id    = $(this).data('nid');
-	var el    = $(this);
-	var txt   = el.text();
-	var unrc  = parseInt($('#u-not-read-count').text());
-	var icon  = $('#not-icon');
+	var token  = $('#csrftoken').val();
+	var id     = $(this).data('nid');
+	var unrc   = parseInt($('#u-not-read-count').text());
+	var icon   = $('#not-icon');
 
-	if (txt == 'mark as read')
+	unrc -= 1;
+
+	$(this).find('h5').removeClass('bold');
+
+	if (unrc > 0)
 	{
-		el.parent().parent().parent().find('h5').removeClass('bold');
-		el.text('mark as unread');
-
-		unrc -= 1;
-
-		if (unrc > 0)
-		{
-			$('#u-not-read-count').text(unrc);
-		}
-		else
-		{
-			$('#not-icon').addClass('ion-android-notifications-none');
-			$('#not-icon').removeClass('orange-text');
-			$('#u-not-read-count').text('');
-		}
+		$('#u-not-read-count').text(unrc);
 	}
 	else
 	{
-		el.parent().parent().parent().find('h5').addClass('bold');
-		el.text('mark as read');
-
-		if (!unrc)
-		{
-			unrc = 0;
-		}
-
-		unrc += 1;
-
-		$('#u-not-read-count').text(unrc);
-		$('#not-icon').removeClass('ion-android-notifications-none');
-		$('#not-icon').addClass('ion-android-notifications orange-text');
+		$('#not-icon').addClass('ion-android-notifications-none');
+		$('#not-icon').removeClass('orange-text');
+		$('#u-not-read-count').text('');
 	}
 
 	$.post('/markasread', {_token:token, id:id}, function(res)
 	{
 		if (res != 'marked')
 		{
-			el.parent().parent().parent().find('h5').addClass('bold');
-			el.text('mark as read');
-
 			if (!unrc)
 			{
 				unrc = 0;
